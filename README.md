@@ -18,7 +18,10 @@
 
 ### 项目接受
 项目工程采用： webpack4.x babel7.x eslint 搭建
-项目采用 react, react-router, mobx, antd 搭建  
+
+项目采用 react, react-router, mobx, material-ui 搭建
+  
+使用 js-in-css 样式书写
 
 使用 eslint, react-arbnb 规范约束代码,
 

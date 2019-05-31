@@ -1,31 +1,22 @@
 import React from 'react';
-import { Button } from 'antd';
+// import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
-import classes from './home.css';
+import { style1 } from './style';
 
+const useStyles = makeStyles(style1);
 
-class Home extends React.Component {
-  state = {
-    current: 'mail',
-  };
-
-  handleClick = (n) => {
-    this.setState({
-      current: n,
-    });
-  };
-
-  render() {
-    const { current } = this.state;
-    return (
-      <div className={classes.container}>
-        <div>{current}</div>
-        <div>
-          <Button type="primary" onClick={() => { this.handleClick('1'); }}>Add</Button>
-        </div>
+const Home = () => {
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
+      <div className={classes.wrapper}>哈哈啊</div>
+      <div>
+        <Button variant="contained" color="primary">text</Button>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Home;

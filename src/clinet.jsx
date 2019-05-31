@@ -1,0 +1,33 @@
+import React from 'react';
+import { hot } from 'react-hot-loader/root';
+import { makeStyles } from '@material-ui/core/styles/index';
+import { renderRoutes } from 'react-router-config';
+
+import routers from './router/index';
+
+import './asstes/style/reset.css';
+
+const useStyles = makeStyles(() => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+    '& > div:nth-child(2)': {
+      flex: 1,
+    },
+  },
+}));
+
+
+const App = () => {
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
+      {
+        renderRoutes(routers)
+      }
+    </div>
+  );
+};
+
+export default hot(App);

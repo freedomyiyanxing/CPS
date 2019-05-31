@@ -6,7 +6,17 @@ module.exports = {
   mode: 'production',
   devtool: false,
   entry: {
-    vendor: ['axios', 'babel-polyfill', 'react', 'react-dom', '@hot-loader/react-dom', 'react-router-dom', 'antd']
+    vendor: [
+      'axios',
+      'react',
+      'react-dom',
+      '@hot-loader/react-dom',
+      'react-router-dom',
+      '@material-ui/core',
+      '@material-ui/icons',
+      'jss',
+      'react-jss'
+    ]
   },
   output: {
     path: path.join(__dirname, '../static/js'), // 打包后文件输出的位置

@@ -60,23 +60,34 @@ const config = {
         ],
       },
       {
-        test: /\.less$/,
+        test: /\.(png|jpg|gif)$/i,
         use: [
-          MiniCssExtractPlugin.loader,
           {
-            loader: 'css-loader',
-          },
-          {
-            loader: 'less-loader',
+            loader: 'url-loader',
             options: {
-              modifyVars: {
-                'primary-color': '#000000',
-                'link-color': '#f5f688'
-              },
-              javascriptEnabled: true,
-            }
-          }
+              limit: 8192,
+            },
+          },
         ],
+      },
+      {
+        // test: /\.less$/,
+        // use: [
+        //   MiniCssExtractPlugin.loader,
+        //   {
+        //     loader: 'css-loader',
+        //   },
+        //   {
+        //     loader: 'less-loader',
+        //     options: {
+        //       modifyVars: {
+        //         'primary-color': '#000000',
+        //         'link-color': '#f5f688'
+        //       },
+        //       javascriptEnabled: true,
+        //     }
+        //   }
+        // ],
       },
     ],
   },
