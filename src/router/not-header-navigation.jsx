@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { renderRoutes } from 'react-router-config';
 
-import HeaderLogin from '../component/header/header-login';
+import HeaderNotLogin from '../component/header/header-not-login';
 
 /**
  * 解决方案 使用多级路由
@@ -10,19 +10,19 @@ import HeaderLogin from '../component/header/header-login';
  * @returns {*}
  * @constructor
  */
-const HeaderNavigation = (props) => {
+const NotHeaderNavigation = (props) => {
   const { route, history } = props;
   return (
     <>
-      <HeaderLogin history={history} />
+      <HeaderNotLogin history={history} />
       {renderRoutes(route.routes)}
     </>
   );
 };
 
-HeaderNavigation.propTypes = {
+NotHeaderNavigation.propTypes = {
   history: PropTypes.objectOf(PropTypes.object).isRequired,
   route: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
-export default HeaderNavigation;
+export default NotHeaderNavigation;

@@ -6,6 +6,7 @@ import { renderRoutes } from 'react-router-config';
 import routers from './router/index';
 
 import './asstes/style/reset.css';
+import './asstes/style/index.css';
 
 const useStyles = makeStyles(() => ({
   root: {

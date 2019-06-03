@@ -1,0 +1,25 @@
+.triangle-right {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 5px 5px 0 5px;
+  display: inline-block;
+  transition: all .15s linear;
+}
+
+/*下拉动画*/
+.slide-enter {
+  opacity: 0;
+}
+.slide-enter-active {
+  opacity: 1;
+  transition: opacity 300ms, transform 300ms;
+}
+.slide-exit {
+  opacity: 1;
+}
+.slide-exit-active {
+  opacity: 0;
+  transition: opacity 300ms, transform 300ms;
+}

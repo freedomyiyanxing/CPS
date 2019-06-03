@@ -51,10 +51,10 @@ const config = {
           },
           {
             loader: 'css-loader',
-            options: {
-              modules: true,
-              localIdentName: '[name]__[local]-[hash:base64:10]',
-            }
+            // options: {
+            //   modules: true,
+            //   localIdentName: '[name]__[local]-[hash:base64:10]',
+            // }
           },
           'postcss-loader',
         ],

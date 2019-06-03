@@ -4,12 +4,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
 import HeaderContainer from './header-container';
-import { loginHeaderStyle } from './style';
+import { loginNotStyle } from './style';
 import logo from '../../asstes/images/logo_white.png';
 
-const useStyles = makeStyles(loginHeaderStyle);
+const useStyles = makeStyles(loginNotStyle);
 
-const HeaderLogin = (props) => {
+const HeaderNotLogin = (props) => {
   const { history } = props;
   const classes = useStyles();
 
@@ -19,25 +19,30 @@ const HeaderLogin = (props) => {
 
   return (
     <HeaderContainer>
-      <div className={classes.logo}>
-        <img src={logo} alt="" />
+      <div className={classes.left}>
+        <div className={classes.logo}>
+          <img src={logo} alt="iNFLUMONSTER logo" />
+        </div>
       </div>
       <div>
         <Button
           variant="contained"
           color="primary"
           onClick={handleClick}
+          classes={{
+            root: classes.btn,
+          }}
         >
-          Login
+          Login1
         </Button>
       </div>
     </HeaderContainer>
   );
 };
 
-HeaderLogin.propTypes = {
+HeaderNotLogin.propTypes = {
   history: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 
-export default HeaderLogin;
+export default HeaderNotLogin;

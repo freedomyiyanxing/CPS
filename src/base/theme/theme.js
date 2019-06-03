@@ -22,14 +22,13 @@ export const theme = createMuiTheme({
       '900': "#212121",
       A100: "#d5d5d5",
       A200: "#aaaaaa",
-      A400: "#303030",
+      A400: "#292929",
       A700: "#616161",
-      dark: "#616161",
+      dark: "#292929",
       light: "#e0e0e0",
-      main: "#333333",
-      contrastText: "#040404",
+      main: "#040404",
+      contrastText: "#ffffff",
     },
-    // primary: orange,
     // 错误色
     error: red,
     // 次要色 (当前项目的风格中用不到)
@@ -41,6 +40,20 @@ export const theme = createMuiTheme({
       default: '#f5f5f5',
       paper: '#ffffff',
     },
+    text: {
+      disabled: 'rgba(0, 0, 0, 0.38)',
+      hint: 'rgba(0, 0, 0, 0.38)',
+      primary: 'rgb(255, 255, 255)',
+      secondary: 'rgba(0, 0, 0, 0.54)',
+    },
+    action: {
+      active: 'rgba(0, 0, 0, 0.54)',
+      disabled: 'rgba(0, 0, 0, 0.26)',
+      disabledBackground: 'rgba(0, 0, 0, 0.12)',
+      hover: 'rgba(0, 0, 0, 0.8)',
+      hoverOpacity: 0.18,
+      selected: 'rgba(0, 0, 0, 0.14)',
+    }
   },
   // 边框配置
   shape: {

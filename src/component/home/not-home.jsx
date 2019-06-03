@@ -3,15 +3,15 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-import { homeStyle } from './style';
+import { notHomeStyle } from './style';
 
-const useStyles = makeStyles(homeStyle);
+const useStyles = makeStyles(notHomeStyle);
 
-const Home = () => {
+const NotHome = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <div className={classes.wrapper}>登陆的首页1</div>
+      <div className={classes.wrapper}>未登陆</div>
       <div>
         <Button variant="contained" color="primary">text</Button>
       </div>
@@ -19,4 +19,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default NotHome;
