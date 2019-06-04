@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { renderRoutes } from 'react-router-config';
 
 import HeaderLogin from '../component/header/header-login';
+import BoxContainer from '../common/box-container/index';
 
 /**
  * 解决方案 使用多级路由
@@ -15,7 +16,9 @@ const HeaderNavigation = (props) => {
   return (
     <>
       <HeaderLogin history={history} />
-      {renderRoutes(route.routes)}
+      <BoxContainer>
+        {renderRoutes(route.routes)}
+      </BoxContainer>
     </>
   );
 };

@@ -4,7 +4,7 @@ export const containerStyle = theme => ({
   },
   wrapper: {
     maxWidth: 1370,
-    minWidth: 1000,
+    minWidth: 1100,
     margin: [[0, 'auto']],
     display: 'flex',
     justifyContent: 'space-between',
@@ -12,17 +12,43 @@ export const containerStyle = theme => ({
   },
 });
 
-// 未登陆 头部样式
-export const loginNotStyle = theme => ({
-  logo: {
-    width: 260,
-    minHeight: 68,
-    display: 'flex',
-    alignItems: 'center',
-    color: theme.palette.primary[50],
-  },
+const login = theme => ({
+  width: 260,
+  minHeight: 68,
+  display: 'flex',
+  alignItems: 'center',
+  color: theme.palette.primary[50],
 });
 
+const line = (theme, margin) => ({
+  width: 2,
+  height: 12,
+  margin,
+  background: theme.palette.primary[700],
+});
+
+const right = () => ({
+  display: 'flex',
+  alignItems: 'center',
+});
+
+// 未登陆 头部样式
+export const loginNotStyle = theme => ({
+  logo: login(theme),
+  right: right(),
+  rightBtn: {
+    fontSize: theme.typography.fontSizeLg,
+    textTransform: 'capitalize',
+  },
+  line: line(theme, [[0, 4]]),
+});
+
+const drop = (top, width) => ({
+  position: 'absolute',
+  top,
+  left: 0,
+  width,
+});
 
 // 登陆 头部样式
 export const loginStyle = theme => ({
@@ -30,13 +56,7 @@ export const loginStyle = theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  logo: {
-    width: 260,
-    minHeight: 60,
-    display: 'flex',
-    alignItems: 'center',
-    color: theme.palette.primary[50],
-  },
+  logo: login(theme),
   nav: {
     width: '100%',
     display: 'flex',
@@ -62,20 +82,20 @@ export const loginStyle = theme => ({
   lastBtn: {
     padding: [[0, 18]],
   },
+  addActive: {
+    background: theme.palette.primary.A400,
+  },
   indicator: {
+    width: 48,
     position: 'absolute',
     height: 2,
-    background: 'red',
-    width: 48,
     bottom: 0,
+    background: theme.palette.primary[50],
+    transition: 'all .2s linear',
   },
 
   // 左边
-  right: {
-    display: 'flex',
-    alignItems: 'center',
-    color: '#fff',
-  },
+  right: right(),
   rightInfo: {
     position: 'relative',
     display: 'flex',
@@ -94,29 +114,15 @@ export const loginStyle = theme => ({
   name: {
     margin: [[0, 10, 0, 6]],
     fontSize: theme.typography.fontSizeLg,
+    color: theme.palette.primary[50],
   },
-  line: {
-    width: 2,
-    height: 12,
-    margin: [[0, 20, 0, 30]],
-    background: theme.palette.primary[700],
-  },
+  line: line(theme, [[0, 4, 0, 30]]),
   rightBtn: {
     fontSize: theme.typography.fontSizeLg,
     textTransform: 'capitalize',
   },
-  dropDownContainer: {
-    position: 'absolute',
-    top: 40,
-    left: 0,
-    width: 170,
-  },
-  dropDownContainer1: {
-    position: 'absolute',
-    top: 44,
-    left: 0,
-    width: 160,
-  },
+  dropDownContainer: drop(40, 170),
+  dropDownContainer1: drop(44, 160),
   dropDownWrapper: {
     background: theme.palette.primary.A400,
     position: 'relative',

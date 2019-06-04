@@ -14,26 +14,35 @@ const HeaderNotLogin = (props) => {
   const classes = useStyles();
 
   const handleClick = () => {
-    history.push('/not/login');
+    history.push('/yes/index');
   };
 
   return (
     <HeaderContainer>
-      <div className={classes.left}>
-        <div className={classes.logo}>
-          <img src={logo} alt="iNFLUMONSTER logo" />
-        </div>
+      <div className={classes.logo}>
+        <img src={logo} alt="iNFLUMONSTER logo" />
       </div>
-      <div>
+      <div className={classes.right}>
         <Button
           variant="contained"
           color="primary"
           onClick={handleClick}
           classes={{
-            root: classes.btn,
+            root: classes.rightBtn,
           }}
         >
-          Login1
+          Join Now
+        </Button>
+        <span className={classes.line} />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleClick}
+          classes={{
+            root: classes.rightBtn,
+          }}
+        >
+          Login
         </Button>
       </div>
     </HeaderContainer>

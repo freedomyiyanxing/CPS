@@ -4,11 +4,23 @@ import PropTypes from 'prop-types';
 import uuid from 'uuid';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { CSSTransition } from 'react-transition-group';
 
 import HeaderContainer from './header-container';
 import { loginStyle } from './style';
 import logo from '../../asstes/images/logo_white.png';
+
+const links = [
+  {
+    id: uuid(),
+    text: 'Product Search',
+  },
+  {
+    id: uuid(),
+    text: 'My Oroduct',
+  },
+];
 
 const account = [
   {
@@ -33,9 +45,27 @@ const HeaderLogin = (props) => {
   const [open, setOpen] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const anchorRef1 = useRef(null);
+  const indicator = useRef(null);
 
   const handleClick = () => {
     history.push('/not/login');
+  };
+
+  // tabs下面的线条切换
+  const tabHandleClick = (number) => {
+    console.log(number);
+    if (number) {
+      toggleOpen();
+      console.log('点击了 Links')
+    } else {
+      console.log('点击了 home')
+    }
+    indicator.current.style.transform = `translateX(${number * 95}px)`;
+    // () => { setOpen(true) }
+  };
+
+  const toggleOpen = () => {
+    setOpen(!open);
   };
 
   return (
@@ -48,6 +78,7 @@ const HeaderLogin = (props) => {
           <Button
             variant="contained"
             color="primary"
+            onClick={() => { tabHandleClick(0) }}
             classes={{
               root: classes.navBtn,
             }}
@@ -57,11 +88,12 @@ const HeaderLogin = (props) => {
           <Button
             variant="contained"
             color="primary"
-            className={classes.lastBtn}
+            className={`${classes.lastBtn} ${open ? classes.addActive : ''}`}
             classes={{
               root: classes.navBtn,
             }}
-            onClick={() => { setOpen(!open) }}
+            onClick={() => { tabHandleClick(1); }}
+            // onMouseLeave={() => { setOpen(false) }}
           >
             <span>Links</span>
             <span className="triangle-right" />
@@ -71,27 +103,29 @@ const HeaderLogin = (props) => {
               classNames="slide"
               unmountOnExit
             >
-              <div
-                className={classes.dropDownContainer1}
-              >
-                <div className={classes.dropDownWrapper1}>
-                  {
-                    account.map(v => (
-                      <Button
-                        key={v.id}
-                        classes={{
-                          root: classes.dropBtn,
-                        }}
-                      >
-                        {v.text}
-                      </Button>
-                    ))
-                  }
+              <ClickAwayListener onClickAway={toggleOpen}>
+                <div
+                  className={classes.dropDownContainer1}
+                >
+                  <div className={classes.dropDownWrapper1}>
+                    {
+                      links.map(v => (
+                        <Button
+                          key={v.id}
+                          classes={{
+                            root: classes.dropBtn,
+                          }}
+                        >
+                          {v.text}
+                        </Button>
+                      ))
+                    }
+                  </div>
                 </div>
-              </div>
+              </ClickAwayListener>
             </CSSTransition>
           </Button>
-          <span className={classes.indicator} />
+          <span ref={indicator} className={classes.indicator} />
         </div>
       </div>
       <div className={classes.right}>

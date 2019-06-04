@@ -17,6 +17,7 @@ time, mark, audio, video {
   font-size: 100%;
   vertical-align: baseline;
   line-height: 1;
+  user-select: none;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -32,6 +33,10 @@ footer, header, hgroup, main, menu, nav, section {
 
 * {
   box-sizing: border-box;
+}
+
+body, html {
+  font-family: 'Mukta Vaani',sans-serif;
 }
 
 html {
@@ -81,6 +86,7 @@ input[type="hidden"] {
   opacity: 0;
 }
 
-#root{
-  /*margin-top: 40px;*/
+/*清除自动填充时input框的背景色*/
+input:-webkit-autofill {
+  box-shadow: 0 0 0 1000px #fff inset;
 }

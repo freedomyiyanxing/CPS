@@ -8,16 +8,16 @@ import routers from './router/index';
 import './asstes/style/reset.css';
 import './asstes/style/index.css';
 
-const useStyles = makeStyles(() => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100vh',
-    '& > div:nth-child(2)': {
-      flex: 1,
+const useStyles = makeStyles((theme) => {
+  console.log(theme);
+  return {
+    root: {
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh',
     },
-  },
-}));
+  };
+});
 
 
 const App = () => {

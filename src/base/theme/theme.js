@@ -4,6 +4,9 @@ import grey from '@material-ui/core/colors/grey';
 import red from '@material-ui/core/colors/red';
 import orange from '@material-ui/core/colors/orange';
 import lightBlue from '@material-ui/core/colors/lightBlue';
+import purple from '@material-ui/core/colors/purple';
+import brown from '@material-ui/core/colors/brown';
+import lime from '@material-ui/core/colors/lime';
 
 export const theme = createMuiTheme({
   // 色彩配置
@@ -24,7 +27,7 @@ export const theme = createMuiTheme({
       A200: "#aaaaaa",
       A400: "#292929",
       A700: "#616161",
-      dark: "#292929",
+      dark: "#333333",
       light: "#e0e0e0",
       main: "#040404",
       contrastText: "#ffffff",
@@ -43,8 +46,10 @@ export const theme = createMuiTheme({
     text: {
       disabled: 'rgba(0, 0, 0, 0.38)',
       hint: 'rgba(0, 0, 0, 0.38)',
-      primary: 'rgb(255, 255, 255)',
+      primary: 'rgba(0, 0, 0, 0.87)',
       secondary: 'rgba(0, 0, 0, 0.54)',
+      color9F: '#9f9f9f',
+      colorDdd: '#dddddd',
     },
     action: {
       active: 'rgba(0, 0, 0, 0.54)',
@@ -65,7 +70,10 @@ export const theme = createMuiTheme({
     htmlFontSize: 10,
     fontWeight: 800,
     fontSizeLg: 18,
-    fontSizeXs: 10,
+    fontSizeMd: 16,
+    fontSizeSm: 14,
+    fontSizeXs: 12,
+    fontFamily: '\'Mukta Vaani\',sans-serif',
   },
   // 间距
   spacing: {
