@@ -6,7 +6,7 @@ module.exports = {
     "@babel/preset-react"
   ],
   plugins: [
-    'react-hot-loader/babel', // 热更新  详情见 https://www.npmjs.com/package/react-hot-loader
+    // 'react-hot-loader/babel', // 热更新  详情见 https://www.npmjs.com/package/react-hot-loader
     "@babel/plugin-transform-runtime",
     "@babel/plugin-syntax-dynamic-import",
     [

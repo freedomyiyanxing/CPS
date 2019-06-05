@@ -17,8 +17,9 @@ const useStyle = makeStyles(theme => ({
     padding: [[20, 60, 50]],
   },
   title: {
+    lineHeight: '60px',
     fontSize: 36,
-    color: theme.palette.primary.dark,
+    color: theme.palette.primary.primary,
   },
 }));
 

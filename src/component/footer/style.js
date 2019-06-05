@@ -11,17 +11,14 @@ const footerStyle = theme => ({
     display: 'flex',
     justifyContent: 'space-between',
   },
-  item: {
-    // flex: '0 0 33%',
-  },
   itemHeader: {
     marginBottom: 16,
     '& span': {
       display: 'block',
       width: '100%',
       fontWeight: theme.typography.fontWeight,
-      color: theme.palette.text.color9F,
-      fontSize: theme.typography.fontSizeMd,
+      color: theme.palette.text.secondary,
+      fontSize: theme.typography.fontSizeLg,
     },
   },
   itemContent: {

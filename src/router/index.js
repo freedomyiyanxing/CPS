@@ -4,6 +4,9 @@ import HeaderNavigation from './header-navigation';
 import Home from '../component/home/home';
 import NotHome from '../component/home/not-home';
 import Login from '../component/login/login';
+import ForgetPassword from '../component/login/forget-password';
+import EmailSentPage from '../component/login/email-sent';
+import ResetPassword from '../component/login/reset-password';
 import Not404 from '../component/not-404/not-404';
 
 const routers = [
@@ -28,6 +31,24 @@ const routers = [
             exact: true,
             component: Login,
             key: 'login-router',
+          },
+          {
+            path: '/not/forget-password',
+            exact: true,
+            component: ForgetPassword,
+            key: 'forget-password-router',
+          },
+          {
+            path: '/not/email-sent',
+            exact: true,
+            component: EmailSentPage,
+            key: 'email-sent-router',
+          },
+          {
+            path: '/not/reset-password',
+            exact: true,
+            component: ResetPassword,
+            key: 'reset-password-router',
           },
           {
             component: Not404,

@@ -46,10 +46,9 @@ export const theme = createMuiTheme({
     text: {
       disabled: 'rgba(0, 0, 0, 0.38)',
       hint: 'rgba(0, 0, 0, 0.38)',
-      primary: 'rgba(0, 0, 0, 0.87)',
-      secondary: 'rgba(0, 0, 0, 0.54)',
-      color9F: '#9f9f9f',
-      colorDdd: '#dddddd',
+      primary: 'rgb(51, 51, 51)',
+      secondary: 'rgb(153, 153, 153)',
+      colorDdd: 'rgb(221, 221, 221)',
     },
     action: {
       active: 'rgba(0, 0, 0, 0.54)',

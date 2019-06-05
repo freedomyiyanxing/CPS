@@ -1,5 +1,5 @@
 import React from 'react';
-import { hot } from 'react-hot-loader/root';
+// import { hot } from 'react-hot-loader/root';
 import { makeStyles } from '@material-ui/core/styles/index';
 import { renderRoutes } from 'react-router-config';
 
@@ -31,4 +31,4 @@ const App = () => {
   );
 };
 
-export default hot(App);
+export default App;

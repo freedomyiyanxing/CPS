@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-// eslint-disable-next-line no-unused-vars
-import { MuiThemeProvider, StylesProvider, jssPreset } from '@material-ui/core/styles';
-// eslint-disable-next-line no-unused-vars
-import { create } from 'jss';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import { theme } from './base/theme/theme';
+
 import App from './clinet';
 
 const root = document.getElementById('root');

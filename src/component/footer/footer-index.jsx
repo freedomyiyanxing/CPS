@@ -33,7 +33,7 @@ const FooterIndex = () => {
         <div className={classes.footerNavigation}>
           {
             title.map(val => (
-              <div key={val.id} className={classes.item}>
+              <div key={val.id}>
                 <div className={classes.itemHeader}>
                   <span>{val.text}</span>
                 </div>
