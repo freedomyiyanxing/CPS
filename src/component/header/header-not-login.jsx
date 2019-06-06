@@ -13,20 +13,42 @@ const HeaderNotLogin = (props) => {
   const { history } = props;
   const classes = useStyles();
 
-  const handleClick = () => {
-    history.push('/yes/index');
+  /**
+   * 去未登录的首页
+   */
+  const handleIndex = () => {
+    history.push('/not/index');
+  };
+
+  /**
+   * 登录
+   */
+  const handleLogin = () => {
+    history.push('/not/login');
+  };
+
+  /**
+   * 注册
+   */
+  const handleRegister = () => {
+    history.push('/not/register');
   };
 
   return (
     <HeaderContainer>
-      <div className={classes.logo}>
+      <div
+        className={classes.logo}
+        role="button"
+        tabIndex={0}
+        onClick={handleIndex}
+      >
         <img src={logo} alt="iNFLUMONSTER logo" />
       </div>
       <div className={classes.right}>
         <Button
           variant="contained"
           color="primary"
-          onClick={handleClick}
+          onClick={handleRegister}
           classes={{
             root: classes.rightBtn,
           }}
@@ -37,7 +59,7 @@ const HeaderNotLogin = (props) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={handleClick}
+          onClick={handleLogin}
           classes={{
             root: classes.rightBtn,
           }}

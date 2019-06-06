@@ -3,15 +3,17 @@ import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
 import { withStyles } from '@material-ui/core/styles';
 
-import { resetPasswordStyle } from './style';
+import { registerInfoStyle } from './style';
 
 import InputContainer from '../../common/form/container';
+import Emails from '../../common/form/email';
+import Name from '../../common/form/name';
 import MergePassword from '../../common/form/password-merge';
 import SubmitButton from '../../common/form/submit-button';
 
-@withStyles(resetPasswordStyle)
+@withStyles(registerInfoStyle)
 @createForm()
-class ResetPassword extends React.Component {
+class RegisterInfo extends React.Component {
   /**
    * 提交事件
    * @returns {*} 验证正确的情况下返回一个 promise对象
@@ -25,9 +27,9 @@ class ResetPassword extends React.Component {
         ayc = new Promise((resolve) => {
           setTimeout(() => {
             console.log({ ...value });
-            history.push('/yes/index');
+            // history.push('/yes/index');
             resolve(true);
-          }, 1000);
+          }, 3000);
         });
       } else {
         ayc = null;
@@ -39,17 +41,14 @@ class ResetPassword extends React.Component {
   render() {
     const { classes, form } = this.props;
     return (
-      <InputContainer title="REST PASSWORD">
-        <p className={classes.prompt}>
-          Dear
-          <b>Alex Huang</b>
-        </p>
-        <p className={classes.prompt}>
-          To reset your password, simply enter a new password below
-        </p>
+      <InputContainer title="Submit">
+        <h4 className={classes.title}>ACCOUNT INFORMATION</h4>
+        <Name name="First Name" value="Alex" form={form} disabled />
+        <Name name="Last Name" value="Huang" form={form} disabled />
+        <Emails form={form} value="85189962@qq.com" disabled />
         <MergePassword form={form} />
         <SubmitButton
-          name="Log in"
+          name="Next"
           handleSubmit={this.handleSubmit}
         />
       </InputContainer>
@@ -57,10 +56,10 @@ class ResetPassword extends React.Component {
   }
 }
 
-ResetPassword.propTypes = {
+RegisterInfo.propTypes = {
   history: PropTypes.objectOf(PropTypes.object).isRequired,
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
   form: formShape.isRequired,
 };
 
-export default ResetPassword;
+export default RegisterInfo;

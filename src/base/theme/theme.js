@@ -73,6 +73,16 @@ export const theme = createMuiTheme({
     fontSizeSm: 14,
     fontSizeXs: 12,
     fontFamily: '\'Mukta Vaani\',sans-serif',
+    h2: {
+      fontSize: '3.6rem',
+      fontWeight: 800,
+      lineHeight: 1.67,
+    },
+    h4: {
+      fontSize: '2rem',
+      fontWeight: 800,
+      lineHeight: 1.7,
+    },
   },
   // 间距
   spacing: {

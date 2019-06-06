@@ -3,21 +3,21 @@ import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
 import { withStyles } from '@material-ui/core/styles';
 
-import { resetPasswordStyle } from './style';
+import { indexStyle } from './style';
 
 import InputContainer from '../../common/form/container';
-import MergePassword from '../../common/form/password-merge';
+import Emails from '../../common/form/email';
+import Name from '../../common/form/name';
 import SubmitButton from '../../common/form/submit-button';
 
-@withStyles(resetPasswordStyle)
+@withStyles(indexStyle)
 @createForm()
-class ResetPassword extends React.Component {
+class Register extends React.Component {
   /**
    * 提交事件
    * @returns {*} 验证正确的情况下返回一个 promise对象
    */
   handleSubmit = () => {
-    // eslint-disable-next-line no-unused-vars
     const { form, history } = this.props;
     let ayc = null;
     form.validateFields((error, value) => {
@@ -25,9 +25,9 @@ class ResetPassword extends React.Component {
         ayc = new Promise((resolve) => {
           setTimeout(() => {
             console.log({ ...value });
-            history.push('/yes/index');
+            history.push('/not/email-sent', { email: value.email, link: 'register' });
             resolve(true);
-          }, 1000);
+          }, 3000);
         });
       } else {
         ayc = null;
@@ -36,20 +36,30 @@ class ResetPassword extends React.Component {
     return ayc;
   };
 
+  /**
+   * 点击跳转到忘记密码页面
+   */
+  handleLink = () => {
+    const { history } = this.props;
+    history.push('/not/forget-password');
+  };
+
   render() {
     const { classes, form } = this.props;
     return (
-      <InputContainer title="REST PASSWORD">
+      <InputContainer title="SIGN UP">
+        <Name name="First Name" form={form} />
+        <Name name="Last Name" form={form} />
+        <Emails form={form} />
         <p className={classes.prompt}>
-          Dear
-          <b>Alex Huang</b>
+          By registering,
+          you agree with our
+          <span> Terms & Condition </span>
+          and
+          <span> Privacy Policy </span>
         </p>
-        <p className={classes.prompt}>
-          To reset your password, simply enter a new password below
-        </p>
-        <MergePassword form={form} />
         <SubmitButton
-          name="Log in"
+          name="Next"
           handleSubmit={this.handleSubmit}
         />
       </InputContainer>
@@ -57,10 +67,10 @@ class ResetPassword extends React.Component {
   }
 }
 
-ResetPassword.propTypes = {
+Register.propTypes = {
   history: PropTypes.objectOf(PropTypes.object).isRequired,
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
   form: formShape.isRequired,
 };
 
-export default ResetPassword;
+export default Register;

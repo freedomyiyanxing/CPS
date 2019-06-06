@@ -8,7 +8,7 @@ import StyleInput from './my-input';
 
 const Password = (props) => {
   const {
-    form, name, validateToNextPassword,
+    form, name, validateToNextPassword, onBlur,
   } = props;
   const [psd, setPsd] = useState('');
 
@@ -27,9 +27,8 @@ const Password = (props) => {
       error={errors}
       margin="normal"
       {...getFieldProps(outputName, {
-        initialValue: '',
         validateFirst: true,
-        validateTrigger: 'onChange',
+        force: true,
         rules: [
           {
             required: true,
@@ -52,6 +51,7 @@ const Password = (props) => {
         aria-describedby="my-helper-text"
         value={psd}
         onChange={handleChange}
+        onBlur={onBlur}
       />
       {
         errors
@@ -65,11 +65,13 @@ const Password = (props) => {
 Password.propTypes = {
   form: PropTypes.objectOf(PropTypes.object).isRequired,
   validateToNextPassword: PropTypes.func,
+  onBlur: PropTypes.func,
   name: PropTypes.string.isRequired,
 };
 
 Password.defaultProps = {
   validateToNextPassword: null,
+  onBlur: null,
 };
 
 export default Password;

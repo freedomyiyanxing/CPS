@@ -22,7 +22,7 @@ class ForgetPassword extends React.Component {
         ayc = new Promise((resolve) => {
           setTimeout(() => {
             console.log({ ...value });
-            history.push('/not/email-sent', { email: value.email });
+            history.push('/not/email-sent', { email: value.email, link: 'forget' });
             resolve(true);
           }, 3000);
         });

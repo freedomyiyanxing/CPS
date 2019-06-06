@@ -25,12 +25,11 @@ const ConfirmPassword = (props) => {
       error={errors}
       margin="normal"
       {...getFieldProps('confirmPassword', {
-        initialValue: '',
         validateFirst: true,
-        validateTrigger: 'onChange',
         rules: [
           {
             required: true,
+            message: '密码是必填的',
           },
           {
             validator: compareToFirstPassword,

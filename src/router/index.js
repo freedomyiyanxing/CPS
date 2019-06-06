@@ -7,6 +7,8 @@ import Login from '../component/login/login';
 import ForgetPassword from '../component/login/forget-password';
 import EmailSentPage from '../component/login/email-sent';
 import ResetPassword from '../component/login/reset-password';
+import Register from '../component/register/index';
+import RegisterInfo from '../component/register/register-info';
 import Not404 from '../component/not-404/not-404';
 
 const routers = [
@@ -49,6 +51,18 @@ const routers = [
             exact: true,
             component: ResetPassword,
             key: 'reset-password-router',
+          },
+          {
+            path: '/not/register',
+            exact: true,
+            component: Register,
+            key: 'register-router',
+          },
+          {
+            path: '/not/register-info',
+            exact: true,
+            component: RegisterInfo,
+            key: 'register-info-router',
           },
           {
             component: Not404,

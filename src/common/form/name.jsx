@@ -6,16 +6,20 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import StyleInput from './my-input';
 
-const Emails = (props) => {
-  const { value, form, disabled } = props;
-  const [email, setEmail] = useState(value);
+const Name = (props) => {
+  const {
+    value, form, name, disabled,
+  } = props;
+  const [names, setNames] = useState(value);
+
+  const outputName = name.replace(/\s/g, '');
 
   const handleChange = (e) => {
-    setEmail(e.target.value);
+    setNames(e.target.value);
   };
 
   const { getFieldProps, getFieldError } = form;
-  const errors = getFieldError('email');
+  const errors = getFieldError(outputName);
   return (
     <FormControl
       fullWidth
@@ -23,27 +27,27 @@ const Emails = (props) => {
       disabled={disabled}
       error={errors}
       margin="normal"
-      {...getFieldProps('email', {
+      {...getFieldProps(outputName, {
         validateFirst: true,
         hidden: disabled, // 是否忽略当前字段的验证
         rules: [
           {
             required: true,
-            message: '邮箱必填',
+            message: '我们需要你的名字',
           },
           {
-            type: 'email',
-            message: '邮箱格式错误',
+            pattern: /^([A-Za-z\s.-]{2,30})$/,
+            message: '我们需要有效的字符(A-Z a-z) 特殊字符只限(. -) 字数(2 - 30) 之间',
           },
         ],
       })}
     >
-      <InputLabel htmlFor="my-email">Email</InputLabel>
+      <InputLabel htmlFor={`my-${name}`}>{name}</InputLabel>
       <StyleInput
-        id="my-email"
+        id={`my-${name}`}
         type="email"
         aria-describedby="my-helper-text"
-        value={email}
+        value={names}
         autocomplete="off"
         onChange={handleChange}
       />
@@ -56,15 +60,16 @@ const Emails = (props) => {
   );
 };
 
-Emails.propTypes = {
+Name.propTypes = {
   form: PropTypes.objectOf(PropTypes.object).isRequired,
+  name: PropTypes.string.isRequired,
   value: PropTypes.string,
   disabled: PropTypes.bool,
 };
 
-Emails.defaultProps = {
+Name.defaultProps = {
   value: '',
   disabled: false,
 };
 
-export default Emails;
+export default Name;

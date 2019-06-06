@@ -5,6 +5,7 @@ const StyleInput = withStyles(theme => ({
   root: {
     lineHeight: 1,
     padding: 6,
+    color: `${theme.palette.text.primary}!important`,
     '&:before': {
       borderBottomColor: theme.palette.text.colorDdd,
     },
