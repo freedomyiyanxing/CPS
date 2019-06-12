@@ -7,6 +7,7 @@ import routers from './router/index';
 
 import './asstes/style/reset.css';
 import './asstes/style/index.css';
+import './asstes/style/flags.css';
 
 const useStyles = makeStyles((theme) => {
   console.log(theme);

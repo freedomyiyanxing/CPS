@@ -1,4 +1,4 @@
-const submitButtonStyle = theme => ({
+export const submitButtonStyle = theme => ({
   wrapperBtn: {
     marginTop: 30,
     position: 'relative',
@@ -20,4 +20,30 @@ const submitButtonStyle = theme => ({
   },
 });
 
-export default submitButtonStyle;
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+
+export const mySelectStyle = theme => ({
+  root: {
+    '&:before': {
+      borderBottomColor: theme.palette.text.colorDdd,
+    },
+  },
+  icon: {
+    color: theme.palette.text.secondary,
+  },
+  menu: {
+    maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+  },
+});
+
+export const myTextareaStyle = theme => ({
+  root: {
+    '&:before': {
+      borderBottomColor: theme.palette.text.colorDdd,
+    },
+    '& > textarea': {
+      fontSize: theme.typography.fontSizeMd,
+    },
+  },
+});

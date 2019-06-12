@@ -60,35 +60,51 @@ const config = {
         ],
       },
       {
-        test: /\.(png|jpg|gif)$/i,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 8192,
-            },
-          },
-        ],
+        test: /\.(jpg|png|gif|jpeg)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]?[hash]',
+          limit: 8192,
+        }
       },
       {
-        // test: /\.less$/,
-        // use: [
-        //   MiniCssExtractPlugin.loader,
-        //   {
-        //     loader: 'css-loader',
-        //   },
-        //   {
-        //     loader: 'less-loader',
-        //     options: {
-        //       modifyVars: {
-        //         'primary-color': '#000000',
-        //         'link-color': '#f5f688'
-        //       },
-        //       javascriptEnabled: true,
-        //     }
-        //   }
-        // ],
-      },
+        test: /\.(ttf|eot|woff|woff2|svg)$/,
+        loader: 'url-loader',
+        options: {
+          name: '[name].[ext]?[hash]',
+          limit: 8192,
+        }
+      }
+      // {
+      //   test: /\.(png|jpg|gif)$/i,
+      //   use: [
+      //     {
+      //       loader: 'url-loader',
+      //       options: {
+      //         limit: 8192,
+      //       },
+      //     },
+      //   ],
+      // },
+      // {
+      //   test: /\.less$/,
+      //   use: [
+      //     MiniCssExtractPlugin.loader,
+      //     {
+      //       loader: 'css-loader',
+      //     },
+      //     {
+      //       loader: 'less-loader',
+      //       options: {
+      //         modifyVars: {
+      //           'primary-color': '#000000',
+      //           'link-color': '#f5f688'
+      //         },
+      //         javascriptEnabled: true,
+      //       }
+      //     }
+      //   ],
+      // },
     ],
   },
   plugins: [
@@ -109,6 +125,7 @@ const config = {
   ],
   optimization: {
     splitChunks: {
+    minSize: 300000,
       cacheGroups: {
         vendors: {
           test: /node_modules/,

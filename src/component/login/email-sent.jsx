@@ -34,7 +34,7 @@ const EmailSentPage = (props) => {
     setTimeout(() => {
       history.push(links);
       resolve(true);
-    }, 3000);
+    }, 1000);
   });
 
   console.log(history);

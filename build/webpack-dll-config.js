@@ -15,7 +15,8 @@ module.exports = {
       '@material-ui/core',
       '@material-ui/icons',
       'jss',
-      'react-jss'
+      'react-jss',
+      'prop-types',
     ]
   },
   output: {

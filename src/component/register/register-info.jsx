@@ -1,19 +1,34 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
 import { withStyles } from '@material-ui/core/styles';
-
-import { registerInfoStyle } from './style';
+import FormControl from '@material-ui/core/FormControl';
 
 import InputContainer from '../../common/form/container';
 import Emails from '../../common/form/email';
 import Name from '../../common/form/name';
 import MergePassword from '../../common/form/password-merge';
 import SubmitButton from '../../common/form/submit-button';
+import MyTextarea from '../../common/form/my-textarea';
+import MyUrl from '../../common/form/my-url';
+import MySelect from '../../common/form/my-select';
+
+import IntlTelInput from '../../common/react-intl-tel-input/intlTelInput';
+
+import { registerInfoStyle } from './style';
+
+import { webSiteCagegory, monthlyVisitors } from '../../asstes/data/default-data';
+
 
 @withStyles(registerInfoStyle)
 @createForm()
 class RegisterInfo extends React.Component {
+  state = {
+    text: '',
+    isValid: true,
+  };
+
   /**
    * 提交事件
    * @returns {*} 验证正确的情况下返回一个 promise对象
@@ -27,9 +42,12 @@ class RegisterInfo extends React.Component {
         ayc = new Promise((resolve) => {
           setTimeout(() => {
             console.log({ ...value });
+            this.setState({
+              text: value.textarea,
+            });
             // history.push('/yes/index');
             resolve(true);
-          }, 3000);
+          }, 1000);
         });
       } else {
         ayc = null;
@@ -38,19 +56,69 @@ class RegisterInfo extends React.Component {
     return ayc;
   };
 
+  // 接受电话号码的数据
+  handlePhoneData = (val, isValid) => {
+    console.log(val, isValid);
+  };
+
+  // 验证函数
+  onPhoneNumberChange = (isValid, newNumber, currentObj, fullNumber) => {
+    console.log(isValid, newNumber, currentObj, fullNumber);
+    this.setState({
+      isValid,
+    })
+  };
+
   render() {
     const { classes, form } = this.props;
+    const { isValid } = this.state;
     return (
       <InputContainer title="Submit">
-        <h4 className={classes.title}>ACCOUNT INFORMATION</h4>
+        <div className={classes.firstTitle}>
+          <h4 className={classes.title}>ACCOUNT INFORMATION</h4>
+        </div>
         <Name name="First Name" value="Alex" form={form} disabled />
         <Name name="Last Name" value="Huang" form={form} disabled />
         <Emails form={form} value="85189962@qq.com" disabled />
+        <FormControl
+          className={classes.root}
+          fullWidth
+          required
+          error={!isValid}
+          margin="normal"
+        >
+          <span className={isValid ? classes.labelSuccess : classes.labelError}>
+            Phone *
+          </span>
+          <IntlTelInput
+            onPhoneNumberChange={this.onPhoneNumberChange}
+          />
+        </FormControl>
         <MergePassword form={form} />
+        <div className={classes.lastTitle}>
+          <h4 className={classes.title}>WEBSITE INFORMATION</h4>
+        </div>
+        <Name name="Website Name *" form={form} />
+        <MyUrl form={form} />
+        <MySelect
+          form={form}
+          name="Category"
+          outputName="category"
+          selectArr={webSiteCagegory}
+        />
+        <MySelect
+          form={form}
+          name="Current Monthly Unique Visitores"
+          outputName="monthlyVisitors"
+          selectArr={monthlyVisitors}
+        />
+        <MyTextarea form={form} />
         <SubmitButton
           name="Next"
           handleSubmit={this.handleSubmit}
         />
+        {/* eslint-disable-next-line react/destructuring-assignment */}
+        <span>{this.state.text}</span>
       </InputContainer>
     );
   }

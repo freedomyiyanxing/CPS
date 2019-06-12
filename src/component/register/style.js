@@ -17,14 +17,16 @@ export const registerInfoStyle = theme => ({
     fontWeight: theme.typography.h4.fontWeight,
     color: theme.palette.text.primary,
   },
-  root: {
-    background: theme.palette.primary[50],
+  firstTitle: {
+    marginTop: 14,
   },
-  prompt: {
-    lineHeight: '27px',
-    color: theme.palette.text.primary,
+  lastTitle: {
+    marginTop: 34,
   },
-  wrapper: {
-    marginBottom: 10,
+  labelSuccess: {
+    color: theme.palette.text.disabled,
+  },
+  labelError: {
+    color: theme.palette.error[500],
   },
 });
