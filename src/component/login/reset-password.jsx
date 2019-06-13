@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { resetPasswordStyle } from './style';
 
-import InputContainer from '../../common/form/container';
+import InputContainer from '../../common/box-container/form-container';
 import MergePassword from '../../common/form/password-merge';
 import SubmitButton from '../../common/form/submit-button';
 

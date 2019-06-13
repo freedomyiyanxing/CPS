@@ -9,7 +9,7 @@ import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
 import { loginStyle } from './style';
 
-import InputContainer from '../../common/form/container';
+import InputContainer from '../../common/box-container/form-container';
 import Emails from '../../common/form/email';
 import Password from '../../common/form/password';
 import SubmitButton from '../../common/form/submit-button';
@@ -29,7 +29,7 @@ class Login extends React.Component {
    * @returns {*} 验证正确的情况下返回一个 promise对象
    */
   handleSubmit = () => {
-    const { form } = this.props;
+    const { form, history } = this.props;
     const { check } = this.state;
     let ayc = null;
     form.validateFields((error, value) => {
@@ -37,6 +37,7 @@ class Login extends React.Component {
         ayc = new Promise((resolve) => {
           setTimeout(() => {
             console.log({ ...value, check });
+            history.push('/yes/index');
             resolve(true);
           }, 3000);
         });

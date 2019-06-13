@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { emailSentPageStyle } from './style';
 
-import InputContainer from '../../common/form/container';
+import InputContainer from '../../common/box-container/form-container';
 import SubmitButton from '../../common/form/submit-button';
 
 const useStyle = makeStyles(emailSentPageStyle);

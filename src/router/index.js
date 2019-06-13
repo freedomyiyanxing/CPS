@@ -9,6 +9,9 @@ import EmailSentPage from '../component/login/email-sent';
 import ResetPassword from '../component/login/reset-password';
 import Register from '../component/register/index';
 import RegisterInfo from '../component/register/register-info';
+import AccountSetting from '../component/account/setting/account-setting';
+import AccountBalance from '../component/account/account-balance';
+import AccountPassword from '../component/account/account-password';
 import Not404 from '../component/not-404/not-404';
 
 const routers = [
@@ -80,6 +83,24 @@ const routers = [
             exact: true,
             component: Home,
             key: 'home-router',
+          },
+          {
+            path: '/yes/account-setting',
+            exact: true,
+            component: AccountSetting,
+            key: 'account-setting-router',
+          },
+          {
+            path: '/yes/account-balance',
+            exact: true,
+            component: AccountBalance,
+            key: 'account-balance-router',
+          },
+          {
+            path: '/yes/account-password',
+            exact: true,
+            component: AccountPassword,
+            key: 'account-password-router',
           },
           {
             component: Not404,

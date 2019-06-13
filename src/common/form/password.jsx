@@ -4,6 +4,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
+import PsdVisibility from './psd-visibility';
 import StyleInput from './my-input';
 
 const Password = (props) => {
@@ -11,11 +12,16 @@ const Password = (props) => {
     form, name, validateToNextPassword, onBlur,
   } = props;
   const [psd, setPsd] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const outputName = name.replace(/\s/g, '');
 
   const handleChange = (e) => {
     setPsd(e.target.value);
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const { getFieldProps, getFieldError } = form;
@@ -47,11 +53,12 @@ const Password = (props) => {
       <InputLabel htmlFor="my-password">{name}</InputLabel>
       <StyleInput
         id="my-password"
-        type="password"
+        type={showPassword ? 'text' : 'password'}
         aria-describedby="my-helper-text"
         value={psd}
         onChange={handleChange}
         onBlur={onBlur}
+        endAdornment={<PsdVisibility handleClick={handleClickShowPassword} />}
       />
       {
         errors

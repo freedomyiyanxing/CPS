@@ -54,7 +54,7 @@ export const theme = createMuiTheme({
       active: 'rgba(0, 0, 0, 0.54)',
       disabled: 'rgba(0, 0, 0, 0.26)',
       disabledBackground: 'rgba(0, 0, 0, 0.12)',
-      hover: 'rgba(0, 0, 0, 0.08)',
+      hover: 'rgba(0, 0, 0, 0.28)',
       hoverOpacity: 0.18,
       selected: 'rgba(0, 0, 0, 0.14)',
     }

@@ -17,7 +17,7 @@ const HeaderNotLogin = (props) => {
    * 去未登录的首页
    */
   const handleIndex = () => {
-    history.push('/not/index');
+    history.push('/yes/index');
   };
 
   /**

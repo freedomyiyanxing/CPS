@@ -4,25 +4,16 @@ import { createForm, formShape } from 'rc-form';
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 
-import InputContainer from '../../common/box-container/form-container';
-import Emails from '../../common/form/email';
-import Name from '../../common/form/name';
-import MergePassword from '../../common/form/password-merge';
-import SubmitButton from '../../common/form/submit-button';
-import MyTextarea from '../../common/form/my-textarea';
-import MyUrl from '../../common/form/my-url';
-import MySelect from '../../common/form/my-select';
+import { basicSettingStyle } from '../style';
 
-import IntlTelInput from '../../common/react-intl-tel-input/intlTelInput';
+import Emails from '../../../common/form/email';
+import Name from '../../../common/form/name';
+import SubmitButton from '../../../common/form/submit-button';
+import IntlTelInput from '../../../common/react-intl-tel-input/intlTelInput';
 
-import { registerInfoStyle } from './style';
-
-import { webSiteCagegory, monthlyVisitors } from '../../asstes/data/default-data';
-
-
-@withStyles(registerInfoStyle)
+@withStyles(basicSettingStyle)
 @createForm()
-class RegisterInfo extends React.Component {
+class BasicSetting extends React.Component {
   constructor(props) {
     super(props);
     this.phoneNumber = '';
@@ -37,7 +28,7 @@ class RegisterInfo extends React.Component {
    */
   handleSubmit = () => {
     // eslint-disable-next-line no-unused-vars
-    const { form, history } = this.props;
+    const { form } = this.props;
     const { isValid } = this.state;
     let ayc = null;
     form.validateFields((error, value) => {
@@ -77,13 +68,10 @@ class RegisterInfo extends React.Component {
     const { classes, form } = this.props;
     const { isValid } = this.state;
     return (
-      <InputContainer title="Submit">
-        <div className={classes.firstTitle}>
-          <h4 className={classes.title}>ACCOUNT INFORMATION</h4>
-        </div>
-        <Name name="First Name" value="Alex" form={form} disabled />
-        <Name name="Last Name" value="Huang" form={form} disabled />
-        <Emails form={form} value="85189962@qq.com" disabled />
+      <>
+        <Name name="First Name" form={form} />
+        <Name name="Last Name" form={form} />
+        <Emails form={form} />
         <FormControl
           className={classes.root}
           fullWidth
@@ -98,38 +86,21 @@ class RegisterInfo extends React.Component {
             onPhoneNumberChange={this.onPhoneNumberChange}
           />
         </FormControl>
-        <MergePassword form={form} />
-        <div className={classes.lastTitle}>
-          <h4 className={classes.title}>WEBSITE INFORMATION</h4>
-        </div>
-        <Name name="Website Name *" form={form} />
-        <MyUrl form={form} />
-        <MySelect
-          form={form}
-          name="Category"
-          outputName="category"
-          selectArr={webSiteCagegory}
-        />
-        <MySelect
-          form={form}
-          name="Current Monthly Unique Visitores"
-          outputName="monthlyVisitors"
-          selectArr={monthlyVisitors}
-        />
-        <MyTextarea form={form} />
+        <p className={classes.prompt}>
+          By registering, you agree with our Terms & Condition and Privacy Policy
+        </p>
         <SubmitButton
-          name="Next"
+          name="Submit"
           handleSubmit={this.handleSubmit}
         />
-      </InputContainer>
+      </>
     );
   }
 }
 
-RegisterInfo.propTypes = {
-  history: PropTypes.objectOf(PropTypes.object).isRequired,
+BasicSetting.propTypes = {
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
   form: formShape.isRequired,
 };
 
-export default RegisterInfo;
+export default BasicSetting;

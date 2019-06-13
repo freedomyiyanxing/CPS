@@ -1,9 +1,10 @@
-/* eslint-disable */
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import uuid from 'uuid';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { CSSTransition } from 'react-transition-group';
 
@@ -11,7 +12,7 @@ import HeaderContainer from './header-container';
 import { loginStyle } from './style';
 import logo from '../../asstes/images/logo_white.png';
 
-const links = [
+const homeList = [
   {
     id: uuid(),
     text: 'Product Search',
@@ -26,14 +27,17 @@ const account = [
   {
     id: uuid(),
     text: 'Account Setting',
+    links: 'account-setting',
   },
   {
     id: uuid(),
     text: 'Account Balance',
+    links: 'account-balance',
   },
   {
     id: uuid(),
     text: 'Change Password',
+    links: 'account-password',
   },
 ];
 
@@ -51,21 +55,25 @@ const HeaderLogin = (props) => {
     history.push('/not/login');
   };
 
+  const toggleOpen = () => {
+    setOpen(!open);
+  };
+
   // tabs下面的线条切换
   const tabHandleClick = (number) => {
     console.log(number);
     if (number) {
       toggleOpen();
-      console.log('点击了 Links')
+      console.log('点击了 Links');
     } else {
-      console.log('点击了 home')
+      console.log('点击了 home');
     }
     indicator.current.style.transform = `translateX(${number * 95}px)`;
-    // () => { setOpen(true) }
   };
 
-  const toggleOpen = () => {
-    setOpen(!open);
+  // 点击个人账户下拉列表 事件
+  const handleAccount = (links) => {
+    history.push(`/yes/${links}`);
   };
 
   return (
@@ -78,7 +86,7 @@ const HeaderLogin = (props) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => { tabHandleClick(0) }}
+            onClick={() => { tabHandleClick(0); }}
             classes={{
               root: classes.navBtn,
             }}
@@ -93,7 +101,6 @@ const HeaderLogin = (props) => {
               root: classes.navBtn,
             }}
             onClick={() => { tabHandleClick(1); }}
-            // onMouseLeave={() => { setOpen(false) }}
           >
             <span>Links</span>
             <span className="triangle-right" />
@@ -108,18 +115,20 @@ const HeaderLogin = (props) => {
                   className={classes.dropDownContainer1}
                 >
                   <div className={classes.dropDownWrapper1}>
-                    {
-                      links.map(v => (
-                        <Button
-                          key={v.id}
-                          classes={{
-                            root: classes.dropBtn,
-                          }}
-                        >
-                          {v.text}
-                        </Button>
-                      ))
-                    }
+                    <MenuList className={classes.list}>
+                      {
+                        homeList.map(v => (
+                          <MenuItem
+                            key={v.id}
+                            classes={{
+                              root: classes.items,
+                            }}
+                          >
+                            {v.text}
+                          </MenuItem>
+                        ))
+                      }
+                    </MenuList>
                   </div>
                 </div>
               </ClickAwayListener>
@@ -130,13 +139,15 @@ const HeaderLogin = (props) => {
       </div>
       <div className={classes.right}>
         <div
+          role="button"
+          tabIndex={0}
           ref={anchorRef1}
           className={classes.rightInfo}
-          onClick={() => { setShowMessage(true) }}
-          onMouseLeave={() => { setShowMessage(false) }}
+          onClick={() => { setShowMessage(true); }}
+          onMouseLeave={() => { setShowMessage(false); }}
         >
           <span className={classes.img}>
-            <img src="https://cdn.influmonsters.com/fit-in/250x313/filters:fill(fff)/upload/image/product/desktop/2018/09/27/f5ee73fa-437c-49f7-ada5-39c59dbd1795.jpg" alt=""/>
+            <img src="https://cdn.influmonsters.com/fit-in/250x313/filters:fill(fff)/upload/image/product/desktop/2018/09/27/f5ee73fa-437c-49f7-ada5-39c59dbd1795.jpg" alt="" />
           </span>
           <span className={classes.name}>user name</span>
           <span className="triangle-right" />
@@ -151,18 +162,21 @@ const HeaderLogin = (props) => {
             >
               <span className={classes.dropDownArrow} />
               <div className={classes.dropDownWrapper}>
-                {
-                  account.map(v => (
-                    <Button
-                      key={v.id}
-                      classes={{
-                        root: classes.dropBtn,
-                      }}
-                    >
-                      {v.text}
-                    </Button>
-                  ))
-                }
+                <MenuList className={classes.list}>
+                  {
+                    account.map(v => (
+                      <MenuItem
+                        key={v.id}
+                        onClick={() => { handleAccount(v.links); }}
+                        classes={{
+                          root: classes.items,
+                        }}
+                      >
+                        {v.text}
+                      </MenuItem>
+                    ))
+                  }
+                </MenuList>
               </div>
             </div>
           </CSSTransition>

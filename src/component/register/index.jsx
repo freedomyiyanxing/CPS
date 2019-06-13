@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { indexStyle } from './style';
 
-import InputContainer from '../../common/form/container';
+import InputContainer from '../../common/box-container/form-container';
 import Emails from '../../common/form/email';
 import Name from '../../common/form/name';
 import SubmitButton from '../../common/form/submit-button';

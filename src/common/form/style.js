@@ -3,10 +3,8 @@ export const submitButtonStyle = theme => ({
     marginTop: 30,
     position: 'relative',
   },
-  btn: {
+  btn: { // 解决同一个页面 不同组件引入相同的Button组件导致的问题
     minHeight: 38,
-    boxShadow: 'none',
-    textTransform: 'capitalize',
     borderRadius: 4,
     backgroundColor: theme.palette.primary.dark,
   },
@@ -45,5 +43,11 @@ export const myTextareaStyle = theme => ({
     '& > textarea': {
       fontSize: theme.typography.fontSizeMd,
     },
+  },
+});
+
+export const psdVisibilityStyle = theme => ({
+  icon: {
+    fontSize: theme.typography.fontSizeLg,
   },
 });

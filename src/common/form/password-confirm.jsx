@@ -4,6 +4,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
+import PsdVisibility from './psd-visibility';
 import StyleInput from './my-input';
 
 const ConfirmPassword = (props) => {
@@ -11,9 +12,14 @@ const ConfirmPassword = (props) => {
     form, compareToFirstPassword,
   } = props;
   const [psd, setPsd] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setPsd(e.target.value);
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const { getFieldProps, getFieldError } = form;
@@ -40,10 +46,11 @@ const ConfirmPassword = (props) => {
       <InputLabel htmlFor="my-confirm-password">Confirm Password</InputLabel>
       <StyleInput
         id="my-confirm-password"
-        type="password"
+        type={showPassword ? 'text' : 'password'}
         aria-describedby="my-confirm-password"
         value={psd}
         onChange={handleChange}
+        endAdornment={<PsdVisibility handleClick={handleClickShowPassword} />}
       />
       {
         errors

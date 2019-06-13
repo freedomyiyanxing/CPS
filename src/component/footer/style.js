@@ -4,8 +4,11 @@ const footerStyle = theme => ({
     background: theme.palette.primary.dark,
   },
   wrapper: {
-    width: 1064,
-    margin: [[20, 'auto', 10, 'auto']],
+    width: 1100,
+    minWidth: 1100,
+    margin: [[0, 'auto']],
+    padding: [[20, 0, 10]],
+    background: theme.palette.primary.dark,
   },
   footerNavigation: {
     display: 'flex',

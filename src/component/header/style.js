@@ -9,6 +9,7 @@ export const containerStyle = theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    background: theme.palette.primary.main,
   },
 });
 
@@ -43,11 +44,12 @@ export const loginNotStyle = theme => ({
   line: line(theme, [[0, 4]]),
 });
 
-const drop = (top, width) => ({
+const drop = (theme, top, width) => ({
   position: 'absolute',
   top,
   left: 0,
   width,
+  zIndex: theme.zIndex.tooltip,
 });
 
 // 登陆 头部样式
@@ -109,7 +111,6 @@ export const loginStyle = theme => ({
     width: 40,
     height: 40,
     display: 'flex',
-    border: `1px dashed ${theme.palette.primary[600]}`,
   },
   name: {
     margin: [[0, 10, 0, 6]],
@@ -121,8 +122,8 @@ export const loginStyle = theme => ({
     fontSize: theme.typography.fontSizeLg,
     textTransform: 'capitalize',
   },
-  dropDownContainer: drop(40, 170),
-  dropDownContainer1: drop(44, 160),
+  dropDownContainer: drop(theme, 40, 170),
+  dropDownContainer1: drop(theme, 44, 160),
   dropDownWrapper: {
     background: theme.palette.primary.A400,
     position: 'relative',
@@ -142,9 +143,13 @@ export const loginStyle = theme => ({
     background: theme.palette.primary.A400,
     transform: 'rotate(225deg)',
   },
-  dropBtn: {
+  list: {
+    padding: 0,
+  },
+  items: {
     width: '100%',
     height: 36,
+    minHeight: 0,
     display: 'flex',
     justifyContent: 'flex-start',
     padding: [[0, 10]],

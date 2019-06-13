@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { forgetPasswordStyle } from './style';
 
-import InputContainer from '../../common/form/container';
+import InputContainer from '../../common/box-container/form-container';
 import Emails from '../../common/form/email';
 import SubmitButton from '../../common/form/submit-button';
 
