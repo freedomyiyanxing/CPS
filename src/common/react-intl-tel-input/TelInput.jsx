@@ -1,37 +1,36 @@
-/* eslint-disable */
-
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Input from '@material-ui/core/Input';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { telInputStyle } from './style';
 
-@withStyles(telInputStyle)
-class TelInput extends Component {
-  static propTypes = {
-    value: PropTypes.string,
-    placeholder: PropTypes.string,
-    handleInputChange: PropTypes.func,
-    inputProps: PropTypes.object,
-    classes: PropTypes.objectOf(PropTypes.object).isRequired,
-  };
+const useStyle = makeStyles(telInputStyle);
 
-  render() {
-    const { classes, value } = this.props;
-    return (
-      <Input
-        {...this.props.inputProps}
-        id="my-phone"
-        type="tel"
-        className={classes.root}
-        value={value}
-        placeholder={this.props.placeholder}
-        onChange={this.props.handleInputChange}
-        onBlur={this.props.onBlur}
-      />
-    );
-  }
-}
+const TelInput = (props) => {
+  const {
+    value, placeholder, handleInputChange, onBlur,
+  } = props;
+  const classes = useStyle();
+  return (
+    <Input
+      id="my-phone"
+      type="tel"
+      className={classes.root}
+      value={value}
+      placeholder={placeholder}
+      onChange={handleInputChange}
+      onBlur={onBlur}
+    />
+  );
+};
+
+TelInput.propTypes = {
+  value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  onBlur: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+};
+
 
 export default TelInput;

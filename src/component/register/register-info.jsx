@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
@@ -24,10 +23,13 @@ import { webSiteCagegory, monthlyVisitors } from '../../asstes/data/default-data
 @withStyles(registerInfoStyle)
 @createForm()
 class RegisterInfo extends React.Component {
-  state = {
-    text: '',
-    isValid: true,
-  };
+  constructor(props) {
+    super(props);
+    this.phoneNumber = '';
+    this.state = {
+      isValid: true,
+    };
+  }
 
   /**
    * 提交事件
@@ -36,37 +38,39 @@ class RegisterInfo extends React.Component {
   handleSubmit = () => {
     // eslint-disable-next-line no-unused-vars
     const { form, history } = this.props;
+    const { isValid } = this.state;
     let ayc = null;
     form.validateFields((error, value) => {
-      if (!error) {
-        ayc = new Promise((resolve) => {
-          setTimeout(() => {
-            console.log({ ...value });
-            this.setState({
-              text: value.textarea,
-            });
-            // history.push('/yes/index');
-            resolve(true);
-          }, 1000);
-        });
+      // 判断必须 填写了 电话号码 且 isValid 必须为真,
+      // (只有电话为空时 跟 电话号码正确时为真 isValid 就为真)
+      if (this.phoneNumber && isValid) {
+        if (!error) {
+          ayc = new Promise((resolve) => {
+            setTimeout(() => {
+              console.log({ ...value, phone: this.phoneNumber });
+              // history.push('/yes/index');
+              resolve(true);
+            }, 1000);
+          });
+        } else {
+          ayc = null;
+        }
       } else {
-        ayc = null;
+        this.setState({
+          isValid: false,
+        });
       }
     });
     return ayc;
   };
 
-  // 接受电话号码的数据
-  handlePhoneData = (val, isValid) => {
-    console.log(val, isValid);
-  };
-
-  // 验证函数
+  // 电话验证函数
   onPhoneNumberChange = (isValid, newNumber, currentObj, fullNumber) => {
     console.log(isValid, newNumber, currentObj, fullNumber);
+    this.phoneNumber = newNumber;
     this.setState({
       isValid,
-    })
+    });
   };
 
   render() {
@@ -117,8 +121,6 @@ class RegisterInfo extends React.Component {
           name="Next"
           handleSubmit={this.handleSubmit}
         />
-        {/* eslint-disable-next-line react/destructuring-assignment */}
-        <span>{this.state.text}</span>
       </InputContainer>
     );
   }

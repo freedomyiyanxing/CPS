@@ -30,7 +30,7 @@ class IntlTelInput extends Component {
   constructor(props) {
     super(props);
 
-    this.wrapperClass = {};
+    // this.wrapperClass = {};
 
     this.autoCountry = '';
     this.tempCountry = '';
@@ -143,7 +143,6 @@ class IntlTelInput extends Component {
         this.props.noCountryDataHandler
       )
       : {};
-
     // update the defaultCountry - we only need the iso2 from now on, so just store that
     if (this.selectedCountryData.iso2) {
       this.defaultCountry = this.selectedCountryData.iso2;
@@ -155,7 +154,6 @@ class IntlTelInput extends Component {
         this.selectedCountryData.dialCode
         }`
       : 'Unknown';
-
     let selectedIndex = 0;
 
     if (countryCode && countryCode !== 'auto') {
@@ -163,7 +161,6 @@ class IntlTelInput extends Component {
         this.preferredCountries,
         country => country.iso2 === countryCode
       );
-
       if (selectedIndex === -1) {
         selectedIndex = utils.findIndex(
           this.countries,
@@ -190,25 +187,23 @@ class IntlTelInput extends Component {
         this.updatePlaceholder(this.props);
 
         // update the active list item
-        this.wrapperClass.active = false;
+        // this.wrapperClass.active = false;
 
-        // on change flag, trigger a custom event
-        // Allow Main app to do things when a country is selected
+        // 选择国家列表完成时 返回验证信息
         if (
           !isInit &&
           prevCountry.iso2 !== countryCode &&
-          typeof this.props.onSelectFlag === 'function'
+          typeof this.props.onPhoneNumberChange === 'function'
         ) {
           const currentNumber = this.state.value;
 
           const fullNumber = this.formatFullNumber(currentNumber);
           const isValid = this.isValidNumber(fullNumber);
-
-          this.props.onSelectFlag(
+          this.props.onPhoneNumberChange(
+            isValid,
             currentNumber,
             this.selectedCountryData,
             fullNumber,
-            isValid
           );
         }
       }
@@ -620,11 +615,6 @@ class IntlTelInput extends Component {
       // no existing value and either they've just selected a list item, or autoHideDialCode is disabled: insert new dial code
       newNumber = newDialCode;
     }
-    // console.log(newNumber,currentNumber);
-    // if (newNumber !== currentNumber) {
-    //   this.notifyPhoneNumberChange(newNumber);
-    // }
-
     return newNumber;
   };
 
@@ -699,7 +689,6 @@ class IntlTelInput extends Component {
     const { classes } = this.props;
     const value =this.props.value !== undefined ? this.props.value : this.state.value;
 
-    console.log(this.state.countryCode, '---8888888');
     return (
       <>
         <div className={classes.wrapper}>
@@ -717,7 +706,6 @@ class IntlTelInput extends Component {
                 ? this.props.placeholder
                 : this.state.placeholder
             }
-            inputProps={this.props.telInputProps}
             onBlur={this.notifyPhoneNumberChange}
           />
         </div>
@@ -756,12 +744,10 @@ IntlTelInput.propTypes = {
   preferredCountries: PropTypes.arrayOf(PropTypes.string),
   /** Optional validation callback function. It returns validation status, input box value and selected country data. */
   onPhoneNumberChange: PropTypes.func,
-  /** Allow main app to do things when a country is selected. */
-  onSelectFlag: PropTypes.func,
+  // /** Allow main app to do things when a country is selected. */
+  // onSelectFlag: PropTypes.func,
   /** Static placeholder for input controller. When defined it takes priority over autoPlaceholder. */
   placeholder: PropTypes.string,
-  /** Pass through arbitrary props to the tel input element. */
-  telInputProps: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   /** Format the number. */
   format: PropTypes.bool,
   /** Allow main app to do things when flag icon is clicked. */
@@ -769,7 +755,6 @@ IntlTelInput.propTypes = {
 };
 
 IntlTelInput.defaultProps = {
-  // fieldName: '',
   defaultValue: '',
   // define the countries that'll be present in the dropdown
   // defaults to the data defined in `AllCountries`
@@ -792,15 +777,9 @@ IntlTelInput.defaultProps = {
   numberType: 'MOBILE',
   // function which can catch the "no this default country" exception
   noCountryDataHandler: null,
-  // display only these countries
-  // onlyCountries: [],
   // the countries at the top of the list. defaults to united states and united kingdom
   preferredCountries: ['us', 'cn', 'gb'],
   onPhoneNumberChange: null,
-  // onPhoneNumberBlur: null,
-  onSelectFlag: null,
-  // pass through arbitrary props to the tel input element
-  telInputProps: {},
   // always format the number
   format: true,
   onFlagClick: null,

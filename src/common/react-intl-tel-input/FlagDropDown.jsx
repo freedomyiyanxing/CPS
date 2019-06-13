@@ -1,6 +1,4 @@
-/* eslint-disable */
-
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
@@ -10,22 +8,14 @@ import { countryListStyle } from './style';
 
 @withStyles(countryListStyle)
 class CountryList extends Component {
-  static propTypes = {
-    setFlag: PropTypes.func,
-    countryCode: PropTypes.string.isRequired,
-    countries: PropTypes.arrayOf(PropTypes.object).isRequired,
-    preferredCountries: PropTypes.arrayOf(PropTypes.object).isRequired,
-    classes: PropTypes.objectOf(PropTypes.object).isRequired,
-  };
-
-  handleChange = e => {
-    this.props.setFlag(e.target.value);
-    console.log(e.target.value);
+  handleChange = (e) => {
+    const { setFlag } = this.props;
+    setFlag(e.target.value);
   };
 
   appendListItem = (countries, isPreferred = false) => {
     const { classes } = this.props;
-    return countries.map(country => {
+    return countries.map((country) => {
       const keyPrefix = isPreferred ? 'pref-' : '';
       return (
         <MenuItem
@@ -39,7 +29,10 @@ class CountryList extends Component {
             className={`${classes.itiFlag} flag flag-${country.iso2}`}
           />
           <span className="country-name">{country.name}</span>
-          <span className="dial-code">+{country.dialCode}</span>
+          <span className="dial-code">
+            +
+            {country.dialCode}
+          </span>
         </MenuItem>
       );
     });
@@ -47,7 +40,7 @@ class CountryList extends Component {
 
   render() {
     const {
-      classes, preferredCountries, countries, countryCode
+      classes, preferredCountries, countries, countryCode,
     } = this.props;
     let preferredOptions = null;
     let divider = null;
@@ -56,7 +49,7 @@ class CountryList extends Component {
       divider = <div className={classes.line} />;
     }
 
-    let options = this.appendListItem(countries);
+    const options = this.appendListItem(countries);
     return (
       <>
         <span
@@ -72,6 +65,9 @@ class CountryList extends Component {
               className: classes.menu,
             },
           }}
+          classes={{
+            icon: classes.icon,
+          }}
         >
           {preferredOptions}
           {divider}
@@ -81,5 +77,13 @@ class CountryList extends Component {
     );
   }
 }
+
+CountryList.propTypes = {
+  setFlag: PropTypes.func.isRequired,
+  countryCode: PropTypes.string.isRequired,
+  countries: PropTypes.arrayOf(PropTypes.object).isRequired,
+  preferredCountries: PropTypes.arrayOf(PropTypes.object).isRequired,
+  classes: PropTypes.objectOf(PropTypes.object).isRequired,
+};
 
 export default CountryList;

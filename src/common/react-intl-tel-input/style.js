@@ -11,10 +11,13 @@ export const intTeInputStyle = () => ({
   },
 });
 
-export const telInputStyle = () => ({
+export const telInputStyle = theme => ({
   root: {
     flex: 1,
     paddingLeft: 6,
+    '&:before': {
+      borderBottomColor: theme.palette.text.colorDdd,
+    },
   },
 });
 
@@ -23,7 +26,10 @@ const ITEM_PADDING_TOP = 8;
 
 export const countryListStyle = theme => ({
   root: {
-    flex: '0 0 60px',
+    flex: '0 0 56px',
+    '&:before': {
+      borderBottomColor: theme.palette.text.colorDdd,
+    },
   },
   flag: {
     position: 'absolute',
@@ -45,5 +51,8 @@ export const countryListStyle = theme => ({
     height: 24,
     marginRight: 10,
     background: `url(${BgImg}) no-repeat;`,
+  },
+  icon: {
+    color: theme.palette.text.secondary,
   },
 });
