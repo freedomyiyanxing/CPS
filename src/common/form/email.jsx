@@ -26,6 +26,7 @@ const Emails = (props) => {
       {...getFieldProps('email', {
         validateFirst: true,
         hidden: disabled, // 是否忽略当前字段的验证
+        initialValue: email, // 设置默认值 (保证在有默认值的情况 验证会通过)
         rules: [
           {
             required: true,

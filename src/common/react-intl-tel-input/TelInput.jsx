@@ -9,9 +9,10 @@ const useStyle = makeStyles(telInputStyle);
 
 const TelInput = (props) => {
   const {
-    value, placeholder, handleInputChange, onBlur,
+    value, placeholder, handleInputChange,
   } = props;
   const classes = useStyle();
+
   return (
     <Input
       id="my-phone"
@@ -20,7 +21,6 @@ const TelInput = (props) => {
       value={value}
       placeholder={placeholder}
       onChange={handleInputChange}
-      onBlur={onBlur}
     />
   );
 };
@@ -28,7 +28,6 @@ const TelInput = (props) => {
 TelInput.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  onBlur: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
 };
 

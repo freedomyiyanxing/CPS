@@ -2,12 +2,12 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import uuid from 'uuid';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { CSSTransition } from 'react-transition-group';
 
+import MyButton from '../../common/button/button';
 import HeaderContainer from './header-container';
 import { loginStyle } from './style';
 import logo from '../../asstes/images/logo_white.png';
@@ -83,7 +83,7 @@ const HeaderLogin = (props) => {
           <img src={logo} alt="iNFLUMONSTER logo" />
         </div>
         <div className={classes.nav}>
-          <Button
+          <MyButton
             variant="contained"
             color="primary"
             onClick={() => { tabHandleClick(0); }}
@@ -92,8 +92,8 @@ const HeaderLogin = (props) => {
             }}
           >
             Home
-          </Button>
-          <Button
+          </MyButton>
+          <MyButton
             variant="contained"
             color="primary"
             className={`${classes.lastBtn} ${open ? classes.addActive : ''}`}
@@ -133,7 +133,7 @@ const HeaderLogin = (props) => {
                 </div>
               </ClickAwayListener>
             </CSSTransition>
-          </Button>
+          </MyButton>
           <span ref={indicator} className={classes.indicator} />
         </div>
       </div>
@@ -182,7 +182,7 @@ const HeaderLogin = (props) => {
           </CSSTransition>
         </div>
         <span className={classes.line} />
-        <Button
+        <MyButton
           variant="contained"
           color="primary"
           classes={{
@@ -191,7 +191,7 @@ const HeaderLogin = (props) => {
           onClick={handleClick}
         >
           Logout
-        </Button>
+        </MyButton>
       </div>
     </HeaderContainer>
   );

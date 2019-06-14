@@ -9,14 +9,13 @@ import { submitButtonStyle } from './style';
 const useStyle = makeStyles(submitButtonStyle);
 
 const SubmitButton = (props) => {
-  const { handleSubmit, name } = props;
+  const { handleSubmit, name, width } = props;
   const [loading, setLoading] = useState(false);
   const classes = useStyle();
 
   const handleClick = () => {
     const promise = handleSubmit();
     if (promise) {
-      console.log(promise);
       setLoading(true);
       promise.then(() => {
         setLoading(false);
@@ -32,6 +31,7 @@ const SubmitButton = (props) => {
         disabled={loading}
         className={classes.btn}
         onClick={handleClick}
+        style={{ width }}
       >
         {name}
       </MyButton>
@@ -44,6 +44,11 @@ const SubmitButton = (props) => {
 SubmitButton.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
+  width: PropTypes.string,
+};
+
+SubmitButton.defaultProps = {
+  width: null,
 };
 
 export default SubmitButton;

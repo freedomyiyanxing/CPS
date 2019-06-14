@@ -23,10 +23,4 @@ export const registerInfoStyle = theme => ({
   lastTitle: {
     marginTop: 34,
   },
-  labelSuccess: {
-    color: theme.palette.text.disabled,
-  },
-  labelError: {
-    color: theme.palette.error[500],
-  },
 });

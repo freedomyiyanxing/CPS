@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import MyButton from '../../common/button/button';
 
 import HeaderContainer from './header-container';
 import { loginNotStyle } from './style';
@@ -45,7 +45,7 @@ const HeaderNotLogin = (props) => {
         <img src={logo} alt="iNFLUMONSTER logo" />
       </div>
       <div className={classes.right}>
-        <Button
+        <MyButton
           variant="contained"
           color="primary"
           onClick={handleRegister}
@@ -54,9 +54,9 @@ const HeaderNotLogin = (props) => {
           }}
         >
           Join Now
-        </Button>
+        </MyButton>
         <span className={classes.line} />
-        <Button
+        <MyButton
           variant="contained"
           color="primary"
           onClick={handleLogin}
@@ -65,7 +65,7 @@ const HeaderNotLogin = (props) => {
           }}
         >
           Login
-        </Button>
+        </MyButton>
       </div>
     </HeaderContainer>
   );

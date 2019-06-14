@@ -30,7 +30,7 @@ const MyTextarea = (props) => {
     >
       <TextField
         multiline
-        label="Discription of Your Website"
+        label="Discription of Your Website *"
         id="mui-theme-provider-standard-input"
         value={names}
         error={errors}

@@ -1,13 +1,19 @@
 import BgImg from '../../asstes/images/flags.png';
 
-export const intTeInputStyle = () => ({
-  root: {
-    margin: [[16, 0, 8]],
-  },
+export const intTeInputStyle = theme => ({
   wrapper: {
     display: 'flex',
     position: 'relative',
     marginTop: 4,
+  },
+  label: {
+    color: theme.palette.text.secondary,
+    fontSize: theme.typography.fontSizeMd,
+    transform: 'translate(0, 1.5px) scale(0.75)',
+    transformOrigin: 'top left',
+  },
+  labelError: {
+    color: theme.palette.error[500],
   },
 });
 

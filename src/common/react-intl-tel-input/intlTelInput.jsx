@@ -3,12 +3,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import libphonenumber from 'libphonenumber-js-utils'; // 这个必须得加载
 import { withStyles } from '@material-ui/core/styles';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+
 import AllCountries from './AllCountries';
 import FlagDropDown from './FlagDropDown';
 import TelInput from './TelInput';
 import utils from './utils';
 
 import { intTeInputStyle } from './style';
+
+const PHONEERROR = '电话号码错误';
+const PHONEREQUIRE = '电话号码是必填的';
 
 @withStyles(intTeInputStyle)
 class IntlTelInput extends Component {
@@ -30,8 +36,6 @@ class IntlTelInput extends Component {
   constructor(props) {
     super(props);
 
-    // this.wrapperClass = {};
-
     this.autoCountry = '';
     this.tempCountry = '';
     this.startedLoadingAutoCountry = false;
@@ -43,25 +47,13 @@ class IntlTelInput extends Component {
     this.countries = [];
     this.countryCodes = {};
 
-    this.keys = {
-      UP: 38,
-      DOWN: 40,
-      ENTER: 13,
-      ESC: 27,
-      PLUS: 43,
-      A: 65,
-      Z: 90,
-      SPACE: 32,
-      TAB: 9,
-    };
-
     this.query = '';
     this.selectedCountryData = {};
 
     this.state = {
-      value: '',// props.value || props.defaultValue,
+      value: props.value || props.defaultValue,
       placeholder: '',
-      title: '', // eslint-disable-line react/no-unused-state
+      title: '',
       countryCode: 'us',
     };
   }
@@ -77,7 +69,7 @@ class IntlTelInput extends Component {
     this.processCountryData.call(this);
 
     // 获取默认国家的数据
-    this.tempCountry = this.getTempCountry(this.props.defaultCountry);
+    // this.tempCountry = this.getTempCountry(this.props.defaultCountry);
 
     // set the initial state of the input value and the selected flag
     this.setInitialState();
@@ -95,13 +87,6 @@ class IntlTelInput extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.value !== prevProps.value) {
       this.updateFlagFromNumber(this.props.value);
-    }
-
-    if (
-      typeof this.props.customPlaceholder === 'function' &&
-      prevProps.customPlaceholder !== this.props.customPlaceholder
-    ) {
-      this.updatePlaceholder(this.props);
     }
   }
 
@@ -140,7 +125,6 @@ class IntlTelInput extends Component {
         countryCode,
         false,
         false,
-        this.props.noCountryDataHandler
       )
       : {};
     // update the defaultCountry - we only need the iso2 from now on, so just store that
@@ -186,9 +170,6 @@ class IntlTelInput extends Component {
         // and the input's placeholder
         this.updatePlaceholder(this.props);
 
-        // update the active list item
-        // this.wrapperClass.active = false;
-
         // 选择国家列表完成时 返回验证信息
         if (
           !isInit &&
@@ -198,9 +179,14 @@ class IntlTelInput extends Component {
           const currentNumber = this.state.value;
 
           const fullNumber = this.formatFullNumber(currentNumber);
-          const isValid = this.isValidNumber(fullNumber);
+          if (this.isValidNumber(fullNumber)) {
+            this.isValid = undefined;
+          } else {
+            this.isValid = [PHONEERROR];
+          }
+          // this.isValid = this.isValidNumber(fullNumber) ? undefined : 'error';
           this.props.onPhoneNumberChange(
-            isValid,
+            this.isValid,
             currentNumber,
             this.selectedCountryData,
             fullNumber,
@@ -209,18 +195,6 @@ class IntlTelInput extends Component {
       }
     );
   };
-
-  // get the extension from the current number
-  // getExtension = number => {
-  //   if (window.intlTelInputUtils) {
-  //     return window.intlTelInputUtils.getExtension(
-  //       this.getFullNumber(number),
-  //       this.selectedCountryData.iso2
-  //     );
-  //   }
-  //
-  //   return '';
-  // };
 
   // format the number to the given format
   getNumber = (number, format) => {
@@ -355,12 +329,10 @@ class IntlTelInput extends Component {
       }
     }
 
-    const doNotify = true;
-
     // NOTE: if tempCountry is set to auto, that will be handled separately
     // format
     if (val) {
-      this.updateValFromNumber(val, this.props.formatOnInit, doNotify);
+      this.updateValFromNumber(val);
     }
   };
 
@@ -395,23 +367,6 @@ class IntlTelInput extends Component {
     } else if (!this.startedLoadingAutoCountry) {
       // don't do this twice!
       this.startedLoadingAutoCountry = true;
-
-      if (typeof this.props.geoIpLookup === 'function') {
-        this.props.geoIpLookup(countryCode => {
-          this.autoCountry = countryCode.toLowerCase();
-          if (window.localStorage !== undefined) {
-            window.localStorage.setItem('itiAutoCountry', this.autoCountry);
-          }
-          // tell all instances the auto country is ready
-          // TODO: this should just be the current instances
-          // UPDATE: use setTimeout in case their geoIpLookup function calls this
-          // callback straight away (e.g. if they have already done the geo ip lookup
-          // somewhere else).
-          // Using setTimeout means that the current thread of execution will finish before
-          // executing this, which allows the plugin to finish initialising.
-          this.autoCountryLoaded();
-        });
-      }
     }
   };
 
@@ -443,8 +398,8 @@ class IntlTelInput extends Component {
   // update the input's value to the given val (format first if possible)
   // if doNotify is true, calls notifyPhoneNumberChange with the formatted value
   // NOTE: this is called from _setInitialState, handleUtils and setNumber
-  updateValFromNumber = (number, doFormat, doNotify = false) => {
-    if (doFormat && window.intlTelInputUtils && this.selectedCountryData) {
+  updateValFromNumber = (number) => {
+    if (window.intlTelInputUtils && this.selectedCountryData) {
       const format = this.nationalMode || number.charAt(0) !== '+'
           ? window.intlTelInputUtils.numberFormat.NATIONAL
           : window.intlTelInputUtils.numberFormat.INTERNATIONAL;
@@ -458,19 +413,9 @@ class IntlTelInput extends Component {
 
     number = this.beforeSetNumber(number);
 
-    this.setState(
-      {
-        // showDropdown: false,
-        value: number,
-      },
-      () => {
-        // if (doNotify) {
-        //   this.notifyPhoneNumberChange(this.state.value);
-        // }
-
-        // this.unbindDocumentClick();
-      }
-    );
+    this.setState({
+      value: number,
+    });
   };
 
   // check if need to select a new flag based on the given number
@@ -534,8 +479,8 @@ class IntlTelInput extends Component {
   // prepare all of the country data, including onlyCountries and preferredCountries options
   processCountryData = () => {
     // format countries data to what is necessary for component function
-    // defaults to data defined in `AllCountries`
-    AllCountries.initialize(this.props.countriesData);
+    // to data defined in `AllCountries`
+    AllCountries.initialize();
 
     // 获取数据
     this.countries = AllCountries.getCountries();
@@ -548,15 +493,14 @@ class IntlTelInput extends Component {
     this.processPreferredCountries.call(this);
   };
 
-  // update the input placeholder to an
-  // example number from the currently selected country
+  // 将输入占位符更新为 来自当前所选国家/地区的示例号码
   updatePlaceholder = (props = this.props) => {
     if (
       window.intlTelInputUtils &&
       props.autoPlaceholder &&
       this.selectedCountryData
     ) {
-      const numberType = window.intlTelInputUtils.numberType[props.numberType];
+      const numberType = window.intlTelInputUtils.numberType['MOBILE'];
       let placeholder = this.selectedCountryData.iso2
         ? window.intlTelInputUtils.getExampleNumber(
           this.selectedCountryData.iso2,
@@ -564,15 +508,6 @@ class IntlTelInput extends Component {
           numberType
         )
         : '';
-
-      placeholder = this.beforeSetNumber(placeholder, props);
-
-      if (typeof props.customPlaceholder === 'function') {
-        placeholder = props.customPlaceholder(
-          placeholder,
-          this.selectedCountryData
-        );
-      }
 
       this.setState({
         placeholder,
@@ -618,7 +553,6 @@ class IntlTelInput extends Component {
     return newNumber;
   };
 
-
   // validate the input val - assumes the global function isValidNumber (from libphonenumber)
   isValidNumber = number => {
     const val = utils.trim(number);
@@ -630,6 +564,7 @@ class IntlTelInput extends Component {
     return false;
   };
 
+  // 格式化数据 加上 区号
   formatFullNumber = number => {
     return window.intlTelInputUtils
       ? this.getNumber(
@@ -639,34 +574,18 @@ class IntlTelInput extends Component {
       : number;
   };
 
-  notifyPhoneNumberChange = newNumber => {
-    if (typeof this.props.onPhoneNumberChange === 'function') {
-      const fullNumber = this.formatFullNumber(this.state.value);
-      const isValid = this.isValidNumber(fullNumber);
-
-      this.props.onPhoneNumberChange(
-        isValid,
-        this.state.value,
-        this.selectedCountryData,
-        fullNumber,
-      );
-    }
-  };
-
   // remove the dial code if separateDialCode is enabled
   beforeSetNumber = (number) => this.cap(number);
 
   // Either notify phoneNumber changed if component is controlled
   // or udpate the state and notify change if component is uncontrolled
   handleInputChange = e => {
-    const value = this.props.format
-      ? this.formatNumber(e.target.value)
-      : e.target.value;
+    const value = this.formatNumber(e.target.value);
+
 
     if (this.props.value === undefined) {
       this.setState({value}, () => {
         this.updateFlagFromNumber(value);
-        // this.notifyPhoneNumberChange(value);
       });
     }
   };
@@ -685,104 +604,129 @@ class IntlTelInput extends Component {
     }
   };
 
-  render() {
-    const { classes } = this.props;
-    const value =this.props.value !== undefined ? this.props.value : this.state.value;
+  // 验证电话号码
+  validatorPhone = (rule, value, callback) => {
+    const { form } = this.props;
+    const val = this.formatFullNumber(value || this.props.defaultValue);
+    // 防止在传递了默认电话号码时  value 为空的情况
+    if(this.isValidNumber(val)) {
+      callback();
+      form.setFieldsValue({
+        'phone': val,
+      });
+      this.isValid = undefined;
+      this.props.onPhoneNumberChange(this.isValid)
+    } else {
+      callback(PHONEERROR);
+    }
+  };
 
+  // 验证电话号码必填
+  isRequiredPhone = (rule, value, callback) => {
+    // 防止在传递了默认电话号码时  value 为空的情况 且 防止直接清除值
+    if ((value || this.props.defaultValue) && this.state.value) {
+      callback();
+    } else {
+      callback(PHONEREQUIRE);
+    }
+  };
+
+  render() {
+    const { classes, form } = this.props;
+    const { getFieldProps, getFieldError } = form;
+    const errors = getFieldError('phone');
+
+    const value = this.props.value !== undefined
+      ? this.formatNumber(this.props.value)
+      : this.state.value;
+
+    const isValue = errors || this.isValid;
+
+    const textCls = (isValue === undefined) ? '' : classes.labelError;
     return (
-      <>
+      <FormControl
+        fullWidth
+        required
+        error={isValue}
+        margin="normal"
+        {...getFieldProps('phone', {
+          validateFirst: true, // 如果第一个规则错了 就不验证 后面的规则
+          trigger: 'onBlur',
+          rules: [
+            {
+              validator: this.isRequiredPhone, // 自定义验证必填规则
+            },
+            {
+              validator: this.validatorPhone, // 自定义验证错误规则
+            },
+          ],
+        })}
+      >
+        <span
+          className={`${classes.label} ${textCls}`}>
+          Phone *
+        </span>
         <div className={classes.wrapper}>
           <FlagDropDown
             setFlag={this.setFlag}
-            countryCode={this.state.countryCode}
             countries={this.countries}
+            countryCode={this.state.countryCode}
             preferredCountries={this.preferredCountries}
           />
           <TelInput
-            handleInputChange={this.handleInputChange}
             value={value}
-            placeholder={
-              this.props.placeholder !== undefined
-                ? this.props.placeholder
-                : this.state.placeholder
-            }
-            onBlur={this.notifyPhoneNumberChange}
+            handleInputChange={this.handleInputChange}
+            placeholder={this.state.placeholder}
           />
         </div>
-      </>
+        {
+          isValue
+            ? <FormHelperText>{isValue.join(',')}</FormHelperText>
+            : null
+        }
+      </FormControl>
     );
   }
 }
 
 IntlTelInput.propTypes = {
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
+  // rc-form 验证
+  form: PropTypes.objectOf(PropTypes.object).isRequired,
   /** The value of the input field. Useful for making input value controlled from outside the component. */
   value: PropTypes.string,
   /** The value used to initialize input. This will only work on uncontrolled component. */
   defaultValue: PropTypes.string,
-  /** Countries data can be configured, it defaults to data defined in `AllCountries`. */
-  countriesData: PropTypes.arrayOf(PropTypes.array),
   /** If there is just a dial code in the input: remove it on blur, and re-add it on focus. */
   autoHideDialCode: PropTypes.bool,
   /** Add or remove input placeholder with an example number for the selected country. */
   autoPlaceholder: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
-  /** Change the placeholder generated by autoPlaceholder. Must return a string. */
-  customPlaceholder: PropTypes.func,
-  /** Format the input value during initialisation. */
-  formatOnInit: PropTypes.bool,
   /** Default country. */
-  defaultCountry: PropTypes.string,
-  /** GeoIp lookup function. */
-  geoIpLookup: PropTypes.func,
+  // defaultCountry: PropTypes.string,
   /** Don't insert international dial codes. */
   nationalMode: PropTypes.bool,
-  /** Number type to use for placeholders. */
-  numberType: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
-  /** The function which can catch the "no this default country" exception. */
-  noCountryDataHandler: PropTypes.func,
   /** The countries at the top of the list. defaults to United States and United Kingdom. */
   preferredCountries: PropTypes.arrayOf(PropTypes.string),
-  /** Optional validation callback function. It returns validation status, input box value and selected country data. */
+
+  //
   onPhoneNumberChange: PropTypes.func,
-  // /** Allow main app to do things when a country is selected. */
-  // onSelectFlag: PropTypes.func,
-  /** Static placeholder for input controller. When defined it takes priority over autoPlaceholder. */
-  placeholder: PropTypes.string,
-  /** Format the number. */
-  format: PropTypes.bool,
-  /** Allow main app to do things when flag icon is clicked. */
-  onFlagClick: PropTypes.func,
 };
 
 IntlTelInput.defaultProps = {
   defaultValue: '',
   // define the countries that'll be present in the dropdown
-  // defaults to the data defined in `AllCountries`
-  countriesData: null,
   // if there is just a dial code in the input: remove it on blur, and re-add it on focus
   autoHideDialCode: true,
   // add or remove input placeholder with an example number for the selected country
   autoPlaceholder: true,
-  // modify the auto placeholder
-  customPlaceholder: null,
-  // format the input value during initialisation
-  formatOnInit: true,
   // default country
-  defaultCountry: '',
-  // geoIp lookup function
-  geoIpLookup: null,
+  // defaultCountry: 'us',
   // don't insert international dial codes
   nationalMode: true,
-  // number type to use for placeholders
-  numberType: 'MOBILE',
-  // function which can catch the "no this default country" exception
-  noCountryDataHandler: null,
   // the countries at the top of the list. defaults to united states and united kingdom
-  preferredCountries: ['us', 'cn', 'gb'],
+  preferredCountries: ['cn', 'us', 'gb'],
+
   onPhoneNumberChange: null,
-  // always format the number
-  format: true,
-  onFlagClick: null,
 };
 
 export default IntlTelInput;

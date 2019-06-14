@@ -31,7 +31,7 @@ export const settingStyle = theme => ({
     background: theme.palette.primary[50],
   },
   left: {
-    flex: '0 0 400px',
+    flex: '0 0 398px',
   },
   right: {
     flex: 1,
@@ -58,6 +58,6 @@ export const passwordStyle = theme => ({
 // eslint-disable-next-line no-unused-vars
 export const basicSettingStyle = theme => ({
   root: {
-    width: 400,
+    width: '100%',
   },
 });

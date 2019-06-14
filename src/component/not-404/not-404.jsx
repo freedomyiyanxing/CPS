@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import MyButton from '../../common/button/button';
 
 import not404Style from './style';
 
@@ -19,12 +19,12 @@ const Not404 = (props) => {
       <h3>
         {location.pathname}
       </h3>
-      <Button
+      <MyButton
         variant="contained"
         color="primary"
       >
         回到主页
-      </Button>
+      </MyButton>
     </div>
   );
 };

@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import uuid from 'uuid';
 import { withStyles } from '@material-ui/core/styles/index';
-// import Button from '@material-ui/core/Button/index';
 import MyButton from '../../../common/button/button'
 
 import MainContainer from '../../../common/box-container/main-container';
@@ -44,16 +43,9 @@ class AccountSetting extends React.Component {
     });
   };
 
-  handleChangeIndex = (index) => {
-    this.setState({
-      value: index,
-    });
-  };
-
   render() {
     const { classes } = this.props;
     const { value } = this.state;
-    console.log(value);
     return (
       <MainContainer>
         <div className={classes.header}>

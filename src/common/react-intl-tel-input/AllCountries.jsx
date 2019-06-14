@@ -356,8 +356,8 @@ function _formatCountriesData(countriesData) {
   }));
 }
 
-function initialize(externalCountriesList) {
-  countries = _formatCountriesData(externalCountriesList || defaultCountriesData);
+function initialize() {
+  countries = _formatCountriesData(defaultCountriesData);
 }
 
 function getCountries() {

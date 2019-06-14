@@ -39,7 +39,6 @@ export const loginNotStyle = theme => ({
   right: right(),
   rightBtn: {
     fontSize: theme.typography.fontSizeLg,
-    textTransform: 'capitalize',
   },
   line: line(theme, [[0, 4]]),
 });
@@ -70,7 +69,6 @@ export const loginStyle = theme => ({
     boxShadow: 'none',
     padding: 0,
     justifyContent: 'flex-start',
-    textTransform: 'capitalize',
     color: theme.palette.primary[50],
     fontSize: theme.typography.fontSizeLg,
     '&:first-child': {
@@ -120,7 +118,6 @@ export const loginStyle = theme => ({
   line: line(theme, [[0, 4, 0, 30]]),
   rightBtn: {
     fontSize: theme.typography.fontSizeLg,
-    textTransform: 'capitalize',
   },
   dropDownContainer: drop(theme, 40, 170),
   dropDownContainer1: drop(theme, 44, 160),
