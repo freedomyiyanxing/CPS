@@ -20,23 +20,6 @@ export const submitButtonStyle = theme => ({
   },
 });
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-
-export const mySelectStyle = theme => ({
-  root: {
-    '&:before': {
-      borderBottomColor: theme.palette.text.colorDdd,
-    },
-  },
-  icon: {
-    color: theme.palette.text.secondary,
-  },
-  menu: {
-    maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-  },
-});
-
 export const myTextareaStyle = theme => ({
   root: {
     '&:before': {
@@ -56,9 +39,8 @@ export const psdVisibilityStyle = theme => ({
 
 export const radioStyle = theme => ({
   root: {
-    display: 'flex',
     alignItems: 'center',
-    margin: [[16, 0, 8]],
+    flexDirection: 'initial',
   },
   label: {
     color: theme.palette.text.secondary,

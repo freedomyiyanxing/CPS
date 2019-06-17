@@ -600,22 +600,17 @@ class IntlTelInput extends Component {
   autoCountryLoaded = () => {
     if (this.tempCountry === 'auto') {
       this.tempCountry = this.autoCountry;
-      this.autoCountryDeferred.then(() => { resolve(true) }); //.resolve();
+      this.autoCountryDeferred.then(() => { resolve(true) });
     }
   };
 
   // 验证电话号码
   validatorPhone = (rule, value, callback) => {
-    const { form } = this.props;
-    const val = this.formatFullNumber(value || this.props.defaultValue);
+    const val = this.formatFullNumber(value || this.state.value);
     // 防止在传递了默认电话号码时  value 为空的情况
     if(this.isValidNumber(val)) {
       callback();
-      form.setFieldsValue({
-        'phone': val,
-      });
-      this.isValid = undefined;
-      this.props.onPhoneNumberChange(this.isValid)
+      this.props.onPhoneNumberChange(this.isValid = undefined);
     } else {
       callback(PHONEERROR);
     }
@@ -624,7 +619,7 @@ class IntlTelInput extends Component {
   // 验证电话号码必填
   isRequiredPhone = (rule, value, callback) => {
     // 防止在传递了默认电话号码时  value 为空的情况 且 防止直接清除值
-    if ((value || this.props.defaultValue) && this.state.value) {
+    if (value || this.state.value) {
       callback();
     } else {
       callback(PHONEREQUIRE);
@@ -641,7 +636,6 @@ class IntlTelInput extends Component {
       : this.state.value;
 
     const isValue = errors || this.isValid;
-
     const textCls = (isValue === undefined) ? '' : classes.labelError;
     return (
       <FormControl
@@ -651,6 +645,7 @@ class IntlTelInput extends Component {
         margin="normal"
         {...getFieldProps('phone', {
           validateFirst: true, // 如果第一个规则错了 就不验证 后面的规则
+          initialValue: value,
           trigger: 'onBlur',
           rules: [
             {
@@ -724,7 +719,7 @@ IntlTelInput.defaultProps = {
   // don't insert international dial codes
   nationalMode: true,
   // the countries at the top of the list. defaults to united states and united kingdom
-  preferredCountries: ['cn', 'us', 'gb'],
+  preferredCountries: ['us', 'cn', 'gb'],
 
   onPhoneNumberChange: null,
 };

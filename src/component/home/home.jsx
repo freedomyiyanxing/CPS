@@ -1,7 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import MyButton from '../../common/button/button';
+import MyButton from '../../common/material-ui-compoents/button';
 
 import { homeStyle } from './style';
 

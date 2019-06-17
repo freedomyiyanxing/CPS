@@ -10,8 +10,8 @@ import { myTextareaStyle } from './style';
 const useStyle = makeStyles(myTextareaStyle);
 
 const MyTextarea = (props) => {
-  const { form } = props;
-  const [names, setNames] = useState('');
+  const { form, value } = props;
+  const [names, setNames] = useState(value);
   const classes = useStyle();
 
   const handleChange = (e) => {
@@ -40,6 +40,7 @@ const MyTextarea = (props) => {
         onChange={handleChange}
         {...getFieldProps('textarea', {
           validateFirst: true,
+          initialValue: value,
           rules: [
             {
               required: true,
@@ -64,6 +65,12 @@ const MyTextarea = (props) => {
 
 MyTextarea.propTypes = {
   form: PropTypes.objectOf(PropTypes.object).isRequired,
+  value: PropTypes.string,
 };
+
+MyTextarea.defaultProps = {
+  value: '',
+};
+
 
 export default MyTextarea;

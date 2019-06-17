@@ -3,10 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import uuid from 'uuid';
 import { withStyles } from '@material-ui/core/styles/index';
-import MyButton from '../../../common/button/button'
+import MyButton from '../../../common/material-ui-compoents/button'
 
 import MainContainer from '../../../common/box-container/main-container';
 import BasicSetting from './basic-setting';
+import WibsiteSetting from './wibsite-setting';
 
 import { settingStyle } from '../style';
 
@@ -33,7 +34,7 @@ class AccountSetting extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
+      value: 1,
     };
   }
 
@@ -69,7 +70,7 @@ class AccountSetting extends React.Component {
         <div className={classes.root}>
           <div className={classes.left}>
             {value === 0 && <BasicSetting />}
-            {value === 1 && <div className={classes.items}>我是Wibsite Setting</div>}
+            {value === 1 && <WibsiteSetting />}
           </div>
           <div className={classes.right}>
             我是个人账户修改页面

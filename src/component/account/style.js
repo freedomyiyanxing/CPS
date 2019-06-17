@@ -54,10 +54,3 @@ export const passwordStyle = theme => ({
     color: theme.palette.text.primary,
   },
 });
-
-// eslint-disable-next-line no-unused-vars
-export const basicSettingStyle = theme => ({
-  root: {
-    width: '100%',
-  },
-});

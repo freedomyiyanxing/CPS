@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import FormControl from '@material-ui/core/FormControl';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -13,7 +14,7 @@ import { radioStyle } from './style';
 const useStyle = makeStyles(radioStyle);
 
 const MyRadio = (props) => {
-  const { value, getGender } = props;
+  const { value, form } = props;
 
   const classes = useStyle();
 
@@ -21,18 +22,26 @@ const MyRadio = (props) => {
 
   const handleChange = (event) => {
     setVal(event.target.value);
-    getGender(event.target.value)
   };
 
+  const { getFieldProps } = form;
+
   return (
-    <div className={classes.root}>
+    <FormControl
+      fullWidth
+      margin="normal"
+      className={classes.root}
+      {...getFieldProps('radio', {
+        initialValue: val,
+      })}
+    >
       <span className={classes.label}>Gender :</span>
       <RadioGroup
+        row
         aria-label="position"
         name="position"
         value={val}
         onChange={handleChange}
-        row
       >
         <FormControlLabel
           value="Male"
@@ -59,13 +68,13 @@ const MyRadio = (props) => {
           labelPlacement="end"
         />
       </RadioGroup>
-    </div>
+    </FormControl>
   );
 };
 
 MyRadio.propTypes = {
+  form: PropTypes.objectOf(PropTypes.object).isRequired,
   value: PropTypes.string,
-  getGender: PropTypes.func.isRequired,
 };
 
 MyRadio.defaultPoprs = {

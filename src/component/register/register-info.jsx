@@ -71,7 +71,7 @@ class RegisterInfo extends React.Component {
         <div className={classes.lastTitle}>
           <h4 className={classes.title}>WEBSITE INFORMATION</h4>
         </div>
-        <Name name="Website Name *" form={form} />
+        <Name name="Website Name" form={form} />
         <MyUrl form={form} />
         <MySelect
           form={form}

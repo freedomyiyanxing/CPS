@@ -4,7 +4,6 @@ export const intTeInputStyle = theme => ({
   wrapper: {
     display: 'flex',
     position: 'relative',
-    marginTop: 4,
   },
   label: {
     color: theme.palette.text.secondary,

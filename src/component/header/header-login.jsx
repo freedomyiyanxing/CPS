@@ -7,7 +7,7 @@ import MenuList from '@material-ui/core/MenuList';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { CSSTransition } from 'react-transition-group';
 
-import MyButton from '../../common/button/button';
+import MyButton from '../../common/material-ui-compoents/button';
 import HeaderContainer from './header-container';
 import { loginStyle } from './style';
 import logo from '../../asstes/images/logo_white.png';

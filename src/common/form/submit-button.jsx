@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import MyButton from '../button/button';
+import MyButton from '../material-ui-compoents/button';
 import { submitButtonStyle } from './style';
 
 const useStyle = makeStyles(submitButtonStyle);

@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { mySelectStyle } from './style';
-
-const useStyle = makeStyles(mySelectStyle);
+import MySelects from '../material-ui-compoents/select';
 
 const MySelect = (props) => {
   const {
-    form, selectArr, name, outputName,
+    form, selectArr, name, outputName, value,
   } = props;
-  const [names, setNames] = useState('');
-  const classes = useStyle();
+  const [names, setNames] = useState(value);
 
   const handleChange = (e) => {
     setNames(e.target.value);
@@ -32,21 +27,14 @@ const MySelect = (props) => {
       margin="normal"
     >
       <InputLabel htmlFor="my-url">{name}</InputLabel>
-      <Select
+      <MySelects
         value={names}
         onChange={handleChange}
         name="value"
-        className={classes.root}
-        MenuProps={{
-          PaperProps: {
-            className: classes.menu,
-          },
-        }}
-        classes={{
-          icon: classes.icon,
-        }}
+        displayEmpty
         {...getFieldProps(outputName, {
           validateFirst: true,
+          initialValue: value,
           rules: [
             {
               required: true,
@@ -55,12 +43,13 @@ const MySelect = (props) => {
           ],
         })}
       >
+        <MenuItem value="" disabled>{value}</MenuItem>
         {
           selectArr.map(v => (
             <MenuItem key={v} value={v}>{v}</MenuItem>
           ))
         }
-      </Select>
+      </MySelects>
       {
         errors
           ? <FormHelperText>{errors.join(',')}</FormHelperText>
@@ -75,6 +64,12 @@ MySelect.propTypes = {
   selectArr: PropTypes.objectOf(PropTypes.array).isRequired,
   name: PropTypes.string.isRequired,
   outputName: PropTypes.string.isRequired,
+  value: PropTypes.string,
+};
+
+
+MySelect.defaultProps = {
+  value: '',
 };
 
 export default MySelect;

@@ -7,8 +7,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import StyleInput from './my-input';
 
 const MyUrl = (props) => {
-  const { form } = props;
-  const [names, setNames] = useState('');
+  const { form, value } = props;
+  const [names, setNames] = useState(value);
 
   const handleChange = (e) => {
     setNames(e.target.value);
@@ -24,6 +24,7 @@ const MyUrl = (props) => {
       margin="normal"
       {...getFieldProps('url', {
         validateFirst: true,
+        initialValue: value,
         rules: [
           {
             required: true,
@@ -56,6 +57,11 @@ const MyUrl = (props) => {
 
 MyUrl.propTypes = {
   form: PropTypes.objectOf(PropTypes.object).isRequired,
+  value: PropTypes.string,
+};
+
+MyUrl.defaultProps = {
+  value: '',
 };
 
 export default MyUrl;
