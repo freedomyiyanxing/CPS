@@ -50,9 +50,9 @@ const Password = (props) => {
         ],
       })}
     >
-      <InputLabel htmlFor="my-password">{name}</InputLabel>
+      <InputLabel htmlFor={`my-${outputName || name}`}>{name}</InputLabel>
       <StyleInput
-        id="my-password"
+        id={`my-${outputName || name}`}
         type={showPassword ? 'text' : 'password'}
         aria-describedby="my-helper-text"
         value={psd}

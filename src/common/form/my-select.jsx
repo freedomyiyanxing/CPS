@@ -9,7 +9,7 @@ import MySelects from '../material-ui-compoents/select';
 
 const MySelect = (props) => {
   const {
-    form, selectArr, name, outputName, value,
+    form, selectArr, name, outputName, value, noRequire,
   } = props;
   const [names, setNames] = useState(value);
 
@@ -22,7 +22,7 @@ const MySelect = (props) => {
   return (
     <FormControl
       fullWidth
-      required
+      required={noRequire}
       error={errors}
       margin="normal"
     >
@@ -37,13 +37,17 @@ const MySelect = (props) => {
           initialValue: value,
           rules: [
             {
-              required: true,
+              required: noRequire,
               message: '我们需要 你选择类别',
             },
           ],
         })}
       >
-        <MenuItem value="" disabled>{value}</MenuItem>
+        {
+          value
+            ? <MenuItem value="" disabled>{value}</MenuItem>
+            : null
+        }
         {
           selectArr.map(v => (
             <MenuItem key={v} value={v}>{v}</MenuItem>
@@ -65,11 +69,13 @@ MySelect.propTypes = {
   name: PropTypes.string.isRequired,
   outputName: PropTypes.string.isRequired,
   value: PropTypes.string,
+  noRequire: PropTypes.bool,
 };
 
 
 MySelect.defaultProps = {
   value: '',
+  noRequire: true,
 };
 
 export default MySelect;

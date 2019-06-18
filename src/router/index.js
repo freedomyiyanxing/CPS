@@ -10,8 +10,8 @@ import ResetPassword from '../component/login/reset-password';
 import Register from '../component/register/index';
 import RegisterInfo from '../component/register/register-info';
 import AccountSetting from '../component/account/setting/account-setting';
-import AccountBalance from '../component/account/account-balance';
-import AccountPassword from '../component/account/account-password';
+import AccountBalance from '../component/account/balance/account-balance';
+import AccountPassword from '../component/account/set-password/account-password';
 import Not404 from '../component/not-404/not-404';
 
 const routers = [

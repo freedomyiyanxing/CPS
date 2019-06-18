@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React from 'react';
 import { createForm, formShape } from 'rc-form';
 
@@ -9,7 +7,7 @@ import MySelect from '../../../common/form/my-select';
 import MyTextarea from '../../../common/form/my-textarea';
 import Name from '../../../common/form/name';
 
-import {monthlyVisitors, webSiteCagegory} from '../../../asstes/data/default-data';
+import { monthlyVisitors, webSiteCagegory } from '../../../asstes/data/default-data';
 
 @createForm()
 class WibsiteSetting extends React.Component {
@@ -67,7 +65,8 @@ class WibsiteSetting extends React.Component {
           value="this is changsha ?"
         />
         <SubmitButton
-          name="Next"
+          width="200px"
+          name="Submit"
           handleSubmit={this.handleSubmit}
         />
       </>

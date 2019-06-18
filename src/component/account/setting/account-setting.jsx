@@ -1,40 +1,24 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
-import uuid from 'uuid';
 import { withStyles } from '@material-ui/core/styles/index';
-import MyButton from '../../../common/material-ui-compoents/button'
+import MyButton from '../../../common/material-ui-compoents/button';
 
 import MainContainer from '../../../common/box-container/main-container';
 import BasicSetting from './basic-setting';
 import WibsiteSetting from './wibsite-setting';
+import MyCropper from './cropper';
 
-import { settingStyle } from '../style';
+import { accountSettingTabs } from '../../../asstes/data/default-data';
+import { settingStyle } from './style';
 
-const titleArr = [
-  {
-    id: uuid(),
-    index: 0,
-    text: 'Basic Setting',
-  },
-  {
-    id: uuid(),
-    index: null,
-    text: null,
-  },
-  {
-    id: uuid(),
-    index: 1,
-    text: 'Wibsite Setting',
-  },
-];
+const iconUrl = 'https://fengyuanchen.github.io/cropperjs/images/picture.jpg';
 
 @withStyles(settingStyle)
 class AccountSetting extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 1,
+      value: 0,
     };
   }
 
@@ -51,7 +35,7 @@ class AccountSetting extends React.Component {
       <MainContainer>
         <div className={classes.header}>
           {
-            titleArr.map(v => (
+            accountSettingTabs.map(v => (
               v.text === null
                 ? <span className={classes.line} />
                 : (
@@ -72,9 +56,7 @@ class AccountSetting extends React.Component {
             {value === 0 && <BasicSetting />}
             {value === 1 && <WibsiteSetting />}
           </div>
-          <div className={classes.right}>
-            我是个人账户修改页面
-          </div>
+          <MyCropper iconUrl={iconUrl} />
         </div>
       </MainContainer>
     );

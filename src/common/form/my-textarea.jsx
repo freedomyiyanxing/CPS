@@ -10,7 +10,9 @@ import { myTextareaStyle } from './style';
 const useStyle = makeStyles(myTextareaStyle);
 
 const MyTextarea = (props) => {
-  const { form, value } = props;
+  const {
+    form, value, noRequire, name,
+  } = props;
   const [names, setNames] = useState(value);
   const classes = useStyle();
 
@@ -30,7 +32,7 @@ const MyTextarea = (props) => {
     >
       <TextField
         multiline
-        label="Discription of Your Website *"
+        label={name}
         id="mui-theme-provider-standard-input"
         value={names}
         error={errors}
@@ -43,7 +45,7 @@ const MyTextarea = (props) => {
           initialValue: value,
           rules: [
             {
-              required: true,
+              required: noRequire,
               message: '我们需要 你网站的详细信息',
             },
             {
@@ -65,11 +67,15 @@ const MyTextarea = (props) => {
 
 MyTextarea.propTypes = {
   form: PropTypes.objectOf(PropTypes.object).isRequired,
+  name: PropTypes.string,
   value: PropTypes.string,
+  noRequire: PropTypes.bool,
 };
 
 MyTextarea.defaultProps = {
   value: '',
+  name: 'Discription of Your Website *',
+  noRequire: true,
 };
 
 

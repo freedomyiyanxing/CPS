@@ -1,5 +1,4 @@
 import React from 'react';
-// import { hot } from 'react-hot-loader/root';
 import { makeStyles } from '@material-ui/core/styles/index';
 import { renderRoutes } from 'react-router-config';
 
@@ -8,6 +7,7 @@ import routers from './router/index';
 import './asstes/style/reset.css';
 import './asstes/style/index.css';
 import './asstes/style/flags.css';
+import './asstes/style/cropper.css';
 
 const useStyles = makeStyles((theme) => {
   console.log(theme);

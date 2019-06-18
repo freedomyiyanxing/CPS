@@ -7,6 +7,8 @@ import lightBlue from '@material-ui/core/colors/lightBlue';
 import purple from '@material-ui/core/colors/purple';
 import brown from '@material-ui/core/colors/brown';
 import lime from '@material-ui/core/colors/lime';
+import blueGrey from '@material-ui/core/colors/blueGrey';
+import blue from '@material-ui/core/colors/blue';
 
 export const theme = createMuiTheme({
   // 色彩配置
@@ -82,6 +84,11 @@ export const theme = createMuiTheme({
       fontSize: '2rem',
       fontWeight: 800,
       lineHeight: 1.7,
+    },
+    h6: {
+      fontSize: '1.8rem',
+      fontWeight: 800,
+      lineHeight: 1,
     },
   },
   // 间距
