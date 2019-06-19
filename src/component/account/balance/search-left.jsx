@@ -6,14 +6,20 @@ import { withStyles } from '@material-ui/core/styles/index';
 import MyTextarea from '../../../common/form/my-textarea';
 import MySelect from '../../../common/form/my-select';
 import SubmitButton from '../../../common/form/submit-button';
+import DateRange from '../../../common/date-picker/rc-calendar';
 
 import { searchStyle } from './style';
 
-const arr = ['Get Earning', 'Withdraw'];
+const arr = ['not', 'Get Earning', 'Withdraw'];
 
 @withStyles(searchStyle)
 @createForm()
 class SearchLeft extends React.Component {
+  constructor() {
+    super();
+    this.date = null; // 存储日期区间
+  }
+
   handleSubmit = () => {
     const { form } = this.props;
     let ayc = null;
@@ -21,7 +27,7 @@ class SearchLeft extends React.Component {
       if (!error) {
         ayc = new Promise((resolve) => {
           setTimeout(() => {
-            console.log({ ...value });
+            console.log({ ...value, date: this.date });
             resolve(true);
           }, 1000);
         });
@@ -32,27 +38,35 @@ class SearchLeft extends React.Component {
     return ayc;
   };
 
+  getDate = (date) => {
+    this.date = date;
+    console.log('选择时间', date);
+  };
+
   render() {
     const { classes, form } = this.props;
     return (
       <div className={classes.root}>
-        <h4 className={classes.title}>Search</h4>
-        <MySelect
-          form={form}
-          name="Type :"
-          outputName="type"
-          selectArr={arr}
-          noRequire={false}
-        />
-        <MyTextarea
-          form={form}
-          noRequire={false}
-          name="Description :"
-        />
-        <SubmitButton
-          name="Apply"
-          handleSubmit={this.handleSubmit}
-        />
+        <div className={classes.wrapper}>
+          <h4 className={classes.title}>Search</h4>
+          <DateRange getDate={this.getDate} />
+          <MySelect
+            form={form}
+            name="Type :"
+            outputName="type"
+            selectArr={arr}
+            noRequire={false}
+          />
+          <MyTextarea
+            form={form}
+            noRequire={false}
+            name="Description :"
+          />
+          <SubmitButton
+            name="Apply"
+            handleSubmit={this.handleSubmit}
+          />
+        </div>
       </div>
     );
   }

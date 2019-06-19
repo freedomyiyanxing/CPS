@@ -31,7 +31,7 @@ export const theme = createMuiTheme({
       A700: "#616161",
       dark: "#333333",
       light: "#e0e0e0",
-      main: "#040404",
+      main: "#333333",
       contrastText: "#ffffff",
     },
     // 错误色
@@ -42,15 +42,16 @@ export const theme = createMuiTheme({
     inherit: lightBlue,
     type: 'light',
     background: {
+      black: '#040404',
       default: '#f5f5f5',
       paper: '#ffffff',
     },
     text: {
       disabled: 'rgba(0, 0, 0, 0.38)',
       hint: 'rgba(0, 0, 0, 0.38)',
-      primary: 'rgb(51, 51, 51)',
-      secondary: 'rgb(153, 153, 153)',
-      colorDdd: 'rgb(221, 221, 221)',
+      primary: 'rgba(51, 51, 51, 1)',
+      secondary: 'rgba(153, 153, 153, 1)',
+      colorDdd: 'rgba(221, 221, 221, 1)',
     },
     action: {
       active: 'rgba(0, 0, 0, 0.54)',
@@ -59,7 +60,11 @@ export const theme = createMuiTheme({
       hover: 'rgba(0, 0, 0, 0.28)',
       hoverOpacity: 0.18,
       selected: 'rgba(0, 0, 0, 0.14)',
-    }
+    },
+    border: {
+      borderEf: 'rgba(239,239,239, 1)', // #efefef
+      borderDD: 'rgba(221, 221, 221, 1)', // #dddddd,
+    },
   },
   // 边框配置
   shape: {
@@ -75,6 +80,11 @@ export const theme = createMuiTheme({
     fontSizeSm: 14,
     fontSizeXs: 12,
     fontFamily: '\'Mukta Vaani\',sans-serif',
+    h1: {
+      fontSize: '4.0rem',
+      fontWeight: 800,
+      lineHeight: 1.67,
+    },
     h2: {
       fontSize: '3.6rem',
       fontWeight: 800,

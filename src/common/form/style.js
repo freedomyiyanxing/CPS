@@ -8,7 +8,6 @@ export const submitButtonStyle = theme => ({
   btn: { // 解决同一个页面 不同组件引入相同的Button组件导致的问题
     minHeight: 38,
     borderRadius: 4,
-    backgroundColor: theme.palette.primary.dark,
   },
   buttonProgress: {
     position: 'absolute',
@@ -22,6 +21,7 @@ export const submitButtonStyle = theme => ({
 
 export const myTextareaStyle = theme => ({
   root: {
+    padding: 6,
     '&:before': {
       borderBottomColor: theme.palette.text.colorDdd,
     },

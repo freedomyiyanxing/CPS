@@ -1,6 +1,6 @@
 export const containerStyle = theme => ({
   root: {
-    background: theme.palette.primary.main,
+    background: theme.palette.background.black,
   },
   wrapper: {
     maxWidth: 1370,
@@ -9,7 +9,7 @@ export const containerStyle = theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    background: theme.palette.primary.main,
+    background: theme.palette.background.black,
   },
 });
 

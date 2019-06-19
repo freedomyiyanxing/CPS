@@ -66,7 +66,7 @@ export const cropperStyle = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    background: theme.palette.primary.main,
+    background: theme.palette.background.black,
     transition: 'all .2s linear',
     transform: 'translateY(30px)',
     opacity: 0.8,
