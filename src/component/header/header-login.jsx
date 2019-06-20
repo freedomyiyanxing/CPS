@@ -4,11 +4,12 @@ import uuid from 'uuid';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import { CSSTransition } from 'react-transition-group';
+import Collapse from '@material-ui/core/Collapse';
+import Avatar from '@material-ui/core/Avatar';
 
 import MyButton from '../../common/material-ui-compoents/button';
 import HeaderContainer from './header-container';
+import PartitionLine from '../../common/partition-line/partition-line';
 import { loginStyle } from './style';
 import logo from '../../asstes/images/logo_white.png';
 
@@ -51,24 +52,31 @@ const HeaderLogin = (props) => {
   const anchorRef1 = useRef(null);
   const indicator = useRef(null);
 
+  /**
+   * 去未登录的首页
+   */
+  const handleIndex = () => {
+    history.push('/yes/index');
+  };
+
   const handleClick = () => {
     history.push('/not/login');
   };
 
-  const toggleOpen = () => {
-    setOpen(!open);
+  // home 点击事件
+  const handleHome = () => {
+    // indicator.current.style.transform = 'translateX(12px)';
   };
 
-  // tabs下面的线条切换
-  const tabHandleClick = (number) => {
-    console.log(number);
-    if (number) {
-      toggleOpen();
-      console.log('点击了 Links');
-    } else {
-      console.log('点击了 home');
-    }
-    indicator.current.style.transform = `translateX(${number * 95}px)`;
+  // home 移入事件
+  const onMouseEnterHome = () => {
+    indicator.current.style.transform = 'translateX(12px)';
+  };
+
+  // links 移入事件
+  const onMouseEnterLinks = () => {
+    setOpen(true);
+    indicator.current.style.transform = 'translateX(85px)';
   };
 
   // 点击个人账户下拉列表 事件
@@ -79,60 +87,50 @@ const HeaderLogin = (props) => {
   return (
     <HeaderContainer>
       <div className={classes.left}>
-        <div className={classes.logo}>
+        <div
+          className={classes.logo}
+          role="button"
+          tabIndex={0}
+          onClick={handleIndex}
+        >
           <img src={logo} alt="iNFLUMONSTER logo" />
         </div>
         <div className={classes.nav}>
           <MyButton
-            variant="contained"
-            color="primary"
-            onClick={() => { tabHandleClick(0); }}
-            classes={{
-              root: classes.navBtn,
-            }}
+            className={classes.linkBtn}
+            onClick={handleHome}
+            onMouseEnter={onMouseEnterHome}
           >
             Home
           </MyButton>
           <MyButton
-            variant="contained"
-            color="primary"
-            className={`${classes.lastBtn} ${open ? classes.addActive : ''}`}
-            classes={{
-              root: classes.navBtn,
-            }}
-            onClick={() => { tabHandleClick(1); }}
+            className={classes.linkBtn}
+            onMouseEnter={onMouseEnterLinks}
+            onMouseLeave={() => { setOpen(false); }}
           >
             <span>Links</span>
             <span className="triangle-right" />
-            <CSSTransition
+            <Collapse
               in={open}
-              timeout={300}
-              classNames="slide"
-              unmountOnExit
+              classes={{
+                container: classes.linkCollapse,
+              }}
             >
-              <ClickAwayListener onClickAway={toggleOpen}>
-                <div
-                  className={classes.dropDownContainer1}
-                >
-                  <div className={classes.dropDownWrapper1}>
-                    <MenuList className={classes.list}>
-                      {
-                        homeList.map(v => (
-                          <MenuItem
-                            key={v.id}
-                            classes={{
-                              root: classes.items,
-                            }}
-                          >
-                            {v.text}
-                          </MenuItem>
-                        ))
-                      }
-                    </MenuList>
-                  </div>
-                </div>
-              </ClickAwayListener>
-            </CSSTransition>
+              <MenuList className={classes.linkList}>
+                {
+                  homeList.map(v => (
+                    <MenuItem
+                      key={v.id}
+                      classes={{
+                        root: classes.items,
+                      }}
+                    >
+                      {v.text}
+                    </MenuItem>
+                  ))
+                }
+              </MenuList>
+            </Collapse>
           </MyButton>
           <span ref={indicator} className={classes.indicator} />
         </div>
@@ -146,48 +144,41 @@ const HeaderLogin = (props) => {
           onClick={() => { setShowMessage(true); }}
           onMouseLeave={() => { setShowMessage(false); }}
         >
-          <span className={classes.img}>
-            <img src="https://cdn.influmonsters.com/fit-in/250x313/filters:fill(fff)/upload/image/product/desktop/2018/09/27/f5ee73fa-437c-49f7-ada5-39c59dbd1795.jpg" alt="" />
-          </span>
+          <Avatar
+            src="https://cdn.influmonsters.com/fit-in/250x313/filters:fill(fff)/upload/image/product/desktop/2018/09/27/f5ee73fa-437c-49f7-ada5-39c59dbd1795.jpg"
+            alt="iNFLUMONSTER logo"
+            className={classes.bigAvatar}
+          />
           <span className={classes.name}>user name</span>
           <span className="triangle-right" />
-          <CSSTransition
+          <Collapse
             in={showMessage}
-            timeout={300}
-            classNames="slide"
-            unmountOnExit
+            classes={{
+              container: classes.accountCollapse,
+              wrapperInner: classes.accountWrapperInner,
+            }}
           >
-            <div
-              className={classes.dropDownContainer}
-            >
-              <span className={classes.dropDownArrow} />
-              <div className={classes.dropDownWrapper}>
-                <MenuList className={classes.list}>
-                  {
-                    account.map(v => (
-                      <MenuItem
-                        key={v.id}
-                        onClick={() => { handleAccount(v.links); }}
-                        classes={{
-                          root: classes.items,
-                        }}
-                      >
-                        {v.text}
-                      </MenuItem>
-                    ))
-                  }
-                </MenuList>
-              </div>
-            </div>
-          </CSSTransition>
+            <span className={classes.accountArrow} />
+            <MenuList className={classes.accountList}>
+              {
+                account.map(v => (
+                  <MenuItem
+                    key={v.id}
+                    onClick={() => { handleAccount(v.links); }}
+                    classes={{
+                      root: classes.items,
+                    }}
+                  >
+                    {v.text}
+                  </MenuItem>
+                ))
+              }
+            </MenuList>
+          </Collapse>
         </div>
-        <span className={classes.line} />
+        <PartitionLine margin={[[0, 4, 0, 30]]} />
         <MyButton
-          variant="contained"
-          color="primary"
-          classes={{
-            root: classes.rightBtn,
-          }}
+          className={classes.rightBtn}
           onClick={handleClick}
         >
           Logout

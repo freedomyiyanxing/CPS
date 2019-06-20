@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MyButton from '../../common/material-ui-compoents/button';
 
 import HeaderContainer from './header-container';
+import PartitionLine from '../../common/partition-line/partition-line';
 import { loginNotStyle } from './style';
 import logo from '../../asstes/images/logo_white.png';
 
@@ -46,23 +47,15 @@ const HeaderNotLogin = (props) => {
       </div>
       <div className={classes.right}>
         <MyButton
-          variant="contained"
-          color="primary"
           onClick={handleRegister}
-          classes={{
-            root: classes.rightBtn,
-          }}
+          className={classes.rightBtn}
         >
           Join Now
         </MyButton>
-        <span className={classes.line} />
+        <PartitionLine margin={[[0, 4]]} />
         <MyButton
-          variant="contained"
-          color="primary"
           onClick={handleLogin}
-          classes={{
-            root: classes.rightBtn,
-          }}
+          className={classes.rightBtn}
         >
           Login
         </MyButton>

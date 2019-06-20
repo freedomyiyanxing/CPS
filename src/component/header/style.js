@@ -21,34 +21,23 @@ const login = theme => ({
   color: theme.palette.primary[50],
 });
 
-const line = (theme, margin) => ({
-  width: 2,
-  height: 12,
-  margin,
-  background: theme.palette.primary[700],
-});
-
 const right = () => ({
   display: 'flex',
   alignItems: 'center',
+});
+
+const rightBtn = theme => ({
+  padding: 16,
+  color: theme.palette.primary.contrastText,
+  fontSize: theme.typography.fontSizeLg,
+  borderRadius: 10,
 });
 
 // 未登陆 头部样式
 export const loginNotStyle = theme => ({
   logo: login(theme),
   right: right(),
-  rightBtn: {
-    fontSize: theme.typography.fontSizeLg,
-  },
-  line: line(theme, [[0, 4]]),
-});
-
-const drop = (theme, top, width) => ({
-  position: 'absolute',
-  top,
-  left: 0,
-  width,
-  zIndex: theme.zIndex.tooltip,
+  rightBtn: rightBtn(theme),
 });
 
 // 登陆 头部样式
@@ -63,28 +52,7 @@ export const loginStyle = theme => ({
     display: 'flex',
     position: 'relative',
   },
-  navBtn: {
-    minWidth: 0,
-    height: 44,
-    boxShadow: 'none',
-    padding: 0,
-    justifyContent: 'flex-start',
-    color: theme.palette.primary[50],
-    fontSize: theme.typography.fontSizeLg,
-    '&:first-child': {
-      marginRight: 26,
-    },
-    '& .triangle-right': {
-      marginLeft: 10,
-      borderTopColor: theme.palette.primary[50],
-    },
-  },
-  lastBtn: {
-    padding: [[0, 18]],
-  },
-  addActive: {
-    background: theme.palette.primary.A400,
-  },
+
   indicator: {
     width: 48,
     position: 'absolute',
@@ -92,6 +60,7 @@ export const loginStyle = theme => ({
     bottom: 0,
     background: theme.palette.primary[50],
     transition: 'all .2s linear',
+    transform: 'translateX(12px)',
   },
 
   // 左边
@@ -105,44 +74,16 @@ export const loginStyle = theme => ({
       borderTopColor: theme.palette.primary[50],
     },
   },
-  img: {
-    width: 40,
-    height: 40,
-    display: 'flex',
+  bigAvatar: {
+    borderRadius: 'inherit',
   },
   name: {
     margin: [[0, 10, 0, 6]],
     fontSize: theme.typography.fontSizeLg,
     color: theme.palette.primary[50],
   },
-  line: line(theme, [[0, 4, 0, 30]]),
-  rightBtn: {
-    fontSize: theme.typography.fontSizeLg,
-  },
-  dropDownContainer: drop(theme, 40, 170),
-  dropDownContainer1: drop(theme, 44, 160),
-  dropDownWrapper: {
-    background: theme.palette.primary.A400,
-    position: 'relative',
-    top: 10,
-  },
-  dropDownWrapper1: {
-    background: theme.palette.primary.A400,
-  },
-  dropDownArrow: {
-    position: 'absolute',
-    width: 14,
-    height: 14,
-    top: 4,
-    left: '50%',
-    marginLeft: -10,
-    opacity: 1,
-    background: theme.palette.primary.A400,
-    transform: 'rotate(225deg)',
-  },
-  list: {
-    padding: 0,
-  },
+  rightBtn: rightBtn(theme),
+
   items: {
     width: '100%',
     height: 36,
@@ -153,5 +94,63 @@ export const loginStyle = theme => ({
     color: theme.palette.primary[50],
     fontSize: theme.typography.fontSize,
     textTransform: 'capitalize',
+  },
+
+  /* -- */
+  linkBtn: {
+    minWidth: 0,
+    height: 44,
+    boxShadow: 'none',
+    padding: 14,
+    justifyContent: 'flex-start',
+    color: theme.palette.primary[50],
+    fontSize: theme.typography.fontSizeLg,
+    '& .triangle-right': {
+      marginLeft: 10,
+      borderTopColor: theme.palette.primary[50],
+    },
+    '&:hover': {
+      background: theme.palette.primary.A400,
+    },
+  },
+  linkCollapse: {
+    position: 'absolute',
+    top: 44,
+    left: 0,
+    zIndex: theme.zIndex.tooltip,
+  },
+  linkList: {
+    width: 160,
+    height: 72,
+    padding: 0,
+    background: theme.palette.primary.A400,
+  },
+
+  /*---*/
+  accountCollapse: {
+    position: 'absolute',
+    top: 40,
+    zIndex: theme.zIndex.tooltip,
+  },
+  accountWrapperInner: {
+    width: 170,
+    height: 118,
+  },
+  accountList: {
+    padding: 0,
+    position: 'relative',
+    top: 10,
+    background: theme.palette.primary.A400,
+  },
+  accountArrow: {
+    position: 'absolute',
+    width: 14,
+    height: 14,
+    top: 4,
+    left: '50%',
+    marginLeft: -10,
+    opacity: 1,
+    background: theme.palette.primary.A400,
+    transform: 'rotate(225deg)',
   },
 });

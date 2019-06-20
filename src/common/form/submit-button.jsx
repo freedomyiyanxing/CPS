@@ -25,8 +25,8 @@ const SubmitButton = (props) => {
   return (
     <div className={classes.wrapperBtn}>
       <MyButton
-        variant="contained"
         fullWidth
+        variant="contained"
         color="primary"
         disabled={loading}
         className={classes.btn}

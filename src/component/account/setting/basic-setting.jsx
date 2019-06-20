@@ -22,11 +22,11 @@ class BasicSetting extends React.Component {
   handleSubmit = () => {
     const { form } = this.props;
     let ayc = null;
-    const date = this.pickerRef.current.handleSubmit();
+    const date = this.pickerRef.current.handleDateSubmit();
     form.validateFields((error, value) => {
       // 判断必须 填写了 电话号码 且 isValid 必须为真,
       // (只有电话为空时 跟 电话号码正确时为真 isValid 就为真)
-      if (!error && !this.isValid && date) {
+      if (!error && !this.isValid) {
         ayc = new Promise((resolve) => {
           setTimeout(() => {
             console.log({ ...value, date });
@@ -48,6 +48,7 @@ class BasicSetting extends React.Component {
 
   render() {
     const { form } = this.props;
+    // eslint-disable-next-line no-unused-vars
     const dirb = new Date('1993/02/23').getTime();
     return (
       <>
@@ -73,10 +74,10 @@ class BasicSetting extends React.Component {
         { /* MyRadio 的默认只有 只有 Male || Female 其他无效 */ }
         <MyRadio
           form={form}
-          value="Male"
+          // value="Male"
         />
         <DatePicker
-          defaultValue={dirb} // 默认的时间戳
+          // defaultValue={dirb} // 默认的时间戳
           ref={this.pickerRef}
         />
         <SubmitButton

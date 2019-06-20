@@ -32,6 +32,18 @@ function isValidRange(v) {
   return v && v[0] && v[1];
 }
 
+// 计算一天的毫秒数
+const day = 24 * 60 * 60 * 1000;
+// 当前时间
+const now = new Date().getTime() + day;
+// 计算得到从今天往前走90天的毫秒数
+const result = now - (90 * day);
+
+// 时间限制区
+function disabledDate(current) {
+  return current < moment(result) || current > moment(now);
+}
+
 @withStyles(rcCalendarStyle)
 class DateRange extends React.Component {
   state = {
@@ -53,6 +65,7 @@ class DateRange extends React.Component {
     const calendar = (
       <RangeCalendar
         dateInputPlaceholder={['start', 'end']}
+        disabledDate={disabledDate}
         locale={enUS}
         showClear
         clearIcon={(

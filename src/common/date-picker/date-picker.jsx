@@ -83,21 +83,20 @@ class DatePicker extends React.Component {
   };
 
   // 提交按钮点击时触发
-  handleSubmit = () => {
+  handleDateSubmit = () => {
     const {
       _month, _date, _year, errors,
     } = this.state;
     this.isSubmit = false;
     // 报错的情况下 禁止提交
     if (errors) return null;
-    // 月份要 + 1
     if (_month && _date && _year) {
       console.log('你的出生日期是 :', getDateFormat(_year, _month, _date));
       return new Date(getDateFormat(_year, _month, _date)).getTime();
     }
-    this.setState({
-      errors: ['出生日期为必填'],
-    });
+    // this.setState({
+    //   errors: ['出生日期为必填'],
+    // });
     return null;
   };
 
@@ -117,7 +116,7 @@ class DatePicker extends React.Component {
         <span
           className={`${classes.label} ${errors ? classes.labelError : ''}`}
         >
-          Date of birth *
+          Date of birth
         </span>
         <div className={classes.wrapper}>
           <MySelects

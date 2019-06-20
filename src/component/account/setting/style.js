@@ -47,8 +47,6 @@ export const cropperStyle = theme => ({
     position: 'absolute',
     top: 46,
     right: 257,
-    width: 120,
-    height: 120,
     cursor: 'pointer',
     overflow: 'hidden',
     borderRadius: '50%',
@@ -56,6 +54,10 @@ export const cropperStyle = theme => ({
     '&:hover > span': {
       transform: 'translateY(0)',
     },
+  },
+  bigAvatar: {
+    width: 120,
+    height: 120,
   },
   mask: {
     width: '100%',

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -77,7 +76,7 @@ MyRadio.propTypes = {
   value: PropTypes.string,
 };
 
-MyRadio.defaultPoprs = {
+MyRadio.defaultProps = {
   value: '',
 };
 

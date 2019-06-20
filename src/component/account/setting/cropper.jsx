@@ -6,6 +6,7 @@ import LocalSee from '@material-ui/icons/LocalSee';
 import Close from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
 import IconButton from '@material-ui/core/IconButton';
+import Avatar from '@material-ui/core/Avatar';
 import Cropper from 'react-cropper';
 
 import MyButton from '../../../common/material-ui-compoents/button';
@@ -145,7 +146,11 @@ class MyCropper extends React.Component {
             onClick={this.handleClose}
             className={classes.wrapper}
           >
-            <img src={icon} alt="" />
+            <Avatar
+              src={icon}
+              alt="account icon"
+              className={classes.bigAvatar}
+            />
             <span className={classes.mask}>
               <LocalSee className={classes.icon} />
             </span>

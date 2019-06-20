@@ -64,6 +64,7 @@ export const theme = createMuiTheme({
     border: {
       borderEf: 'rgba(239,239,239, 1)', // #efefef
       borderDD: 'rgba(221, 221, 221, 1)', // #dddddd,
+      border66: 'rgba(102, 102, 102, 1)', // #666
     },
   },
   // 边框配置
@@ -92,6 +93,11 @@ export const theme = createMuiTheme({
     },
     h4: {
       fontSize: '2rem',
+      fontWeight: 800,
+      lineHeight: 1.7,
+    },
+    h5: {
+      fontSize: '2.4rem',
       fontWeight: 800,
       lineHeight: 1.7,
     },
