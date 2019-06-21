@@ -24,3 +24,16 @@
   transition: opacity 300ms, transform 300ms;
 }
 
+/*放大缩小动画*/
+@keyframes myScale {
+  0% {
+    transform: scale(0.6);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.beat-number-counter {
+  animation: myScale .6s linear;
+}

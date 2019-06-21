@@ -7,7 +7,6 @@ import MainContainer from '../../common/box-container/main-container';
 import HomeHeader from './home-utils/home-header';
 import HomeCurve from './home-utils/home-curve';
 
-// eslint-disable-next-line no-unused-vars
 import { accountData, statisticsTbs, daily } from '../../../data/data';
 import { homeStyle } from './style';
 

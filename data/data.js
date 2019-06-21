@@ -11,8 +11,8 @@ export const accountData = {
 
 export const statisticsTbs = {
   clicks: 6526,
-  purchaseQty: 23,
-  rate: 0.23,
+  purchaseQty: 23.05,
+  rate: 0.63,
   purchaseAmount: 125.63,
   expectedBrokerageAmount: 2.23,
   completeBrokerageAmount: 10.56,
@@ -21,92 +21,92 @@ export const statisticsTbs = {
 //模拟曲线图的数据
 export const daily = [
   {
-    date: 1554111924975, // 4月1
-    clicks: 12,
+    date: 1551269600000, // 4月1
+    clicks: 123,
     purchaseQty: 12,
-    rate: 12,
-    purchaseAmount: 12,
+    rate: 57,
+    purchaseAmount: 0,
     expectedBrokerageAmount: 12,
     completeBrokerageAmount: 12
   },
   {
-    date: 1554198324975, // 4月2
-    clicks: 12,
-    purchaseQty: 12,
-    rate: 12,
-    purchaseAmount: 12,
+    date: 1551456000000, // 4月2
+    clicks: 124,
+    purchaseQty: 2,
+    rate: 23,
+    purchaseAmount: 0,
     expectedBrokerageAmount: 12,
     completeBrokerageAmount: 12
   },
   {
-    date: 1554284832279, // 4月3
-    clicks: 12,
-    purchaseQty: 12,
-    rate: 12,
-    purchaseAmount: 12,
+    date: 1551542400000, // 4月3
+    clicks: 25,
+    purchaseQty: 5,
+    rate: 32,
+    purchaseAmount: 0,
     expectedBrokerageAmount: 12,
     completeBrokerageAmount: 12
   },
   {
-    date: 1554371232279, // 4月4
-    clicks: 12,
-    purchaseQty: 12,
-    rate: 12,
-    purchaseAmount: 12,
+    date: 1551628800000, // 4月4
+    clicks: 234,
+    purchaseQty: 0,
+    rate: 36,
+    purchaseAmount: 0,
     expectedBrokerageAmount: 12,
     completeBrokerageAmount: 12
   },
   {
-    date: 1554457632279, // 4月5
-    clicks: 12,
-    purchaseQty: 12,
-    rate: 12,
-    purchaseAmount: 12,
+    date: 1551715200000, // 4月5
+    clicks: 345,
+    purchaseQty: 19,
+    rate: 47,
+    purchaseAmount: 0,
     expectedBrokerageAmount: 12,
     completeBrokerageAmount: 12
   },
   {
-    date: 1554544032279, // 4月6
-    clicks: 12,
-    purchaseQty: 12,
-    rate: 12,
-    purchaseAmount: 12,
+    date: 1551801600000, // 4月6
+    clicks: 56,
+    purchaseQty: 31,
+    rate: 29,
+    purchaseAmount: 0,
     expectedBrokerageAmount: 12,
     completeBrokerageAmount: 12
   },
   {
-    date: 1554630515879, // 4月7
-    clicks: 12,
-    purchaseQty: 12,
-    rate: 12,
-    purchaseAmount: 12,
+    date: 1551888000000, // 4月7
+    clicks: 16,
+    purchaseQty: 9,
+    rate: 78,
+    purchaseAmount: 0,
     expectedBrokerageAmount: 12,
     completeBrokerageAmount: 12
   },
   {
-    date: 1554716915879, // 4月8
-    clicks: 12,
-    purchaseQty: 12,
-    rate: 12,
-    purchaseAmount: 12,
+    date: 1551974400000, // 4月8
+    clicks: 123,
+    purchaseQty: 45,
+    rate: 65,
+    purchaseAmount: 0,
     expectedBrokerageAmount: 12,
     completeBrokerageAmount: 12
   },
   {
-    date: 1554803381102, // 4月9
-    clicks: 12,
-    purchaseQty: 12,
-    rate: 12,
-    purchaseAmount: 12,
+    date: 1552060800000, // 4月9
+    clicks: 567,
+    purchaseQty: 112,
+    rate: 20,
+    purchaseAmount: 0,
     expectedBrokerageAmount: 12,
     completeBrokerageAmount: 12
   },
   {
-    date: 1554889781102, // 4月10
-    clicks: 12,
-    purchaseQty: 12,
-    rate: 12,
-    purchaseAmount: 12,
+    date: 1552147200000, // 4月10
+    clicks: 142,
+    purchaseQty: 56,
+    rate: 80,
+    purchaseAmount: 0,
     expectedBrokerageAmount: 12,
     completeBrokerageAmount: 12
   },

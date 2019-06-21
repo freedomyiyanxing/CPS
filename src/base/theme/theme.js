@@ -52,6 +52,7 @@ export const theme = createMuiTheme({
       primary: 'rgba(51, 51, 51, 1)',
       secondary: 'rgba(153, 153, 153, 1)',
       colorDdd: 'rgba(221, 221, 221, 1)',
+      inherit: 'rgba(102, 102, 102, 1)',
     },
     action: {
       active: 'rgba(0, 0, 0, 0.54)',

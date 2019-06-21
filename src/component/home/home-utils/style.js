@@ -60,7 +60,7 @@ export const curveStyle = theme => ({
     display: 'none',
   },
   flexContainer: {
-    border: `1px solid ${theme.palette.border.borderEf}`,
+    paddingBottom: 10,
   },
   tabRoot: {
     padding: 0,
@@ -68,10 +68,47 @@ export const curveStyle = theme => ({
     maxWidth: 'inherit',
     color: theme.palette.text.primary,
     textTransform: 'capitalize',
+    opacity: 1,
+    overflow: 'initial',
+    border: `1px solid ${theme.palette.border.borderEf}`,
+    borderRight: 'none',
+    '&:last-child': {
+      borderRight: `1px solid ${theme.palette.border.borderEf}`,
+    },
   },
   tabWrapper: {
-    height: '100%',
+    height: 80,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    padding: [[5, 10, 0]],
+  },
+  tabsText: {
+    fontSize: theme.typography.fontSize,
+    color: theme.palette.text.inherit,
+    textAlign: 'left',
+    lineHeight: '20px',
+  },
+  active: {
+    background: theme.palette.border.borderEf,
   },
   tabsItem: {
   },
+  triangle: {
+    position: 'absolute',
+    borderTopColor: theme.palette.border.borderEf,
+    bottom: -8,
+    left: '50%',
+    marginLeft: -11,
+    borderWidth: '8px 11px 0',
+  },
+  /*
+    position: absolute;
+    border-top-color: #efefef;
+    bottom: -8px;
+    left: 50%;
+    margin-left: -11px;
+    border-width: 8px 11px 0;
+  */
 });

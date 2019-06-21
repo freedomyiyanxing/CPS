@@ -14,7 +14,6 @@ const useStyle = makeStyles(headerStyle);
 const HomeHeader = (props) => {
   const { data } = props;
   const classes = useStyle();
-  console.log(data);
   const dialogRef = useRef();
 
   /**
