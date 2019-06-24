@@ -1,6 +1,4 @@
-/* eslint-disable */
 import React, { useState, useImperativeHandle, forwardRef } from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import Link from '@material-ui/core/Link';
@@ -20,11 +18,10 @@ const footerText = [
   {
     id: 'btn-2',
     text: 'Back',
-  }
+  },
 ];
 
 const WithdrawDialogs = (props, ref) => {
-  const { } = props;
   const [open, setOpen] = useState(false);
   const classes = useStyle();
   /**
@@ -40,7 +37,7 @@ const WithdrawDialogs = (props, ref) => {
   useImperativeHandle(ref, () => ({
     handleCloses() {
       handleClose();
-    }
+    },
   }));
 
   return (
@@ -59,13 +56,14 @@ const WithdrawDialogs = (props, ref) => {
         <div className={classes.items}>
           <span className={classes.left}>Payment Account :</span>
           <span className={`${classes.right} ${classes.img}`}>
-            <img src={paypal} alt=""/>
+            <img src={paypal} alt="支付Icon" />
           </span>
         </div>
         <div className={classes.items}>
           <span className={classes.left}>Account Balance :</span>
           <span className={`${classes.right} ${classes.all}`}>
             <span className={classes.price}>$1000.88</span>
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <Link
               component="button"
               underline="always"
@@ -99,8 +97,8 @@ const WithdrawDialogs = (props, ref) => {
         }
       </div>
     </Dialog>
-  )
+  );
 };
 
 const WithdrawDialog = forwardRef(WithdrawDialogs);
-export default WithdrawDialog
+export default WithdrawDialog;

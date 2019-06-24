@@ -5,7 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 import PsdVisibility from './psd-visibility';
-import StyleInput from './my-input';
+import MyInput from '../material-ui-compoents/input';
 
 const Password = (props) => {
   const {
@@ -51,7 +51,7 @@ const Password = (props) => {
       })}
     >
       <InputLabel htmlFor={`my-${outputName || name}`}>{name}</InputLabel>
-      <StyleInput
+      <MyInput
         id={`my-${outputName || name}`}
         type={showPassword ? 'text' : 'password'}
         aria-describedby="my-helper-text"

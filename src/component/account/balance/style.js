@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-export const balanceStyle = theme => ({
+export const balanceStyle = () => ({
   root: {
     display: 'flex',
   },
@@ -42,11 +41,12 @@ export const viewStyle = theme => ({
   headerBtn: {
     padding: [[4, 9]],
   },
-  tableHeader: {
-    background: theme.palette.primary[100],
+  amount: {
+    display: 'flex',
+    alignItems: 'center',
   },
-  tableBody: {
-    border: `1px solid ${theme.palette.border.borderEf}`,
-    borderBottom: 'none',
+  icon: {
+    fontSize: theme.typography.fontSize,
+    marginRight: 2,
   },
 });

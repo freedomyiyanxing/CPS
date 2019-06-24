@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import uuid from 'uuid';
 import PropTypes from 'prop-types';
@@ -9,7 +8,7 @@ import moment from 'moment';
 
 import DateRange from '../../../common/date-picker/rc-calendar';
 import Counter from '../../../common/beat-number/beat-number';
-import MyHighcharts from '../../../common/my-highcharts/my-highcharts'
+import MyHighcharts from '../../../common/my-highcharts/my-highcharts';
 
 import { curveStyle } from './style';
 
@@ -19,7 +18,7 @@ class HomeCurve extends React.Component {
     super(props);
     const { data } = props;
     this.state = {
-      tabs: 0,
+      tabs: 2,
     };
 
     // tabs数据
@@ -100,7 +99,7 @@ class HomeCurve extends React.Component {
   handleChange = (event, tabs) => {
     this.setState({
       tabs,
-    })
+    });
   };
 
   render() {
@@ -108,9 +107,7 @@ class HomeCurve extends React.Component {
     const { tabs } = this.state;
     return (
       <div className={classes.root}>
-        <div className={classes.date}>
-          <DateRange getDate={this.getDate} />
-        </div>
+        <DateRange getDate={this.getDate} />
         <Tabs
           value={tabs}
           centered
@@ -144,7 +141,11 @@ class HomeCurve extends React.Component {
             ))
           }
         </Tabs>
-        <MyHighcharts chartsData={{time: this.dailyTime, data: this.dailyData[tabs]}} />
+        <MyHighcharts
+          chartsData={{
+            time: this.dailyTime, data: this.dailyData[tabs],
+          }}
+        />
       </div>
     );
   }
@@ -152,7 +153,7 @@ class HomeCurve extends React.Component {
 
 HomeCurve.propTypes = {
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
-  data: PropTypes.array.isRequired,
+  data: PropTypes.objectOf(PropTypes.array).isRequired,
 };
 
 export default HomeCurve;

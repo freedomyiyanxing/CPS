@@ -16,7 +16,7 @@
 // UPDATE Sept 12th 2015
 // List of regions that have iso2 country codes, which I have chosen to omit:
 // (based on this information: https://en.wikipedia.org/wiki/List_of_country_calling_codes)
-// AQ - Antarctica - all different country codes depending on which 'base'
+// AQ - Antarctica - all different country codes depending on which 'config'
 // BV - Bouvet Island - no calling code
 // GS - South Georgia and the South Sandwich Islands -
 // 'inhospitable collection of islands' - same flag and calling code as Falkland Islands

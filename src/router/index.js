@@ -1,7 +1,12 @@
+import uuid from 'uuid';
+
 import FooterNavigation from './footer-navigation';
 import NotHeaderNavigation from './not-header-navigation';
 import HeaderNavigation from './header-navigation';
 import Home from '../component/home/home';
+import ProductSearch from '../component/product-search/index';
+import MyProducts from '../component/my-product/index';
+
 import NotHome from '../component/home/not-home';
 import Login from '../component/login/login';
 import ForgetPassword from '../component/login/forget-password';
@@ -18,99 +23,111 @@ const routers = [
   {
     path: '/',
     component: FooterNavigation,
-    key: 'footer-navigation-router',
+    key: uuid(),
     routes: [
       {
         path: '/not',
         component: NotHeaderNavigation,
-        key: 'not-header-navigation-router',
+        key: uuid(),
         routes: [
           {
             path: '/not/index',
             exact: true,
             component: NotHome,
-            key: 'home-router',
+            key: uuid(),
           },
           {
             path: '/not/login',
             exact: true,
             component: Login,
-            key: 'login-router',
+            key: uuid(),
           },
           {
             path: '/not/forget-password',
             exact: true,
             component: ForgetPassword,
-            key: 'forget-password-router',
+            key: uuid(),
           },
           {
             path: '/not/email-sent',
             exact: true,
             component: EmailSentPage,
-            key: 'email-sent-router',
+            key: uuid(),
           },
           {
             path: '/not/reset-password',
             exact: true,
             component: ResetPassword,
-            key: 'reset-password-router',
+            key: uuid(),
           },
           {
             path: '/not/register',
             exact: true,
             component: Register,
-            key: 'register-router',
+            key: uuid(),
           },
           {
             path: '/not/register-info',
             exact: true,
             component: RegisterInfo,
-            key: 'register-info-router',
+            key: uuid(),
           },
           {
             component: Not404,
-            key: 'no-match-router',
+            key: uuid(),
           },
         ],
       },
       {
         path: '/yes',
         component: HeaderNavigation,
-        key: 'header-navigation-router',
+        key: uuid(),
         routes: [
           {
             path: '/yes/index',
             exact: true,
             component: Home,
-            key: 'home-router',
+            key: uuid(),
+          },
+          {
+            path: '/yes/product-search',
+            exact: true,
+            component: ProductSearch,
+            key: uuid(),
+          },
+          {
+            path: '/yes/my-products',
+            exact: true,
+            component: MyProducts,
+            key: uuid(),
           },
           {
             path: '/yes/account-setting',
             exact: true,
             component: AccountSetting,
-            key: 'account-setting-router',
+            key: uuid(),
           },
           {
             path: '/yes/account-balance',
             exact: true,
             component: AccountBalance,
-            key: 'account-balance-router',
+            key: uuid(),
           },
           {
             path: '/yes/account-password',
             exact: true,
             component: AccountPassword,
-            key: 'account-password-router',
+            key: uuid(),
           },
           {
             component: Not404,
-            key: 'no-match-router',
+            key: uuid(),
           },
         ],
       },
       {
         component: Not404,
-        key: 'all-no-match-router',
+        key: uuid(),
       },
     ],
   },

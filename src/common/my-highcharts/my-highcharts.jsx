@@ -4,6 +4,9 @@ import Highcharts from 'highcharts';
 
 const startUp = (ref, time, data) => {
   Highcharts.chart(ref, {
+    credits: {
+      enabled: false, // 移除默认的版权信息,
+    },
     chart: {
       zoomType: 'x',
     },

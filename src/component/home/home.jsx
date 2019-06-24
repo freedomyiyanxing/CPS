@@ -1,32 +1,20 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import MyButton from '../../common/material-ui-compoents/button';
 
 import MainContainer from '../../common/box-container/main-container';
 import HomeHeader from './home-utils/home-header';
 import HomeCurve from './home-utils/home-curve';
+import HomeDetail from './home-utils/home-detail';
 
-import { accountData, statisticsTbs, daily } from '../../../data/data';
-import { homeStyle } from './style';
+import {
+  accountData, statisticsTbs, daily, details,
+} from '../../../data/data';
 
-const useStyles = makeStyles(homeStyle);
-
-
-const Home = () => {
-  const classes = useStyles();
-  return (
-    <MainContainer margin={[44, 0, 40]}>
-      <HomeHeader data={accountData} />
-      <HomeCurve data={[statisticsTbs, daily]} />
-      <div className={classes.root}>
-        <div className={classes.wrapper}>登陆的首页1</div>
-        <div>
-          <MyButton>text</MyButton>
-        </div>
-      </div>
-    </MainContainer>
-  );
-};
+const Home = () => (
+  <MainContainer margin={[44, 0, 40]}>
+    <HomeHeader data={accountData} />
+    <HomeCurve data={[statisticsTbs, daily]} />
+    <HomeDetail data={details} />
+  </MainContainer>
+);
 
 export default Home;

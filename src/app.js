@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
-import { theme } from './base/theme/theme';
+import { theme } from './config/theme/theme';
 
 import App from './clinet';
 

@@ -5,7 +5,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 import PsdVisibility from './psd-visibility';
-import StyleInput from './my-input';
+import MyInput from '../material-ui-compoents/input';
 
 const ConfirmPassword = (props) => {
   const {
@@ -44,7 +44,7 @@ const ConfirmPassword = (props) => {
       })}
     >
       <InputLabel htmlFor="my-confirm-password">Confirm Password</InputLabel>
-      <StyleInput
+      <MyInput
         id="my-confirm-password"
         type={showPassword ? 'text' : 'password'}
         aria-describedby="my-confirm-password"

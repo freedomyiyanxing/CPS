@@ -4,7 +4,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-import StyleInput from './my-input';
+import MyInput from '../material-ui-compoents/input';
 
 const MyUrl = (props) => {
   const { form, value } = props;
@@ -38,7 +38,7 @@ const MyUrl = (props) => {
       })}
     >
       <InputLabel htmlFor="my-url">Website URL</InputLabel>
-      <StyleInput
+      <MyInput
         id="my-url"
         type="email"
         aria-describedby="my-helper-text"

@@ -4,11 +4,11 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-import StyleInput from './my-input';
+import MyInput from '../material-ui-compoents/input';
 
 const Name = (props) => {
   const {
-    value, form, name, disabled,
+    value, form, name, disabled, noRequire,
   } = props;
   const [names, setNames] = useState(value);
 
@@ -23,7 +23,7 @@ const Name = (props) => {
   return (
     <FormControl
       fullWidth
-      required={!disabled}
+      required={noRequire && !disabled} // 如果是必填 则是否是 disabled 状态
       disabled={disabled}
       error={errors}
       margin="normal"
@@ -33,7 +33,7 @@ const Name = (props) => {
         initialValue: names, // 设置默认值 (保证在有默认值的情况 验证会通过)
         rules: [
           {
-            required: true,
+            required: noRequire,
             message: '我们需要你的名字',
           },
           {
@@ -44,7 +44,7 @@ const Name = (props) => {
       })}
     >
       <InputLabel htmlFor={`my-${name}`}>{name}</InputLabel>
-      <StyleInput
+      <MyInput
         id={`my-${name}`}
         type="email"
         aria-describedby="my-helper-text"
@@ -63,14 +63,16 @@ const Name = (props) => {
 
 Name.propTypes = {
   form: PropTypes.objectOf(PropTypes.object).isRequired,
-  name: PropTypes.string.isRequired,
-  value: PropTypes.string,
-  disabled: PropTypes.bool,
+  name: PropTypes.string.isRequired, // label名称 以及输出字段名称
+  value: PropTypes.string, // 默认值
+  disabled: PropTypes.bool, // 是的禁用
+  noRequire: PropTypes.bool, // 是否必填
 };
 
 Name.defaultProps = {
   value: '',
-  disabled: false,
+  disabled: false, // 默认不禁用
+  noRequire: true, // 默认必填
 };
 
 export default Name;

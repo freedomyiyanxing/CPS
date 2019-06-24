@@ -17,10 +17,12 @@ const homeList = [
   {
     id: uuid(),
     text: 'Product Search',
+    links: 'product-search',
   },
   {
     id: uuid(),
-    text: 'My Oroduct',
+    text: 'My Products',
+    links: 'my-products',
   },
 ];
 
@@ -65,17 +67,25 @@ const HeaderLogin = (props) => {
 
   // home 点击事件
   const handleHome = () => {
+    history.push('/yes/index');
+    indicator.current.style.transform = 'translateX(12px)';
     // indicator.current.style.transform = 'translateX(12px)';
   };
 
   // home 移入事件
   const onMouseEnterHome = () => {
-    indicator.current.style.transform = 'translateX(12px)';
+    // indicator.current.style.transform = 'translateX(12px)';
   };
 
   // links 移入事件
   const onMouseEnterLinks = () => {
     setOpen(true);
+    // indicator.current.style.transform = 'translateX(85px)';
+  };
+
+  // 点击进入推广管理页面
+  const handlePushWide = (links) => {
+    history.push(`/yes/${links}`);
     indicator.current.style.transform = 'translateX(85px)';
   };
 
@@ -124,6 +134,7 @@ const HeaderLogin = (props) => {
                       classes={{
                         root: classes.items,
                       }}
+                      onClick={() => { handlePushWide(v.links); }}
                     >
                       {v.text}
                     </MenuItem>

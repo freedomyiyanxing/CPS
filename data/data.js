@@ -111,3 +111,63 @@ export const daily = [
     completeBrokerageAmount: 12
   },
 ];
+
+//查询推广数据明细
+export const details = {
+  total: 256,
+  pages: 12,
+  items: [
+    {
+      orderSN: '124412sd2S',
+      orderTime: 1560333699,
+      orderStatus: '0',
+      prodName: '11商品名字',
+      purchaseQty: 1,
+      purchaseAmount: 100.00,
+      brokerageRate: '0.10',
+      brokerageAmount: 10.00
+    },
+    {
+      orderSN: '12441sdf22S',
+      orderTime: 1560733699,
+      orderStatus: '1',
+      prodName: '22商品名字12',
+      purchaseQty: 1,
+      purchaseAmount: 100.00,
+      brokerageRate: '0.10',
+      brokerageAmount: 10.00
+    },
+    {
+      orderSN: '124sdf2sd2S',
+      orderTime: 1561355847969,
+      orderStatus: '2',
+      prodName: '商品名字333',
+      purchaseQty: 1,
+      purchaseAmount: 100.00,
+      brokerageRate: '0.10',
+      brokerageAmount: 10.00
+    },
+  ]
+};
+
+// 个人查询余额变动
+export const balance = {
+  total: 1233,
+  pages: 50,
+  items: [
+    {
+      createdDate: 1561355847969,
+      operateType: 'in',
+      amount: 23.01,
+      balance: 569.12,
+      remark: '描述11111',
+    },
+    {
+      createdDate: 1561337908207,
+      operateType: 'out',
+      amount: 23.01,
+      balance: 569.12,
+      remark: '描述22222',
+    }
+  ]
+};

@@ -7,6 +7,7 @@ const MyInput = withStyles(theme => ({
     padding: 6,
     color: `${theme.palette.text.primary}!important`,
     '&:before': {
+      borderBottomStyle: 'solid !important',
       borderBottomColor: theme.palette.text.colorDdd,
     },
   },

@@ -1,4 +1,3 @@
-/* eslint-disable */
 export const headerStyle = theme => ({
   root: {
     width: '100%',
@@ -50,11 +49,8 @@ export const headerStyle = theme => ({
 export const curveStyle = theme => ({
   root: {
     marginBottom: 10,
+    padding: 10,
     background: theme.palette.primary[50],
-  },
-  date: {
-    width: 300,
-    padding: [[0, 10, 6]],
   },
   indicator: {
     display: 'none',
@@ -111,4 +107,11 @@ export const curveStyle = theme => ({
     margin-left: -11px;
     border-width: 8px 11px 0;
   */
+});
+
+export const detailStyle = theme => ({
+  root: {
+    padding: 10,
+    background: theme.palette.primary[50],
+  },
 });

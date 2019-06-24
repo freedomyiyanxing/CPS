@@ -31,7 +31,6 @@ const MySelect = (props) => {
         value={names}
         onChange={handleChange}
         name="value"
-        displayEmpty
         {...getFieldProps(outputName, {
           validateFirst: true,
           initialValue: value,
@@ -44,8 +43,8 @@ const MySelect = (props) => {
         })}
       >
         {
-          value
-            ? <MenuItem value="" disabled>{value}</MenuItem>
+          !noRequire // 非必填时 给一个空选项
+            ? <MenuItem value="">None</MenuItem>
             : null
         }
         {
@@ -66,10 +65,10 @@ const MySelect = (props) => {
 MySelect.propTypes = {
   form: PropTypes.objectOf(PropTypes.object).isRequired,
   selectArr: PropTypes.objectOf(PropTypes.array).isRequired,
-  name: PropTypes.string.isRequired,
-  outputName: PropTypes.string.isRequired,
-  value: PropTypes.string,
-  noRequire: PropTypes.bool,
+  name: PropTypes.string.isRequired, // label名称
+  outputName: PropTypes.string.isRequired, // 输出字段名称
+  value: PropTypes.string, // 默认值
+  noRequire: PropTypes.bool, // 是否必填
 };
 
 

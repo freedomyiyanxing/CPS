@@ -1,39 +1,62 @@
 import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles/index';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import moment from 'moment';
+import uuid from 'uuid';
+import Add from '@material-ui/icons/Add';
+import Remove from '@material-ui/icons/Remove';
 
-import MyTableCell from '../../../common/material-ui-compoents/tableCell';
+import MyTable from '../../../common/material-ui-compoents/table';
 import MyButton from '../../../common/material-ui-compoents/button';
 import MyPagination from '../../../common/pagination/pagination';
 import WithdrawDialog from '../../../common/withdraw-dialog/withdraw-dialog';
 
 import { viewStyle } from './style';
 
-function createData(name, calories, fat, carbs, protein) {
-  return {
-    name, calories, fat, carbs, protein,
-  };
-}
+const headers = ['Date', 'Amount', 'Balance', 'Type', 'Description'];
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('哈哈哈哈哈', 356, 16.0, 49, 3.9),
-];
+const setType = (classes, type, amount = null) => {
+  let msg = null;
+  if (amount) {
+    msg = (
+      <span className={classes.amount}>
+        {type === 'in' ? <Add className={classes.icon} /> : <Remove className={classes.icon} />}
+        {amount}
+      </span>
+    );
+  } else {
+    msg = type === 'in' ? 'Get Earning' : 'Withdraw';
+  }
+  return msg;
+};
+
+// 处理表格数据
+const setTableData = (tables, classes) => {
+  const arr = [];
+  let index = 0;
+  // eslint-disable-next-line no-restricted-syntax
+  for (const v of tables) {
+    // 1.改变数据顺序 保证遍历渲染顺序正确
+    // 2.处理数据格式
+    arr[index] = {
+      id: v.id || uuid(),
+      createdDate: moment(v.createdDate).format('YYYY-MM-DD HH:mm:ss'),
+      amount: setType(classes, v.operateType, v.amount),
+      balance: `$ ${v.balance}`,
+      operateType: setType(classes, v.operateType),
+      remark: v.remark,
+    };
+    index += 1;
+  }
+  console.log(arr);
+  return arr;
+};
 
 
 @withStyles(viewStyle)
 class ViewRight extends React.Component {
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
     this.dialogRef = createRef();
   }
 
@@ -53,7 +76,7 @@ class ViewRight extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, data } = this.props;
     return (
       <>
         <WithdrawDialog ref={this.dialogRef} />
@@ -70,28 +93,10 @@ class ViewRight extends React.Component {
               Withdraw
             </MyButton>
           </div>
-          <Table className={classes.table}>
-            <TableHead className={classes.tableHeader}>
-              <TableRow>
-                <MyTableCell>Dessert (100g serving)</MyTableCell>
-                <MyTableCell align="center">Calories</MyTableCell>
-                <MyTableCell align="center">Fat&nbsp;(g)</MyTableCell>
-                <MyTableCell align="center">Carbs&nbsp;(g)</MyTableCell>
-                <MyTableCell align="center">Protein&nbsp;(g)</MyTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody className={classes.tableBody}>
-              {rows.map(row => (
-                <TableRow key={row.name}>
-                  <MyTableCell scope="row">{row.name}</MyTableCell>
-                  <MyTableCell align="center">{row.calories}</MyTableCell>
-                  <MyTableCell align="center">{row.fat}</MyTableCell>
-                  <MyTableCell align="center">{row.carbs}</MyTableCell>
-                  <MyTableCell align="center">{row.protein}</MyTableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <MyTable
+            headers={headers}
+            rows={setTableData(data.items, classes)}
+          />
           <MyPagination
             total={435} // 总条数
             pageSize={10} // 每页条数
@@ -105,6 +110,7 @@ class ViewRight extends React.Component {
 
 ViewRight.propTypes = {
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
+  data: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default ViewRight;

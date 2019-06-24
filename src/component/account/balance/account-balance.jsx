@@ -8,16 +8,19 @@ import ViewRight from './view-right';
 
 import { balanceStyle } from './style';
 
+import { balance } from '../../../../data/data';
+
 @withStyles(balanceStyle)
 class AccountBalance extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <MainContainer margin={[30, 0, 70]}>
-        <div className={classes.root}>
-          <SearchLeft />
-          <ViewRight />
-        </div>
+      <MainContainer
+        margin={[30, 0, 70]}
+        className={classes.root}
+      >
+        <SearchLeft />
+        <ViewRight data={balance} />
       </MainContainer>
     );
   }

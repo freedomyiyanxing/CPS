@@ -12,13 +12,10 @@ const useStyle = makeStyles(theme => ({
     minWidth: 1100,
     margin: [[0, 'auto']],
   },
-  // wrapper: {
-  //   background: theme.palette.primary[50],
-  // },
 }));
 
 const MainContainer = (props) => {
-  const { children, margin } = props;
+  const { children, margin, className } = props;
   const classes = useStyle();
   const styles = {
     margin: `${margin.join('px ')}px`,
@@ -26,7 +23,7 @@ const MainContainer = (props) => {
   return (
     <div className={classes.main}>
       <div className={classes.root}>
-        <div style={styles}>
+        <div style={styles} className={className}>
           {children}
         </div>
       </div>
@@ -37,10 +34,12 @@ const MainContainer = (props) => {
 MainContainer.propTypes = {
   children: PropTypes.node.isRequired,
   margin: PropTypes.objectOf(PropTypes.array),
+  className: PropTypes.string,
 };
 
 MainContainer.defaultProps = {
   margin: [30, 0],
+  className: null,
 };
 
 export default MainContainer;

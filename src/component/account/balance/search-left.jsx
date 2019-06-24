@@ -10,7 +10,7 @@ import DateRange from '../../../common/date-picker/rc-calendar';
 
 import { searchStyle } from './style';
 
-const arr = ['not', 'Get Earning', 'Withdraw'];
+const arr = ['Get Earning', 'Withdraw'];
 
 @withStyles(searchStyle)
 @createForm()
@@ -49,7 +49,7 @@ class SearchLeft extends React.Component {
       <div className={classes.root}>
         <div className={classes.wrapper}>
           <h4 className={classes.title}>Search</h4>
-          <DateRange getDate={this.getDate} />
+          <DateRange getDate={this.getDate} is />
           <MySelect
             form={form}
             name="Type :"
