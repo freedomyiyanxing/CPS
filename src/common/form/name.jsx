@@ -46,7 +46,7 @@ const Name = (props) => {
       <InputLabel htmlFor={`my-${name}`}>{name}</InputLabel>
       <MyInput
         id={`my-${name}`}
-        type="email"
+        type="text"
         aria-describedby="my-helper-text"
         value={names}
         autocomplete="off"

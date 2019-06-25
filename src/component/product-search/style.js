@@ -21,6 +21,23 @@ export const searchStyle = theme => ({
 
 export const viewStyle = () => ({
   root: {
+    flex: 1,
+  },
+  formControl: {
+    height: 32,
     display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-start',
+    marginBottom: 10,
+  },
+  selects: {
+    width: 300,
+    padding: 0,
+  },
+  label: {
+    position: 'absolute',
+  },
+  aa: {
+    flex: 1,
   },
 });

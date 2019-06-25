@@ -171,3 +171,21 @@ export const balance = {
     }
   ]
 };
+
+// 查询推广商品
+export const promotions = {
+  total: 256,
+  pages: 12,
+  items: [
+    {
+      id: 124412242141,
+      prodId: 5654323521,
+      prodName: '商品名字',
+      prodPrice: 12.00,
+      prodImg: '/upload/image/member/2018/06/09/3d2cc564-25c0-4221-9483-d44b97328553.png',
+      storeName: '店铺的名字',
+      brokerageRate: 10.00,
+      endTime: 1560733699
+    }
+  ]
+};

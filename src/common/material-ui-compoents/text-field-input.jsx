@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Search from '@material-ui/icons/Search';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 const useStyle = makeStyles(theme => ({
   field: {
@@ -10,7 +11,7 @@ const useStyle = makeStyles(theme => ({
     position: 'relative',
   },
   wrapper: {
-    paddingRight: 35,
+    padding: 0,
     '& > .MuiOutlinedInput-notchedOutline': {
       borderWidth: '1px !important',
       borderRadius: 4,
@@ -24,11 +25,10 @@ const useStyle = makeStyles(theme => ({
     fontSize: theme.typography.fontSize,
     transform: 'translate(10px, 15px) scale(1)',
   },
-  iconWrapper: {
-    position: 'absolute',
-    right: 10,
-    top: 10,
-    margin: 0,
+  adornment: {
+    marginTop: 4,
+    height: '100%',
+    color: theme.palette.text.secondary,
   },
 }));
 
@@ -39,7 +39,6 @@ const MyTextField = (props) => {
       {...props}
       className={classes.field}
       variant="outlined"
-      helperText={<Search />}
       InputLabelProps={{
         className: classes.label,
       }}
@@ -48,9 +47,14 @@ const MyTextField = (props) => {
         classes: {
           input: classes.input,
         },
-      }}
-      FormHelperTextProps={{
-        className: classes.iconWrapper,
+        endAdornment: (
+          <InputAdornment
+            position="start"
+            className={classes.adornment}
+          >
+            <Search />
+          </InputAdornment>
+        ),
       }}
     />
   );

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import uuid from 'uuid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -53,6 +53,13 @@ const HeaderLogin = (props) => {
   const [showMessage, setShowMessage] = useState(false);
   const anchorRef1 = useRef(null);
   const indicator = useRef(null);
+
+  useEffect(() => {
+    const { pathname } = history.location;
+    if (pathname.endsWith('product-search') || pathname.endsWith('my-products')) {
+      indicator.current.style.transform = 'translateX(85px)';
+    }
+  });
 
   /**
    * 去未登录的首页

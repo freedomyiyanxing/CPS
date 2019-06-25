@@ -6,6 +6,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Name from '../../../common/form/name';
 import SubmitButton from '../../../common/form/submit-button';
 import MySelect from '../../../common/form/my-select';
+import MyPrice from '../../../common/form/my-price';
+import MyPercentage from '../../../common/form/my-percentage';
 
 import { searchStyle } from '../style';
 
@@ -54,6 +56,8 @@ class Search extends React.Component {
           noRequire={false}
           outputName="BelongStore"
         />
+        <MyPrice form={form} />
+        <MyPercentage form={form} />
         <SubmitButton
           name="Apply"
           handleSubmit={this.handleSubmit}
