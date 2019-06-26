@@ -1,5 +1,4 @@
-const withdrawStyle = theme => ({
-  container: {},
+export const dialogsStyle = theme => ({
   dialog: {
     width: 600,
     margin: 0,
@@ -12,12 +11,26 @@ const withdrawStyle = theme => ({
     display: 'flex',
     alignItems: 'center',
     paddingLeft: 20,
-    background: theme.palette.primary.dark,
+    background: theme.palette.primary.main,
     fontSize: theme.typography.fontSizeLg,
     color: theme.palette.primary.contrastText,
     fontWeight: theme.typography.fontWeight,
     borderRadius: [[0, 0, 4, 4]],
   },
+  footer: {
+    marginBottom: 30,
+    display: 'flex',
+    justifyContent: 'space-evenly',
+  },
+  btn: {
+    width: 120,
+    height: 38,
+    fontWeight: theme.typography.fontWeight,
+    borderRadius: 4,
+  },
+});
+
+export const withdrawStyle = theme => ({
   content: {
     margin: [[20, 0]],
   },
@@ -56,17 +69,4 @@ const withdrawStyle = theme => ({
   links: {
     color: theme.palette.text.secondary,
   },
-  footer: {
-    marginBottom: 30,
-    display: 'flex',
-    justifyContent: 'space-evenly',
-  },
-  btn: {
-    width: 120,
-    height: 38,
-    fontWeight: theme.typography.fontWeight,
-    borderRadius: 4,
-  },
 });
-
-export default withdrawStyle;

@@ -8,6 +8,8 @@ export const searchStyle = theme => ({
   root: {
     flex: '0 0 330px',
     marginRight: 10,
+  },
+  wrapper: {
     padding: 10,
     background: theme.palette.primary[50],
   },
@@ -23,21 +25,14 @@ export const viewStyle = () => ({
   root: {
     flex: 1,
   },
-  formControl: {
-    height: 32,
+  header: {
+    width: '100%',
     display: 'flex',
     justifyContent: 'flex-end',
-    alignItems: 'flex-start',
-    marginBottom: 10,
   },
-  selects: {
-    width: 300,
-    padding: 0,
-  },
-  label: {
-    position: 'absolute',
-  },
-  aa: {
-    flex: 1,
+  wrapper: {
+    width: '100%',
+    display: 'flex',
+    flexFlow: 'wrap',
   },
 });

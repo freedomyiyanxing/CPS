@@ -2,19 +2,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import uuid from 'uuid';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
+import { makeStyles } from '@material-ui/core/styles';
 
-import InputBase from '@material-ui/core/InputBase';
-import MyTextField from '../../../common/material-ui-compoents/text-field-input';
-import MyInput from '../../../common/material-ui-compoents/input';
-
-import MySelects from '../../../common/material-ui-compoents/select';
+import DropDownBox from '../../../common/drop-down-box/drop-down-box';
+import ProductItems from '../../../common/product-item/product-item';
 
 import { viewStyle } from '../style';
-
 
 const selects = [
   {
@@ -59,70 +52,34 @@ const selects = [
   },
 ];
 
-const BootstrapInput = withStyles(theme => ({
-  root: {
-    'label + &': {
-      marginTop: theme.spacing(3),
-    },
-  },
-  input: {
-    position: 'relative',
-    backgroundColor: theme.palette.background.paper,
-    border: '1px solid #ced4da',
-    fontSize: 16,
-    padding: '10px 26px 10px 12px',
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
-    '&:focus': {
-      borderColor: '#80bdff',
-      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-    },
-  },
-}))(InputBase);
-
 
 const useStyle = makeStyles(viewStyle);
 const View = (props) => {
   const { data } = props;
-  const [value, setValue] = useState('');
   const classes = useStyle();
   console.log(data);
 
-  const handleSelectChange = (e) => {
-    setValue(e.target.value);
+  // 获取筛选的值
+  const handleSelectChange = (v) => {
+    console.log(v);
   };
+
 
   return (
     <div className={classes.root}>
-      <FormControl
-        fullWidth
-        margin="none"
-        className={classes.formControl}
-      >
-        {/*<InputLabel htmlFor="outlined-age-simple">*/}
-        {/*  Age*/}
-        {/*</InputLabel>*/}
-        <MySelects
-          value={value}
+      <div className={classes.header}>
+        <DropDownBox
+          selects={selects}
           onChange={handleSelectChange}
-          className={classes.selects}
-          input={(
-            <MyInput
-              type="text"
-              startAdornment={<span>哈哈</span>}
-              classes={{
-                focused: classes.aa,
-              }}
-            />
-          )}
-        >
-          {
-            selects.map(v => (
-              <MenuItem key={v.id} value={v.value}>{v.name}</MenuItem>
-            ))
-          }
-        </MySelects>
-      </FormControl>
-
+        />
+      </div>
+      <div className={classes.wrapper}>
+        {
+          data.items.map(v => (
+            <ProductItems data={v} key={v.id} />
+          ))
+        }
+      </div>
     </div>
   );
 };

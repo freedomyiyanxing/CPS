@@ -168,6 +168,13 @@ export const balance = {
       amount: 23.01,
       balance: 569.12,
       remark: '描述22222',
+    },
+    {
+      createdDate: 1561337908207,
+      operateType: 'out',
+      amount: 23.01,
+      balance: 569.12,
+      remark: '描述22222',
     }
   ]
 };
@@ -180,9 +187,49 @@ export const promotions = {
     {
       id: 124412242141,
       prodId: 5654323521,
+      prodName: 'BW Blaze Track Suit BW Blaze Track Suit',
+      prodPrice: 12.00,
+      prodImg: '/upload/image/product/desktop/2018/09/27/f5ee73fa-437c-49f7-ada5-39c59dbd1795.jpg',
+      storeName: '店铺的名字',
+      brokerageRate: 10.00,
+      endTime: 1560733699
+    },
+    {
+      id: 124412242141,
+      prodId: 5654323521,
       prodName: '商品名字',
       prodPrice: 12.00,
-      prodImg: '/upload/image/member/2018/06/09/3d2cc564-25c0-4221-9483-d44b97328553.png',
+      prodImg: '/upload/image/201801/f91a310d-93a6-4009-b5f5-0ce420b3bfba.jpg',
+      storeName: '店铺的名字',
+      brokerageRate: 10.00,
+      endTime: 1560733699
+    },
+    {
+      id: 124412242141,
+      prodId: 5654323521,
+      prodName: '商品名字',
+      prodPrice: 112.00,
+      prodImg: '/upload/image/product/desktop/2018/09/27/f5ee73fa-437c-49f7-ada5-39c59dbd1795.jpg',
+      storeName: '店铺的名字',
+      brokerageRate: 13.00,
+      endTime: 1560733699
+    },
+    {
+      id: 124412242141,
+      prodId: 5654323521,
+      prodName: '商品名字',
+      prodPrice: 12.00,
+      prodImg: '/upload/image/product/desktop/2019/01/17/ec36d033-3ed9-4b66-b1f5-e738d82e592f.jpg',
+      storeName: '店铺的名字',
+      brokerageRate: 10.00,
+      endTime: 1560733699
+    },
+    {
+      id: 124412242141,
+      prodId: 5654323521,
+      prodName: '商品名字',
+      prodPrice: 12.00,
+      prodImg: '/upload/image/product/desktop/2018/10/23/fdf67a77-bb60-496a-b26b-7cc3c1fd3a41.jpg',
       storeName: '店铺的名字',
       brokerageRate: 10.00,
       endTime: 1560733699

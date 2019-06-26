@@ -36,7 +36,8 @@ const SubmitButton = (props) => {
         {name}
       </MyButton>
       {
-        loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+        loading && <CircularProgress size={24} className={classes.buttonProgress} />
+      }
     </div>
   );
 };

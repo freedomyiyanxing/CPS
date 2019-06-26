@@ -109,9 +109,9 @@ export const loginStyle = theme => ({
       marginLeft: 10,
       borderTopColor: theme.palette.primary[50],
     },
-    '&:hover': {
-      background: theme.palette.primary.A400,
-    },
+    // '&:hover': {
+    //   background: theme.palette.primary.A400,
+    // },
   },
   linkCollapse: {
     position: 'absolute',

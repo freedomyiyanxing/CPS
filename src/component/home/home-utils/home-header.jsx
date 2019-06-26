@@ -5,7 +5,8 @@ import Avatar from '@material-ui/core/Avatar';
 
 import PartitionLine from '../../../common/partition-line/partition-line';
 import MyButton from '../../../common/material-ui-compoents/button';
-import WithdrawDialog from '../../../common/withdraw-dialog/withdraw-dialog';
+import MyDialog from '../../../common/dialog/dialog';
+import Withdraw from '../../../common/dialog/withdraw';
 
 import { headerStyle } from './style';
 
@@ -55,7 +56,13 @@ const HomeHeader = (props) => {
           Withdraw
         </MyButton>
       </div>
-      <WithdrawDialog ref={dialogRef} />
+      <MyDialog
+        ref={dialogRef}
+        title="Withdraw"
+        btnArr={['Submit', 'Clean']}
+      >
+        <Withdraw />
+      </MyDialog>
     </>
   );
 };

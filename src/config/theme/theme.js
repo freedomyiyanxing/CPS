@@ -29,7 +29,7 @@ export const theme = createMuiTheme({
       A200: "#aaaaaa",
       A400: "#292929",
       A700: "#616161",
-      dark: "#333333",
+      dark: "#5a5a5a", // button 组件 设置了variant 的hover值
       light: "#e0e0e0",
       main: "#333333",
       contrastText: "#ffffff",
@@ -58,8 +58,9 @@ export const theme = createMuiTheme({
       active: 'rgba(0, 0, 0, 0.54)',
       disabled: 'rgba(0, 0, 0, 0.26)',
       disabledBackground: 'rgba(0, 0, 0, 0.12)',
-      hover: 'rgba(0, 0, 0, 0.28)',
-      hoverOpacity: 0.18,
+      hover: 'rgba(0, 0, 0, 0.28)', // MenuItem hover 时的值
+      // 没有设置 variant 属性运用的
+      hoverOpacity: 0.38, // button hover 时的透明度, 颜色采用text.primary
       selected: 'rgba(0, 0, 0, 0.14)',
     },
     border: {

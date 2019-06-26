@@ -36,32 +36,34 @@ class Search extends React.Component {
     const { classes, form } = this.props;
     return (
       <div className={classes.root}>
-        <h4 className={classes.title}>Search</h4>
-        <Name
-          form={form}
-          name="Product Name :"
-          noRequire={false}
-          outputName="ProductName"
-        />
-        <MySelect
-          form={form}
-          name="Product Category :"
-          outputName="ProductCategory"
-          selectArr={['1', '2']}
-          noRequire={false}
-        />
-        <Name
-          form={form}
-          name="Belong Store :"
-          noRequire={false}
-          outputName="BelongStore"
-        />
-        <MyPrice form={form} />
-        <MyPercentage form={form} />
-        <SubmitButton
-          name="Apply"
-          handleSubmit={this.handleSubmit}
-        />
+        <div className={classes.wrapper}>
+          <h4 className={classes.title}>Search</h4>
+          <Name
+            form={form}
+            name="Product Name :"
+            noRequire={false}
+            outputName="ProductName"
+          />
+          <MySelect
+            form={form}
+            name="Product Category :"
+            outputName="ProductCategory"
+            selectArr={['1', '2']}
+            noRequire={false}
+          />
+          <Name
+            form={form}
+            name="Belong Store :"
+            noRequire={false}
+            outputName="BelongStore"
+          />
+          <MyPrice form={form} />
+          <MyPercentage form={form} />
+          <SubmitButton
+            name="Apply"
+            handleSubmit={this.handleSubmit}
+          />
+        </div>
       </div>
     );
   }

@@ -1,14 +1,14 @@
 const footerStyle = theme => ({
   root: {
     width: '100%',
-    background: theme.palette.primary.dark,
+    background: theme.palette.primary.main,
   },
   wrapper: {
     width: 1100,
     minWidth: 1100,
     margin: [[0, 'auto']],
     padding: [[20, 0, 10]],
-    background: theme.palette.primary.dark,
+    background: theme.palette.primary.main,
   },
   footerNavigation: {
     display: 'flex',

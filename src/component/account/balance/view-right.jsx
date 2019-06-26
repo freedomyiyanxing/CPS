@@ -9,7 +9,8 @@ import Remove from '@material-ui/icons/Remove';
 import MyTable from '../../../common/material-ui-compoents/table';
 import MyButton from '../../../common/material-ui-compoents/button';
 import MyPagination from '../../../common/pagination/pagination';
-import WithdrawDialog from '../../../common/withdraw-dialog/withdraw-dialog';
+import MyDialog from '../../../common/dialog/dialog';
+import Withdraw from '../../../common/dialog/withdraw';
 
 import { viewStyle } from './style';
 
@@ -79,7 +80,6 @@ class ViewRight extends React.Component {
     const { classes, data } = this.props;
     return (
       <>
-        <WithdrawDialog ref={this.dialogRef} />
         <div className={classes.root}>
           <div className={classes.header}>
             <span>Balance :</span>
@@ -103,6 +103,13 @@ class ViewRight extends React.Component {
             change={this.handlePaginationChange} // 点击分页时调用
           />
         </div>
+        <MyDialog
+          ref={this.dialogRef}
+          title="Withdraw"
+          btnArr={['Submit', 'Clean']}
+        >
+          <Withdraw />
+        </MyDialog>
       </>
     );
   }
