@@ -1,23 +1,25 @@
-import React from 'react';
+/* eslint-disable */
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import uuid from 'uuid';
 import { makeStyles } from '@material-ui/core/styles';
 
 import DropDownBox from '../../../common/drop-down-box/drop-down-box';
-import ProductItems from '../../../common/product-item/product-item';
 import MyPagination from '../../../common/pagination/pagination';
+import AllTopBtn from './all-top-btn';
+import ProductList from './product-list';
 
 import { viewStyle } from '../style';
 
 const selects = [
   {
     uuid: uuid(),
-    name: 'Date: New to Old',
+    name: 'Selected Date: default',
     value: 'dateDesc',
   },
   {
     uuid: uuid(),
-    name: 'Date: Old to New',
+    name: 'Selected Date: Old to New',
     value: 'dateAsc',
   },
   {
@@ -29,16 +31,6 @@ const selects = [
     uuid: uuid(),
     name: 'Ad Fees Rate: Low to High',
     value: 'rateAsc',
-  },
-  {
-    uuid: uuid(),
-    name: 'Price: High to Low',
-    value: 'priceDesc',
-  },
-  {
-    uuid: uuid(),
-    name: 'Price: Low to High',
-    value: 'priceAsc',
   },
   {
     uuid: uuid(),
@@ -71,18 +63,13 @@ const View = (props) => {
   return (
     <div className={classes.root}>
       <div className={classes.header}>
+        <AllTopBtn />
         <DropDownBox
           selects={selects}
           onChange={handleSelectChange}
         />
       </div>
-      <div className={classes.wrapper}>
-        {
-          data.items.map(v => (
-            <ProductItems data={v} key={v.id} />
-          ))
-        }
-      </div>
+      <ProductList data={data.items} />
       <MyPagination
         total={435} // 总条数
         pageSize={10} // 每页条数

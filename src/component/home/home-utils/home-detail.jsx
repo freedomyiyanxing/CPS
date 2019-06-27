@@ -48,8 +48,9 @@ const setTableData = (tables) => {
 
 @withStyles(detailStyle)
 class HomeDetails extends React.Component {
-  handleChange = (e) => {
-    console.log(e.target.value);
+  // 点击分页时调用
+  handlePaginationChange = (current) => {
+    console.log(current);
   };
 
   render() {

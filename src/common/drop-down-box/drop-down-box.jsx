@@ -11,7 +11,6 @@ const useStyle = makeStyles(theme => ({
   selectMain: {
     width: 300,
     position: 'relative',
-    marginBottom: 10,
   },
   control: {
     position: 'relative',
@@ -35,6 +34,8 @@ const useStyle = makeStyles(theme => ({
     height: 280,
     overflowY: 'auto',
     background: theme.palette.primary[50],
+    border: `1px solid ${theme.palette.border.borderDD}`,
+    borderTop: 'none',
   },
   firstName: {
     color: theme.palette.text.secondary,

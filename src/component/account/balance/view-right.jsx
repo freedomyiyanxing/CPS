@@ -70,6 +70,7 @@ class ViewRight extends React.Component {
     }
   };
 
+  // 点击分页时调用
   handlePaginationChange = (current) => {
     console.log(
       '当前选中的页数: ', current,

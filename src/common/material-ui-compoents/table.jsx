@@ -8,8 +8,9 @@ import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-const MyTableCell = withStyles(theme => ({
+export const MyTableCell = withStyles(theme => ({
   root: {
+    padding: [[10, 0]],
     fontSize: theme.typography.fontSize,
     borderBottomColor: theme.palette.border.borderEf,
   },

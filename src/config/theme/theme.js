@@ -1,14 +1,9 @@
 /* eslint-disable */
 import { createMuiTheme } from '@material-ui/core/styles';
-import grey from '@material-ui/core/colors/grey';
 import red from '@material-ui/core/colors/red';
 import orange from '@material-ui/core/colors/orange';
 import lightBlue from '@material-ui/core/colors/lightBlue';
-import purple from '@material-ui/core/colors/purple';
-import brown from '@material-ui/core/colors/brown';
-import lime from '@material-ui/core/colors/lime';
-import blueGrey from '@material-ui/core/colors/blueGrey';
-import blue from '@material-ui/core/colors/blue';
+import green from '@material-ui/core/colors/green';
 
 export const theme = createMuiTheme({
   // 色彩配置
@@ -40,6 +35,8 @@ export const theme = createMuiTheme({
     secondary: orange,
     // 继承色 (当前项目的风格中用不到)
     inherit: lightBlue,
+    // 成功色
+    green: green,
     type: 'light',
     background: {
       black: '#040404',

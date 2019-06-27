@@ -29,6 +29,7 @@ export const viewStyle = () => ({
     width: '100%',
     display: 'flex',
     justifyContent: 'flex-end',
+    marginBottom: 10,
   },
   wrapper: {
     width: '100%',

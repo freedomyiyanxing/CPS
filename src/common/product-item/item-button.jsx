@@ -8,6 +8,7 @@ import copy from 'copy-to-clipboard';
 import MyButton from '../../common/material-ui-compoents/button';
 import PartitionLine from '../../common/partition-line/partition-line';
 import MyDialogs from '../../common/dialog/dialog';
+import openNotification from '../../common/prompt-box/prompt-box';
 
 const useStyle = makeStyles(theme => ({
   btnWrapper: {
@@ -43,8 +44,12 @@ const ItemButton = (props) => {
   const handleSelect = () => {
     setLoading(true);
     setTimeout(() => {
-      setLoading(false)
-    }, 3000);
+      setLoading(false);
+      openNotification({
+        message: '已经加入你的推广商品列表 --- OK',
+        variant: 'success',
+      });
+    }, 1000);
   };
 
   /**
@@ -57,7 +62,7 @@ const ItemButton = (props) => {
       // 发送获取 Links 请求
       setTimeout(() => {
         setLinks('www.baidu.com');
-      }, 2000);
+      }, 1000);
     }
   };
 
@@ -67,6 +72,10 @@ const ItemButton = (props) => {
     if (links) {
       copy(links);
       dialogRef.current.handleCloses();
+      openNotification({
+        message: '复制成功 --- OK',
+        variant: 'success',
+      });
     }
   };
   return (
