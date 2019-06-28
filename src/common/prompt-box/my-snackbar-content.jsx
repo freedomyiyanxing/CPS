@@ -15,6 +15,9 @@ const variantIcon = {
 };
 
 const useStyles = makeStyles(theme => ({
+  wrapper: {
+    padding: [[8, 46, 8, 16]],
+  },
   success: {
     backgroundColor: '#43a047',
   },
@@ -32,12 +35,15 @@ const useStyles = makeStyles(theme => ({
   },
   iconVariant: {
     opacity: 0.9,
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(2),
   },
-  message: {
+  msgWrapper: {
     display: 'flex',
     alignItems: 'center',
+  },
+  message: {
     fontSize: 16,
+    lineHeight: 1.4,
   },
 }));
 
@@ -48,13 +54,18 @@ function MySnackbarContentWrapper(props) {
 
   return (
     <SnackbarContent
-      className={`${classes[variant]} ${className}`}
+      className={`${classes[variant]} ${className} ${classes.wrapper}`}
       aria-describedby="client-snackbar"
+      classes={{
+        message: classes.msgWrapper,
+      }}
       message={(
-        <span id="client-snackbar" className={classes.message}>
+        <>
           <Icon className={`${classes.icon} ${classes.iconVariant}`} />
-          {message}
-        </span>
+          <span className={classes.message}>
+            {message}
+          </span>
+        </>
       )}
     />
   );

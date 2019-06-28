@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import MyButton from '../../../common/material-ui-compoents/button';
 
@@ -13,15 +14,21 @@ const useStyle = makeStyles(theme => ({
   },
 }));
 
-const AllTopBtn = () => {
+const AllTopBtn = (props) => {
+  const { value } = props;
   const classes = useStyle();
-  console.log(1);
+
+  const getLinks = () => {
+    console.log('获取所有的选中的id', value, 'value');
+  };
+
   return (
     <div>
       <MyButton
         variant="contained"
         color="primary"
         className={classes.root}
+        onClick={getLinks}
       >
         Batch Get Link
       </MyButton>
@@ -34,6 +41,10 @@ const AllTopBtn = () => {
       </MyButton>
     </div>
   );
+};
+
+AllTopBtn.propTypes = {
+  value: PropTypes.objectOf(PropTypes.array).isRequired,
 };
 
 export default AllTopBtn;

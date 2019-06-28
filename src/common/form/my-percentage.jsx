@@ -6,22 +6,17 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Remove from '@material-ui/icons/Remove';
 import MyInput from '../material-ui-compoents/input';
+import MyLabel from '../material-ui-compoents/input-label';
 
 const useStyle = makeStyles(theme => ({
   root: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 4,
+    marginTop: 16,
     '& > div': {
       maxWidth: 140,
     },
-  },
-  label: {
-    transform: 'translate(0, 1.5px) scale(0.75)',
-    transformOrigin: 'top left',
-    fontSize: theme.typography.fontSizeMd,
-    color: theme.palette.text.secondary,
   },
   icon: {
     fontSize: theme.typography.fontSize,
@@ -80,7 +75,7 @@ const MyPercentage = (props) => {
       error={errors}
       margin="normal"
     >
-      <span className={classes.label}>Advertising :</span>
+      <MyLabel fontSize="sm" shrink>Advertising :</MyLabel>
       <div className={classes.root}>
         <MyInput
           type="text"

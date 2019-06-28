@@ -1,33 +1,13 @@
-export const submitButtonStyle = theme => ({
+export const submitButtonStyle = () => ({
   wrapperBtn: {
     marginTop: 30,
     position: 'relative',
     display: 'flex',
     justifyContent: 'center',
   },
-  btn: { // 解决同一个页面 不同组件引入相同的Button组件导致的问题
+  btn: {
     minHeight: 38,
     borderRadius: 4,
-  },
-  buttonProgress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12,
-    color: theme.palette.primary.primary,
-  },
-});
-
-export const myTextareaStyle = theme => ({
-  root: {
-    padding: 6,
-    '&:before': {
-      borderBottomColor: theme.palette.text.colorDdd,
-    },
-    '& > textarea': {
-      fontSize: theme.typography.fontSizeMd,
-    },
   },
 });
 

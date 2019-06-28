@@ -9,7 +9,7 @@ import MenuList from '@material-ui/core/MenuList';
 
 const useStyle = makeStyles(theme => ({
   selectMain: {
-    width: 300,
+    width: 260,
     position: 'relative',
   },
   control: {
@@ -28,9 +28,10 @@ const useStyle = makeStyles(theme => ({
     position: 'absolute',
     right: 0,
     top: 32,
+    zIndex: theme.zIndex.mobileStepper,
   },
   selectWrapper: {
-    width: 300,
+    width: 260,
     height: 280,
     overflowY: 'auto',
     background: theme.palette.primary[50],

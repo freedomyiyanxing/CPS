@@ -1,6 +1,6 @@
-// import uuid from 'uuid';
+import uuid from 'uuid';
 
-export const webSiteCagegory = [
+const webSiteCagegory = [
   'Adult', 'Arts', 'Automobile', 'Blogs', 'Books', 'Business',
   'Career', 'Celebrities', 'Computer', 'Education', 'Electronics', 'Entertainment',
   'Finance', 'Fitness', 'Food & Beverage', 'Gambling', 'Games', 'Government',
@@ -9,9 +9,9 @@ export const webSiteCagegory = [
   'Science', 'Shopping', 'Sports', 'Telecommunications', 'Travel',
 ];
 
-export const monthlyVisitors = ['< 1K', '1K – 10K', '10K – 100K', '100K – 1000K', '>1000K'];
+const monthlyVisitors = ['< 1K', '1K – 10K', '10K – 100K', '100K – 1000K', '>1000K'];
 
-export const accountSettingTabs = [
+const accountSettingTabs = [
   {
     id: 'uuid-1',
     index: 0,
@@ -28,3 +28,93 @@ export const accountSettingTabs = [
     text: 'Wibsite Setting',
   },
 ];
+
+/* 商家推广商品默认数据 */
+const storeProduct = {
+  productSort: [
+    {
+      uuid: uuid(),
+      name: 'Date: New to Old',
+      value: 'dateDesc',
+    },
+    {
+      uuid: uuid(),
+      name: 'Date: Old to New',
+      value: 'dateAsc',
+    },
+    {
+      uuid: uuid(),
+      name: 'Ad Fees Rate: High to Low',
+      value: 'rateDesc',
+    },
+    {
+      uuid: uuid(),
+      name: 'Ad Fees Rate: Low to High',
+      value: 'rateAsc',
+    },
+    {
+      uuid: uuid(),
+      name: 'Price: High to Low',
+      value: 'priceDesc',
+    },
+    {
+      uuid: uuid(),
+      name: 'Price: Low to High',
+      value: 'priceAsc',
+    },
+    {
+      uuid: uuid(),
+      name: 'Alphabetically: A-Z',
+      value: 'nameDesc',
+    },
+    {
+      uuid: uuid(),
+      name: 'Alphabetically: Z-A',
+      value: 'nameAsc',
+    },
+  ],
+};
+
+/* 我的推广商品默认数据 */
+const myProduct = {
+  productSort: [
+    {
+      uuid: uuid(),
+      name: 'Selected Date: default',
+      value: 'dateDesc',
+    },
+    {
+      uuid: uuid(),
+      name: 'Selected Date: Old to New',
+      value: 'dateAsc',
+    },
+    {
+      uuid: uuid(),
+      name: 'Ad Fees Rate: High to Low',
+      value: 'rateDesc',
+    },
+    {
+      uuid: uuid(),
+      name: 'Ad Fees Rate: Low to High',
+      value: 'rateAsc',
+    },
+    {
+      uuid: uuid(),
+      name: 'Alphabetically: A-Z',
+      value: 'nameDesc',
+    },
+    {
+      uuid: uuid(),
+      name: 'Alphabetically: Z-A',
+      value: 'nameAsc',
+    },
+  ],
+};
+
+export {
+  storeProduct,
+  myProduct,
+  webSiteCagegory,
+  monthlyVisitors,
+  accountSettingTabs,
+};

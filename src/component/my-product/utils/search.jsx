@@ -41,6 +41,7 @@ class Search extends React.Component {
             name="Product Name :"
             noRequire={false}
             outputName="ProductName"
+            fontSize="sm"
           />
           <MySelect
             form={form}
@@ -48,6 +49,7 @@ class Search extends React.Component {
             outputName="Status"
             selectArr={['Normal', 'invalid']}
             noRequire={false}
+            fontSize="sm"
           />
           <MySelect
             form={form}
@@ -55,12 +57,14 @@ class Search extends React.Component {
             outputName="ProductCategory"
             selectArr={['1', '2']}
             noRequire={false}
+            fontSize="sm"
           />
           <Name
             form={form}
             name="Belong Store :"
             noRequire={false}
             outputName="BelongStore"
+            fontSize="sm"
           />
           <SubmitButton
             name="Apply"

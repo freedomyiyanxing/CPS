@@ -19,10 +19,16 @@ export const MyTableCell = withStyles(theme => ({
 const useStyle = makeStyles(theme => ({
   tableHeader: {
     background: theme.palette.primary[100],
+    '& th': {
+      paddingLeft: 30,
+    },
   },
   tableBody: {
     border: `1px solid ${theme.palette.border.borderEf}`,
     borderBottom: 'none',
+    '& td': {
+      paddingLeft: 30,
+    },
   },
 }));
 

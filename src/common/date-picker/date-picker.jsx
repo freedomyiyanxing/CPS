@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -5,6 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import MySelects from '../material-ui-compoents/select';
+import MyLabel from '../material-ui-compoents/input-label';
 
 import dateArr, { getDefault, MonthText, getDateFormat } from './get-date';
 import datePickerStyle from './style';
@@ -106,18 +108,13 @@ class DatePicker extends React.Component {
       _month, _date, _year, errors,
     } = this.state;
     const { month, date, year } = dateArr;
-    console.log('刷新了嘛', _month, _date, _year);
     return (
       <FormControl
         fullWidth
         margin="normal"
         error={errors}
       >
-        <span
-          className={`${classes.label} ${errors ? classes.labelError : ''}`}
-        >
-          Date of birth
-        </span>
+        <MyLabel fontSize="sm" shrink>Date of birth</MyLabel>
         <div className={classes.wrapper}>
           <MySelects
             displayEmpty

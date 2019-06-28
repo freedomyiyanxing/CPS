@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { createMuiTheme } from '@material-ui/core/styles';
+import {createMuiTheme} from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 import orange from '@material-ui/core/colors/orange';
 import lightBlue from '@material-ui/core/colors/lightBlue';
@@ -42,6 +42,7 @@ export const theme = createMuiTheme({
       black: '#040404',
       default: '#f5f5f5',
       paper: '#ffffff',
+      disabled: 'rgba(151, 151, 151, 0.5)',
     },
     text: {
       disabled: 'rgba(0, 0, 0, 0.38)',
@@ -50,6 +51,7 @@ export const theme = createMuiTheme({
       secondary: 'rgba(153, 153, 153, 1)',
       colorDdd: 'rgba(221, 221, 221, 1)',
       inherit: 'rgba(102, 102, 102, 1)',
+      color00: 'rgba(0, 0, 0, 1)',
     },
     action: {
       active: 'rgba(0, 0, 0, 0.54)',
@@ -75,10 +77,11 @@ export const theme = createMuiTheme({
     useNextVariants: true,
     htmlFontSize: 10,
     fontWeight: 800,
-    fontSizeLg: 18,
-    fontSizeMd: 16,
-    fontSizeSm: 14,
-    fontSizeXs: 12,
+    fontNormal: 400,
+    fontSizeLg: '1.8rem',
+    fontSizeMd: '1.6rem',
+    fontSizeSm: '1.4rem',
+    fontSizeXs: '1.2rem',
     fontFamily: '\'Mukta Vaani\',sans-serif',
     h1: {
       fontSize: '4.0rem',

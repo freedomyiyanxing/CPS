@@ -28,16 +28,17 @@ const SubmitButton = (props) => {
         fullWidth
         variant="contained"
         color="primary"
-        disabled={loading}
+        loading={loading}
         className={classes.btn}
         onClick={handleClick}
         style={{ width }}
       >
-        {name}
+        {
+          loading
+            ? <CircularProgress size={24} />
+            : name
+        }
       </MyButton>
-      {
-        loading && <CircularProgress size={24} className={classes.buttonProgress} />
-      }
     </div>
   );
 };

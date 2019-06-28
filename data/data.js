@@ -179,7 +179,7 @@ export const balance = {
   ]
 };
 
-// 查询推广商品
+// 查询商家推广商品
 export const promotions = {
   total: 256,
   pages: 12,
@@ -192,7 +192,7 @@ export const promotions = {
       prodImg: '/upload/image/product/desktop/2018/09/27/f5ee73fa-437c-49f7-ada5-39c59dbd1795.jpg',
       storeName: '店铺的名字',
       brokerageRate: 10.00,
-      endTime: 1560733699
+      endTime: 1565443200000
     },
     {
       id: 'sdgdsyg45124412242141',
@@ -202,7 +202,7 @@ export const promotions = {
       prodImg: '/upload/image/201801/f91a310d-93a6-4009-b5f5-0ce420b3bfba.jpg',
       storeName: '店铺的名字',
       brokerageRate: 10.00,
-      endTime: 1560733699
+      endTime: 1565443200000
     },
     {
       id: '325tsdger124412242141',
@@ -212,7 +212,7 @@ export const promotions = {
       prodImg: '/upload/image/product/desktop/2018/09/27/f5ee73fa-437c-49f7-ada5-39c59dbd1795.jpg',
       storeName: '店铺的名字',
       brokerageRate: 13.00,
-      endTime: 1560733699
+      endTime: 1565443200000
     },
     {
       id: 'sdgf34124412242141',
@@ -222,7 +222,7 @@ export const promotions = {
       prodImg: '/upload/image/product/desktop/2019/01/17/ec36d033-3ed9-4b66-b1f5-e738d82e592f.jpg',
       storeName: '店铺的名字',
       brokerageRate: 10.00,
-      endTime: 1560733699
+      endTime: 1565443200000
     },
     {
       id: 'sdf34124412242141',
@@ -232,7 +232,7 @@ export const promotions = {
       prodImg: '/upload/image/product/desktop/2018/10/23/fdf67a77-bb60-496a-b26b-7cc3c1fd3a41.jpg',
       storeName: '店铺的名字',
       brokerageRate: 10.00,
-      endTime: 1560733699
+      endTime: 1564243200000
     },
     {
       id: 'sdg45124412242141',
@@ -242,7 +242,7 @@ export const promotions = {
       prodImg: '/upload/image/product/desktop/2018/09/27/f5ee73fa-437c-49f7-ada5-39c59dbd1795.jpg',
       storeName: '店铺的名字',
       brokerageRate: 13.00,
-      endTime: 1560733699
+      endTime: 1564243200000
     },
     {
       id: 'sdfsdf34546757',
@@ -252,7 +252,7 @@ export const promotions = {
       prodImg: '/upload/image/product/desktop/2019/01/17/ec36d033-3ed9-4b66-b1f5-e738d82e592f.jpg',
       storeName: '店铺的名字',
       brokerageRate: 10.00,
-      endTime: 1560733699
+      endTime: 1564243200000
     },
     {
       id: '124412242141sdfsdf34546757',
@@ -262,26 +262,51 @@ export const promotions = {
       prodImg: '/upload/image/product/desktop/2018/09/27/f5ee73fa-437c-49f7-ada5-39c59dbd1795.jpg',
       storeName: '店铺的名字',
       brokerageRate: 13.00,
-      endTime: 1560733699
+      endTime: 1564243200000
     },
   ]
 };
 
+// 查询个人推广商品
 export const myPromotions = {
   total: 256,
   pages: 12,
   items: [
     {
-      id: '124412242141',
-      prodName: 'BW Blaze Track Suit Track',
+      id: '1244122s42141A',
+      prodName: 'BW Blaze Track BW Blaze Track  Suit Track',
       prodPrice: 122.00,
       prodImg: '/upload/image/product/desktop/2019/04/25/89ff4b3b-0781-4765-b76c-f80a281a7591.jpg',
-      storeName: '店铺的名字',
+      storeName: 'store 1',
       brokerageRate: 20,
       brokerageAmount: 10.00,
-      endTime: 1560733699,
+      endTime: 1565443200000, // 1561705200000 // 1564243200000
       status: 'normal',
-      prodCateName: '分类的名字',
-    }
+      prodCateName: 'Category 1',
+    },
+    {
+      id: '1244343214134B',
+      prodName: 'BW Blaze Track BW Blaze Track  Suit Track',
+      prodPrice: 122.00,
+      prodImg: '/upload/image/product/desktop/2019/04/25/89ff4b3b-0781-4765-b76c-f80a281a7591.jpg',
+      storeName: 'store 2',
+      brokerageRate: 20,
+      brokerageAmount: 10.00,
+      endTime: 1564243200000, // 1561705200000 // 1564243200000
+      status: 'normal',
+      prodCateName: 'Category 2',
+    },
+    {
+      id: '124412242sf14C',
+      prodName: 'BW Blaze Track BW Blaze Track  Suit Track',
+      prodPrice: 122.00,
+      prodImg: '/upload/image/product/desktop/2019/04/25/89ff4b3b-0781-4765-b76c-f80a281a7591.jpg',
+      storeName: 'store 1',
+      brokerageRate: 20,
+      brokerageAmount: 10.00,
+      endTime: 1565443200000, // 1561705200000 // 1564243200000
+      status: 'normal',
+      prodCateName: 'Category 1',
+    },
   ]
 };

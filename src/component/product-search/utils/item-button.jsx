@@ -1,37 +1,18 @@
 /* eslint-disable */
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from "@material-ui/core/CircularProgress";
-import copy from 'copy-to-clipboard';
+import { makeStyles } from '@material-ui/core/styles/index';
+import CircularProgress from '@material-ui/core/CircularProgress/index';
+import copy from 'copy-to-clipboard/index';
 
-import MyButton from '../../common/material-ui-compoents/button';
-import PartitionLine from '../../common/partition-line/partition-line';
-import MyDialogs from '../../common/dialog/dialog';
-import openNotification from '../../common/prompt-box/prompt-box';
+import MyButton from '../../../common/material-ui-compoents/button';
+import PartitionLine from '../../../common/partition-line/partition-line';
+import MyDialogs from '../../../common/dialog/dialog';
+import openNotification from '../../../common/prompt-box/prompt-box';
 
-const useStyle = makeStyles(theme => ({
-  btnWrapper: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  btn: {
-    flex: 1,
-    height: 38,
-  },
-  disabled: {
-    background: theme.palette.primary[400],
-  },
-  copyWrapper: {
-    height: 150,
-    margin: [[20, 20, 30]],
-    padding: 10,
-    fontSize: theme.typography.fontSizeMd,
-    color: theme.palette.text.secondary,
-    border: `1px solid ${theme.palette.border.borderDD}`,
-  },
-}));
+import { itemButtonStyle } from '../style';
+
+const useStyle = makeStyles(itemButtonStyle);
 
 const ItemButton = (props) => {
   const { } = props;
@@ -101,7 +82,7 @@ const ItemButton = (props) => {
         >
           {
             loading
-              ? <CircularProgress size={24} className={classes.buttonProgress} />
+              ? <CircularProgress size={24} />
               : 'Select'
           }
         </MyButton>

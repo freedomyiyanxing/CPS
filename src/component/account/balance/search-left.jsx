@@ -56,11 +56,13 @@ class SearchLeft extends React.Component {
             outputName="type"
             selectArr={arr}
             noRequire={false}
+            fontSize="sm"
           />
           <MyTextarea
             form={form}
             noRequire={false}
             name="Description :"
+            fontSize="sm"
           />
           <SubmitButton
             name="Apply"

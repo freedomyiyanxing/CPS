@@ -7,12 +7,12 @@ import enUS from 'rc-calendar/lib/locale/en_US';
 import moment from 'moment';
 import Close from '@material-ui/icons/Close';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import 'moment/locale/en-gb';
 import 'rc-calendar/assets/index.css';
 
 import MyInput from '../material-ui-compoents/input';
 import MyTextField from '../material-ui-compoents/text-field-input';
+import MyLabel from '../material-ui-compoents/input-label';
 
 import { rcCalendarStyle } from './style';
 
@@ -93,7 +93,7 @@ class DateRange extends React.Component {
                   fullWidth
                   margin="dense"
                 >
-                  <InputLabel htmlFor="my-rc-calendar">Date Range :</InputLabel>
+                  <MyLabel fontSize="sm" htmlFor="my-rc-calendar">Date Range :</MyLabel>
                   <MyInput
                     id="my-rc-calendar"
                     readOnly

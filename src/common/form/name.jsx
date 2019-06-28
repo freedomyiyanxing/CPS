@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 import MyInput from '../material-ui-compoents/input';
+import MyLabel from '../material-ui-compoents/input-label';
 
 const Name = (props) => {
   const {
-    value, form, name, disabled, noRequire,
+    value, form, name, disabled, noRequire, fontSize,
   } = props;
   const [names, setNames] = useState(value);
 
@@ -43,7 +43,7 @@ const Name = (props) => {
         ],
       })}
     >
-      <InputLabel htmlFor={`my-${name}`}>{name}</InputLabel>
+      <MyLabel fontSize={fontSize} htmlFor={`my-${name}`}>{name}</MyLabel>
       <MyInput
         id={`my-${name}`}
         type="text"
@@ -67,12 +67,14 @@ Name.propTypes = {
   value: PropTypes.string, // 默认值
   disabled: PropTypes.bool, // 是的禁用
   noRequire: PropTypes.bool, // 是否必填
+  fontSize: PropTypes.string, // 控制label文字
 };
 
 Name.defaultProps = {
   value: '',
   disabled: false, // 默认不禁用
   noRequire: true, // 默认必填
+  fontSize: 'md',
 };
 
 export default Name;

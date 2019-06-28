@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import MySelects from '../material-ui-compoents/select';
+import MyLabel from '../material-ui-compoents/input-label';
 
 const MySelect = (props) => {
   const {
-    form, selectArr, name, outputName, value, noRequire,
+    form, selectArr, name, outputName, value, noRequire, fontSize,
   } = props;
   const [names, setNames] = useState(value);
 
@@ -26,7 +26,7 @@ const MySelect = (props) => {
       error={errors}
       margin="normal"
     >
-      <InputLabel htmlFor="my-url">{name}</InputLabel>
+      <MyLabel fontSize={fontSize} htmlFor="my-url">{name}</MyLabel>
       <MySelects
         value={names}
         onChange={handleChange}
@@ -69,12 +69,14 @@ MySelect.propTypes = {
   outputName: PropTypes.string.isRequired, // 输出字段名称
   value: PropTypes.string, // 默认值
   noRequire: PropTypes.bool, // 是否必填
+  fontSize: PropTypes.string, // 控制label文字
 };
 
 
 MySelect.defaultProps = {
   value: '',
   noRequire: true,
+  fontSize: 'md',
 };
 
 export default MySelect;

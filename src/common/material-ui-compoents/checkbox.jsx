@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -16,21 +16,14 @@ const useStyle = makeStyles(theme => ({
 
 
 const MyCheckbox = (props) => {
-  const { onChange } = props;
-  const [check, setCheck] = useState(false);
+  const { onChange, checked } = props;
   const classes = useStyle();
-
-  const handleChange = () => {
-    setCheck(!check);
-    onChange(!check);
-  };
-
 
   return (
     <Checkbox
       value="checkedC"
-      checked={check}
-      onChange={handleChange}
+      checked={checked}
+      onChange={onChange}
       icon={<CheckBoxOutlineBlank className={classes.icon} />}
       color="primary"
       checkedIcon={<CheckBox className={classes.icon} />}
@@ -43,6 +36,11 @@ const MyCheckbox = (props) => {
 
 MyCheckbox.propTypes = {
   onChange: PropTypes.func.isRequired,
+  checked: PropTypes.bool,
+};
+
+MyCheckbox.defaultProps = {
+  checked: false,
 };
 
 export default MyCheckbox;

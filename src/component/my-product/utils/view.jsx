@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import uuid from 'uuid';
 import { makeStyles } from '@material-ui/core/styles';
 
 import DropDownBox from '../../../common/drop-down-box/drop-down-box';
@@ -9,46 +8,27 @@ import MyPagination from '../../../common/pagination/pagination';
 import AllTopBtn from './all-top-btn';
 import ProductList from './product-list';
 
+import { myProduct } from '../../../asstes/data/default-data';
 import { viewStyle } from '../style';
 
-const selects = [
-  {
-    uuid: uuid(),
-    name: 'Selected Date: default',
-    value: 'dateDesc',
-  },
-  {
-    uuid: uuid(),
-    name: 'Selected Date: Old to New',
-    value: 'dateAsc',
-  },
-  {
-    uuid: uuid(),
-    name: 'Ad Fees Rate: High to Low',
-    value: 'rateDesc',
-  },
-  {
-    uuid: uuid(),
-    name: 'Ad Fees Rate: Low to High',
-    value: 'rateAsc',
-  },
-  {
-    uuid: uuid(),
-    name: 'Alphabetically: A-Z',
-    value: 'nameDesc',
-  },
-  {
-    uuid: uuid(),
-    name: 'Alphabetically: Z-A',
-    value: 'nameAsc',
-  },
-];
-
-
 const useStyle = makeStyles(viewStyle);
+
 const View = (props) => {
   const { data } = props;
+  const [value, setValue] = useState(null);
   const classes = useStyle();
+
+  // 点击全选时调用
+  const getListData = (data) => {
+    const arr = [];
+    // 筛选出 所有选中的id
+    data.forEach(v => {
+      if (v.check) {
+        arr.push(v.id);
+      }
+    });
+    setValue(arr);
+  };
 
   // 获取筛选的值
   const handleSelectChange = (v) => {
@@ -63,13 +43,16 @@ const View = (props) => {
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <AllTopBtn />
+        <AllTopBtn value={value} />
         <DropDownBox
-          selects={selects}
+          selects={myProduct.productSort}
           onChange={handleSelectChange}
         />
       </div>
-      <ProductList data={data.items} />
+      <ProductList
+        data={data.items}
+        getListData={getListData}
+      />
       <MyPagination
         total={435} // 总条数
         pageSize={10} // 每页条数

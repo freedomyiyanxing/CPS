@@ -12,6 +12,7 @@ const MyInput = withStyles(theme => ({
     },
   },
   input: {
+    lineHeight: 1.3,
     padding: 0,
     fontSize: theme.typography.fontSizeMd,
   },
