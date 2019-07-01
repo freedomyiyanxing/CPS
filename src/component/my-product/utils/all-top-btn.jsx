@@ -15,11 +15,11 @@ const useStyle = makeStyles(theme => ({
 }));
 
 const AllTopBtn = (props) => {
-  const { value } = props;
+  const { selectArrId } = props;
   const classes = useStyle();
 
   const getLinks = () => {
-    console.log('获取所有的选中的id', value, 'value');
+    console.log('获取所有的选中的id', selectArrId, 'value');
   };
 
   return (
@@ -44,7 +44,7 @@ const AllTopBtn = (props) => {
 };
 
 AllTopBtn.propTypes = {
-  value: PropTypes.objectOf(PropTypes.array).isRequired,
+  selectArrId: PropTypes.objectOf(PropTypes.array).isRequired,
 };
 
 export default AllTopBtn;

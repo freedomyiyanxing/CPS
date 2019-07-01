@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,7 +13,9 @@ import { itemButtonStyle } from '../style';
 const useStyle = makeStyles(itemButtonStyle);
 
 const ItemButton = (props) => {
-  const { id } = props;
+  const {
+    id, handleDeleteClick, handleGetLinks,
+  } = props;
   const [links, setLinks] = useState(null);
   const [clean, setClean] = useState(false);
   const classes = useStyle();
@@ -23,15 +24,16 @@ const ItemButton = (props) => {
   /**
    *  点击获取商品的 Links
    */
-  const handleClick = (id) => {
+  const handleClick = (ids) => {
     if (dialogRef.current) {
-      console.log('发送id: ', id);
+      console.log('发送id: ', ids);
       // 打开弹出框
       dialogRef.current.handleCloses();
-      // 发送获取 Links 请求
-      setTimeout(() => {
-        setLinks('www.baidu.com');
-      }, 1000);
+
+      // 获取link
+      handleGetLinks(ids).then((data) => {
+        setLinks(data);
+      });
     }
   };
 
@@ -49,15 +51,16 @@ const ItemButton = (props) => {
   };
 
   // 点击删除商品
-  const handleClean = (id) => {
+  const handleClean = (ids) => {
     setClean(true);
-    setTimeout(() => {
+    handleDeleteClick(ids).then((data) => {
       setClean(false);
+      console.log(data);
       openNotification({
-        message: `删除当前商品 -${id} :  success ---`,
+        message: data,
         variant: 'success',
       });
-    }, 2000);
+    });
   };
   return (
     <>
@@ -89,7 +92,7 @@ const ItemButton = (props) => {
         disabled={Boolean(links)}
       >
         <div className={classes.copyWrapper}>
-          {links ? links : '努力加载中....'}
+          {links || '努力加载中....'}
         </div>
       </MyDialogs>
     </>
@@ -98,6 +101,8 @@ const ItemButton = (props) => {
 
 ItemButton.propTypes = {
   id: PropTypes.string.isRequired,
+  handleDeleteClick: PropTypes.func.isRequired,
+  handleGetLinks: PropTypes.func.isRequired,
 };
 
 export default ItemButton;

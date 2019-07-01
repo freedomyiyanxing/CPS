@@ -8,13 +8,17 @@ import not404Style from './style';
 const useStyles = makeStyles(not404Style);
 
 const Not404 = (props) => {
+  // eslint-disable-next-line no-unused-vars
   const { location, route } = props;
+  console.log(props);
   const classes = useStyles();
-  console.log(route);
   // 如果是在二级路由中未匹配 则添加样式;
-  const notIndex = route.key === 'all-no-match-router' ? { height: '100vh' } : {};
+  // const notIndex = route.key === 'all-no-match-router' ? { height: '100vh' } : {};
   return (
-    <div className={classes.root} style={notIndex}>
+    <div
+      className={classes.root}
+      // style={notIndex}
+    >
       <h2>No match for </h2>
       <h3>
         {location.pathname}

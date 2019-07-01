@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -13,24 +13,56 @@ import { viewStyle } from '../style';
 
 const useStyle = makeStyles(viewStyle);
 
+// 装着选中的ID
+const selectArrId = [];
+
 const View = (props) => {
   const { data } = props;
-  const [value, setValue] = useState(null);
   const classes = useStyle();
 
-  // 点击全选时调用
-  const getListData = (data) => {
-    const arr = [];
-    // 筛选出 所有选中的id
-    data.forEach(v => {
-      if (v.check) {
-        arr.push(v.id);
+  // 处理选中的ID
+  const getListData = (data, check) => {
+    // 点击checkAll全选时调用
+    if (Array.isArray(data)) {
+      if (check) {
+        if (selectArrId.length) {
+          selectArrId.length = 0;
+        }
+        data.forEach(item => {
+          selectArrId.push(item.id);
+        });
+      } else {
+        selectArrId.length = 0;
       }
-    });
-    setValue(arr);
+      return;
+    }
+
+    // 单个点击check
+    if (typeof data === 'object') {
+      if (data.check) {
+        selectArrId.push(data.id);
+      } else {
+        selectArrId.forEach((item, index) => {
+          if(item === data.id) {
+            selectArrId.splice(index, 1);
+          }
+        })
+      }
+    }
+
+    // 删除时调用
+    if (typeof data === 'string') {
+      if (selectArrId.length) {
+        selectArrId.forEach((item, index) => {
+          if (item === data) {
+            selectArrId.splice(index, 1)
+          }
+        });
+      }
+    }
   };
 
-  // 获取筛选的值
+  // 获取筛选排序的值
   const handleSelectChange = (v) => {
     console.log(v);
   };
@@ -43,7 +75,7 @@ const View = (props) => {
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <AllTopBtn value={value} />
+        <AllTopBtn selectArrId={selectArrId} />
         <DropDownBox
           selects={myProduct.productSort}
           onChange={handleSelectChange}

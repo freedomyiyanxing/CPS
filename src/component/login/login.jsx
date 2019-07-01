@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
@@ -7,12 +8,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import CheckBox from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
-import { loginStyle } from './style';
-
 import InputContainer from '../../common/box-container/form-container';
 import Emails from '../../common/form/email';
 import Password from '../../common/form/password';
 import SubmitButton from '../../common/form/submit-button';
+import { Consumer } from '../../context/index';
+
+import { loginStyle } from './style';
 
 @withStyles(loginStyle)
 @createForm()
@@ -28,7 +30,8 @@ class Login extends React.Component {
    * 提交事件
    * @returns {*} 验证正确的情况下返回一个 promise对象
    */
-  handleSubmit = () => {
+  handleSubmit = (context) => {
+    // eslint-disable-next-line no-unused-vars
     const { form, history } = this.props;
     const { check } = this.state;
     let ayc = null;
@@ -36,10 +39,12 @@ class Login extends React.Component {
       if (!error) {
         ayc = new Promise((resolve) => {
           setTimeout(() => {
-            console.log({ ...value, check });
-            history.push('/yes/index');
+            // console.log({ ...value, check });
+            // history.push('/yes/index');
+            console.log(context);
+            context.func(true);
             resolve(true);
-          }, 3000);
+          }, 1000);
         });
       } else {
         ayc = null;
@@ -67,43 +72,50 @@ class Login extends React.Component {
     const { classes, form } = this.props;
     const { check } = this.state;
     return (
-      <InputContainer title="SIGN IN">
-        <Emails form={form} />
-        <Password form={form} name="Password" />
-        <div className={classes.main}>
-          <FormControlLabel
-            control={(
-              <Checkbox
-                value="checkedC"
-                checked={check}
-                onChange={this.handleChange}
-                icon={<CheckBoxOutlineBlank className={classes.icon} />}
-                color="primary"
-                checkedIcon={<CheckBox className={classes.icon} />}
-                classes={{
-                  root: classes.checkRoot,
-                }}
+      <Consumer>
+        {
+          context => (
+            <InputContainer title="SIGN IN">
+              <Emails form={form} />
+              <Password form={form} name="Password" />
+              <div className={classes.main}>
+                <FormControlLabel
+                  control={(
+                    <Checkbox
+                      value="checkedC"
+                      checked={check}
+                      onChange={this.handleChange}
+                      icon={<CheckBoxOutlineBlank className={classes.icon} />}
+                      color="primary"
+                      checkedIcon={<CheckBox className={classes.icon} />}
+                      classes={{
+                        root: classes.checkRoot,
+                      }}
+                    />
+                  )}
+                  label="Keep me logged in"
+                  classes={{
+                    label: classes.label,
+                  }}
+                />
+                <span
+                  role="button"
+                  tabIndex={0}
+                  className={classes.text}
+                  onClick={this.handleLink}
+                >
+                  Forgot your password?
+                </span>
+              </div>
+              <SubmitButton
+                name="Log in"
+                handleSubmit={() => this.handleSubmit(context) }
               />
-            )}
-            label="Keep me logged in"
-            classes={{
-              label: classes.label,
-            }}
-          />
-          <span
-            role="button"
-            tabIndex={0}
-            className={classes.text}
-            onClick={this.handleLink}
-          >
-            Forgot your password?
-          </span>
-        </div>
-        <SubmitButton
-          name="Log in"
-          handleSubmit={this.handleSubmit}
-        />
-      </InputContainer>
+            </InputContainer>
+          )
+        }
+      </Consumer>
+
     );
   }
 }

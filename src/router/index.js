@@ -29,6 +29,7 @@ const routers = [
         path: '/not',
         component: NotHeaderNavigation,
         key: uuid(),
+        auth: false,
         routes: [
           {
             path: '/not/index',
@@ -73,8 +74,7 @@ const routers = [
             key: uuid(),
           },
           {
-            component: Not404,
-            key: uuid(),
+            path: '*',
           },
         ],
       },
@@ -82,6 +82,7 @@ const routers = [
         path: '/yes',
         component: HeaderNavigation,
         key: uuid(),
+        auth: true,
         routes: [
           {
             path: '/yes/index',
@@ -120,12 +121,12 @@ const routers = [
             key: uuid(),
           },
           {
-            component: Not404,
-            key: uuid(),
+            path: '*',
           },
         ],
       },
       {
+        path: '/*',
         component: Not404,
         key: uuid(),
       },

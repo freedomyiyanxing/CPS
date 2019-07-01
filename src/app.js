@@ -1,28 +1,48 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import { makeStyles, MuiThemeProvider } from '@material-ui/core/styles';
+
+import renderRoutes from './router/render-routes';
+import Context from './context/index';
+import routers from './router/index';
+
+import './asstes/style/reset.css';
+import './asstes/style/index.css';
+import './asstes/style/flags.css';
+import './asstes/style/cropper.css';
 
 import { theme } from './config/theme/theme';
 
-import App from './clinet';
 
+// eslint-disable-next-line no-shadow
+const useStyles = makeStyles((theme) => {
+  console.log(theme);
+  return {
+    root: {
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh',
+    },
+  };
+});
 const root = document.getElementById('root');
 
-// console.log(jssPreset());
+const App = () => {
+  const classes = useStyles();
+  return (
+    <BrowserRouter>
+      <MuiThemeProvider theme={theme}>
+        <Context>
+          <div className={classes.root}>
+            {
+              renderRoutes(routers, true)
+            }
+          </div>
+        </Context>
+      </MuiThemeProvider>
+    </BrowserRouter>
+  );
+};
 
-// const jss = create({
-//   ...jssPreset(),
-//   // We define a custom insertion point that JSS will look for injecting the styles in the DOM.
-//   // insertionPoint: document.getElementById('jss-insertion-point'),
-// });
-
-const Main = () => (
-  <BrowserRouter>
-    <MuiThemeProvider theme={theme}>
-      <App />
-    </MuiThemeProvider>
-  </BrowserRouter>
-);
-
-ReactDom.render(<Main />, root);
+ReactDom.render(<App />, root);

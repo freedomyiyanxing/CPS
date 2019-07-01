@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { renderRoutes } from 'react-router-config';
-
+// import { renderRoutes } from 'react-router-config';
+import renderRoutes from './render-routes';
 import HeaderNotLogin from '../component/header/header-not-login';
 import BoxContainer from '../common/box-container/index';
 
@@ -13,11 +13,12 @@ import BoxContainer from '../common/box-container/index';
  */
 const NotHeaderNavigation = (props) => {
   const { route, history } = props;
+  console.log(route);
   return (
     <>
       <HeaderNotLogin history={history} />
       <BoxContainer>
-        {renderRoutes(route.routes)}
+        {renderRoutes(route.routes, true)}
       </BoxContainer>
     </>
   );
