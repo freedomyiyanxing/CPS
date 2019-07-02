@@ -74,7 +74,7 @@ const routers = [
             key: uuid(),
           },
           {
-            path: '*',
+            path: '/*',
           },
         ],
       },
@@ -121,7 +121,7 @@ const routers = [
             key: uuid(),
           },
           {
-            path: '*',
+            path: '/*',
           },
         ],
       },

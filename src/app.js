@@ -36,7 +36,7 @@ const App = () => {
         <Context>
           <div className={classes.root}>
             {
-              renderRoutes(routers, true)
+              renderRoutes(routers)
             }
           </div>
         </Context>

@@ -19,9 +19,6 @@ const config = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-    alias: {
-      'react-dom': '@hot-loader/react-dom',
-    },
   },
   module: {
     rules: [
@@ -75,36 +72,6 @@ const config = {
           limit: 8192,
         }
       }
-      // {
-      //   test: /\.(png|jpg|gif)$/i,
-      //   use: [
-      //     {
-      //       loader: 'url-loader',
-      //       options: {
-      //         limit: 8192,
-      //       },
-      //     },
-      //   ],
-      // },
-      // {
-      //   test: /\.less$/,
-      //   use: [
-      //     MiniCssExtractPlugin.loader,
-      //     {
-      //       loader: 'css-loader',
-      //     },
-      //     {
-      //       loader: 'less-loader',
-      //       options: {
-      //         modifyVars: {
-      //           'primary-color': '#000000',
-      //           'link-color': '#f5f688'
-      //         },
-      //         javascriptEnabled: true,
-      //       }
-      //     }
-      //   ],
-      // },
     ],
   },
   plugins: [
@@ -155,11 +122,11 @@ if (isDev) {
     historyApiFallback: {
       index: '/public/index.html',
     },
-    // proxy: { //解决跨域 代理有请求 /business的全部代理到 'http://192.168.1.26:8081'
-    //   '/business': {
-    //     target: 'http://192.168.1.26:8081',
-    //   },
-    // }
+    proxy: { //解决跨域 代理有请求 /api的全部代理到 'http://192.168.1.20:8678'
+      '/api': {
+        target: 'http://192.168.1.20:8768',
+      },
+    }
   };
   config.plugins.push(new webpack.HashedModuleIdsPlugin());
 }

@@ -40,7 +40,7 @@ class Search extends React.Component {
             form={form}
             name="Product Name :"
             noRequire={false}
-            outputName="ProductName"
+            outputName="productName"
             fontSize="sm"
           />
           <MySelect
@@ -63,7 +63,7 @@ class Search extends React.Component {
             form={form}
             name="Belong Store :"
             noRequire={false}
-            outputName="BelongStore"
+            outputName="belongStore"
             fontSize="sm"
           />
           <SubmitButton

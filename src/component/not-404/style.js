@@ -5,6 +5,7 @@ const not404Style = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
+    flex: 1,
   },
 });
 

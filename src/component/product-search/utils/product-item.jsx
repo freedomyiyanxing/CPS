@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles/index';
 import ItemButton from './item-button';
 
-import { getTimes, imgPath } from '../../../base/js/utils-methods';
+import { getTimes, imgPath } from '../../../asstes/js/utils-methods';
 import { itemStyle } from '../style';
 
 const useStyle = makeStyles(itemStyle);

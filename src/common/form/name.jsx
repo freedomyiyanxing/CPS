@@ -8,11 +8,9 @@ import MyLabel from '../material-ui-compoents/input-label';
 
 const Name = (props) => {
   const {
-    value, form, name, disabled, noRequire, fontSize,
+    value, form, name, disabled, noRequire, fontSize, outputName,
   } = props;
   const [names, setNames] = useState(value);
-
-  const outputName = name.replace(/\s/g, '');
 
   const handleChange = (e) => {
     setNames(e.target.value);
@@ -68,6 +66,7 @@ Name.propTypes = {
   disabled: PropTypes.bool, // 是的禁用
   noRequire: PropTypes.bool, // 是否必填
   fontSize: PropTypes.string, // 控制label文字
+  outputName: PropTypes.string, // 输出key值
 };
 
 Name.defaultProps = {
@@ -75,6 +74,7 @@ Name.defaultProps = {
   disabled: false, // 默认不禁用
   noRequire: true, // 默认必填
   fontSize: 'md',
+  outputName: 'name', // 输出key值
 };
 
 export default Name;

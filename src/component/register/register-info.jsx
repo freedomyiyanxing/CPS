@@ -59,8 +59,8 @@ class RegisterInfo extends React.Component {
         <div className={classes.firstTitle}>
           <h4 className={classes.title}>ACCOUNT INFORMATION</h4>
         </div>
-        <Name name="First Name" value="Alex" form={form} disabled />
-        <Name name="Last Name" value="Huang" form={form} disabled />
+        <Name name="First Name" outputName="firstName" value="Alex" form={form} disabled />
+        <Name name="Last Name" outputName="lastName" value="Huang" form={form} disabled />
         <Emails form={form} value="85189962@qq.com" disabled />
         <IntlTelInput
           // defaultValue="+244 923 123 456"
@@ -71,7 +71,7 @@ class RegisterInfo extends React.Component {
         <div className={classes.lastTitle}>
           <h4 className={classes.title}>WEBSITE INFORMATION</h4>
         </div>
-        <Name name="Website Name" form={form} />
+        <Name name="Website Name" outputName="websiteName" form={form} />
         <MyUrl form={form} />
         <MySelect
           form={form}

@@ -7,7 +7,7 @@ class Context extends Component {
   constructor() {
     super();
     this.state = {
-      isLogin: false,
+      isLogin: true, // 是否登录
     };
   }
 
@@ -20,12 +20,12 @@ class Context extends Component {
   render() {
     const { children } = this.props;
     const { isLogin } = this.state;
-    console.log(isLogin);
+    console.log(isLogin, '登录标志');
     return (
       <Provider
         value={{
           state: { isLogin },
-          func: this.handleClick,
+          setLogin: this.handleClick,
         }}
       >
         {children}

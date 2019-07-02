@@ -56,11 +56,13 @@ class BasicSetting extends React.Component {
           form={form}
           name="First Name"
           value="freedom"
+          outputName="firstName"
         />
         <Name
           form={form}
           name="Last Name"
           value="yi"
+          outputName="lastName"
         />
         <Emails
           form={form}

@@ -5,9 +5,12 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 import MyInput from '../material-ui-compoents/input';
+// import { get } from '../../asstes/http';
 
 const Emails = (props) => {
-  const { value, form, disabled } = props;
+  const {
+    value, form, disabled, onChange,
+  } = props;
   const [email, setEmail] = useState(value);
 
   const handleChange = (e) => {
@@ -36,6 +39,15 @@ const Emails = (props) => {
             type: 'email',
             message: '邮箱格式错误',
           },
+          {
+            // 异步验证
+            // eslint-disable-next-line no-shadow
+            validator(rule, value, callback) {
+              if (typeof onChange === 'function') {
+                onChange(value, callback);
+              }
+            },
+          },
         ],
       })}
     >
@@ -61,11 +73,15 @@ Emails.propTypes = {
   form: PropTypes.objectOf(PropTypes.object).isRequired,
   value: PropTypes.string,
   disabled: PropTypes.bool,
+  onChange: PropTypes.func,
+  compareToEndEmail: PropTypes.func, // 验证邮箱是否存在
 };
 
 Emails.defaultProps = {
   value: '',
   disabled: false,
+  onChange: null,
+  compareToEndEmail: null,
 };
 
 export default Emails;

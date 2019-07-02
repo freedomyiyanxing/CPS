@@ -41,6 +41,7 @@ class WibsiteSetting extends React.Component {
           form={form}
           name="Website Name"
           value="freedom.yi"
+          outputName="websiteName"
         />
         <MyUrl
           form={form}

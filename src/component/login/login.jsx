@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
@@ -19,8 +18,8 @@ import { loginStyle } from './style';
 @withStyles(loginStyle)
 @createForm()
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       check: false,
     };
@@ -32,17 +31,19 @@ class Login extends React.Component {
    */
   handleSubmit = (context) => {
     // eslint-disable-next-line no-unused-vars
-    const { form, history } = this.props;
+    const { form, history, location } = this.props;
     const { check } = this.state;
     let ayc = null;
     form.validateFields((error, value) => {
       if (!error) {
         ayc = new Promise((resolve) => {
           setTimeout(() => {
-            // console.log({ ...value, check });
-            // history.push('/yes/index');
-            console.log(context);
-            context.func(true);
+            const { pathname } = location.state ? location.state.from : { pathname: '/yes/index' };
+            console.log({ ...value, check }, pathname);
+            // 修改登录状态
+            context.setLogin(true);
+            // 跳转至登录首页
+            history.push(pathname);
             resolve(true);
           }, 1000);
         });
@@ -109,19 +110,19 @@ class Login extends React.Component {
               </div>
               <SubmitButton
                 name="Log in"
-                handleSubmit={() => this.handleSubmit(context) }
+                handleSubmit={() => this.handleSubmit(context)}
               />
             </InputContainer>
           )
         }
       </Consumer>
-
     );
   }
 }
 
 Login.propTypes = {
   history: PropTypes.objectOf(PropTypes.object).isRequired,
+  location: PropTypes.objectOf(PropTypes.object).isRequired,
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
   form: formShape.isRequired,
 };

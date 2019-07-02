@@ -10,7 +10,6 @@ module.exports = {
       'axios',
       'react',
       'react-dom',
-      '@hot-loader/react-dom',
       'react-router-dom',
       '@material-ui/core',
       '@material-ui/icons',

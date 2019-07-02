@@ -8,9 +8,6 @@ import HeaderLogin from '../component/header/header-login';
 import BoxContainer from '../common/box-container/index';
 import { Consumer } from '../context/index';
 
-const isAuth = false; // 是否需要登录
-const authPath = '/not/login';
-
 /**
  * 解决方案 使用多级路由
  * @param props
@@ -23,12 +20,11 @@ const HeaderNavigation = (props) => {
     <Consumer>
       {
         data => {
-          console.log(data.state.isLogin);
           return (
             <>
               <HeaderLogin history={history} />
               <BoxContainer>
-                {renderRoutes(route.routes, data.state.isLogin, authPath)}
+                {renderRoutes(route.routes, data.state.isLogin)}
               </BoxContainer>
             </>
           )

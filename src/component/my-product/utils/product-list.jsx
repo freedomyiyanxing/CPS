@@ -12,7 +12,7 @@ import { MyTableCell } from '../../../common/material-ui-compoents/table';
 import MyCheckbox from '../../../common/material-ui-compoents/checkbox';
 import ItemButton from './item-button';
 
-import { getTimes, imgPath, getCheckArr } from '../../../base/js/utils-methods';
+import { getTimes, imgPath, getCheckArr } from '../../../asstes/js/utils-methods';
 import { listStyle } from '../style';
 
 @withStyles(listStyle)
