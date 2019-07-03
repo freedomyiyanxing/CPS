@@ -15,17 +15,13 @@ import './asstes/style/cropper.css';
 import { theme } from './config/theme/theme';
 
 
-// eslint-disable-next-line no-shadow
-const useStyles = makeStyles((theme) => {
-  console.log(theme);
-  return {
-    root: {
-      display: 'flex',
-      flexDirection: 'column',
-      minHeight: '100vh',
-    },
-  };
-});
+const useStyles = makeStyles(() => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+  },
+}));
 const root = document.getElementById('root');
 
 const App = () => {

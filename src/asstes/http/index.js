@@ -12,6 +12,7 @@ axios.interceptors.request.use(
 // 返回后拦截 都返回一个Promise对象
 axios.interceptors.response.use(
   response => new Promise((resolve) => { // 成功的返回
+    console.log('response: -> ', response);
     if (response.status === 200) {
       resolve(response.data);
     }
@@ -24,23 +25,21 @@ axios.interceptors.response.use(
     } else if (err.response.status === 500) {
       console.log('服务器开小差了⊙﹏⊙∥');
     }
-    return Promise.reject(err);
+    return Promise.reject(err.response);
   },
 );
 
 // @RequestBody请求
-const postRequestBody = (url, params) => {
-  console.log(params);
-  axios({
-    method: 'post',
-    url,
-    data: params,
-    headers: {
-      'Content-Type': 'application/json',
-      charset: 'utf-8',
-    },
-  });
-};
+const postRequestBody = (url, params) => axios({
+  method: 'post',
+  url,
+  data: params,
+  headers: {
+    'Content-Type': 'application/json',
+    charset: 'utf-8',
+  },
+});
+
 
 // @RequestParam请求
 const postRequestParam = (url, params) => axios({
@@ -71,9 +70,12 @@ const multiple = (requsetArray, callback) => {
   axios.all(requsetArray).then(axios.spread(callback));
 };
 
+const SUCCESS = 'Success!';
+
 export {
   get,
   postRequestBody,
   postRequestParam,
   multiple,
+  SUCCESS,
 };

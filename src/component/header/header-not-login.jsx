@@ -25,14 +25,14 @@ const HeaderNotLogin = (props) => {
    * 登录
    */
   const handleLogin = () => {
-    history.push('/not/login');
+    history.push('/s/signin');
   };
 
   /**
    * 注册
    */
   const handleRegister = () => {
-    history.push('/not/register');
+    history.push('/s/signup');
   };
 
   return (

@@ -7,7 +7,7 @@ import MySelect from '../../../common/form/my-select';
 import MyTextarea from '../../../common/form/my-textarea';
 import Name from '../../../common/form/name';
 
-import { monthlyVisitors, webSiteCagegory } from '../../../asstes/data/default-data';
+import { monthlyVisitors, webSiteCategory } from '../../../asstes/data/default-data';
 
 @createForm()
 class WibsiteSetting extends React.Component {
@@ -51,15 +51,15 @@ class WibsiteSetting extends React.Component {
           form={form}
           name="Category"
           outputName="category"
-          selectArr={webSiteCagegory}
-          value={webSiteCagegory[1]}
+          selectArr={webSiteCategory}
+          // value={webSiteCategory[1]}
         />
         <MySelect
           form={form}
           name="Current Monthly Unique Visitores"
           outputName="monthlyVisitors"
           selectArr={monthlyVisitors}
-          value={monthlyVisitors[1]}
+          // value={monthlyVisitors[1]}
         />
         <MyTextarea
           form={form}

@@ -32,7 +32,7 @@ class MergePassword extends React.Component {
   // 确认密码的
   compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
-    if (value && value !== form.getFieldValue('NewPassword')) {
+    if (value && value !== form.getFieldValue('password')) {
       // eslint-disable-next-line standard/no-callback-literal
       callback('两次输入的密码不一致');
     } else {

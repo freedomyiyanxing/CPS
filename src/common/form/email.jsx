@@ -1,21 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
-
 import MyInput from '../material-ui-compoents/input';
-// import { get } from '../../asstes/http';
 
 const Emails = (props) => {
   const {
     value, form, disabled, onChange,
   } = props;
-  const [email, setEmail] = useState(value);
-
-  const handleChange = (e) => {
-    setEmail(e.target.value);
-  };
 
   const { getFieldProps, getFieldError } = form;
   const errors = getFieldError('email');
@@ -26,39 +19,38 @@ const Emails = (props) => {
       disabled={disabled}
       error={errors}
       margin="normal"
-      {...getFieldProps('email', {
-        validateFirst: true,
-        hidden: disabled, // 是否忽略当前字段的验证
-        initialValue: email, // 设置默认值 (保证在有默认值的情况 验证会通过)
-        rules: [
-          {
-            required: true,
-            message: '邮箱必填',
-          },
-          {
-            type: 'email',
-            message: '邮箱格式错误',
-          },
-          {
-            // 异步验证
-            // eslint-disable-next-line no-shadow
-            validator(rule, value, callback) {
-              if (typeof onChange === 'function') {
-                onChange(value, callback);
-              }
-            },
-          },
-        ],
-      })}
     >
       <InputLabel htmlFor="my-email">Email</InputLabel>
       <MyInput
         id="my-email"
         type="email"
-        aria-describedby="my-helper-text"
-        value={email}
-        autocomplete="off"
-        onChange={handleChange}
+        {...getFieldProps('email', {
+          validateFirst: true,
+          hidden: disabled, // 是否忽略当前字段的验证
+          initialValue: value, // 设置默认值 (保证在有默认值的情况 验证会通过)
+          rules: [
+            {
+              required: true,
+              message: '邮箱必填',
+            },
+            {
+              type: 'email',
+              message: '邮箱格式错误',
+            },
+            {
+              // 异步验证
+              // eslint-disable-next-line no-shadow
+              validator(rule, value, callback) {
+                // 如果需要异步验证邮箱 就传一个异步验证的方法 (onChange) 否则就直接忽略
+                if (typeof onChange === 'function') {
+                  onChange(value, callback);
+                } else {
+                  callback();
+                }
+              },
+            },
+          ],
+        })}
       />
       {
         errors
@@ -74,14 +66,12 @@ Emails.propTypes = {
   value: PropTypes.string,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
-  compareToEndEmail: PropTypes.func, // 验证邮箱是否存在
 };
 
 Emails.defaultProps = {
   value: '',
   disabled: false,
   onChange: null,
-  compareToEndEmail: null,
 };
 
 export default Emails;

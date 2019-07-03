@@ -9,55 +9,45 @@ import MyInput from '../material-ui-compoents/input';
 
 const Password = (props) => {
   const {
-    form, name, validateToNextPassword, onBlur,
+    form, name, value, validateToNextPassword,
   } = props;
-  const [psd, setPsd] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-
-  const outputName = name.replace(/\s/g, '');
-
-  const handleChange = (e) => {
-    setPsd(e.target.value);
-  };
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
   const { getFieldProps, getFieldError } = form;
-  const errors = getFieldError(outputName);
+  const errors = getFieldError('password');
   return (
     <FormControl
       fullWidth
       required
       error={errors}
       margin="normal"
-      {...getFieldProps(outputName, {
-        validateFirst: true,
-        force: true,
-        rules: [
-          {
-            required: true,
-            message: '密码是必填的',
-          },
-          {
-            pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d~^$@$!%*#?&\-_]{6,20}$/,
-            message: '密码格式错误',
-          },
-          {
-            validator: validateToNextPassword,
-          },
-        ],
-      })}
     >
-      <InputLabel htmlFor={`my-${outputName || name}`}>{name}</InputLabel>
+      <InputLabel htmlFor={`my-${name}`}>{name}</InputLabel>
       <MyInput
-        id={`my-${outputName || name}`}
+        id={`my-${name}`}
         type={showPassword ? 'text' : 'password'}
-        aria-describedby="my-helper-text"
-        value={psd}
-        onChange={handleChange}
-        onBlur={onBlur}
+        {...getFieldProps('password', {
+          validateFirst: true,
+          force: true,
+          initialValue: value, // 设置默认值 (保证在有默认值的情况 验证会通过)
+          rules: [
+            {
+              required: true,
+              message: '密码是必填的',
+            },
+            {
+              pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d~^$@$!%*#?&\-_]{6,20}$/,
+              message: '密码格式错误',
+            },
+            {
+              validator: validateToNextPassword,
+            },
+          ],
+        })}
         endAdornment={<PsdVisibility handleClick={handleClickShowPassword} />}
       />
       {
@@ -72,6 +62,7 @@ const Password = (props) => {
 Password.propTypes = {
   form: PropTypes.objectOf(PropTypes.object).isRequired,
   validateToNextPassword: PropTypes.func,
+  value: PropTypes.string,
   onBlur: PropTypes.func,
   name: PropTypes.string.isRequired,
 };
@@ -79,6 +70,7 @@ Password.propTypes = {
 Password.defaultProps = {
   validateToNextPassword: null,
   onBlur: null,
+  value: '',
 };
 
 export default Password;

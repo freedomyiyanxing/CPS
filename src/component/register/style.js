@@ -23,4 +23,22 @@ export const registerInfoStyle = theme => ({
   lastTitle: {
     marginTop: 34,
   },
+  errorWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    minHeight: 130,
+    alignItems: 'center',
+    color: theme.palette.error.main,
+  },
+  errorTitle: {
+    fontSize: theme.typography.h4.fontSize,
+    fontWeight: theme.typography.h4.fontWeight,
+    lineHeight: theme.typography.h4.lineHeight,
+  },
+  errorText: {
+    fontSize: theme.typography.fontSize,
+    fontWeight: theme.typography.fontWeight,
+    lineHeight: 1.5,
+  },
 });

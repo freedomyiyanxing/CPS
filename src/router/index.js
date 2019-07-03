@@ -26,49 +26,49 @@ const routers = [
     key: uuid(),
     routes: [
       {
-        path: '/not',
+        path: '/s',
         component: NotHeaderNavigation,
         key: uuid(),
         auth: false,
         routes: [
           {
-            path: '/not/index',
+            path: '/s/index',
             exact: true,
             component: NotHome,
             key: uuid(),
           },
           {
-            path: '/not/login',
+            path: '/s/signin',
             exact: true,
             component: Login,
             key: uuid(),
           },
           {
-            path: '/not/forget-password',
+            path: '/s/password/forgot',
             exact: true,
             component: ForgetPassword,
             key: uuid(),
           },
           {
-            path: '/not/email-sent',
-            exact: true,
-            component: EmailSentPage,
-            key: uuid(),
-          },
-          {
-            path: '/not/reset-password',
+            path: '/s/password/reset',
             exact: true,
             component: ResetPassword,
             key: uuid(),
           },
           {
-            path: '/not/register',
+            path: '/s/email-sent',
+            exact: true,
+            component: EmailSentPage,
+            key: uuid(),
+          },
+          {
+            path: '/s/signup',
             exact: true,
             component: Register,
             key: uuid(),
           },
           {
-            path: '/not/register-info',
+            path: '/s/signup/confirm',
             exact: true,
             component: RegisterInfo,
             key: uuid(),

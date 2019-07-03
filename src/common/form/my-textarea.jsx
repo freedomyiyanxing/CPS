@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -11,43 +11,34 @@ const MyTextarea = (props) => {
   const {
     form, value, noRequire, name, fontSize,
   } = props;
-  const [names, setNames] = useState(value);
-
-  const handleChange = (e) => {
-    setNames(e.target.value);
-  };
 
   const { getFieldProps, getFieldError } = form;
-
-  const errors = getFieldError('textarea');
-
+  const errors = getFieldError('websiteDesc');
   return (
     <FormControl
       fullWidth
       error={errors}
       margin="normal"
-      {...getFieldProps('textarea', {
-        validateFirst: true,
-        initialValue: value,
-        rules: [
-          {
-            required: noRequire,
-            message: '我们需要 你网站的详细信息',
-          },
-          {
-            pattern: /^([A-Za-z0-9\s.\\,+()!?`={}'"<>/:#@$%&*-]{2,200})$/,
-            message: '我们需要有效的字符(A-Z a-z) 字数(2 - 200) 之间',
-          },
-        ],
-      })}
     >
       <MyLabel fontSize={fontSize} htmlFor={`my-${name}`}>{name}</MyLabel>
       <MyInput
         multiline
         id={`my-${name}`}
         type="text"
-        value={names}
-        onChange={handleChange}
+        {...getFieldProps('websiteDesc', {
+          validateFirst: true,
+          initialValue: value,
+          rules: [
+            {
+              required: noRequire,
+              message: '我们需要 你网站的详细信息',
+            },
+            {
+              pattern: /^([A-Za-z0-9\s.\\,+()!?`={}'"<>/:#@$%&*-]{2,200})$/,
+              message: '我们需要有效的字符(A-Z a-z) 字数(2 - 200) 之间',
+            },
+          ],
+        })}
       />
       {
         errors

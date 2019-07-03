@@ -18,6 +18,11 @@ export const loginStyle = theme => ({
   label: {
     color: theme.palette.text.secondary,
     fontSize: theme.typography.fontSizeSm,
+    fontFamily: theme.typography.fontFamily,
+    letterSpacing: 0,
+  },
+  labelRoot: {
+    marginLeft: -7,
   },
   text: {
     color: theme.palette.text.secondary,

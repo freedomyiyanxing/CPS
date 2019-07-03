@@ -69,7 +69,7 @@ const HeaderLogin = (props) => {
   };
 
   const handleClick = () => {
-    history.push('/not/login');
+    history.push('/s/signin');
   };
 
   // home 点击事件

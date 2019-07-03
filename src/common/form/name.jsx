@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable */
+import React from 'react';
 import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -10,12 +11,6 @@ const Name = (props) => {
   const {
     value, form, name, disabled, noRequire, fontSize, outputName,
   } = props;
-  const [names, setNames] = useState(value);
-
-  const handleChange = (e) => {
-    setNames(e.target.value);
-  };
-
   const { getFieldProps, getFieldError } = form;
   const errors = getFieldError(outputName);
   return (
@@ -25,30 +20,26 @@ const Name = (props) => {
       disabled={disabled}
       error={errors}
       margin="normal"
-      {...getFieldProps(outputName, {
-        validateFirst: true,
-        hidden: disabled, // 是否忽略当前字段的验证
-        initialValue: names, // 设置默认值 (保证在有默认值的情况 验证会通过)
-        rules: [
-          {
-            required: noRequire,
-            message: '我们需要你的名字',
-          },
-          {
-            pattern: /^([A-Za-z\s.-]{2,30})$/,
-            message: '我们需要有效的字符(A-Z a-z) 特殊字符只限(. -) 字数(2 - 30) 之间',
-          },
-        ],
-      })}
     >
       <MyLabel fontSize={fontSize} htmlFor={`my-${name}`}>{name}</MyLabel>
       <MyInput
         id={`my-${name}`}
         type="text"
-        aria-describedby="my-helper-text"
-        value={names}
-        autocomplete="off"
-        onChange={handleChange}
+        {...getFieldProps(outputName, {
+          validateFirst: true,
+          hidden: disabled, // 是否忽略当前字段的验证
+          initialValue: value, // 设置默认值 (保证在有默认值的情况 验证会通过)
+          rules: [
+            {
+              required: noRequire,
+              message: '我们需要你的名字',
+            },
+            {
+              pattern: /^([A-Za-z\s.-]{2,30})$/,
+              message: '我们需要有效的字符(A-Z a-z) 特殊字符只限(. -) 字数(2 - 30) 之间',
+            },
+          ],
+        })}
       />
       {
         errors

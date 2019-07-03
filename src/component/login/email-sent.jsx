@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { emailSentPageStyle } from './style';
-
 import InputContainer from '../../common/box-container/form-container';
 import SubmitButton from '../../common/form/submit-button';
+
+import { emailSentPageStyle } from './style';
 
 const useStyle = makeStyles(emailSentPageStyle);
 
@@ -30,15 +30,12 @@ const EmailSentPage = (props) => {
    * @returns {Promise<any>} 返回promise对象
    */
   const handleSubmit = () => new Promise((resolve) => {
-    const links = isRegister ? '/not/register-info' : '/not/reset-password';
+    const links = isRegister ? '/s/signup/confirm' : '/s/password/reset';
     setTimeout(() => {
       history.push(links);
       resolve(true);
     }, 1000);
   });
-
-  console.log(history);
-  console.log(location);
 
   return (
     <InputContainer title="EMAIL SENT">

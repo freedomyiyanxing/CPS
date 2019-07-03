@@ -629,7 +629,7 @@ class IntlTelInput extends Component {
   render() {
     const { classes, form } = this.props;
     const { getFieldProps, getFieldError } = form;
-    const errors = getFieldError('phone');
+    const errors = getFieldError('mobile');
 
     const value = this.props.value !== undefined
       ? this.formatNumber(this.props.value)
@@ -643,7 +643,7 @@ class IntlTelInput extends Component {
         required
         error={isValue}
         margin="normal"
-        {...getFieldProps('phone', {
+        {...getFieldProps('mobile', {
           validateFirst: true, // 如果第一个规则错了 就不验证 后面的规则
           initialValue: value,
           trigger: 'onBlur',

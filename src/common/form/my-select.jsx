@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -11,11 +11,6 @@ const MySelect = (props) => {
   const {
     form, selectArr, name, outputName, value, noRequire, fontSize,
   } = props;
-  const [names, setNames] = useState(value);
-
-  const handleChange = (e) => {
-    setNames(e.target.value);
-  };
 
   const { getFieldProps, getFieldError } = form;
   const errors = getFieldError(outputName);
@@ -26,11 +21,8 @@ const MySelect = (props) => {
       error={errors}
       margin="normal"
     >
-      <MyLabel fontSize={fontSize} htmlFor="my-url">{name}</MyLabel>
+      <MyLabel fontSize={fontSize}>{name}</MyLabel>
       <MySelects
-        value={names}
-        onChange={handleChange}
-        name="value"
         {...getFieldProps(outputName, {
           validateFirst: true,
           initialValue: value,
@@ -49,7 +41,7 @@ const MySelect = (props) => {
         }
         {
           selectArr.map(v => (
-            <MenuItem key={v} value={v}>{v}</MenuItem>
+            <MenuItem key={v.id} value={v.sign}>{v.text}</MenuItem>
           ))
         }
       </MySelects>

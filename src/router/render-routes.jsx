@@ -13,7 +13,7 @@ const renderRoutes = (routes, auth = true, extraProps = {}, switchProps = {}) =>
           const { location } = props;
           // 进入当前端口 直接redirect到首页
           if (location.pathname === '/') {
-            return <Redirect to={{ pathname: '/not/index', state: { from: location } }} />;
+            return <Redirect to={{ pathname: '/s/index', state: { from: location } }} />;
           }
           // 为匹配的路径直接redirect到404页面
           if (route.path === '/*') {
@@ -24,7 +24,7 @@ const renderRoutes = (routes, auth = true, extraProps = {}, switchProps = {}) =>
             return <route.component {...props} {...extraProps} route={route} />;
           }
           // 如果是需要登录的 则redirect到登录页面
-          return <Redirect to={{ pathname: '/not/login', state: { from: location } }} />;
+          return <Redirect to={{ pathname: '/s/signin', state: { from: location } }} />;
         }}
       />
     ))}

@@ -24,7 +24,7 @@ const Not404 = (props) => {
         <MyButton
           variant="contained"
           color="primary"
-          onClick={() => history.push('/not/index')}
+          onClick={() => history.push('/s/index')}
         >
           回到主页
         </MyButton>
