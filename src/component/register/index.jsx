@@ -7,8 +7,8 @@ import InputContainer from '../../common/box-container/form-container';
 import Emails from '../../common/form/email';
 import Name from '../../common/form/name';
 import SubmitButton from '../../common/form/submit-button';
-import openNotification from '../../common/prompt-box/prompt-box';
 
+import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { debounce } from '../../asstes/js/utils-methods';
 import { postRequestBody, get, SUCCESS } from '../../asstes/http/index';
 import { indexStyle } from './style';
@@ -50,7 +50,7 @@ class Register extends React.Component {
             postRequestBody('/api/auth/signup', { ...value })
               .then((data) => {
                 if (data.message === SUCCESS) {
-                  openNotification({
+                  openNotifications.open({
                     message: '邮件发送成功, 请耐心等待 --- OK',
                     variant: 'success',
                     duration: 10,

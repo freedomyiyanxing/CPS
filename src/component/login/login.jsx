@@ -12,7 +12,7 @@ import Password from '../../common/form/password';
 import SubmitButton from '../../common/form/submit-button';
 import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { Consumer } from '../../context/index';
-import { psdBase64, storage } from '../../asstes/js/utils-methods';
+import { psdBase64, storage, cookies } from '../../asstes/js/utils-methods';
 import { postRequestBody } from '../../asstes/http/index';
 
 import { loginStyle } from './style';
@@ -39,11 +39,12 @@ class Login extends React.Component {
    * @returns {*} 验证正确的情况下返回一个 promise对象
    */
   handleSubmit = (context) => {
-    // eslint-disable-next-line no-unused-vars
     const { form, history, location } = this.props;
     const { check } = this.state;
     let ayc = null;
+    // rc-form验证
     form.validateFields((error, value) => {
+      // 如果没有错误信息 说明 验证通过
       if (!error) {
         ayc = new Promise((resolve) => {
           postRequestBody('/api/auth/signin', { ...value })
@@ -56,28 +57,34 @@ class Login extends React.Component {
                 });
               }
               console.log(response);
-              // 修改登录状态
+              const loginInfo = {
+                token: response.token,
+                isLogin: true,
+              };
+              cookies.setCookie('isLogin', true);
+              cookies.setCookie('token', response.token);
+              // 登录完成后 把token 和 登录标志 写入 sessionStorage
+              window.sessionStorage.setItem('loginInfo', JSON.stringify(loginInfo));
+              // 修改全局登录状态 (确保路由不在拦截)
               context.setLogin(true);
-              // 跳转至登录首页
-              // eslint-disable-next-line max-len
-              // const { pathname } = location.state ? location.state.from : { pathname: '/yes/index' };
-              // history.push(pathname);
+              // 登录完成时 -> 跳转至登录首页 或者上次停留的页面
+              const { pathname } = location.state ? location.state.from : { pathname: '/my/index' };
+              history.push(pathname);
+              // 松开按钮的loading效果
               resolve(true);
+              // 清除登录的报错提示
               openNotifications.clean('error');
             })
             .catch((err) => {
               resolve(err);
-              console.log('loginerror: ', err.data.message);
               openNotifications.open({
-                message: err.data.message,
+                message: err.data.message || '服务器错误',
                 variant: 'error',
                 duration: null, // null 表示永远不移除
                 key: 'error', // 方便删除 相当于当前提示框的唯一标识
               });
             });
         });
-      } else {
-        ayc = null;
       }
     });
     return ayc;

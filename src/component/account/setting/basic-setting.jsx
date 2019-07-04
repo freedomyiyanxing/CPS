@@ -30,7 +30,7 @@ class BasicSetting extends React.Component {
         ayc = new Promise((resolve) => {
           setTimeout(() => {
             console.log({ ...value, date });
-            // history.push('/yes/index');
+            // history.push('/my/index');
             resolve(true);
           }, 1000);
         });

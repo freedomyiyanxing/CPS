@@ -14,7 +14,7 @@ import MySelect from '../../common/form/my-select';
 import MyButton from '../../common/material-ui-compoents/button';
 
 import IntlTelInput from '../../common/react-intl-tel-input/intlTelInput';
-import openNotification from '../../common/prompt-box/prompt-box';
+import { openNotifications } from '../../common/prompt-box/prompt-box';
 
 import { postRequestBody, get, SUCCESS } from '../../asstes/http/index';
 import { webSiteCategory, monthlyVisitors } from '../../asstes/data/default-data';
@@ -88,18 +88,16 @@ class RegisterInfo extends React.Component {
           postRequestBody('/api/auth/signup/complete', obj)
             .then((response) => {
               if (response.message === SUCCESS) {
-                openNotification({
+                openNotifications.open({
                   message: '注册成功 --- OK',
                   variant: 'success',
                   duration: 5,
                 });
                 resolve(true);
-                history.push('/yes/index');
+                history.push('/my/index');
               }
             });
         });
-      } else {
-        ayc = null;
       }
     });
     return ayc;
@@ -116,7 +114,7 @@ class RegisterInfo extends React.Component {
       firstName, lastName, email, isError, loading,
     } = this.state;
     return (
-      <InputContainer title={(!loading && !isError) ? 'Submit' : ''}>
+      <InputContainer title={(!loading && !isError) ? 'SIGN UP' : ''}>
         {
           // eslint-disable-next-line no-nested-ternary
           loading
@@ -169,7 +167,7 @@ class RegisterInfo extends React.Component {
                     />
                     <MyTextarea form={form} />
                     <SubmitButton
-                      name="Next"
+                      name="Submit"
                       handleSubmit={this.handleSubmit}
                     />
                   </>
@@ -177,7 +175,6 @@ class RegisterInfo extends React.Component {
             )
         }
       </InputContainer>
-      // eslint-disable-next-line no-nested-ternary
     );
   }
 }

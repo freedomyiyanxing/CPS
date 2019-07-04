@@ -77,10 +77,21 @@ export const loginStyle = theme => ({
   bigAvatar: {
     borderRadius: 'inherit',
   },
+  defaultAvatar: {
+    background: 'none',
+    color: theme.palette.primary.contrastText,
+  },
+  defaultIcon: {
+    fontSize: theme.typography.h2.fontSize,
+  },
   name: {
     margin: [[0, 10, 0, 6]],
     fontSize: theme.typography.fontSizeLg,
     color: theme.palette.primary[50],
+    overflow: 'hidden',
+    maxWidth: 110,
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
   },
   rightBtn: rightBtn(theme),
 
@@ -152,5 +163,32 @@ export const loginStyle = theme => ({
     opacity: 1,
     background: theme.palette.primary.A400,
     transform: 'rotate(225deg)',
+  },
+
+  // 弹出框
+  dialogWrapper: {
+    width: 400,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 10,
+    borderTop: '4px solid',
+    minHeight: 180,
+  },
+  dialogIcon: {
+    fontSize: theme.typography.h1.fontSize,
+  },
+  dialogText: {
+    fontSize: theme.typography.fontSizeMd,
+  },
+  dialogFooter: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  dialogButton: {
+    padding: [[10, 30]],
   },
 });

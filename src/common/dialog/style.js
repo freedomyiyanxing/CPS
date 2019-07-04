@@ -3,7 +3,6 @@ export const dialogsStyle = theme => ({
     width: 600,
     margin: 0,
     maxHeight: 'calc(100% - 30px)',
-    borderRadius: 4,
   },
   header: {
     width: '100%',
