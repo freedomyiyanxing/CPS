@@ -48,27 +48,24 @@ const setTableData = (tables) => {
 
 @withStyles(detailStyle)
 class HomeDetails extends React.Component {
-  // 点击分页时调用
-  handlePaginationChange = (current) => {
-    console.log(current);
-  };
-
   render() {
-    const { classes, data } = this.props;
+    const {
+      classes, data, size, onChangePage, onChangeOrderNumber,
+    } = this.props;
     return (
       <div className={classes.root}>
         <MyTextField
           label="Order Number"
-          onChange={this.handleChange}
+          onChange={onChangeOrderNumber}
         />
         <MyTable
           headers={headers}
           rows={setTableData(data.items)}
         />
         <MyPagination
-          total={435} // 总条数
-          pageSize={10} // 每页条数
-          change={this.handlePaginationChange} // 点击分页时调用
+          total={data.total} // 总条数
+          pageSize={size} // 每页条数
+          change={onChangePage} // 点击分页时调用
         />
       </div>
     );
@@ -78,6 +75,9 @@ class HomeDetails extends React.Component {
 HomeDetails.propTypes = {
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
   data: PropTypes.objectOf(PropTypes.array).isRequired,
+  size: PropTypes.number.isRequired,
+  onChangePage: PropTypes.func.isRequired,
+  onChangeOrderNumber: PropTypes.func.isRequired,
 };
 
 export default HomeDetails;

@@ -12,7 +12,7 @@ import Password from '../../common/form/password';
 import SubmitButton from '../../common/form/submit-button';
 import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { Consumer } from '../../context/index';
-import { psdBase64, storage, cookies } from '../../asstes/js/utils-methods';
+import { psdBase64, storage, session } from '../../asstes/js/utils-methods';
 import { postRequestBody } from '../../asstes/http/index';
 
 import { loginStyle } from './style';
@@ -56,21 +56,17 @@ class Login extends React.Component {
                   psd: psdBase64.encryption(value.password),
                 });
               }
-              console.log(response);
-              const loginInfo = {
+              // 登录完成后 把token 和 登录标志 写入 sessionStorage
+              session.setSession('loginInfo', {
                 token: response.token,
                 isLogin: true,
-              };
-              cookies.setCookie('isLogin', true);
-              cookies.setCookie('token', response.token);
-              // 登录完成后 把token 和 登录标志 写入 sessionStorage
-              window.sessionStorage.setItem('loginInfo', JSON.stringify(loginInfo));
+              });
               // 修改全局登录状态 (确保路由不在拦截)
               context.setLogin(true);
               // 登录完成时 -> 跳转至登录首页 或者上次停留的页面
               const { pathname } = location.state ? location.state.from : { pathname: '/my/index' };
               history.push(pathname);
-              // 松开按钮的loading效果
+              // 结束按钮的loading效果
               resolve(true);
               // 清除登录的报错提示
               openNotifications.clean('error');
@@ -78,7 +74,7 @@ class Login extends React.Component {
             .catch((err) => {
               resolve(err);
               openNotifications.open({
-                message: err.data.message || '服务器错误',
+                message: 'err.data.message' || '服务器错误',
                 variant: 'error',
                 duration: null, // null 表示永远不移除
                 key: 'error', // 方便删除 相当于当前提示框的唯一标识

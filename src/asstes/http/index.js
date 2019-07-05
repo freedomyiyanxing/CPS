@@ -1,4 +1,8 @@
+/* eslint-disable */
+import React from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+import { session } from '../js/utils-methods';
 
 //
 const _setParams = (url, params) => {
@@ -27,7 +31,7 @@ axios.interceptors.request.use(
         request.headers.Authorization = loginInfo.token;
       }
     });
-    console.log('request: ', request);
+    // console.log('request: ', request);
     return request;
   },
   (err) => {
@@ -38,13 +42,22 @@ axios.interceptors.request.use(
 
 // 返回后拦截 都返回一个Promise对象
 axios.interceptors.response.use(
-  response => new Promise((resolve) => { // 成功的返回
-    console.log('response: -> ', response.header);
+  // 成功的返回
+  response => new Promise((resolve) => {
+    // 如果服务端返回了新的 token 就写入 session
+    // console.log('response: ', response.headers);
+    if (response.headers.authorization) {
+      session.setSession('loginInfo', {
+        token: response.headers.authorization,
+        isLogin: true,
+      });
+    }
     if (response.status === 200) {
       resolve(response.data);
     }
   }),
-  (err) => { // 失败的返回
+  // 失败的返回
+  (err) => {
     if (err.response.status === 504 || err.response.status === 404) {
       console.log('服务器被吃了⊙﹏⊙∥');
     } else if (err.response.status === 401) {

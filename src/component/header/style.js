@@ -77,13 +77,7 @@ export const loginStyle = theme => ({
   bigAvatar: {
     borderRadius: 'inherit',
   },
-  defaultAvatar: {
-    background: 'none',
-    color: theme.palette.primary.contrastText,
-  },
-  defaultIcon: {
-    fontSize: theme.typography.h2.fontSize,
-  },
+  defaultAvatar: { background: 'none' },
   name: {
     margin: [[0, 10, 0, 6]],
     fontSize: theme.typography.fontSizeLg,

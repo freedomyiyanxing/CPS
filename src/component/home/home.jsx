@@ -6,19 +6,10 @@ import HomeHeader from './home-utils/home-header';
 import HomeCurve from './home-utils/home-curve';
 import HomeDetail from './home-utils/home-detail';
 import { Consumer } from '../../context/index';
-import { cookies } from '../../asstes/js/utils-methods';
+import { session, timeInterval } from '../../asstes/js/utils-methods';
+import { httpResponse } from './home-http';
 
-import { get } from '../../asstes/http/index';
-
-import {
-  accountData, statisticsTbs, daily, details,
-} from '../../../data/data';
-
-// 模拟数据
-const obj = {
-  userName: 'freedom.yi',
-  userPhoto: 'https://cdn.influmonsters.com/fit-in/250x313/filters:fill(fff)/upload/image/product/desktop/2018/09/27/f5ee73fa-437c-49f7-ada5-39c59dbd1795.jpg',
-};
+const PAGESIZE = 10; // 分页每一页条数
 
 class Home extends React.Component {
   constructor(props) {
@@ -26,73 +17,145 @@ class Home extends React.Component {
     this.state = {
       loading: true,
       userInfo: null,
+      statistics: null,
+      detail: null,
+      daily: null,
     };
     this.consumer = null;
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      get('/api/index/userInfo')
-        .then((response) => {
-          console.log(response);
-          this.setState({
-            loading: false,
-            userInfo: obj,
-          });
-          this.consumer.getUserInfo(obj);
-          console.log(this.consumer)
-          // setUseInfo(obj);
-          // setLoading(false)
-          cookies.setCookie('userInfo', JSON.stringify(obj));
-        })
-        .catch((err) => {
-          console.log('err: ', err);
-        });
-    }, 1000);
+    const interval = timeInterval();
+    this._unmount = true;
+    Promise.all([
+      httpResponse('/api/index/userInfo'),
+      httpResponse('/api/index/statistics', {
+        start: interval.resultTime,
+        end: interval.currentTime,
+      }),
+      httpResponse('/api/index/statistics/daily', {
+        start: interval.resultTime,
+        end: interval.currentTime,
+      }),
+      httpResponse('/api/index/statistics/detail', {
+        start: interval.resultTime,
+        end: interval.currentTime,
+        page: 0,
+        size: PAGESIZE,
+      }),
+    ]).then((data) => { // 最后还得处理异常情况
+      // 防止组件移除后 执行setState
+      if (this._unmount) {
+        const userInfo = {
+          userName: data[0].firstName + data[0].lastName,
+          userPhoto: data[0].photo,
+        };
+        // userInfo 写入context当中
+        this.consumer.getUserInfo(userInfo);
+        // // userInfo 写入 session 当中
+        session.setSession('userInfo', userInfo);
 
-    // get('/api/index/statistics', {start: '1556696480511', end: '1562226098999'})
-    //   .then((response) => {
-    //     console.log(response)
-    //   })
-    //   .catch((err) => {
-    //     console.log('err: ', err);
-    //   });
-    //
-    // //{start: 1560413388221, end: 1560931788221}
-    // get('/api/index/statistics/detail', {
-    //   start: '1560413388221',
-    //   end: '1560931788221',
-    //   page: 0,
-    //   size: 10,
-    // }).then((response) => {
-    //     console.log(response)
-    //   })
-    //   .catch((err) => {
-    //     console.log('err: ', err);
-    //   })
+        this.setState({
+          loading: false,
+          userInfo: data[0],
+          statistics: data[1],
+          daily: data[2],
+          detail: data[3],
+        });
+      }
+    }).catch((err) => {
+      if (err.status === 401) {
+        this.props.history.push('/s/signin');
+      }
+    })
   }
 
+  componentWillUnmount() {
+    this._unmount = false;
+  }
+
+  // 按日期查询推广数据 (折线图)
+  handleChangeDate = (result) => {
+    const { start, end } = result;
+    httpResponse('/api/index/statistics/daily', {
+      start,
+      end,
+    }).then((response) => {
+      this.setState({
+        daily: response,
+      });
+    }).catch((err) => {
+      if (err.status === 401) {
+        this.props.history.push('/s/signin');
+      }
+    });
+  };
+
+  // 点击分页时查询推广数据明细 (表格)
+  handlePaginationChange = (current) => {
+    const interval = timeInterval();
+    console.log(current);
+    httpResponse('/api/index/statistics/detail', {
+      start: interval.resultTime,
+      end: interval.currentTime,
+      page: current,
+      size: PAGESIZE,
+    }).then((response) => {
+      console.log(response);
+      this.setState({
+        detail: response,
+      });
+    })
+  };
+
+  // 按订单号查询推广数据明细 (表格)
+  handleOrderNumberChange = (e) => {
+    const interval = timeInterval();
+    httpResponse('/api/index/statistics/detail', {
+      start: interval.resultTime,
+      end: interval.currentTime,
+      page: 1,
+      size: PAGESIZE,
+      orderSN: e.target.value,
+    }).then((response) => {
+      console.log(response);
+      this.setState({
+        detail: response,
+      });
+    })
+  };
+
   render() {
-    const { loading, userInfo } = this.state;
+    const { loading, userInfo, statistics, detail, daily } = this.state;
     return (
-      loading
-        ? <div>loading。。。。</div>
-        : (
-          <Consumer ref={this.consumer}>
-            {
-              context => {
-                this.consumer = context;
-                return (
-                  <MainContainer margin={[44, 0, 40]}>
-                    <HomeHeader data={accountData} />
-                    <HomeCurve data={[statisticsTbs, daily]} />
-                    <HomeDetail data={details} />
-                  </MainContainer>
-                )
-              }
+      <MainContainer margin={[44, 0, 40]}>
+        <Consumer>
+          {
+            context => {
+              this.consumer = context;
+              return (
+                loading
+                  ? <div>loading。。。。</div>
+                  : (
+                    <>
+                      <HomeHeader data={userInfo} />
+                      <HomeCurve
+                        data={[daily, statistics]}
+                        onChange={this.handleChangeDate}
+                      />
+                      <HomeDetail
+                        size={PAGESIZE}
+                        data={detail}
+                        onChangePage={this.handlePaginationChange}
+                        onChangeOrderNumber={this.handleOrderNumberChange}
+                      />
+                    </>
+                  )
+              )
             }
-          </Consumer>
-        )
+          }
+        </Consumer>
+      </MainContainer>
     );
   }
 }

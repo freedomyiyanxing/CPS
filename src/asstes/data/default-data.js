@@ -1,4 +1,5 @@
 import uuid from 'uuid';
+import moment from 'moment';
 
 // 网站分类默认数据 (用于信息注册页面)
 const webSiteCategory = [
@@ -226,6 +227,80 @@ const accountSettingTabs = [
   },
 ];
 
+// 用户首页 推广数据统计 tab数据
+const statisticsTabs = statistics => ([
+  {
+    id: uuid(),
+    unit: null,
+    text: 'Clicks',
+    value: statistics.clicks,
+  },
+  {
+    id: uuid(),
+    unit: null,
+    text: 'Ordered items',
+    value: statistics.purchaseQty,
+  },
+  {
+    id: uuid(),
+    unit: '%',
+    text: 'Conversion',
+    value: statistics.rate,
+  },
+  {
+    id: uuid(),
+    unit: '$',
+    text: 'Ordered amount',
+    value: statistics.purchaseAmount,
+  },
+  {
+    id: uuid(),
+    unit: '$',
+    text: 'Esimated earnings from uncompleted items',
+    value: statistics.expectedBrokerageAmount,
+  },
+  {
+    id: uuid(),
+    unit: '$',
+    text: 'Earnings from completed items',
+    value: statistics.completeBrokerageAmount,
+  },
+]);
+
+// 用户首页 推广数据统计 (曲线图)
+const polylineDaily = (daily) => {
+  // 曲线图中 时间数组
+  const dailyTime = [];
+
+  // 曲线图中 数据数组 二位数组
+  const dailyData = [];
+  if (Array.isArray(daily)) {
+    daily.forEach((v, i) => {
+      // 把时间格式修改 然后存入 this.dailyDate 数组中
+      dailyTime.push(moment(v.date).format('MMM DD,YYYY'));
+      if (i === 0) {
+        dailyData[0] = [v.clicks];
+        dailyData[1] = [v.purchaseQty];
+        dailyData[2] = [v.rate];
+        dailyData[3] = [v.purchaseAmount];
+        dailyData[4] = [v.expectedBrokerageAmount];
+        dailyData[5] = [v.completeBrokerageAmount];
+      } else {
+        dailyData[0].push(v.clicks);
+        dailyData[1].push(v.purchaseQty);
+        dailyData[2].push(v.rate);
+        dailyData[3].push(v.purchaseAmount);
+        dailyData[4].push(v.expectedBrokerageAmount);
+        dailyData[5].push(v.completeBrokerageAmount);
+      }
+    });
+  }
+  return {
+    dailyTime,
+    dailyData,
+  };
+};
+
 /* 商家推广商品默认数据 */
 const storeProduct = {
   productSort: [
@@ -314,4 +389,6 @@ export {
   storeProduct,
   myProduct,
   accountSettingTabs,
+  statisticsTabs,
+  polylineDaily,
 };

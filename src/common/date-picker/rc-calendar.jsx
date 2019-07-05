@@ -13,6 +13,8 @@ import 'rc-calendar/assets/index.css';
 import MyInput from '../material-ui-compoents/input';
 import MyTextField from '../material-ui-compoents/text-field-input';
 import MyLabel from '../material-ui-compoents/input-label';
+// eslint-disable-next-line no-unused-vars
+import { timeInterval } from '../../asstes/js/utils-methods';
 
 import { rcCalendarStyle } from './style';
 
@@ -34,16 +36,11 @@ function isValidRange(v) {
   return v && v[0] && v[1];
 }
 
-// 计算一天的毫秒数
-const day = 24 * 60 * 60 * 1000;
-// 当前时间
-const now = new Date().getTime() + day;
-// 计算得到从今天往前走90天的毫秒数
-const result = now - (90 * day);
-
 // 时间限制区
+const interval = timeInterval();
 function disabledDate(current) {
-  return current < moment(result) || current > moment(now);
+  // +一分钟 是保证当前日期是在可选范围
+  return current < moment(interval.resultTime) || current > moment(interval.currentTime + 60000);
 }
 
 @withStyles(rcCalendarStyle)

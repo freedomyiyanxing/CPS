@@ -5,6 +5,7 @@ import Avatar from '@material-ui/core/Avatar';
 
 import PartitionLine from '../../../common/partition-line/partition-line';
 import MyButton from '../../../common/material-ui-compoents/button';
+import MyPerson from '../../../common/material-ui-compoents/icon-person';
 import MyDialog from '../../../common/dialog/dialog';
 import Withdraw from '../../../common/dialog/withdraw';
 
@@ -29,13 +30,23 @@ const HomeHeader = (props) => {
   return (
     <>
       <div className={classes.root}>
-        <Avatar
-          src={data.photo}
-          alt="account icon"
-          className={classes.bigAvatar}
-        />
+        {
+          data.photo
+            ? (
+              <Avatar
+                src={data.photo}
+                alt="account icon"
+                className={classes.bigAvatar}
+              />
+            )
+            : (
+              <Avatar className={classes.bigAvatar}>
+                <MyPerson />
+              </Avatar>
+            )
+        }
         <h5 className={classes.name}>
-          {`${data.firstName} ${data.lastName}`}
+          {(data.firstName + data.lastName) || ''}
         </h5>
         <span className={classes.email}>
           {data.email}
@@ -44,7 +55,7 @@ const HomeHeader = (props) => {
         <span className={classes.balance}>
           <span className={classes.text}>Balance :</span>
           <span className={classes.price}>
-            {`$ ${data.balance}`}
+            {`$ ${data.balance || 0}`}
           </span>
         </span>
         <MyButton

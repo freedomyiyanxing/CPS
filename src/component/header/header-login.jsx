@@ -9,12 +9,13 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import Dialog from '@material-ui/core/Dialog';
 import ErrorOutline from '@material-ui/icons/ErrorOutline';
-import Person from '@material-ui/icons/Person';
 
 import { Consumer } from '../../context/index';
 import MyButton from '../../common/material-ui-compoents/button';
 import HeaderContainer from './header-container';
 import PartitionLine from '../../common/partition-line/partition-line';
+import MyPerson from '../../common/material-ui-compoents/icon-person';
+
 import { loginStyle } from './style';
 import logo from '../../asstes/images/logo_white.png';
 
@@ -185,7 +186,7 @@ const HeaderLogin = (props) => {
                         )
                         : (
                           <Avatar className={classes.defaultAvatar}>
-                            <Person className={classes.defaultIcon} />
+                            <MyPerson />
                           </Avatar>
                         )
                     }
