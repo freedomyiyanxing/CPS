@@ -7,6 +7,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Remove from '@material-ui/icons/Remove';
 import MyInput from '../material-ui-compoents/input';
 import MyLabel from '../material-ui-compoents/input-label';
+import { formPrompt } from '../../asstes/data/prompt-text';
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -47,11 +48,10 @@ const MyPercentage = (props) => {
 
   const compareToStartPercentage = (rule, value, callback) => {
     // 获取起始价格
+    const { parseInt } = window;
     const price = form.getFieldValue('startPercentage');
-    // eslint-disable-next-line radix
     if ((value && price) && parseInt(value) <= parseInt(price)) {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback('起始佣金必须 小于 结尾佣金');
+      callback(formPrompt.advertisingStart);
     } else {
       callback();
     }
@@ -60,8 +60,7 @@ const MyPercentage = (props) => {
   // 限制结束佣金不得超过100
   const limitEndPercentage = (rule, value, callback) => {
     if (value && value > 100) {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback('佣金 比例 不许 超过 100%');
+      callback(formPrompt.advertisingEnd);
     } else {
       callback();
     }
@@ -96,7 +95,7 @@ const MyPercentage = (props) => {
             rules: [
               {
                 pattern: /^([0-9]{1,2})$/,
-                message: '开始佣金 我们需要有效的 数字',
+                message: formPrompt.advertisingFormat,
               },
               {
                 validator: compareToEndPercentage,
@@ -124,7 +123,7 @@ const MyPercentage = (props) => {
             rules: [
               {
                 pattern: /^([0-9]{1,3})$/,
-                message: ' 结束 佣金 我们需要有效的 数字',
+                message: formPrompt.advertisingFormat,
               },
               {
                 validator: limitEndPercentage,

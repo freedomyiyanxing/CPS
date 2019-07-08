@@ -3,6 +3,7 @@ import { createForm, formShape } from 'rc-form';
 
 import Password from './password';
 import ConfirmPassword from './password-confirm';
+import { formPrompt } from '../../asstes/data/prompt-text';
 
 @createForm()
 class MergePassword extends React.Component {
@@ -33,8 +34,7 @@ class MergePassword extends React.Component {
   compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
     if (value && value !== form.getFieldValue('password')) {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback('两次输入的密码不一致');
+      callback(formPrompt.passwordValidator);
     } else {
       callback();
     }

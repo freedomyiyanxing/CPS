@@ -11,7 +11,7 @@ import SubmitButton from '../../common/form/submit-button';
 import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { debounce } from '../../asstes/js/utils-methods';
 import { postRequestBody, get, SUCCESS } from '../../asstes/http/index';
-import { registerIndexPrompt } from '../../asstes/data/prompt-text';
+import { registerIndexPrompt, formPrompt } from '../../asstes/data/prompt-text';
 
 import { indexStyle } from './style';
 
@@ -27,8 +27,7 @@ class Register extends React.Component {
       get(`/api/auth/emailExist/${emails}`)
         .then((data) => {
           if (data.existed) {
-            // eslint-disable-next-line standard/no-callback-literal
-            callback('邮箱已经存在');
+            callback(formPrompt.emailValidator);
           } else {
             callback();
           }

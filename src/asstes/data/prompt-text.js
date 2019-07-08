@@ -1,3 +1,16 @@
+// 表单验证错误提示语
+const formPrompt = {
+  emailRequired: '邮箱必填',
+  emailFormat: '邮箱格式错误',
+  emailValidator: '邮箱已经存在',
+  passwordRequired: '密码是必填的',
+  passwordFormat: '密码格式错误',
+  passwordValidator: '两次输入的密码不一致',
+  advertisingFormat: '佣金 我们需要有效的 数字',
+  advertisingEnd: '佣金 比例 不许 超过 100%',
+  advertisingStart: '起始佣金必须 小于 结尾佣金',
+};
+
 // 发送邮件页面
 const emailSentPrompt = {
   successText: '邮件发送成功, 请打开邮箱点击进入重置密码页面',
@@ -34,6 +47,7 @@ const registerInfoPrompt = {
 
 
 export {
+  formPrompt,
   emailSentPrompt,
   forgetPasswordPrompt,
   loginPrompt,

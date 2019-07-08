@@ -4,6 +4,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import MyInput from '../material-ui-compoents/input';
+import { formPrompt } from '../../asstes/data/prompt-text';
 
 const Emails = (props) => {
   const {
@@ -31,11 +32,11 @@ const Emails = (props) => {
           rules: [
             {
               required: true,
-              message: '邮箱必填',
+              message: formPrompt.emailRequired,
             },
             {
               type: 'email',
-              message: '邮箱格式错误',
+              message: formPrompt.emailFormat,
             },
             {
               // 异步验证

@@ -6,6 +6,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import PsdVisibility from './psd-visibility';
 import MyInput from '../material-ui-compoents/input';
+import { formPrompt } from '../../asstes/data/prompt-text';
 
 const Password = (props) => {
   const {
@@ -37,11 +38,11 @@ const Password = (props) => {
           rules: [
             {
               required: true,
-              message: '密码是必填的',
+              message: formPrompt.passwordRequired,
             },
             {
               pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d~^$@$!%*#?&\-_]{6,20}$/,
-              message: '密码格式错误',
+              message: formPrompt.passwordFormat,
             },
             {
               validator: validateToNextPassword,
