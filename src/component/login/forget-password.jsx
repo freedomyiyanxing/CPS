@@ -10,8 +10,8 @@ import Emails from '../../common/form/email';
 import SubmitButton from '../../common/form/submit-button';
 import { get, SUCCESS } from '../../asstes/http/index';
 import { openNotifications } from '../../common/prompt-box/prompt-box';
-
-const promptText = 'Type in your email address below and well send you an email with Instructions on how to reset your password. Due to Security reasons,theink will be valid for 2 hours, after 2 hours you will need to submit anotherrequestgaln.';
+import { forgetPasswordText } from '../../asstes/data/default-data';
+import { forgetPasswordPrompt } from '../../asstes/data/prompt-text';
 
 @withStyles(forgetPasswordStyle)
 @createForm()
@@ -22,28 +22,26 @@ class ForgetPassword extends React.Component {
     form.validateFields((error, value) => {
       if (!error) {
         ayc = new Promise((resolve) => {
-          setTimeout(() => {
-            get(`/api/password/send?email=${value.email}`)
-              .then((response) => {
-                if (response.message === SUCCESS) {
-                  openNotifications.open({
-                    message: '邮件发送成功, 请打开邮箱点击进入重置密码页面',
-                    variant: 'success',
-                    duration: 5,
-                  });
-                  history.push('/s/email-sent', { email: value.email, link: 'login' });
-                }
-                resolve(true);
-              })
-              .catch((err) => {
+          get(`/api/password/send?email=${value.email}`)
+            .then((response) => {
+              if (response.message === SUCCESS) {
                 openNotifications.open({
-                  message: err.data.message || '服务器错误',
-                  variant: 'error',
-                  duration: 5, // null 表示永远不移除
+                  message: forgetPasswordPrompt.successText,
+                  variant: 'success',
+                  duration: 5,
                 });
-                resolve(true);
+                history.push('/s/email-sent', { email: value.email, link: 'login' });
+              }
+              resolve(true);
+            })
+            .catch((err) => {
+              openNotifications.open({
+                message: err.data.message || forgetPasswordPrompt.errorText,
+                variant: 'error',
+                duration: 5,
               });
-          }, 1000);
+              resolve(true);
+            });
         });
       }
     });
@@ -54,7 +52,7 @@ class ForgetPassword extends React.Component {
     const { classes, form } = this.props;
     return (
       <InputContainer title="FORGOT PASSWORD?">
-        <p className={classes.prompt}>{promptText}</p>
+        <p className={classes.prompt}>{forgetPasswordText}</p>
         <div className={classes.wrapper}>
           <Emails form={form} />
         </div>

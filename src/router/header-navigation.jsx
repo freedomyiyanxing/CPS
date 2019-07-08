@@ -1,7 +1,5 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { renderRoutes } from 'react-router-config';
 import renderRoutes from './render-routes';
 
 import HeaderLogin from '../component/header/header-login';
@@ -19,16 +17,14 @@ const HeaderNavigation = (props) => {
   return (
     <Consumer>
       {
-        data => {
-          return (
-            <>
-              <HeaderLogin history={history} />
-              <BoxContainer>
-                {renderRoutes(route.routes, data.state.isLogin)}
-              </BoxContainer>
-            </>
-          )
-        }
+        data => (
+          <>
+            <HeaderLogin history={history} />
+            <BoxContainer>
+              {renderRoutes(route.routes, data.state.isLogin)}
+            </BoxContainer>
+          </>
+        )
       }
     </Consumer>
   );

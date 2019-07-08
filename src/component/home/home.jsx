@@ -1,5 +1,5 @@
-/* eslint-disable */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import MainContainer from '../../common/box-container/main-container';
 import HomeHeader from './home-utils/home-header';
@@ -9,17 +9,18 @@ import { Consumer } from '../../context/index';
 import { session, timeInterval } from '../../asstes/js/utils-methods';
 import { httpResponse } from './home-http';
 
-const PAGESIZE = 10; // 分页每一页条数
+const PAGE_SIZE = 10; // 分页每一页条数
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
-      userInfo: null,
-      statistics: null,
-      detail: null,
-      daily: null,
+      userInfo: null, // 用户信息数据
+      statistics: null, // 推广数据统计 (tab)
+      detail: null, // 推广数据统计 (表格)
+      daily: null, // 推广数据统计 (折线图)
+      timer: {},
     };
     this.consumer = null;
   }
@@ -40,15 +41,15 @@ class Home extends React.Component {
       httpResponse('/api/index/statistics/detail', {
         start: interval.resultTime,
         end: interval.currentTime,
-        page: 0,
-        size: PAGESIZE,
+        page: 1,
+        size: PAGE_SIZE,
       }),
-    ]).then((data) => { // 最后还得处理异常情况
+    ]).then((response) => { // 最后还得处理异常情况
       // 防止组件移除后 执行setState
       if (this._unmount) {
         const userInfo = {
-          userName: data[0].firstName + data[0].lastName,
-          userPhoto: data[0].photo,
+          userName: response[0].firstName + response[0].lastName,
+          userPhoto: response[0].photo,
         };
         // userInfo 写入context当中
         this.consumer.getUserInfo(userInfo);
@@ -57,81 +58,59 @@ class Home extends React.Component {
 
         this.setState({
           loading: false,
-          userInfo: data[0],
-          statistics: data[1],
-          daily: data[2],
-          detail: data[3],
+          userInfo: response[0],
+          statistics: response[1],
+          daily: response[2],
+          detail: response[3],
         });
       }
     }).catch((err) => {
       if (err.status === 401) {
+        // eslint-disable-next-line react/destructuring-assignment
         this.props.history.push('/s/signin');
       }
-    })
+    });
   }
 
   componentWillUnmount() {
     this._unmount = false;
   }
 
-  // 按日期查询推广数据 (折线图)
+  // 按日期查询推广数据
   handleChangeDate = (result) => {
     const { start, end } = result;
-    httpResponse('/api/index/statistics/daily', {
-      start,
-      end,
-    }).then((response) => {
+    Promise.all([
+      httpResponse('/api/index/statistics/daily', {
+        start,
+        end,
+      }),
+      httpResponse('/api/index/statistics/detail', {
+        start,
+        end,
+        page: 1,
+        size: PAGE_SIZE,
+      }),
+    ]).then((response) => {
       this.setState({
-        daily: response,
+        daily: response[0],
+        detail: response[1],
+        timer: {
+          start,
+          end,
+        },
       });
-    }).catch((err) => {
-      if (err.status === 401) {
-        this.props.history.push('/s/signin');
-      }
     });
   };
 
-  // 点击分页时查询推广数据明细 (表格)
-  handlePaginationChange = (current) => {
-    const interval = timeInterval();
-    console.log(current);
-    httpResponse('/api/index/statistics/detail', {
-      start: interval.resultTime,
-      end: interval.currentTime,
-      page: current,
-      size: PAGESIZE,
-    }).then((response) => {
-      console.log(response);
-      this.setState({
-        detail: response,
-      });
-    })
-  };
-
-  // 按订单号查询推广数据明细 (表格)
-  handleOrderNumberChange = (e) => {
-    const interval = timeInterval();
-    httpResponse('/api/index/statistics/detail', {
-      start: interval.resultTime,
-      end: interval.currentTime,
-      page: 1,
-      size: PAGESIZE,
-      orderSN: e.target.value,
-    }).then((response) => {
-      console.log(response);
-      this.setState({
-        detail: response,
-      });
-    })
-  };
-
   render() {
-    const { loading, userInfo, statistics, detail, daily } = this.state;
+    const {
+      loading, userInfo, statistics, detail, daily, timer,
+    } = this.state;
     return (
       <MainContainer margin={[44, 0, 40]}>
         <Consumer>
           {
-            context => {
+            (context) => {
               this.consumer = context;
               return (
                 loading
@@ -144,14 +123,13 @@ class Home extends React.Component {
                         onChange={this.handleChangeDate}
                       />
                       <HomeDetail
-                        size={PAGESIZE}
+                        size={PAGE_SIZE}
                         data={detail}
-                        onChangePage={this.handlePaginationChange}
-                        onChangeOrderNumber={this.handleOrderNumberChange}
+                        time={timer}
                       />
                     </>
                   )
-              )
+              );
             }
           }
         </Consumer>
@@ -159,5 +137,9 @@ class Home extends React.Component {
     );
   }
 }
+
+Home.propTypes = {
+  history: PropTypes.objectOf(PropTypes.object).isRequired,
+};
 
 export default Home;

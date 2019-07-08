@@ -16,39 +16,10 @@ import HeaderContainer from './header-container';
 import PartitionLine from '../../common/partition-line/partition-line';
 import MyPerson from '../../common/material-ui-compoents/icon-person';
 
-import { loginStyle } from './style';
+import { myHeader } from '../../asstes/data/default-data';
 import logo from '../../asstes/images/logo_white.png';
 
-const homeList = [
-  {
-    id: uuid(),
-    text: 'Product Search',
-    links: 'product-search',
-  },
-  {
-    id: uuid(),
-    text: 'My Products',
-    links: 'my-products',
-  },
-];
-
-const account = [
-  {
-    id: uuid(),
-    text: 'Account Setting',
-    links: 'account-setting',
-  },
-  {
-    id: uuid(),
-    text: 'Account Balance',
-    links: 'account-balance',
-  },
-  {
-    id: uuid(),
-    text: 'Change Password',
-    links: 'account-password',
-  },
-];
+import { loginStyle } from './style';
 
 const useStyles = makeStyles(loginStyle);
 
@@ -148,7 +119,7 @@ const HeaderLogin = (props) => {
                       >
                         <MenuList className={classes.linkList}>
                           {
-                            homeList.map(v => (
+                            myHeader.homeList.map(v => (
                               <MenuItem
                                 key={v.id}
                                 classes={{
@@ -202,7 +173,7 @@ const HeaderLogin = (props) => {
                       <span className={classes.accountArrow} />
                       <MenuList className={classes.accountList}>
                         {
-                          account.map(v => (
+                          myHeader.account.map(v => (
                             <MenuItem
                               key={v.id}
                               onClick={() => { handleAccount(v.links); }}

@@ -11,6 +11,8 @@ import SubmitButton from '../../common/form/submit-button';
 import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { debounce } from '../../asstes/js/utils-methods';
 import { postRequestBody, get, SUCCESS } from '../../asstes/http/index';
+import { registerIndexPrompt } from '../../asstes/data/prompt-text';
+
 import { indexStyle } from './style';
 
 @withStyles(indexStyle)
@@ -46,37 +48,32 @@ class Register extends React.Component {
     form.validateFields((error, value) => {
       if (!error) {
         ayc = new Promise((resolve) => {
-          setTimeout(() => {
-            postRequestBody('/api/auth/signup', { ...value })
-              .then((data) => {
-                if (data.message === SUCCESS) {
-                  openNotifications.open({
-                    message: '邮件发送成功, 请耐心等待 --- OK',
-                    variant: 'success',
-                    duration: 10,
-                  });
-                  resolve(true);
-                  history.push('/s/email-sent', { email: value.email, link: 'register' });
-                }
-              })
-              .catch((err) => {
-                console.log(err);
+          postRequestBody('/api/auth/signup', { ...value })
+            .then((data) => {
+              if (data.message === SUCCESS) {
+                openNotifications.open({
+                  message: registerIndexPrompt.successText,
+                  variant: 'success',
+                  duration: 5,
+                });
+                resolve(true);
+                // to 到发送邮件页面
+                history.push('/s/email-sent', { email: value.email, link: 'register' });
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              openNotifications.open({
+                message: err.data.message || registerIndexPrompt.errorText,
+                variant: 'error',
+                duration: 5,
               });
-          }, 1000);
+              resolve(true);
+            });
         });
-      } else {
-        ayc = null;
       }
     });
     return ayc;
-  };
-
-  /**
-   * 点击跳转到忘记密码页面
-   */
-  handleLink = () => {
-    const { history } = this.props;
-    history.push('/s/password/forgot');
   };
 
   render() {
@@ -85,10 +82,7 @@ class Register extends React.Component {
       <InputContainer title="SIGN UP">
         <Name name="First Name" outputName="firstName" form={form} />
         <Name name="Last Name" outputName="lastName" form={form} />
-        <Emails
-          form={form}
-          onChange={this.handleChange}
-        />
+        <Emails form={form} onChange={this.handleChange} />
         <p className={classes.prompt}>
           By registering,
           you agree with our
@@ -96,10 +90,7 @@ class Register extends React.Component {
           and
           <span> Privacy Policy </span>
         </p>
-        <SubmitButton
-          name="Next"
-          handleSubmit={this.handleSubmit}
-        />
+        <SubmitButton name="Next" handleSubmit={this.handleSubmit} />
       </InputContainer>
     );
   }

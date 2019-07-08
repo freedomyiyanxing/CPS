@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles/index';
-import MyButton from '../../../common/material-ui-compoents/button';
 
+import MyButton from '../../../common/material-ui-compoents/button';
 import MainContainer from '../../../common/box-container/main-container';
 import BasicSetting from './basic-setting';
 import WibsiteSetting from './wibsite-setting';
 import MyCropper from './cropper';
 
 import { accountSettingTabs } from '../../../asstes/data/default-data';
+import { get } from '../../../asstes/http/index';
+
 import { settingStyle } from './style';
 
 const iconUrl = 'https://fengyuanchen.github.io/cropperjs/images/picture.jpg';
@@ -20,6 +22,16 @@ class AccountSetting extends React.Component {
     this.state = {
       value: 0,
     };
+  }
+
+  componentDidMount() {
+    get('/api/profile/info')
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   handleChange = (newValue) => {

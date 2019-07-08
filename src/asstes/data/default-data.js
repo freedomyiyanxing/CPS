@@ -209,6 +209,7 @@ const monthlyVisitors = [
   },
 ];
 
+// 修改个人资料页面 的 tabs 文案
 const accountSettingTabs = [
   {
     id: 'uuid-1',
@@ -273,8 +274,18 @@ const polylineDaily = (daily) => {
   const dailyTime = [];
 
   // 曲线图中 数据数组 二位数组
-  const dailyData = [];
-  if (Array.isArray(daily)) {
+  // 如果没有数据, 则初始化下数据
+  const dailyData = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ];
+
+  if (Array.isArray(daily) && daily.length) {
+    dailyData.length = 0;
     daily.forEach((v, i) => {
       // 把时间格式修改 然后存入 this.dailyDate 数组中
       dailyTime.push(moment(v.date).format('MMM DD,YYYY'));
@@ -383,6 +394,133 @@ const myProduct = {
   ],
 };
 
+// 登录完成的头部 下拉菜单
+const myHeader = {
+  homeList: [
+    {
+      id: uuid(),
+      text: 'Product Search',
+      links: 'product-search',
+    },
+    {
+      id: uuid(),
+      text: 'My Products',
+      links: 'my-products',
+    },
+  ],
+
+  account: [
+    {
+      id: uuid(),
+      text: 'Account Setting',
+      links: 'account-setting',
+    },
+    {
+      id: uuid(),
+      text: 'Account Balance',
+      links: 'account-balance',
+    },
+    {
+      id: uuid(),
+      text: 'Change Password',
+      links: 'account-password',
+    },
+  ],
+};
+
+// 登录首页 表格头部标题文字
+const myIndexTableHeaders = [
+  {
+    id: uuid(),
+    text: 'Order Number',
+  },
+  {
+    id: uuid(),
+    text: 'Purdchase Time',
+  },
+  {
+    id: uuid(),
+    text: 'Order Status',
+  },
+  {
+    id: uuid(),
+    text: 'Product Qty',
+  },
+  {
+    id: uuid(),
+    text: 'Protein',
+  },
+  {
+    id: uuid(),
+    text: 'Amount',
+  },
+  {
+    id: uuid(),
+    text: 'Advertising fees rate',
+  },
+  {
+    id: uuid(),
+    text: 'Earnings',
+  },
+];
+
+// 登录首页 表格数据处理
+const myIndexTablesBody = {
+  orderStatus(status) {
+    // eslint-disable-next-line no-nested-ternary
+    return status === '0' ? 'Created' : status === '1' ? 'Uncompleted' : 'Completed';
+  },
+
+  // 处理表格数据
+  setTableData(tables) {
+    const arr = [];
+    if (!tables.length) {
+      return arr;
+    }
+    let index = 0;
+    // eslint-disable-next-line no-restricted-syntax
+    for (const v of tables) {
+      arr[index] = {
+        id: v.id || uuid(),
+        orderSN: v.orderSN,
+        orderTime: moment(v.orderTime).format('YYYY-MM-DD HH:mm:ss'),
+        orderStatus: this.orderStatus(v.orderStatus),
+        prodName: v.prodName,
+        purchaseQty: v.purchaseQty,
+        purchaseAmount: `$ ${v.purchaseAmount}`,
+        brokerageRate: `${v.brokerageRate} %`,
+        brokerageAmount: `$ ${v.brokerageAmount}`,
+      };
+      index += 1;
+    }
+    return arr;
+  },
+};
+
+// 忘记密码页面
+const forgetPasswordText = `
+  Type in your email address below and well send you an email with 
+  Instructions on how to reset your password. Due to Security reasons,
+  theink will be valid for 2 hours, after 2 hours you will 
+  need to submit anotherrequestgaln.
+`;
+
+// 邮件发送页面
+const emailSentText = (is) => {
+  let s = null;
+  if (is) {
+    s = 'Please click the link in the email to confirm your email address';
+  } else {
+    s = `
+      with a link to reset your password,Please click here 
+      tologin to your mail box, The email might take a couple 
+      of minutes to reach your account, Please check your lunk 
+      mail to ensure you receive it.
+    `;
+  }
+  return s;
+};
+
 export {
   webSiteCategory,
   monthlyVisitors,
@@ -391,4 +529,9 @@ export {
   accountSettingTabs,
   statisticsTabs,
   polylineDaily,
+  myHeader,
+  myIndexTableHeaders,
+  myIndexTablesBody,
+  forgetPasswordText,
+  emailSentText,
 };

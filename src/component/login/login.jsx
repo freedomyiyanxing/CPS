@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
@@ -14,6 +13,7 @@ import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { Consumer } from '../../context/index';
 import { psdBase64, storage, session } from '../../asstes/js/utils-methods';
 import { postRequestBody } from '../../asstes/http/index';
+import { loginPrompt } from '../../asstes/data/prompt-text';
 
 import { loginStyle } from './style';
 
@@ -74,7 +74,7 @@ class Login extends React.Component {
             .catch((err) => {
               resolve(err);
               openNotifications.open({
-                message: 'err.data.message' || '服务器错误',
+                message: err.data.message || loginPrompt.errorText,
                 variant: 'error',
                 duration: null, // null 表示永远不移除
                 key: 'error', // 方便删除 相当于当前提示框的唯一标识

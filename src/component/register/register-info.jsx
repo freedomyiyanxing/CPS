@@ -12,12 +12,12 @@ import MyTextarea from '../../common/form/my-textarea';
 import MyUrl from '../../common/form/my-url';
 import MySelect from '../../common/form/my-select';
 import MyButton from '../../common/material-ui-compoents/button';
-
 import IntlTelInput from '../../common/react-intl-tel-input/intlTelInput';
-import { openNotifications } from '../../common/prompt-box/prompt-box';
 
+import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { postRequestBody, get, SUCCESS } from '../../asstes/http/index';
 import { webSiteCategory, monthlyVisitors } from '../../asstes/data/default-data';
+import { registerInfoPrompt } from '../../asstes/data/prompt-text';
 
 import { registerInfoStyle } from './style';
 
@@ -41,27 +41,25 @@ class RegisterInfo extends React.Component {
     this._unmount = true;
     if (search) {
       // 获取注册用户的信息 (name && email)
-      setTimeout(() => {
-        get(`/api/auth/signup/info${search}`)
-          .then((response) => {
-            const { firstName, lastName, email } = response;
-            if (this._unmount) {
-              this.setState({
-                firstName,
-                lastName,
-                email,
-                loading: false,
-              });
-            }
-          })
-          .catch((err) => {
-            console.log(err, 'error');
+      get(`/api/auth/signup/info${search}`)
+        .then((response) => {
+          const { firstName, lastName, email } = response;
+          if (this._unmount) {
             this.setState({
-              isError: true,
+              firstName,
+              lastName,
+              email,
               loading: false,
             });
+          }
+        })
+        .catch((err) => {
+          console.log(err, 'error');
+          this.setState({
+            isError: true,
+            loading: false,
           });
-      }, 1000);
+        });
     }
   }
 
@@ -82,20 +80,30 @@ class RegisterInfo extends React.Component {
       // (只有电话为空时 跟 电话号码正确时为真 isValid 就为真)
       if (!error && !this.isValid) {
         ayc = new Promise((resolve) => {
-          const obj = Object.assign({}, {
-            firstName, lastName, email,
-          }, { ...value });
+          const obj = {
+            firstName, lastName, email, ...value,
+          };
           postRequestBody('/api/auth/signup/complete', obj)
             .then((response) => {
               if (response.message === SUCCESS) {
                 openNotifications.open({
-                  message: '注册成功 --- OK',
+                  message: registerInfoPrompt.successText,
                   variant: 'success',
                   duration: 5,
                 });
                 resolve(true);
+                // to 到个人主页
                 history.push('/my/index');
               }
+            })
+            .catch((err) => {
+              console.log(err, 'err');
+              openNotifications.open({
+                message: err.data.message || registerInfoPrompt.errorText,
+                variant: 'error',
+                duration: 5,
+              });
+              resolve(true);
             });
         });
       }

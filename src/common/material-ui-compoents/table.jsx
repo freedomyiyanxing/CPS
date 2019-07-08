@@ -36,30 +36,42 @@ const MyTable = (props) => {
   const { headers, rows } = props;
   const classes = useStyle();
   // 数组中第一个元素必须是对象, 获取对象中的所有key 返回一个数组
-  const rowsKey = Object.keys(rows[0]);
+  const rowsKey = rows.length && Object.keys(rows[0]);
   return (
     <Table className={classes.table}>
       <TableHead className={classes.tableHeader}>
         <TableRow>
           {
-            headers.map(header => (
-              <MyTableCell key={header}>{header}</MyTableCell>
+            headers.map(items => (
+              <MyTableCell key={items.id}>{items.text}</MyTableCell>
             ))
           }
         </TableRow>
       </TableHead>
       <TableBody className={classes.tableBody}>
-        {rows.map(row => (
-          <TableRow key={row.id} className={row.id}>
-            {
-              rowsKey.map(item => (
-                item !== 'id'
-                  ? <MyTableCell key={item}>{row[item]}</MyTableCell>
-                  : null
+        {
+          rows.length
+            ? (
+              rows.map(row => (
+                <TableRow key={row.id} className={row.id}>
+                  {
+                    rowsKey.map(item => (
+                      item !== 'id'
+                        ? <MyTableCell key={item}>{row[item]}</MyTableCell>
+                        : null
+                    ))
+                  }
+                </TableRow>
               ))
-            }
-          </TableRow>
-        ))}
+            )
+            : (
+              <TableRow>
+                <MyTableCell style={{ height: 200 }} align="center" colspan={8}>
+                  暂无数据
+                </MyTableCell>
+              </TableRow>
+            )
+        }
       </TableBody>
     </Table>
   );

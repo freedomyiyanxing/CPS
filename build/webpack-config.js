@@ -122,9 +122,9 @@ if (isDev) {
     historyApiFallback: {
       index: '/public/index.html',
     },
-    proxy: { //解决跨域 代理有请求 /api的全部代理到 'http://192.168.1.20:8678'
+    proxy: { //解决跨域 代理有请求 /api的全部代理到 'http://192.168.1.20:8768'
       '/api': {
-        target: 'http://192.168.1.26:8768',
+        target: 'http://192.168.1.20:8768',
       },
     }
   };

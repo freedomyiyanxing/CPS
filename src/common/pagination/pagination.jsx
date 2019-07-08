@@ -19,19 +19,19 @@ const useStyle = makeStyles(theme => ({
 
 
 const MyPagination = (props) => {
-  const { total, pageSize, change } = props;
+  const {
+    total, pageSize, change, pageCurrent,
+  } = props;
   const classes = useStyle();
-
-  function onChange(current, size) {
-    change(current, size);
+  function onChange(page, size) {
+    change(page, size);
   }
-
   return (
     <div className={classes.wrapper}>
       <Pagination
+        current={pageCurrent}
         showSizeChanger
         defaultPageSize={pageSize}
-        defaultCurrent={1}
         onChange={onChange}
         total={total}
         prevIcon={<ChevronLeft className={classes.icon} />}
@@ -44,7 +44,9 @@ const MyPagination = (props) => {
 MyPagination.propTypes = {
   total: PropTypes.number.isRequired,
   pageSize: PropTypes.number.isRequired,
+  pageCurrent: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
 };
+
 
 export default MyPagination;

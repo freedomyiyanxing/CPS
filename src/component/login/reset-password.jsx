@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
@@ -11,6 +10,7 @@ import MyButton from '../../common/material-ui-compoents/button';
 
 import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { get, patchRequestBody, SUCCESS } from '../../asstes/http';
+import { resetPasswordPrompt } from '../../asstes/data/prompt-text';
 
 import { resetPasswordStyle } from './style';
 
@@ -62,7 +62,6 @@ class ResetPassword extends React.Component {
    * @returns {*} 验证正确的情况下返回一个 promise对象
    */
   handleSubmit = () => {
-    // eslint-disable-next-line no-unused-vars
     const { form, history } = this.props;
     const { email } = this.state;
     let ayc = null;
@@ -76,25 +75,24 @@ class ResetPassword extends React.Component {
               newPassword: value.password,
             })
               .then((response) => {
-                console.log(response);
                 if (response.message === SUCCESS) {
                   openNotifications.open({
-                    message: '密码重置成功 请用新密码登录',
+                    message: resetPasswordPrompt.successText,
                     variant: 'success',
                     duration: 5,
                   });
-                  // history.push('/s/login');
                 }
                 resolve(true);
+                // 密码修改完成 回到登录页面
+                history.push('/s/signin');
               })
               .catch((err) => {
                 console.log(err);
                 resolve(true);
                 openNotifications.open({
-                  message: err.data.message || '服务器错误',
+                  message: err.data.message || resetPasswordPrompt.errorText,
                   variant: 'error',
                   duration: 5, // null 表示永远不移除
-                  // key: 'error',
                 });
               });
           }, 1000);
@@ -123,9 +121,9 @@ class ResetPassword extends React.Component {
                   <MyButton
                     variant="contained"
                     color="inherit"
-                    onClick={() => { history.push('/s/login'); }}
+                    onClick={() => { history.push('/s/password/forgot'); }}
                   >
-                    回到注册页面
+                    回到找回密码页面
                   </MyButton>
                 </div>
               )

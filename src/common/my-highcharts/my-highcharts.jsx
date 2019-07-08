@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import Highcharts from 'highcharts';
 
 const startUp = (ref, time, data) => {
@@ -11,11 +12,11 @@ const startUp = (ref, time, data) => {
       zoomType: 'x',
     },
     title: {
-      text: 'freedom.yi',
+      text: null, // 'freedom.yi',
     },
     subtitle: {
-      text: document.ontouchstart === undefined
-        ? '鼠标拖动可以进行缩放' : '手势操作进行缩放',
+      // text: document.ontouchstart === undefined
+      //   ? '鼠标拖动可以进行缩放' : '手势操作进行缩放',
     },
     xAxis: {
       categories: time,
@@ -65,6 +66,16 @@ const startUp = (ref, time, data) => {
   });
 };
 
+@withStyles(() => ({
+  root: {
+    maxHeight: 500,
+    minHeight: 400,
+    marginTop: 38,
+  },
+  rootNo: {
+    height: 400,
+  },
+}))
 class MyHighcharts extends React.Component {
   componentDidMount() {
     const { chartsData } = this.props;
@@ -79,14 +90,19 @@ class MyHighcharts extends React.Component {
   }
 
   render() {
+    const { classes, chartsData } = this.props;
     return (
-      <div style={{ minHeight: 400 }} ref={(n) => { this.containerRef = n; }} />
+      <div
+        className={chartsData.time.length ? classes.root : classes.rootNo}
+        ref={(n) => { this.containerRef = n; }}
+      />
     );
   }
 }
 
 MyHighcharts.propTypes = {
   chartsData: PropTypes.objectOf(PropTypes.object).isRequired,
+  classes: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default MyHighcharts;
