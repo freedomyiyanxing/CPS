@@ -5,6 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 import MyInput from '../material-ui-compoents/input';
+import { formPrompt } from '../../asstes/data/prompt-text';
 
 const MyUrl = (props) => {
   const { form, value } = props;
@@ -28,11 +29,11 @@ const MyUrl = (props) => {
           rules: [
             {
               required: true,
-              message: '我们需要 你网站的 地址',
+              message: formPrompt.urlRequired,
             },
             {
               type: 'url',
-              message: '网址不正确 或者含有非法的字符',
+              message: formPrompt.urlFormat,
             },
           ],
         })}

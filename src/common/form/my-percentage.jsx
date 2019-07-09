@@ -28,20 +28,20 @@ const useStyle = makeStyles(theme => ({
 const MyPercentage = (props) => {
   const { form } = props;
   const classes = useStyle();
-  const [startPrice, setStartPrice] = useState('');
-  const [endPrice, setEndPrice] = useState('');
+  const [rateLow, setRateLow] = useState('');
+  const [rateHigh, setRateHigh] = useState('');
 
   const handleStartChange = (e) => {
-    setStartPrice(e.target.value);
+    setRateLow(e.target.value);
   };
 
   const handleEndChange = (e) => {
-    setEndPrice(e.target.value);
+    setRateHigh(e.target.value);
   };
 
   const compareToEndPercentage = (rule, value, callback) => {
     if (value) {
-      form.validateFields(['endPercentage'], { force: true });
+      form.validateFields(['rateHigh'], { force: true });
     }
     callback();
   };
@@ -49,7 +49,7 @@ const MyPercentage = (props) => {
   const compareToStartPercentage = (rule, value, callback) => {
     // 获取起始价格
     const { parseInt } = window;
-    const price = form.getFieldValue('startPercentage');
+    const price = form.getFieldValue('rateLow');
     if ((value && price) && parseInt(value) <= parseInt(price)) {
       callback(formPrompt.advertisingStart);
     } else {
@@ -67,7 +67,7 @@ const MyPercentage = (props) => {
   };
 
   const { getFieldProps, getFieldError } = form;
-  const errors = getFieldError('startPercentage') || getFieldError('endPercentage');
+  const errors = getFieldError('rateLow') || getFieldError('rateHigh');
   return (
     <FormControl
       fullWidth
@@ -78,7 +78,7 @@ const MyPercentage = (props) => {
       <div className={classes.root}>
         <MyInput
           type="text"
-          value={startPrice}
+          value={rateLow}
           autocomplete="off"
           onChange={handleStartChange}
           endAdornment={(
@@ -89,7 +89,7 @@ const MyPercentage = (props) => {
               %
             </InputAdornment>
           )}
-          {...getFieldProps('startPercentage', {
+          {...getFieldProps('rateLow', {
             validateFirst: true,
             initialValue: '',
             rules: [
@@ -106,7 +106,7 @@ const MyPercentage = (props) => {
         <Remove className={classes.icon} />
         <MyInput
           type="text"
-          value={endPrice}
+          value={rateHigh}
           autocomplete="off"
           onChange={handleEndChange}
           endAdornment={(
@@ -117,7 +117,7 @@ const MyPercentage = (props) => {
               %
             </InputAdornment>
           )}
-          {...getFieldProps('endPercentage', {
+          {...getFieldProps('rateHigh', {
             validateFirst: true,
             initialValue: '',
             rules: [

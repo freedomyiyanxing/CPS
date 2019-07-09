@@ -9,6 +9,7 @@ import WibsiteSetting from './wibsite-setting';
 import MyCropper from './cropper';
 
 import { accountSettingTabs } from '../../../asstes/data/default-data';
+// eslint-disable-next-line no-unused-vars
 import { get } from '../../../asstes/http/index';
 
 import { settingStyle } from './style';
@@ -25,13 +26,13 @@ class AccountSetting extends React.Component {
   }
 
   componentDidMount() {
-    get('/api/profile/info')
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // get('/api/profile/info')
+    //   .then((response) => {
+    //     console.log(response);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   }
 
   handleChange = (newValue) => {

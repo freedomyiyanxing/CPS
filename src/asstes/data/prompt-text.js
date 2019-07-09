@@ -9,6 +9,19 @@ const formPrompt = {
   advertisingFormat: '佣金 我们需要有效的 数字',
   advertisingEnd: '佣金 比例 不许 超过 100%',
   advertisingStart: '起始佣金必须 小于 结尾佣金',
+  priceFormat: '开始价格 我们需要有效的 数字',
+  priceValidator: '起始价格必须 小于 结尾价格',
+  urlRequired: '我们需要 你网站的 地址',
+  urlFormat: '网址不正确 或者含有非法的字符',
+  nameRequired: '我们需要你的名字',
+  nameFormat: '我们需要有效的字符(A-Z a-z) 特殊字符只限(. -) 字数(2 - 30) 之间',
+  textareaRequired: '我们需要 你网站的详细信息',
+  textareaFormat: '我们需要有效的字符(A-Z a-z) 字数(2 - 200) 之间',
+  selectRequired: '我们需要 你选择类别',
+  dateOne: '无效的日期, 在判断2月不可能 有30天 时 报错',
+  dateTwo: '无效的日期, 在判断大小月份时 报错',
+  dateThree: '无效的日期 , 出生日期 不可能在今天 或者 以后',
+  dateFour: '无效的日期 在判断闰年时报错',
 };
 
 // 发送邮件页面

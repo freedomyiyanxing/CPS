@@ -34,6 +34,11 @@ class Login extends React.Component {
     this.psd = result ? psdBase64.decrypt(result.psd) : '';
   }
 
+  componentWillUnmount() {
+    // 清除登录的报错提示
+    openNotifications.clean('error');
+  }
+
   /**
    * 提交事件
    * @returns {*} 验证正确的情况下返回一个 promise对象
@@ -68,8 +73,6 @@ class Login extends React.Component {
               history.push(pathname);
               // 结束按钮的loading效果
               resolve(true);
-              // 清除登录的报错提示
-              openNotifications.clean('error');
             })
             .catch((err) => {
               resolve(err);

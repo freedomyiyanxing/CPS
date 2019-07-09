@@ -6,6 +6,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import PsdVisibility from './psd-visibility';
 import MyInput from '../material-ui-compoents/input';
+import { formPrompt } from '../../asstes/data/prompt-text';
 
 const ConfirmPassword = (props) => {
   const {
@@ -35,7 +36,7 @@ const ConfirmPassword = (props) => {
         rules: [
           {
             required: true,
-            message: '密码是必填的',
+            message: formPrompt.passwordFormat,
           },
           {
             validator: compareToFirstPassword,
@@ -45,11 +46,10 @@ const ConfirmPassword = (props) => {
     >
       <InputLabel htmlFor="my-confirm-password">Confirm Password</InputLabel>
       <MyInput
-        id="my-confirm-password"
-        type={showPassword ? 'text' : 'password'}
-        aria-describedby="my-confirm-password"
         value={psd}
         onChange={handleChange}
+        id="my-confirm-password"
+        type={showPassword ? 'text' : 'password'}
         endAdornment={<PsdVisibility handleClick={handleClickShowPassword} />}
       />
       {

@@ -7,10 +7,10 @@ export const { Provider, Consumer } = createContext();
 class Context extends Component {
   constructor() {
     super();
-    const loginInfo = session.getSession('loginInfo');
+    // const loginInfo = session.getSession('loginInfo');
     const userInfo = session.getSession('userInfo');
     this.state = {
-      isLogin: loginInfo ? loginInfo.isLogin : false, // 是否登录
+      isLogin: true, // loginInfo ? loginInfo.isLogin : false, // 是否登录
       useObj: userInfo || {}, // 用户信息
     };
   }

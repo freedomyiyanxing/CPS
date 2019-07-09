@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -7,8 +6,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import MySelects from '../material-ui-compoents/select';
 import MyLabel from '../material-ui-compoents/input-label';
-
 import dateArr, { getDefault, MonthText, getDateFormat } from './get-date';
+import { formPrompt } from '../../asstes/data/prompt-text';
+
 import datePickerStyle from './style';
 
 @withStyles(datePickerStyle)
@@ -40,13 +40,13 @@ class DatePicker extends React.Component {
         console.log(_date);
         if (_month === 2 && _date >= 30) { // 选择 2 月份的
           this.setState({
-            errors: ['无效的日期, 在判断2月不可能 有30天 时 报错'],
+            errors: [formPrompt.dateOne],
           });
           return false;
         }
         if ((_month === 4 || _month === 6 || _month === 9 || _month === 11) && _date >= 31) {
           this.setState({
-            errors: ['无效的日期, 在判断大小月份时 报错'],
+            errors: [formPrompt.dateTwo],
           });
           return false;
         }
@@ -59,7 +59,7 @@ class DatePicker extends React.Component {
         const selectTime = new Date(getDateFormat(_year, _month, _date + 1)).getTime();
         if (selectTime > currentTime) {
           this.setState({
-            errors: ['无效的日期 , 出生日期 不可能在今天 或者 以后'],
+            errors: [formPrompt.dateThree],
           });
           return false;
         }
@@ -68,7 +68,7 @@ class DatePicker extends React.Component {
         if (!((_year % 4 === 0 && _year % 100 !== 0) || (_year % 400 === 0))) {
           if (_month === 2 && _date >= 29) {
             this.setState({
-              errors: ['无效的日期 在判断闰年时报错'],
+              errors: [formPrompt.dateFour],
             });
             return false;
           }
@@ -96,9 +96,6 @@ class DatePicker extends React.Component {
       console.log('你的出生日期是 :', getDateFormat(_year, _month, _date));
       return new Date(getDateFormat(_year, _month, _date)).getTime();
     }
-    // this.setState({
-    //   errors: ['出生日期为必填'],
-    // });
     return null;
   };
 

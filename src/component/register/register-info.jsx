@@ -72,6 +72,7 @@ class RegisterInfo extends React.Component {
    * @returns {*} 验证正确的情况下返回一个 promise对象
    */
   handleSubmit = () => {
+    // eslint-disable-next-line no-unused-vars
     const { form, history } = this.props;
     const { firstName, lastName, email } = this.state;
     let ayc = null;
@@ -83,6 +84,7 @@ class RegisterInfo extends React.Component {
           const obj = {
             firstName, lastName, email, ...value,
           };
+          console.log(obj);
           postRequestBody('/api/auth/signup/complete', obj)
             .then((response) => {
               if (response.message === SUCCESS) {
@@ -92,8 +94,8 @@ class RegisterInfo extends React.Component {
                   duration: 5,
                 });
                 resolve(true);
-                // to 到个人主页
-                history.push('/my/index');
+                // to 登录页面
+                // history.push('/s/signin');
               }
             })
             .catch((err) => {

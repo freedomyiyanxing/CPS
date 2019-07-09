@@ -23,7 +23,6 @@ export const MonthText = ['January', 'February', 'March', 'April', 'May', 'June'
 export const getDefault = (number = null) => {
   let obj = {};
   const now = new Date(number);
-  console.log(now);
   if (number) {
     obj = {
       year: now.getFullYear(),

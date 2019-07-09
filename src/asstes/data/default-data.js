@@ -497,6 +497,44 @@ const myIndexTablesBody = {
   },
 };
 
+// 个人账户account-balance页 (表格头部数据)
+const balanceTableHeaders = [
+  {
+    id: uuid(),
+    text: 'Date',
+  },
+  {
+    id: uuid(),
+    text: 'Amount',
+  },
+  {
+    id: uuid(),
+    text: 'Balance',
+  },
+  {
+    id: uuid(),
+    text: 'Type',
+  },
+  {
+    id: uuid(),
+    text: 'Description',
+  },
+];
+
+// 个人推广商品页面 状态刷选 默认数据
+const myProductStatus = [
+  {
+    id: uuid(),
+    sign: 'normal',
+    text: 'Normal',
+  },
+  {
+    id: uuid(),
+    sign: 'invalid',
+    text: 'Invalid',
+  },
+];
+
 // 忘记密码页面
 const forgetPasswordText = `
   Type in your email address below and well send you an email with 
@@ -534,4 +572,6 @@ export {
   myIndexTablesBody,
   forgetPasswordText,
   emailSentText,
+  balanceTableHeaders,
+  myProductStatus,
 };

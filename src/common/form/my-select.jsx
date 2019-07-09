@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import MySelects from '../material-ui-compoents/select';
 import MyLabel from '../material-ui-compoents/input-label';
+import { formPrompt } from '../../asstes/data/prompt-text';
 
 const MySelect = (props) => {
   const {
@@ -29,7 +30,7 @@ const MySelect = (props) => {
           rules: [
             {
               required: noRequire,
-              message: '我们需要 你选择类别',
+              message: formPrompt.selectRequired,
             },
           ],
         })}

@@ -8,6 +8,7 @@ import SubmitButton from '../../../common/form/submit-button';
 import MySelect from '../../../common/form/my-select';
 import MyPrice from '../../../common/form/my-price';
 import MyPercentage from '../../../common/form/my-percentage';
+import { setSearchArg } from '../../../asstes/js/utils-methods';
 
 import { searchStyle } from '../style';
 
@@ -15,18 +16,21 @@ import { searchStyle } from '../style';
 @createForm()
 class Search extends React.Component {
   handleSubmit = () => {
-    const { form } = this.props;
+    const { form, onChange } = this.props;
     let ayc = null;
     form.validateFields((error, value) => {
       if (!error) {
+        const arg = setSearchArg(value);
+        // 如果没有搜索内容 则直接 return
+        if (!Object.keys(arg).length) {
+          return null;
+        }
         ayc = new Promise((resolve) => {
           setTimeout(() => {
-            console.log({ ...value });
+            onChange(arg);
             resolve(true);
           }, 1000);
         });
-      } else {
-        ayc = null;
       }
     });
     return ayc;
@@ -49,7 +53,7 @@ class Search extends React.Component {
             form={form}
             name="Product Category :"
             outputName="ProductCategory"
-            selectArr={['1', '2']}
+            selectArr={['1', '2']} // 商品分类需要调用接口
             noRequire={false}
             fontSize="sm"
           />
@@ -74,6 +78,7 @@ class Search extends React.Component {
 
 Search.propTypes = {
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
+  onChange: PropTypes.func.isRequired,
   form: formShape.isRequired,
 };
 

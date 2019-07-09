@@ -7,6 +7,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Remove from '@material-ui/icons/Remove';
 import MyInput from '../material-ui-compoents/input';
 import MyLabel from '../material-ui-compoents/input-label';
+import { formPrompt } from '../../asstes/data/prompt-text';
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -40,25 +41,24 @@ const MyPrice = (props) => {
 
   const compareToEndPrice = (rule, value, callback) => {
     if (value) {
-      form.validateFields(['endPrice'], { force: true });
+      form.validateFields(['priceHigh'], { force: true });
     }
     callback();
   };
 
   const compareToStartPrice = (rule, value, callback) => {
     // 获取起始价格
-    const price = form.getFieldValue('startPrice');
-    // eslint-disable-next-line radix
+    const { parseInt } = window;
+    const price = form.getFieldValue('priceLow');
     if ((value && price) && parseInt(value) <= parseInt(price)) {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback('起始价格必须 小于 结尾价格');
+      callback(formPrompt.priceValidator);
     } else {
       callback();
     }
   };
 
   const { getFieldProps, getFieldError } = form;
-  const errors = getFieldError('startPrice') || getFieldError('endPrice');
+  const errors = getFieldError('priceLow') || getFieldError('priceHigh');
   return (
     <FormControl
       fullWidth
@@ -80,13 +80,13 @@ const MyPrice = (props) => {
               $
             </InputAdornment>
           )}
-          {...getFieldProps('startPrice', {
+          {...getFieldProps('priceLow', {
             validateFirst: true,
             initialValue: '',
             rules: [
               {
                 pattern: /^([0-9]{1,4})$/,
-                message: '开始价格 我们需要有效的 数字',
+                message: formPrompt.priceFormat,
               },
               {
                 validator: compareToEndPrice,
@@ -108,13 +108,13 @@ const MyPrice = (props) => {
               $
             </InputAdornment>
           )}
-          {...getFieldProps('endPrice', {
+          {...getFieldProps('priceHigh', {
             validateFirst: true,
             initialValue: '',
             rules: [
               {
                 pattern: /^([0-9]{1,5})$/,
-                message: ' 结束 价格 我们需要有效的 数字',
+                message: formPrompt.priceFormat,
               },
               {
                 validator: compareToStartPrice,

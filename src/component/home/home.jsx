@@ -6,7 +6,7 @@ import HomeHeader from './home-utils/home-header';
 import HomeCurve from './home-utils/home-curve';
 import HomeDetail from './home-utils/home-detail';
 import { Consumer } from '../../context/index';
-import { session, timeInterval } from '../../asstes/js/utils-methods';
+import { session, getDaysTime, getTime } from '../../asstes/js/utils-methods';
 import { httpResponse } from './home-http';
 
 const PAGE_SIZE = 10; // 分页每一页条数
@@ -26,23 +26,15 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    const interval = timeInterval();
+    const start = getTime(getDaysTime(90));
+    const end = getTime(new Date().getTime(), 'end');
     this._unmount = true;
     Promise.all([
       httpResponse('/api/index/userInfo'),
-      httpResponse('/api/index/statistics', {
-        start: interval.resultTime,
-        end: interval.currentTime,
-      }),
-      httpResponse('/api/index/statistics/daily', {
-        start: interval.resultTime,
-        end: interval.currentTime,
-      }),
+      httpResponse('/api/index/statistics', { start, end }),
+      httpResponse('/api/index/statistics/daily', { start, end }),
       httpResponse('/api/index/statistics/detail', {
-        start: interval.resultTime,
-        end: interval.currentTime,
-        page: 1,
-        size: PAGE_SIZE,
+        start, end, page: 1, size: PAGE_SIZE,
       }),
     ]).then((response) => { // 最后还得处理异常情况
       // 防止组件移除后 执行setState
@@ -80,15 +72,9 @@ class Home extends React.Component {
   handleChangeDate = (result) => {
     const { start, end } = result;
     Promise.all([
-      httpResponse('/api/index/statistics/daily', {
-        start,
-        end,
-      }),
+      httpResponse('/api/index/statistics/daily', { start, end }),
       httpResponse('/api/index/statistics/detail', {
-        start,
-        end,
-        page: 1,
-        size: PAGE_SIZE,
+        start, end, page: 1, size: PAGE_SIZE,
       }),
     ]).then((response) => {
       this.setState({

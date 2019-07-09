@@ -7,7 +7,7 @@ import MyTextField from '../../../common/material-ui-compoents/text-field-input'
 import MyPagination from '../../../common/pagination/pagination';
 
 import { httpResponse } from '../home-http';
-import { timeInterval, debounce } from '../../../asstes/js/utils-methods';
+import { getDaysTime, getTime, debounce } from '../../../asstes/js/utils-methods';
 import { myIndexTableHeaders, myIndexTablesBody } from '../../../asstes/data/default-data';
 
 import { detailStyle } from './style';
@@ -31,10 +31,9 @@ class HomeDetails extends React.Component {
 
   getData() {
     const { size, time } = this.props;
-    const interval = timeInterval();
     httpResponse('/api/index/statistics/detail', {
-      start: time.start || interval.resultTime,
-      end: time.end || interval.currentTime,
+      start: time.start || getTime(getDaysTime(90)),
+      end: time.end || getTime(new Date().getTime(), 'end'),
       size,
       page: this.pageCurrent,
       orderSN: this.orderSN || '',

@@ -13,8 +13,7 @@ import 'rc-calendar/assets/index.css';
 import MyInput from '../material-ui-compoents/input';
 import MyTextField from '../material-ui-compoents/text-field-input';
 import MyLabel from '../material-ui-compoents/input-label';
-// eslint-disable-next-line no-unused-vars
-import { timeInterval, dayTime } from '../../asstes/js/utils-methods';
+import { getTime, getDaysTime } from '../../asstes/js/utils-methods';
 
 import { rcCalendarStyle } from './style';
 
@@ -26,36 +25,31 @@ function format(v) {
   return v ? v.format('YYYY-MM-DD') : '';
 }
 
-// 将日期 转换为 毫秒数
-// function valueOf(v) {
-//   return v ? v.valueOf() : '';
-// }
-
 // 验证选择的日期
 function isValidRange(v) {
   return v && v[0] && v[1];
 }
 
 // 时间限制区
-const interval = timeInterval();
 function disabledDate(current) {
-  // +一分钟 是保证当前日期是在可选范围
-  return current < moment(interval.resultTime) || current > moment(interval.currentTime + 60000);
+  // 时间限制 (当前日期的 && 当前日期前90天) 之间的日期 是允许的
+  return current < getTime(getDaysTime(90))
+    || current > getTime(moment(), 'end');
 }
 
 @withStyles(rcCalendarStyle)
 class DateRange extends React.Component {
   state = {
-    value: [],
+    values: [],
   };
 
   onChange = (value) => {
     const { getDate } = this.props;
-    this.setState({ value });
+    this.setState({ values: value });
     // 获取开始时间的 某一天的 0点0分0秒
-    const start = moment(value[0].format('YYYY-MM-DD')).valueOf();
+    const start = getTime(value[0]);
     // 获取结束时间的 某一天的 23点59分59秒
-    const end = moment(value[1].format('YYYY-MM-DD')).valueOf() + dayTime - 1000;
+    const end = getTime(value[1], 'end');
     getDate({
       start,
       end,
@@ -64,7 +58,7 @@ class DateRange extends React.Component {
 
   render() {
     const { classes, is } = this.props;
-    const { value } = this.state;
+    const { values } = this.state;
     const calendar = (
       <RangeCalendar
         dateInputPlaceholder={['start', 'end']}
@@ -80,13 +74,12 @@ class DateRange extends React.Component {
     );
     return (
       <Picker
-        value={value}
+        value={values}
         onChange={this.onChange}
         animation="slide-up"
         calendar={calendar}
       >
         {
-          // eslint-disable-next-line no-shadow
           ({ value }) => (
             is
               ? (

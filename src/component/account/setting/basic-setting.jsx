@@ -27,6 +27,12 @@ class BasicSetting extends React.Component {
       // 判断必须 填写了 电话号码 且 isValid 必须为真,
       // (只有电话为空时 跟 电话号码正确时为真 isValid 就为真)
       if (!error && !this.isValid) {
+        // window.intlTelInputUtils.numberFormat.INTERNATIONAL
+        console.log(window.intlTelInputUtils.formatNumber(
+          value.mobile,
+          'us',
+          window.intlTelInputUtils.numberFormat.INTERNATIONAL,
+        ));
         ayc = new Promise((resolve) => {
           setTimeout(() => {
             console.log({ ...value, date });
@@ -34,8 +40,6 @@ class BasicSetting extends React.Component {
             resolve(true);
           }, 1000);
         });
-      } else {
-        ayc = null;
       }
     });
     return ayc;
@@ -48,8 +52,6 @@ class BasicSetting extends React.Component {
 
   render() {
     const { form } = this.props;
-    // eslint-disable-next-line no-unused-vars
-    const dirb = new Date('1993/02/23').getTime();
     return (
       <>
         <Name
@@ -69,7 +71,7 @@ class BasicSetting extends React.Component {
           value="851989962@qq.com"
         />
         <IntlTelInput
-          defaultValue="+244 923 123 456"
+          defaultValue="+1 201-555-1123"
           form={form}
           onPhoneNumberChange={this.onPhoneNumberChange}
         />

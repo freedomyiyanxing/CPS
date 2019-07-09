@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
@@ -6,6 +5,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import MyInput from '../material-ui-compoents/input';
 import MyLabel from '../material-ui-compoents/input-label';
+import { formPrompt } from '../../asstes/data/prompt-text';
 
 const Name = (props) => {
   const {
@@ -32,11 +32,11 @@ const Name = (props) => {
           rules: [
             {
               required: noRequire,
-              message: '我们需要你的名字',
+              message: formPrompt.nameRequired,
             },
             {
               pattern: /^([A-Za-z\s.-]{2,30})$/,
-              message: '我们需要有效的字符(A-Z a-z) 特殊字符只限(. -) 字数(2 - 30) 之间',
+              message: formPrompt.nameRequired,
             },
           ],
         })}

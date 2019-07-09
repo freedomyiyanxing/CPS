@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Name from '../../../common/form/name';
 import SubmitButton from '../../../common/form/submit-button';
 import MySelect from '../../../common/form/my-select';
+import { myProductStatus } from '../../../asstes/data/default-data';
 
 import { searchStyle } from '../style';
 
@@ -23,8 +24,6 @@ class Search extends React.Component {
             resolve(true);
           }, 1000);
         });
-      } else {
-        ayc = null;
       }
     });
     return ayc;
@@ -47,7 +46,7 @@ class Search extends React.Component {
             form={form}
             name="Status :"
             outputName="Status"
-            selectArr={['Normal', 'invalid']}
+            selectArr={myProductStatus}
             noRequire={false}
             fontSize="sm"
           />
@@ -55,7 +54,7 @@ class Search extends React.Component {
             form={form}
             name="Product Category :"
             outputName="ProductCategory"
-            selectArr={['1', '2']}
+            selectArr={['1', '2']} // 商品分类数据 需要调用接口
             noRequire={false}
             fontSize="sm"
           />

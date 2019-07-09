@@ -31,8 +31,6 @@ class SearchLeft extends React.Component {
             resolve(true);
           }, 1000);
         });
-      } else {
-        ayc = null;
       }
     });
     return ayc;

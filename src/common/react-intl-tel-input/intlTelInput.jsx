@@ -10,6 +10,7 @@ import AllCountries from './AllCountries';
 import FlagDropDown from './FlagDropDown';
 import TelInput from './TelInput';
 import utils from './utils';
+import MyLabel from '../material-ui-compoents/input-label';
 
 import { intTeInputStyle } from './style';
 
@@ -40,9 +41,6 @@ class IntlTelInput extends Component {
     this.tempCountry = '';
     this.startedLoadingAutoCountry = false;
 
-    this.deferreds = [];
-    this.autoCountryDeferred = new Promise(() => {});
-    this.utilsScriptDeferred = new Promise(() => {});
     this.preferredCountries = [];
     this.countries = [];
     this.countryCodes = {};
@@ -75,13 +73,6 @@ class IntlTelInput extends Component {
     this.setInitialState();
     // utils script, and auto country
     this.initRequests();
-
-    this.deferreds.push(this.autoCountryDeferred);
-    this.deferreds.push(this.utilsScriptDeferred);
-
-    Promise.all(this.deferreds).then(() => {
-      this.setInitialState();
-    });
   }
 
   componentDidUpdate(prevProps) {
@@ -181,7 +172,7 @@ class IntlTelInput extends Component {
           const fullNumber = this.formatFullNumber(currentNumber);
           if (this.isValidNumber(fullNumber)) {
             this.isValid = undefined;
-          } else {
+          } else if(currentNumber) {
             this.isValid = [PHONEERROR];
           }
           // this.isValid = this.isValidNumber(fullNumber) ? undefined : 'error';
@@ -200,7 +191,7 @@ class IntlTelInput extends Component {
   getNumber = (number, format) => {
     if (window.intlTelInputUtils) {
       return window.intlTelInputUtils.formatNumber(
-        this.getFullNumber(number),
+        number,
         this.selectedCountryData.iso2,
         format
       );
@@ -209,10 +200,6 @@ class IntlTelInput extends Component {
     return '';
   };
 
-  // get the input val, adding the dial code if separateDialCode is enabled
-  getFullNumber = number => number;
-
-  // try and extract a valid international dial code from a full telephone number
   // Note: returns the raw string inc plus character and any whitespace/dots etc
   getDialCode = number => {
     let dialCode = '';
@@ -337,13 +324,8 @@ class IntlTelInput extends Component {
   };
 
   initRequests = () => {
-    this.loadUtils();
-    this.utilsScriptDeferred.then(() => { resolve(true) });
-
     if (this.tempCountry === 'auto') {
       this.loadAutoCountry();
-    } else {
-      this.autoCountryDeferred.then(() => { resolve(true) }); //.resolve();
     }
   };
 
@@ -391,7 +373,6 @@ class IntlTelInput extends Component {
         format
       );
     }
-
     return number;
   };
 
@@ -581,8 +562,6 @@ class IntlTelInput extends Component {
   // or udpate the state and notify change if component is uncontrolled
   handleInputChange = e => {
     const value = this.formatNumber(e.target.value);
-
-
     if (this.props.value === undefined) {
       this.setState({value}, () => {
         this.updateFlagFromNumber(value);
@@ -590,17 +569,10 @@ class IntlTelInput extends Component {
     }
   };
 
-  loadUtils = () => {
-    if (window.intlTelInputUtils) {
-      this.utilsScriptDeferred.then(() => { resolve(true) });
-    }
-  };
-
   // this is called when the geoip call returns
   autoCountryLoaded = () => {
     if (this.tempCountry === 'auto') {
       this.tempCountry = this.autoCountry;
-      this.autoCountryDeferred.then(() => { resolve(true) });
     }
   };
 
@@ -608,6 +580,8 @@ class IntlTelInput extends Component {
   validatorPhone = (rule, value, callback) => {
     const val = this.formatFullNumber(value || this.state.value);
     // 防止在传递了默认电话号码时  value 为空的情况
+    console.log(this.state.value);
+
     if(this.isValidNumber(val)) {
       callback();
       this.props.onPhoneNumberChange(this.isValid = undefined);
@@ -619,6 +593,9 @@ class IntlTelInput extends Component {
   // 验证电话号码必填
   isRequiredPhone = (rule, value, callback) => {
     // 防止在传递了默认电话号码时  value 为空的情况 且 防止直接清除值
+    // this.setState({
+    //   value: this.formatFullNumber(value || this.state.value),
+    // });
     if (value || this.state.value) {
       callback();
     } else {
@@ -631,12 +608,14 @@ class IntlTelInput extends Component {
     const { getFieldProps, getFieldError } = form;
     const errors = getFieldError('mobile');
 
+    // const value = this.props.value !== undefined
+    //   ? this.formatNumber(this.props.value)
+    //   : this.state.value;
     const value = this.props.value !== undefined
       ? this.formatNumber(this.props.value)
       : this.state.value;
 
     const isValue = errors || this.isValid;
-    const textCls = (isValue === undefined) ? '' : classes.labelError;
     return (
       <FormControl
         fullWidth
@@ -646,7 +625,7 @@ class IntlTelInput extends Component {
         {...getFieldProps('mobile', {
           validateFirst: true, // 如果第一个规则错了 就不验证 后面的规则
           initialValue: value,
-          trigger: 'onBlur',
+          trigger: 'onChange',
           rules: [
             {
               validator: this.isRequiredPhone, // 自定义验证必填规则
@@ -657,10 +636,7 @@ class IntlTelInput extends Component {
           ],
         })}
       >
-        <span
-          className={`${classes.label} ${textCls}`}>
-          Phone *
-        </span>
+        <MyLabel fontSize="sm" shrink>Phone *</MyLabel>
         <div className={classes.wrapper}>
           <FlagDropDown
             setFlag={this.setFlag}

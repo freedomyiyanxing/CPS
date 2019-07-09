@@ -11,10 +11,9 @@ import MyButton from '../../../common/material-ui-compoents/button';
 import MyPagination from '../../../common/pagination/pagination';
 import MyDialog from '../../../common/dialog/dialog';
 import Withdraw from '../../../common/dialog/withdraw';
+import { balanceTableHeaders } from '../../../asstes/data/default-data';
 
 import { viewStyle } from './style';
-
-const headers = ['Date', 'Amount', 'Balance', 'Type', 'Description'];
 
 const setType = (classes, type, amount = null) => {
   let msg = null;
@@ -95,10 +94,11 @@ class ViewRight extends React.Component {
             </MyButton>
           </div>
           <MyTable
-            headers={headers}
+            headers={balanceTableHeaders}
             rows={setTableData(data.items, classes)}
           />
           <MyPagination
+            pageCurrent={1}
             total={435} // 总条数
             pageSize={10} // 每页条数
             change={this.handlePaginationChange} // 点击分页时调用

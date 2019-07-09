@@ -5,7 +5,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import MyInput from '../material-ui-compoents/input';
 import MyLabel from '../material-ui-compoents/input-label';
-
+import { formPrompt } from '../../asstes/data/prompt-text';
 
 const MyTextarea = (props) => {
   const {
@@ -31,11 +31,11 @@ const MyTextarea = (props) => {
           rules: [
             {
               required: noRequire,
-              message: '我们需要 你网站的详细信息',
+              message: formPrompt.textareaRequired,
             },
             {
               pattern: /^([A-Za-z0-9\s.\\,+()!?`={}'"<>/:#@$%&*-]{2,200})$/,
-              message: '我们需要有效的字符(A-Z a-z) 字数(2 - 200) 之间',
+              message: formPrompt.textareaFormat,
             },
           ],
         })}

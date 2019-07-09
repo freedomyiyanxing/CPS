@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 
 import MainContainer from '../../common/box-container/main-container';
 import Search from './utils/search';
@@ -10,31 +11,59 @@ import { get } from '../../asstes/http/index';
 
 import { indexStyle } from './style';
 
-const useStyle = makeStyles(indexStyle);
 
-const ProductSearch = () => {
-  const classes = useStyle();
+@withStyles(indexStyle)
+class ProductSearch extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: null,
+    };
+  }
 
-  useEffect(() => {
-    console.log(1);
-    get('/api/promotions/all', {
-      page: 1,
-      size: 10,
-    })
+  componentDidMount() {
+    this._unmount = true;
+    this.getData({ page: 0, size: 10 });
+  }
+
+  componentWillUnmount() {
+    this._unmount = false;
+  }
+
+  getData(value) {
+    get('/api/promotions/all', { ...value })
       .then((response) => {
-        console.log(response);
+        if (this._unmount) {
+          this.setState({
+            data: response,
+          });
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-  });
+  }
 
-  return (
-    <MainContainer className={classes.root}>
-      <Search />
-      <View data={promotions} />
-    </MainContainer>
-  );
+  handleSearch = (value) => {
+    console.log(value);
+    // this.getData({ page: 0, size: 10, ...value });
+  };
+
+  render() {
+    const { classes } = this.props;
+    const { data } = this.state;
+    console.log(data);
+    return (
+      <MainContainer className={classes.root}>
+        <Search onChange={this.handleSearch} />
+        <View data={promotions} />
+      </MainContainer>
+    );
+  }
+}
+
+ProductSearch.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default ProductSearch;
