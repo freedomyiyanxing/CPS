@@ -44,7 +44,7 @@ class Home extends React.Component {
           userPhoto: response[0].photo,
         };
         // userInfo 写入context当中
-        this.consumer.getUserInfo(userInfo);
+        this.consumer.setUserInfo(userInfo);
         // // userInfo 写入 session 当中
         session.setSession('userInfo', userInfo);
 
@@ -100,7 +100,7 @@ class Home extends React.Component {
               this.consumer = context;
               return (
                 loading
-                  ? <div>loading。。。。</div>
+                  ? <div style={{ minHeight: 500 }}>loading。。。。</div>
                   : (
                     <>
                       <HomeHeader data={userInfo} />

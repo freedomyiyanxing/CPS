@@ -24,6 +24,7 @@ const MySelect = (props) => {
     >
       <MyLabel fontSize={fontSize}>{name}</MyLabel>
       <MySelects
+        renderValue={items => items.text}
         {...getFieldProps(outputName, {
           validateFirst: true,
           initialValue: value,
@@ -42,7 +43,7 @@ const MySelect = (props) => {
         }
         {
           selectArr.map(v => (
-            <MenuItem key={v.id} value={v.sign}>{v.text}</MenuItem>
+            <MenuItem key={v.id} value={v}>{v.text}</MenuItem>
           ))
         }
       </MySelects>

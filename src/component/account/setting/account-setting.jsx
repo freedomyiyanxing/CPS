@@ -21,19 +21,19 @@ class AccountSetting extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
+      value: 1,
     };
   }
 
-  componentDidMount() {
-    // get('/api/profile/info')
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-  }
+  // componentDidMount() {
+  //   get('/api/profile/info')
+  //     .then((response) => {
+  //       console.log(response);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
 
   handleChange = (newValue) => {
     this.setState({

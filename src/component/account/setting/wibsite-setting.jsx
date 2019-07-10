@@ -26,8 +26,6 @@ class WibsiteSetting extends React.Component {
             resolve(true);
           }, 1000);
         });
-      } else {
-        ayc = null;
       }
     });
     return ayc;
@@ -52,14 +50,14 @@ class WibsiteSetting extends React.Component {
           name="Category"
           outputName="category"
           selectArr={webSiteCategory}
-          // value={webSiteCategory[1]}
+          value={webSiteCategory[0]}
         />
         <MySelect
           form={form}
           name="Current Monthly Unique Visitores"
           outputName="monthlyVisitors"
           selectArr={monthlyVisitors}
-          // value={monthlyVisitors[1]}
+          value={monthlyVisitors[0]}
         />
         <MyTextarea
           form={form}

@@ -1,49 +1,77 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import MyButton from '../material-ui-compoents/button';
 import { submitButtonStyle } from './style';
 
-const useStyle = makeStyles(submitButtonStyle);
+@withStyles(submitButtonStyle)
+class SubmitButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+    };
+  }
 
-const SubmitButton = (props) => {
-  const { handleSubmit, name, width } = props;
-  const [loading, setLoading] = useState(false);
-  const classes = useStyle();
+  componentDidMount() {
+    document.addEventListener('keydown', this.onKeyDown);
+  }
 
-  const handleClick = () => {
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeyDown);
+  }
+
+  // 键盘回车事件 (Enter)
+  onKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      this.handleClick();
+    }
+  };
+
+  handleClick = () => {
+    const { handleSubmit } = this.props;
     const promise = handleSubmit();
     if (promise) {
-      setLoading(true);
+      this.setState({
+        loading: true,
+      });
       promise.then(() => {
-        setLoading(false);
+        this.setState({
+          loading: false,
+        });
       });
     }
   };
-  return (
-    <div className={classes.wrapperBtn}>
-      <MyButton
-        fullWidth
-        variant="contained"
-        color="primary"
-        loading={loading}
-        className={classes.btn}
-        onClick={handleClick}
-        style={{ width }}
-      >
-        {
-          loading
-            ? <CircularProgress size={24} />
-            : name
-        }
-      </MyButton>
-    </div>
-  );
-};
+
+  render() {
+    const { name, width, classes } = this.props;
+    const { loading } = this.state;
+    return (
+      <div className={classes.wrapperBtn}>
+        <MyButton
+          fullWidth
+          variant="contained"
+          color="primary"
+          loading={loading}
+          className={classes.btn}
+          onClick={this.handleClick}
+          style={{ width }}
+        >
+          {
+            loading
+              ? <CircularProgress size={24} />
+              : name
+          }
+        </MyButton>
+      </div>
+    );
+  }
+}
 
 SubmitButton.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.object).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   width: PropTypes.string,

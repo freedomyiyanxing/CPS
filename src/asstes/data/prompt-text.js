@@ -22,6 +22,8 @@ const formPrompt = {
   dateTwo: '无效的日期, 在判断大小月份时 报错',
   dateThree: '无效的日期 , 出生日期 不可能在今天 或者 以后',
   dateFour: '无效的日期 在判断闰年时报错',
+  phoneRequired: '电话号码必填',
+  phoneFormat: '电话号码错误',
 };
 
 // 发送邮件页面

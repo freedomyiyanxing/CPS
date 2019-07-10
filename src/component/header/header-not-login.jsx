@@ -15,13 +15,6 @@ const HeaderNotLogin = (props) => {
   const classes = useStyles();
 
   /**
-   * 去未登录的首页
-   */
-  const handleIndex = () => {
-    history.push('/my/index');
-  };
-
-  /**
    * 登录
    */
   const handleLogin = () => {
@@ -39,9 +32,6 @@ const HeaderNotLogin = (props) => {
     <HeaderContainer>
       <div
         className={classes.logo}
-        role="button"
-        tabIndex={0}
-        onClick={handleIndex}
       >
         <img src={logo} alt="iNFLUMONSTER logo" />
       </div>

@@ -7,10 +7,9 @@ import MyTextarea from '../../../common/form/my-textarea';
 import MySelect from '../../../common/form/my-select';
 import SubmitButton from '../../../common/form/submit-button';
 import DateRange from '../../../common/date-picker/rc-calendar';
+import { myBalanceType } from '../../../asstes/data/default-data';
 
 import { searchStyle } from './style';
-
-const arr = ['Get Earning', 'Withdraw'];
 
 @withStyles(searchStyle)
 @createForm()
@@ -52,7 +51,7 @@ class SearchLeft extends React.Component {
             form={form}
             name="Type :"
             outputName="type"
-            selectArr={arr}
+            selectArr={myBalanceType}
             noRequire={false}
             fontSize="sm"
           />

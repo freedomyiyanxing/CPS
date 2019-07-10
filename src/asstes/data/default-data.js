@@ -535,6 +535,20 @@ const myProductStatus = [
   },
 ];
 
+// 个人账户的个人推广商品明细
+const myBalanceType = [
+  {
+    id: uuid(),
+    sign: '1',
+    text: 'Get Earning',
+  },
+  {
+    id: uuid(),
+    sign: '2',
+    text: 'Withdraw',
+  },
+];
+
 // 忘记密码页面
 const forgetPasswordText = `
   Type in your email address below and well send you an email with 
@@ -574,4 +588,5 @@ export {
   emailSentText,
   balanceTableHeaders,
   myProductStatus,
+  myBalanceType,
 };

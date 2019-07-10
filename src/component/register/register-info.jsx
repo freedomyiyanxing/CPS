@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
 import { withStyles } from '@material-ui/core/styles';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 import InputContainer from '../../common/box-container/form-container';
 import Emails from '../../common/form/email';
@@ -13,11 +15,12 @@ import MyUrl from '../../common/form/my-url';
 import MySelect from '../../common/form/my-select';
 import MyButton from '../../common/material-ui-compoents/button';
 import IntlTelInput from '../../common/react-intl-tel-input/intlTelInput';
+import MyLabel from '../../common/material-ui-compoents/input-label';
 
 import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { postRequestBody, get, SUCCESS } from '../../asstes/http/index';
 import { webSiteCategory, monthlyVisitors } from '../../asstes/data/default-data';
-import { registerInfoPrompt } from '../../asstes/data/prompt-text';
+import { registerInfoPrompt, formPrompt } from '../../asstes/data/prompt-text';
 
 import { registerInfoStyle } from './style';
 
@@ -32,7 +35,10 @@ class RegisterInfo extends React.Component {
       email: '',
       isError: false, // 标致 获取用户是否成功
       loading: true,
+      errorPhone: null,
     };
+
+    this.phone = null;
   }
 
   componentDidMount() {
@@ -72,19 +78,26 @@ class RegisterInfo extends React.Component {
    * @returns {*} 验证正确的情况下返回一个 promise对象
    */
   handleSubmit = () => {
-    // eslint-disable-next-line no-unused-vars
     const { form, history } = this.props;
-    const { firstName, lastName, email } = this.state;
+    const {
+      firstName, lastName, email, errorPhone,
+    } = this.state;
     let ayc = null;
     form.validateFields((error, value) => {
-      // 判断必须 填写了 电话号码 且 isValid 必须为真,
-      // (只有电话为空时 跟 电话号码正确时为真 isValid 就为真)
-      if (!error && !this.isValid) {
+      // 判断必须填写了电话号码
+      if (!this.phone) {
+        this.setState({
+          errorPhone: [formPrompt.phoneRequired],
+        });
+        return false;
+      }
+
+      // (errorPhone如果为真 则表示有电话号码错误)
+      if (!error && !errorPhone) {
         ayc = new Promise((resolve) => {
           const obj = {
             firstName, lastName, email, ...value,
           };
-          console.log(obj);
           postRequestBody('/api/auth/signup/complete', obj)
             .then((response) => {
               if (response.message === SUCCESS) {
@@ -95,7 +108,7 @@ class RegisterInfo extends React.Component {
                 });
                 resolve(true);
                 // to 登录页面
-                // history.push('/s/signin');
+                history.push('/s/signin');
               }
             })
             .catch((err) => {
@@ -113,15 +126,38 @@ class RegisterInfo extends React.Component {
     return ayc;
   };
 
-  // 电话验证函数
-  onPhoneNumberChange = (isValid) => {
-    this.isValid = isValid;
+  // 电话验证函数 (onchange)
+  onPhoneNumberChange = (isValid, newNumber, countryData, fullNumber) => {
+    console.log('电话验证函数onchange: ->', isValid, fullNumber);
+    let errors = null;
+    if (!fullNumber) {
+      errors = [formPrompt.phoneRequired];
+    }
+    if (!isValid && !errors) {
+      errors = [formPrompt.phoneFormat];
+    }
+    this.setState({
+      errorPhone: errors,
+    });
+    this.phone = fullNumber;
+  };
+
+  // 电话验证函数 (切换国家)
+  onSelectFlag = (isValid, newNumber, countryData, fullNumber) => {
+    console.log('切换国家0: ->', isValid, fullNumber);
+    if (!fullNumber) {
+      return false;
+    }
+    this.setState({
+      errorPhone: isValid ? null : [formPrompt.phoneFormat],
+    });
+    this.phone = fullNumber;
   };
 
   render() {
     const { classes, form, history } = this.props;
     const {
-      firstName, lastName, email, isError, loading,
+      firstName, lastName, email, isError, loading, errorPhone,
     } = this.state;
     return (
       <InputContainer title={(!loading && !isError) ? 'SIGN UP' : ''}>
@@ -152,11 +188,24 @@ class RegisterInfo extends React.Component {
                     <Name name="First Name" value={firstName} outputName="firstName" form={form} disabled />
                     <Name name="Last Name" value={lastName} outputName="lastName" form={form} disabled />
                     <Emails form={form} value={email} disabled />
-                    <IntlTelInput
-                      // defaultValue="+244 923 123 456"
-                      form={form}
-                      onPhoneNumberChange={this.onPhoneNumberChange}
-                    />
+                    <FormControl
+                      fullWidth
+                      required
+                      margin="normal"
+                      error={errorPhone}
+                    >
+                      <MyLabel fontSize="sm" shrink>Phone *</MyLabel>
+                      <IntlTelInput
+                        // defaultValue="+244 923 123 456"
+                        onPhoneNumberChange={this.onPhoneNumberChange}
+                        onSelectFlag={this.onSelectFlag}
+                      />
+                      {
+                        errorPhone
+                          ? <FormHelperText>{errorPhone.join(',')}</FormHelperText>
+                          : null
+                      }
+                    </FormControl>
                     <MergePassword form={form} />
                     <div className={classes.lastTitle}>
                       <h4 className={classes.title}>WEBSITE INFORMATION</h4>

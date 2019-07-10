@@ -7,10 +7,10 @@ export const { Provider, Consumer } = createContext();
 class Context extends Component {
   constructor() {
     super();
-    // const loginInfo = session.getSession('loginInfo');
+    const loginInfo = session.getSession('loginInfo');
     const userInfo = session.getSession('userInfo');
     this.state = {
-      isLogin: true, // loginInfo ? loginInfo.isLogin : false, // 是否登录
+      isLogin: loginInfo ? loginInfo.isLogin : false, // 是否登录
       useObj: userInfo || {}, // 用户信息
     };
   }
@@ -32,12 +32,13 @@ class Context extends Component {
   render() {
     const { children } = this.props;
     const { isLogin, useObj } = this.state;
+    console.log(isLogin, useObj);
     return (
       <Provider
         value={{
           state: { isLogin, useObj },
           setLogin: this.handleClick,
-          getUserInfo: this.handleGetUserInfo,
+          setUserInfo: this.handleGetUserInfo,
         }}
       >
         {children}

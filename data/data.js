@@ -120,18 +120,18 @@ export const myPromotions = {
   total: 256,
   pages: 12,
   items: [
-    {
-      id: '1244122s42141A',
-      prodName: 'A 11 BW Blaze Track BW Blaze Track  Suit Track',
-      prodPrice: 1222.00,
-      prodImg: '/upload/image/product/desktop/2019/04/25/89ff4b3b-0781-4765-b76c-f80a281a7591.jpg',
-      storeName: 'store 1',
-      brokerageRate: 20,
-      brokerageAmount: 80.00,
-      endTime: 1565443200000, // 1561705200000 // 1564243200000
-      status: 'normal',
-      prodCateName: 'Category 1',
-    },
+    // {
+    //   id: '1244122s42141A',
+    //   prodName: 'A 11 BW Blaze Track BW Blaze Track  Suit Track',
+    //   prodPrice: 1222.00,
+    //   prodImg: '/upload/image/product/desktop/2019/04/25/89ff4b3b-0781-4765-b76c-f80a281a7591.jpg',
+    //   storeName: 'store 1',
+    //   brokerageRate: 20,
+    //   brokerageAmount: 80.00,
+    //   endTime: 1565443200000, // 1561705200000 // 1564243200000
+    //   status: 'normal',
+    //   prodCateName: 'Category 1',
+    // },
     {
       id: '1244343214134B',
       prodName: 'B 22 W Blaze Track BW Blaze Track  Suit Track',

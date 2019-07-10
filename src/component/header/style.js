@@ -33,6 +33,18 @@ const rightBtn = theme => ({
   borderRadius: 10,
 });
 
+const _items = theme => ({
+  width: '100%',
+  height: 36,
+  minHeight: 0,
+  display: 'flex',
+  justifyContent: 'flex-start',
+  padding: [[0, 10]],
+  color: theme.palette.primary[50],
+  fontSize: theme.typography.fontSize,
+  textTransform: 'capitalize',
+});
+
 // 未登陆 头部样式
 export const loginNotStyle = theme => ({
   logo: login(theme),
@@ -42,6 +54,36 @@ export const loginNotStyle = theme => ({
 
 // 登陆 头部样式
 export const loginStyle = theme => ({
+  // 弹出框
+  dialogWrapper: {
+    width: 400,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 10,
+    borderTop: '4px solid',
+    minHeight: 180,
+  },
+  dialogIcon: {
+    fontSize: theme.typography.h1.fontSize,
+  },
+  dialogText: {
+    fontSize: theme.typography.fontSizeMd,
+  },
+  dialogFooter: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  dialogButton: {
+    padding: [[10, 30]],
+  },
+});
+
+// 登陆头部 left样式
+export const leftStyle = theme => ({
   left: {
     display: 'flex',
     flexDirection: 'column',
@@ -52,7 +94,6 @@ export const loginStyle = theme => ({
     display: 'flex',
     position: 'relative',
   },
-
   indicator: {
     width: 48,
     position: 'absolute',
@@ -62,46 +103,6 @@ export const loginStyle = theme => ({
     transition: 'all .2s linear',
     transform: 'translateX(12px)',
   },
-
-  // 左边
-  right: right(),
-  rightInfo: {
-    position: 'relative',
-    display: 'flex',
-    alignItems: 'center',
-    cursor: 'pointer',
-    '& .triangle-right': {
-      borderTopColor: theme.palette.primary[50],
-    },
-  },
-  bigAvatar: {
-    borderRadius: 'inherit',
-  },
-  defaultAvatar: { background: 'none' },
-  name: {
-    margin: [[0, 10, 0, 6]],
-    fontSize: theme.typography.fontSizeLg,
-    color: theme.palette.primary[50],
-    overflow: 'hidden',
-    maxWidth: 110,
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-  },
-  rightBtn: rightBtn(theme),
-
-  items: {
-    width: '100%',
-    height: 36,
-    minHeight: 0,
-    display: 'flex',
-    justifyContent: 'flex-start',
-    padding: [[0, 10]],
-    color: theme.palette.primary[50],
-    fontSize: theme.typography.fontSize,
-    textTransform: 'capitalize',
-  },
-
-  /* -- */
   linkBtn: {
     minWidth: 0,
     height: 44,
@@ -130,8 +131,37 @@ export const loginStyle = theme => ({
     padding: 0,
     background: theme.palette.primary.A400,
   },
+  items: _items(theme),
+});
 
-  /*---*/
+// 登陆头部 left样式
+export const rightStyle = theme => ({
+  // 左边
+  right: right(),
+  rightInfo: {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
+    '& .triangle-right': {
+      borderTopColor: theme.palette.primary[50],
+    },
+  },
+  bigAvatar: {
+    borderRadius: 'inherit',
+  },
+  defaultAvatar: { background: 'none' },
+  name: {
+    margin: [[0, 10, 0, 6]],
+    fontSize: theme.typography.fontSizeLg,
+    color: theme.palette.primary[50],
+    overflow: 'hidden',
+    maxWidth: 110,
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
+  rightBtn: rightBtn(theme),
+
   accountCollapse: {
     position: 'absolute',
     top: 40,
@@ -159,30 +189,5 @@ export const loginStyle = theme => ({
     transform: 'rotate(225deg)',
   },
 
-  // 弹出框
-  dialogWrapper: {
-    width: 400,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 10,
-    borderTop: '4px solid',
-    minHeight: 180,
-  },
-  dialogIcon: {
-    fontSize: theme.typography.h1.fontSize,
-  },
-  dialogText: {
-    fontSize: theme.typography.fontSizeMd,
-  },
-  dialogFooter: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-  },
-  dialogButton: {
-    padding: [[10, 30]],
-  },
+  items: _items(theme),
 });
