@@ -14,9 +14,11 @@ import EmailSentPage from '../component/login/email-sent';
 import ResetPassword from '../component/login/reset-password';
 import Register from '../component/register/index';
 import RegisterInfo from '../component/register/register-info';
-import AccountSetting from '../component/account/setting/account-setting';
 import AccountBalance from '../component/account/balance/account-balance';
-import AccountPassword from '../component/account/set-password/account-password';
+import AccountIndex from '../component/account/index';
+import WibsiteSetting from '../component/account/wibsite/wibsite-setting';
+import BasicSetting from '../component/account/basic/basic-setting';
+import AccountPassword from '../component/account/password/account-password';
 import Not404 from '../component/not-404/not-404';
 
 const routers = [
@@ -103,15 +105,27 @@ const routers = [
             key: uuid(),
           },
           {
-            path: '/my/account-setting',
-            exact: true,
-            component: AccountSetting,
-            key: uuid(),
-          },
-          {
             path: '/my/account-balance',
             exact: true,
             component: AccountBalance,
+            key: uuid(),
+          },
+          {
+            path: '/my/account',
+            exact: true,
+            component: AccountIndex,
+            key: uuid(),
+          },
+          {
+            path: '/my/account-profile',
+            exact: true,
+            component: BasicSetting,
+            key: uuid(),
+          },
+          {
+            path: '/my/account-website',
+            exact: true,
+            component: WibsiteSetting,
             key: uuid(),
           },
           {

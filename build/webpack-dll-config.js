@@ -25,9 +25,12 @@ module.exports = {
   },
   plugins: [
     new webpack.DllPlugin({
-      path: path.join(__dirname, '../static/json', '[name]-manifest.json'),
-      name: '[name]_library',
-      context: path.join(__dirname, '..'),
+      // path: path.join(__dirname, '../static/json', '[name]-manifest.json'),
+      // name: '[name]_library',
+      // context: path.join(__dirname, '..'),
+      path: path.join(__dirname, '.', '[name]-manifest.json'), // vendor-manifest.json 输出在当前目录下
+      name: '[name]_library', // 暴露出的函数名, 同 output.library 一致即可,
+      context: path.join(__dirname, '..'), // manifest 文件中请求的上下文(context)(默认值为 webpack 的上下文(context))
     })
   ]
 };

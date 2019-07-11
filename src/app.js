@@ -11,6 +11,7 @@ import './asstes/style/reset.css';
 import './asstes/style/index.css';
 import './asstes/style/flags.css';
 import './asstes/style/cropper.css';
+import './asstes/style/icon.css';
 
 import { theme } from './config/theme/theme';
 
@@ -42,3 +43,9 @@ const App = () => {
 };
 
 ReactDom.render(<App />, root);
+
+// 告诉 webpack 允许此模块的热更新
+// 热更新
+if (module.hot) {
+  module.hot.accept();
+}

@@ -1,44 +1,70 @@
-export const settingStyle = theme => ({
-  header: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: 12,
+const indexStyle = theme => ({
+  root: {
+    minHeight: 460,
     background: theme.palette.primary[50],
   },
-  btn: {
-    padding: [[16, 20]],
-    textTransform: 'capitalize',
-    fontWeight: theme.typography.fontWeight,
-    fontSize: theme.typography.fontSizeLg,
-    color: theme.palette.text.secondary,
-    '&:hover': {
+  list: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    padding: [[0, 110]],
+  },
+  listItem: {
+    flex: '0 0 33.33%',
+    margin: [[25, 0]],
+    padding: 20,
+    borderRadius: 5,
+    '&:hover .MuiListItemIcon-root': {
       background: 'none',
     },
   },
-  active: {
-    color: theme.palette.text.primary,
+  listAvatar: {
+    minWidth: 50,
+    width: 50,
+    marginRight: 15,
+    justifyContent: 'center',
+    height: 50,
+    alignItems: 'center',
+    background: theme.palette.primary[100],
+    color: theme.palette.text.secondary,
+    transition: 'background 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
   },
-  line: {
-    width: 2,
-    height: 14,
-    background: theme.palette.text.secondary,
-  },
-
-  root: {
-    display: 'flex',
-    padding: [[20, 24, 60]],
-    background: theme.palette.primary[50],
-  },
-  left: {
-    flex: '0 0 398px',
-  },
-  right: {
-    flex: 1,
+  title: {
+    fontWeight: theme.typography.fontWeight,
   },
 });
 
-export const cropperStyle = theme => ({
+const wibstieStyle = theme => ({
+  root: {
+    padding: [[10, 24, 40]],
+    background: theme.palette.primary[50],
+  },
+  wrapper: {
+    width: 400,
+  },
+});
+
+const containerStyle = theme => ({
+  root: {
+    display: 'flex',
+    padding: [[10, 24, 40]],
+    background: theme.palette.primary[50],
+  },
+  wrapper: {
+    width: 400,
+  },
+  title: {
+    width: '100%',
+    height: 50,
+    marginBottom: 2,
+    lineHeight: '50px',
+    paddingLeft: 20,
+    fontSize: theme.typography.fontSizeLg,
+    fontWeight: theme.typography.fontWeight,
+    background: theme.palette.primary[50],
+  },
+});
+
+const cropperStyle = theme => ({
   root: {
     flex: 1,
     position: 'relative',
@@ -130,3 +156,9 @@ export const cropperStyle = theme => ({
     justifyContent: 'space-between',
   },
 });
+export {
+  indexStyle,
+  wibstieStyle,
+  containerStyle,
+  cropperStyle,
+};

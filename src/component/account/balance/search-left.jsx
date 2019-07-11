@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles/index';
 import MyTextarea from '../../../common/form/my-textarea';
 import MySelect from '../../../common/form/my-select';
 import SubmitButton from '../../../common/form/submit-button';
-import DateRange from '../../../common/date-picker/rc-calendar';
+import DateRange from '../../../common/date-picker/date-range';
 import { myBalanceType } from '../../../asstes/data/default-data';
 
 import { searchStyle } from './style';
@@ -46,7 +46,7 @@ class SearchLeft extends React.Component {
       <div className={classes.root}>
         <div className={classes.wrapper}>
           <h4 className={classes.title}>Search</h4>
-          <DateRange getDate={this.getDate} is />
+          <DateRange onChange={this.getDate} is />
           <MySelect
             form={form}
             name="Type :"

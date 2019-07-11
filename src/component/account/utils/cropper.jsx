@@ -11,7 +11,7 @@ import Cropper from 'react-cropper';
 
 import MyButton from '../../../common/material-ui-compoents/button';
 import iconDefault from '../../../asstes/images/U_150x150.png';
-import { cropperStyle } from './style';
+import { cropperStyle } from '../style';
 
 // cropper控制按钮的
 const cropperBtnArr = [

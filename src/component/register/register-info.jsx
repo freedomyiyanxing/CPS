@@ -21,6 +21,7 @@ import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { postRequestBody, get, SUCCESS } from '../../asstes/http/index';
 import { webSiteCategory, monthlyVisitors } from '../../asstes/data/default-data';
 import { registerInfoPrompt, formPrompt } from '../../asstes/data/prompt-text';
+import { setSubmitArg } from '../../asstes/js/utils-methods';
 
 import { registerInfoStyle } from './style';
 
@@ -96,7 +97,11 @@ class RegisterInfo extends React.Component {
       if (!error && !errorPhone) {
         ayc = new Promise((resolve) => {
           const obj = {
-            firstName, lastName, email, ...value,
+            firstName,
+            lastName,
+            email,
+            mobile: this.phone,
+            ...setSubmitArg(value),
           };
           postRequestBody('/api/auth/signup/complete', obj)
             .then((response) => {

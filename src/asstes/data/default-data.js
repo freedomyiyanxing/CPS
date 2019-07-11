@@ -412,18 +412,13 @@ const myHeader = {
   account: [
     {
       id: uuid(),
-      text: 'Account Setting',
-      links: 'account-setting',
+      text: 'Account',
+      links: 'account',
     },
     {
       id: uuid(),
       text: 'Account Balance',
       links: 'account-balance',
-    },
-    {
-      id: uuid(),
-      text: 'Change Password',
-      links: 'account-password',
     },
   ],
 };
@@ -549,6 +544,45 @@ const myBalanceType = [
   },
 ];
 
+// 个人账户index页面
+const accountIndex = [
+  {
+    id: uuid(),
+    title: 'Profile',
+    text: 'Viw and update your profile',
+    links: 'account-profile',
+    icon: 'icon-profile',
+  },
+  {
+    id: uuid(),
+    title: 'Website',
+    text: 'Viw and update your websiteinformation',
+    links: 'account-website',
+    icon: 'icon-website',
+  },
+  {
+    id: uuid(),
+    title: 'Password',
+    text: 'Change your password',
+    links: 'account-password',
+    icon: 'icon-password',
+  },
+  {
+    id: uuid(),
+    title: 'Payment',
+    text: 'Manage your payment information',
+    links: 'account-payment',
+    icon: 'icon-payment',
+  },
+  {
+    id: uuid(),
+    title: 'Taxes',
+    text: 'Manage your taxes information',
+    links: 'account-taxes',
+    icon: 'icon-taxes',
+  },
+];
+
 // 忘记密码页面
 const forgetPasswordText = `
   Type in your email address below and well send you an email with 
@@ -589,4 +623,5 @@ export {
   balanceTableHeaders,
   myProductStatus,
   myBalanceType,
+  accountIndex,
 };

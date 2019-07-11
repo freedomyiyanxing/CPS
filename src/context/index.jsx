@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { createContext, Component } from 'react';
 import PropTypes from 'prop-types';
 import { session } from '../asstes/js/utils-methods';

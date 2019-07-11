@@ -30,7 +30,7 @@ const MyRadio = (props) => {
       fullWidth
       margin="normal"
       className={classes.root}
-      {...getFieldProps('radio', {
+      {...getFieldProps('gender', {
         initialValue: val,
       })}
     >

@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import DateRange from '../../../common/date-picker/rc-calendar';
+import DateRange from '../../../common/date-picker/date-range';
 import Counter from '../../../common/beat-number/beat-number';
 import MyHighcharts from '../../../common/my-highcharts/my-highcharts';
 import { statisticsTabs, polylineDaily } from '../../../asstes/data/default-data';
@@ -35,7 +35,7 @@ class HomeCurve extends React.Component {
     const polyline = polylineDaily(data[0]);
     return (
       <div className={classes.root}>
-        <DateRange getDate={onChange} />
+        <DateRange onChange={onChange} />
         <Tabs
           value={tabs}
           centered

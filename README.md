@@ -4,7 +4,7 @@
 
 ````html
  |-- build 工程构建文件
-    |-- webpack-config.js  客户端打包文件
+    |-- webpack-dev-config.js  客户端打包文件
     |-- webpack-dll-config.js 第三包打包文件 (把第三方包 和 项目业务代码 分开 以节省打包时长)
  |-- src 项目人口文件 
  |-- static 静态资源, 不参与客户端打包,

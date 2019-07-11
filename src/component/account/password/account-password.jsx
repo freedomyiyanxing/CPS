@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
 import { withStyles } from '@material-ui/core/styles/index';
 
-import InputContainer from '../../../common/box-container/form-container';
 import Password from '../../../common/form/password';
 import SubmitButton from '../../../common/form/submit-button';
 import MergePassword from '../../../common/form/password-merge';
+import MainContainer from '../../../common/box-container/main-container';
+import Container from '../utils/container';
 
 import passwordStyle from './style';
 
@@ -28,26 +29,25 @@ class AccountPassword extends React.Component {
             resolve(true);
           }, 1000);
         });
-      } else {
-        ayc = null;
       }
     });
     return ayc;
   };
 
   render() {
+    // eslint-disable-next-line no-unused-vars
     const { classes, form } = this.props;
     return (
-      <InputContainer title="Set Password">
-        <div className={classes.root}>
+      <MainContainer>
+        <Container title="Change Password">
           <Password form={form} name="Password" />
           <MergePassword form={form} />
           <SubmitButton
             name="Submit"
             handleSubmit={this.handleSubmit}
           />
-        </div>
-      </InputContainer>
+        </Container>
+      </MainContainer>
     );
   }
 }

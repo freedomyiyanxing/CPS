@@ -1,0 +1,123 @@
+const path = require('path');
+const webpackMerge = require('webpack-merge');
+const TerserPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const webpackBaseConfig = require('./webpack-base-config');
+
+module.exports = webpackMerge(webpackBaseConfig, {
+  mode: 'production',
+  output: {
+    filename: 'js/[name]-[hash].js',
+    publicPath: '/',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../',
+            },
+          },
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.less$/,
+        exclude: path.join(__dirname, '../node_modules'),
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../',
+            },
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                mode: 'local',
+                localIdentName: '[name]-[local]-[hash:base64:5]',
+                context: path.resolve(__dirname, 'src'),
+                hashPrefix: 'my-custom-hash',
+              }
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+            },
+          },
+          'less-loader',
+        ]
+      },
+    ],
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'css/[name]-[hash].css',
+    }),
+    // new BundleAnalyzerPlugin({ // 可视化工具 http://127.0.0.1:8888
+    //   analyzerMode: 'server',
+    //   analyzerHost: '127.0.0.1',
+    //   analyzerPort: 8888,
+    //   reportFilename: 'report.html',
+    //   defaultSizes: 'parsed',
+    //   openAnalyzer: true,
+    //   generateStatsFile: false,
+    //   statsFilename: 'stats.json',
+    //   logLevel: 'info'
+    // })
+  ],
+  optimization: {
+    runtimeChunk: {
+      name: 'manifest',
+    },
+    splitChunks: {
+      chunks: 'all', // 同时分割同步和异步代码
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          minSize: 30000,
+          minChunks: 1,
+          chunks: 'initial',
+          priority: 1 // 该配置项是设置处理的优先级，数值越大越优先处理
+        },
+        commons: {
+          test: /[\\/]src[\\/]common[\\/]/,
+          name: 'commons',
+          minSize: 30000,
+          minChunks: 3,
+          chunks: 'initial',
+          priority: -1,
+          reuseExistingChunk: true // 这个配置允许我们使用已经存在的代码块
+        }
+      },
+    },
+    minimizer: [
+      new TerserPlugin({ // 开启js压缩
+        cache: true, // 开去缓存
+        parallel: true, // 开启并行压缩，充分利用cpu (相当于 os.length - 1)
+        // sourceMap: false, // 移除源地址
+        // extractComments: false, // 移除注释
+      }),
+      new OptimizeCSSAssetsPlugin({ // 压缩css
+        cssProcessorOptions: {
+          map: { inline: false }
+        }
+      }),
+    ],
+  },
+});

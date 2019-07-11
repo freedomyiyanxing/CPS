@@ -1,19 +1,26 @@
 import React, { createRef } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import { createForm, formShape } from 'rc-form';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
+import MainContainer from '../../../common/box-container/main-container';
 import Emails from '../../../common/form/email';
 import Name from '../../../common/form/name';
 import SubmitButton from '../../../common/form/submit-button';
 import IntlTelInput from '../../../common/react-intl-tel-input/intlTelInput';
 import MyRadio from '../../../common/form/my-radio';
-import DatePicker from '../../../common/date-picker/date-picker';
+import DateSelection from '../../../common/date-picker/date-selection';
 import MyLabel from '../../../common/material-ui-compoents/input-label';
-import { formPrompt } from '../../../asstes/data/prompt-text';
+import Container from '../utils/container';
+import MyCropper from '../utils/cropper';
 
+import { formPrompt } from '../../../asstes/data/prompt-text';
+import { wibstieStyle } from '../style';
 
 @createForm()
+@withStyles(wibstieStyle)
 class BasicSetting extends React.Component {
   constructor(props) {
     super(props);
@@ -32,7 +39,6 @@ class BasicSetting extends React.Component {
     const { form } = this.props;
     const { errorPhone } = this.state;
     let ayc = null;
-    const date = this.pickerRef.current.handleDateSubmit();
     form.validateFields((error, value) => {
       // 判断必须填写了电话号码
       if (!this.phone) {
@@ -46,7 +52,7 @@ class BasicSetting extends React.Component {
       if (!error && !errorPhone) {
         ayc = new Promise((resolve) => {
           setTimeout(() => {
-            console.log({ ...value, date, phone: this.phone });
+            console.log({ ...value, phone: this.phone });
             // history.push('/my/index');
             resolve(true);
           }, 1000);
@@ -85,64 +91,70 @@ class BasicSetting extends React.Component {
   };
 
   render() {
-    const { form } = this.props;
+    // eslint-disable-next-line no-unused-vars
+    const { form, classes } = this.props;
     const { errorPhone } = this.state;
     return (
-      <>
-        <Name
-          form={form}
-          name="First Name"
-          value="freedom"
-          outputName="firstName"
-        />
-        <Name
-          form={form}
-          name="Last Name"
-          value="yi"
-          outputName="lastName"
-        />
-        <Emails
-          form={form}
-          value="851989962@qq.com"
-        />
-        <FormControl
-          fullWidth
-          required
-          margin="normal"
-          error={errorPhone}
+      <MainContainer>
+        <Container
+          title="Basic Sitting"
+          component={<MyCropper />}
         >
-          <MyLabel fontSize="sm" shrink>Phone *</MyLabel>
-          <IntlTelInput
-            // defaultValue="+244 923 123 456"
-            onPhoneNumberChange={this.onPhoneNumberChange}
-            onSelectFlag={this.onSelectFlag}
+          <Name
+            form={form}
+            name="First Name"
+            value="freedom"
+            outputName="firstName"
           />
-          {
-            errorPhone
-              ? <FormHelperText>{errorPhone.join(',')}</FormHelperText>
-              : null
-          }
-        </FormControl>
-        { /* MyRadio 的默认只有 只有 Male || Female 其他无效 */ }
-        <MyRadio
-          form={form}
-          // value="Male"
-        />
-        <DatePicker
-          // defaultValue={dirb} // 默认的时间戳
-          ref={this.pickerRef}
-        />
-        <SubmitButton
-          width="200px"
-          name="Submit"
-          handleSubmit={this.handleSubmit}
-        />
-      </>
+          <Name
+            form={form}
+            name="Last Name"
+            value="yi"
+            outputName="lastName"
+          />
+          <Emails
+            form={form}
+            value="851989962@qq.com"
+          />
+          <FormControl
+            fullWidth
+            required
+            margin="normal"
+            error={errorPhone}
+          >
+            <MyLabel fontSize="sm" shrink>Phone *</MyLabel>
+            <IntlTelInput
+              defaultValue="+244 923 123 456"
+              onPhoneNumberChange={this.onPhoneNumberChange}
+              onSelectFlag={this.onSelectFlag}
+            />
+            {
+              errorPhone
+                ? <FormHelperText>{errorPhone.join(',')}</FormHelperText>
+                : null
+            }
+          </FormControl>
+          <DateSelection
+            form={form}
+            defaultValue={1562688000000}
+          />
+          <MyRadio
+            form={form}
+            value="Male"
+          />
+          <SubmitButton
+            width="200px"
+            name="Submit"
+            handleSubmit={this.handleSubmit}
+          />
+        </Container>
+      </MainContainer>
     );
   }
 }
 
 BasicSetting.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.object).isRequired,
   form: formShape.isRequired,
 };
 
