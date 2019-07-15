@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
 import { withStyles } from '@material-ui/core/styles';
+import { inject } from 'mobx-react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import MyCheckbox from '../../common/material-ui-compoents/checkbox';
@@ -10,13 +11,15 @@ import Emails from '../../common/form/email';
 import Password from '../../common/form/password';
 import SubmitButton from '../../common/form/submit-button';
 import { openNotifications } from '../../common/prompt-box/prompt-box';
-import { Consumer } from '../../context/index';
 import { psdBase64, storage, session } from '../../asstes/js/utils-methods';
 import { postRequestBody } from '../../asstes/http/index';
 import { loginPrompt } from '../../asstes/data/prompt-text';
 
 import { loginStyle } from './style';
 
+@inject(store => ({
+  userStore: store.userStore,
+}))
 @withStyles(loginStyle)
 @createForm()
 class Login extends React.Component {
@@ -43,8 +46,10 @@ class Login extends React.Component {
    * 提交事件
    * @returns {*} 验证正确的情况下返回一个 promise对象
    */
-  handleSubmit = (context) => {
-    const { form, history, location } = this.props;
+  handleSubmit = () => {
+    const {
+      form, history, location, userStore,
+    } = this.props;
     const { check } = this.state;
     let ayc = null;
     // rc-form验证
@@ -67,7 +72,7 @@ class Login extends React.Component {
                 isLogin: true,
               });
               // 修改全局登录状态 (确保路由不在拦截)
-              context.setLogin(true);
+              userStore.setLogin(true);
               // 登录完成时 -> 跳转至登录首页 或者上次停留的页面
               const { pathname } = location.state ? location.state.from : { pathname: '/my/index' };
               history.push(pathname);
@@ -109,35 +114,29 @@ class Login extends React.Component {
     const { classes, form } = this.props;
     const { check } = this.state;
     return (
-      <Consumer>
-        {
-          context => (
-            <InputContainer title="SIGN IN">
-              <Emails form={form} value={this.emails} />
-              <Password form={form} value={this.psd} name="Password" />
-              <div className={classes.main}>
-                <FormControlLabel
-                  label="Keep me logged in"
-                  classes={{ root: classes.labelRoot, label: classes.label }}
-                  control={<MyCheckbox checked={check} onChange={this.handleChange} />}
-                />
-                <span
-                  role="button"
-                  tabIndex={0}
-                  className={classes.text}
-                  onClick={this.handleLink}
-                >
-                  Forgot your password?
-                </span>
-              </div>
-              <SubmitButton
-                name="Log in"
-                handleSubmit={() => this.handleSubmit(context)}
-              />
-            </InputContainer>
-          )
-        }
-      </Consumer>
+      <InputContainer title="SIGN IN">
+        <Emails form={form} value={this.emails} />
+        <Password form={form} value={this.psd} name="Password" />
+        <div className={classes.main}>
+          <FormControlLabel
+            label="Keep me logged in"
+            classes={{ root: classes.labelRoot, label: classes.label }}
+            control={<MyCheckbox checked={check} onChange={this.handleChange} />}
+          />
+          <span
+            role="button"
+            tabIndex={0}
+            className={classes.text}
+            onClick={this.handleLink}
+          >
+            Forgot your password?
+          </span>
+        </div>
+        <SubmitButton
+          name="Log in"
+          handleSubmit={this.handleSubmit}
+        />
+      </InputContainer>
     );
   }
 }
@@ -146,6 +145,7 @@ Login.propTypes = {
   history: PropTypes.objectOf(PropTypes.object).isRequired,
   location: PropTypes.objectOf(PropTypes.object).isRequired,
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
+  userStore: PropTypes.objectOf(PropTypes.object).isRequired,
   form: formShape.isRequired,
 };
 

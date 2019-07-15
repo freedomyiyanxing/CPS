@@ -1,19 +1,14 @@
+/* eslint-disable */
 import React from 'react';
 import Notification from 'rc-notification';
-import IconButton from '@material-ui/core/IconButton';
-import Close from '@material-ui/icons/Close';
-import MySnackbarContentWrapper from './my-snackbar-content';
+import MySnackbarContentWrapper, { IconButtons } from './my-snackbar-content';
 
 import './notification.css';
 
 let notification = null;
 
 Notification.newInstance({
-  closeIcon: (
-    <IconButton style={{ padding: 15 }}>
-      <Close style={{ fontSize: 18, color: '#fff' }} />
-    </IconButton>
-  ),
+  closeIcon: <IconButtons />,
   style: {
     left: 24,
     top: 24,
@@ -34,9 +29,6 @@ export const openNotifications = {
       closable: true,
       maxCount: 3, // 最多显示多少个
       key,
-      onClose() {
-        console.log('提示框 删除时通知');
-      },
     });
   },
   clean(key) {

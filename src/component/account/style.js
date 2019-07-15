@@ -156,9 +156,25 @@ const cropperStyle = theme => ({
     justifyContent: 'space-between',
   },
 });
+
+const paymentStyle = theme => ({
+  root: {
+    fontSize: theme.typography.fontSizeLg,
+  },
+});
+
+const taxesStyle = theme => ({
+  root: {
+    fontSize: theme.typography.fontSizeLg,
+  },
+});
+
+
 export {
   indexStyle,
   wibstieStyle,
   containerStyle,
   cropperStyle,
+  paymentStyle,
+  taxesStyle,
 };

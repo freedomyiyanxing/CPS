@@ -1,87 +1,94 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-import MyLabel from '../material-ui-compoents/input-label';
 import IntlTelInput from './intlTelInput';
+import { formPrompt } from '../../asstes/data/prompt-text';
 
+@withStyles(theme => ({
+  root: {
+    top: 0,
+    left: 0,
+    position: 'absolute',
+    transform: 'translate(0, 1.5px) scale(0.75)',
+    color: theme.palette.text.secondary,
+    fontSize: theme.typography.fontSize,
+  },
+}))
 class TelIndex extends React.Component {
-  state = {
-    isValid: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      errorPhone: null,
+    };
+    this.phone = null;
+  }
 
   // 电话验证函数 (onchange)
   onPhoneNumberChange = (isValid, newNumber, countryData, fullNumber) => {
+    // console.log('电话验证函数onchange: ->', isValid, fullNumber);
+    let errors = null;
+    if (!fullNumber) {
+      errors = [formPrompt.phoneRequired];
+    }
+    if (!isValid && !errors) {
+      errors = [formPrompt.phoneFormat];
+    }
     this.setState({
-      isValid,
+      errorPhone: errors,
     });
-    console.log(isValid, newNumber, countryData, fullNumber);
-    this.onGetPhone(fullNumber);
+    this.phone = fullNumber;
   };
 
   // 电话验证函数 (切换国家)
   onSelectFlag = (isValid, newNumber, countryData, fullNumber) => {
-    this.setState({
-      isValid,
-    });
-    console.log(isValid, newNumber, countryData, fullNumber);
-    this.onGetPhone(fullNumber);
-  };
-
-  selectFlag = (rule, value, callback) => {
-    const { isValid } = this.state;
-    if (isValid) {
-      callback();
-    } else {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback('电话号码错误');
+    // console.log('切换国家0: ->', isValid, fullNumber);
+    if (!fullNumber) {
+      return false;
     }
-    console.log('this.isValid', isValid);
+    this.setState({
+      errorPhone: isValid ? null : [formPrompt.phoneFormat],
+    });
+    this.phone = fullNumber;
   };
 
-  onGetPhone = (number) => {
-    const { onChangePhone } = this.props;
-    onChangePhone(number);
+  handleChange = () => {
+    // 电话号码为空
+    const { errorPhone } = this.state;
+    if (!this.phone) {
+      this.setState({
+        errorPhone: [formPrompt.phoneRequired],
+      });
+      return false;
+    }
+    // 如果有错误的情况
+    if (errorPhone) {
+      return false;
+    }
+    return this.phone;
   };
 
   render() {
-    const { form } = this.props;
-
-    const { getFieldProps, getFieldError } = form;
-    const errors = getFieldError('phone');
+    const { value, classes } = this.props;
+    const { errorPhone } = this.state;
     return (
       <FormControl
         fullWidth
         required
-        error={errors}
         margin="normal"
-        {...getFieldProps('phone', {
-          validateFirst: true,
-          // initialValue: value, // 设置默认值 (保证在有默认值的情况 验证会通过)
-          rules: [
-            {
-              required: true,
-              message: '电话号码必填',
-            },
-            {
-              validator: this.selectFlag,
-            },
-            // {
-            //   validator: this.phoneNumber,
-            // },
-          ],
-        })}
+        error={errorPhone}
       >
-        <MyLabel fontSize="sm" shrink>Phone *</MyLabel>
+        <span className={classes.root}>Phone *</span>
         <IntlTelInput
-          // defaultValue="+1 201-555-1234"
+          defaultValue={value}
           onPhoneNumberChange={this.onPhoneNumberChange}
           onSelectFlag={this.onSelectFlag}
         />
         {
-          errors
-            ? <FormHelperText>{errors.join(',')}</FormHelperText>
+          errorPhone
+            ? <FormHelperText>{errorPhone.join(',')}</FormHelperText>
             : null
         }
       </FormControl>
@@ -90,8 +97,12 @@ class TelIndex extends React.Component {
 }
 
 TelIndex.propTypes = {
-  form: PropTypes.objectOf(PropTypes.object).isRequired,
-  onChangePhone: PropTypes.func.isRequired,
+  classes: PropTypes.objectOf(PropTypes.object).isRequired,
+  value: PropTypes.string,
+};
+
+TelIndex.defaultProps = {
+  value: '',
 };
 
 export default TelIndex;

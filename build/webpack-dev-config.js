@@ -213,7 +213,7 @@ module.exports = webpackMerge(webpackBaseConfig, {
     },
     publicPath: '/',
     // historyApiFallback 当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代为 index.html
-    // react-router-dom 就是使用 HTML5 History API实现的
+    // react-router-dom 就是使用 HTML5的History API实现的
     // 防止跳转路由时 刷新会出现404页面
     historyApiFallback: {
       index: '/index.html',
@@ -222,7 +222,7 @@ module.exports = webpackMerge(webpackBaseConfig, {
     contentBase: path.join(__dirname, '../dist'), // 打包文件目录
     proxy: { //解决跨域 代理有请求 /api的全部代理到 'http://192.168.1.20:8768'
       '/api': {
-        target: 'http://192.168.1.25:8768',
+        target: 'http://192.168.1.20:8768',
       },
     }
   },

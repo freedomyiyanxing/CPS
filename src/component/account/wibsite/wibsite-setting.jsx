@@ -10,6 +10,8 @@ import MySelect from '../../../common/form/my-select';
 import MyTextarea from '../../../common/form/my-textarea';
 import Name from '../../../common/form/name';
 import Container from '../utils/container';
+// eslint-disable-next-line no-unused-vars
+import { postRequestBody, get } from '../../../asstes/http/index';
 
 import { monthlyVisitors, webSiteCategory } from '../../../asstes/data/default-data';
 import { wibstieStyle } from '../style';
@@ -17,6 +19,36 @@ import { wibstieStyle } from '../style';
 @createForm()
 @withStyles(wibstieStyle)
 class WibsiteSetting extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: null,
+    };
+  }
+
+  componentDidMount() {
+    this._unmount = true;
+    // 查询个人信息
+    setTimeout(() => {
+      get('/api/profile/info')
+        .then((response) => {
+          if (this._unmount) {
+            this.setState({
+              data: response,
+            });
+          }
+          console.log(response, 'response');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, 500);
+  }
+
+  componentWillUnmount() {
+    this._unmount = false;
+  }
+
   /**
    * 提交事件
    * @returns {*} 验证正确的情况下返回一个 promise对象
@@ -40,6 +72,8 @@ class WibsiteSetting extends React.Component {
   render() {
     // eslint-disable-next-line no-unused-vars
     const { form, classes } = this.props;
+    const { data } = this.state;
+    console.log(data);
     return (
       <MainContainer>
         <Container title="Wibsite Setting">

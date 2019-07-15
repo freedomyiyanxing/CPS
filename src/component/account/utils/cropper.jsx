@@ -89,13 +89,16 @@ class MyCropper extends React.Component {
    * @returns {null|boolean}
    */
   handleClick = () => {
-    if (typeof this.refCropper.getCroppedCanvas() === 'undefined') {
+    const canvas = this.refCropper.getCroppedCanvas();
+    console.log(canvas);
+    if (!canvas) {
       console.log('裁剪失败');
       return false;
     }
     this.setState({
-      icon: this.refCropper.getCroppedCanvas().toDataURL(),
+      icon: canvas.toDataURL(),
     }, () => {
+      this.handleClose();
       // eslint-disable-next-line react/destructuring-assignment
       console.log('裁剪的图片 base64: ', this.state.icon);
     });
@@ -226,7 +229,7 @@ class MyCropper extends React.Component {
               className={classes.dialogBtn}
               onClick={this.handleClick}
             >
-              裁剪
+              提交
             </MyButton>
           </div>
         </Dialog>

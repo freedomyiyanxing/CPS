@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import { inject } from 'mobx-react';
 import Dialog from '@material-ui/core/Dialog';
 import ErrorOutline from '@material-ui/icons/ErrorOutline';
 
@@ -12,32 +13,29 @@ import HeaderRight from './utils/header-right';
 import { loginStyle } from './style';
 
 const useStyle = makeStyles(loginStyle);
-let consumers = null;
 
 const HeaderLogin = (props) => {
-  const { history } = props;
+  const { history, userStore } = props;
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const classes = useStyle();
 
-  // 确定退出登录
+  // 退出登录
   const handleOutClick = () => {
     // 清除 sessionStore 中的 登录信息 以及用户信息
     session.remove('loginInfo');
     session.remove('userInfo');
-    // 修改context中的登录状态 清除context中的登录信息
-    consumers.setLogin(false);
-    consumers.setUserInfo({});
+    // 修改context中的登录状态 清除store中的登录信息
+    userStore.setLogin(false);
+    userStore.setUserInfo(null);
     // to 到登录页面
     history.push('/s/signin');
   };
 
   // 打开弹出框
-  const openDialog = (consumer) => {
-    consumers = consumer;
+  const openDialog = () => {
     setDialogOpen(true);
   };
-
   return (
     <>
       <HeaderContainer>
@@ -80,7 +78,8 @@ const HeaderLogin = (props) => {
 
 HeaderLogin.propTypes = {
   history: PropTypes.objectOf(PropTypes.object).isRequired,
+  userStore: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 
-export default HeaderLogin;
+export default inject('userStore')(HeaderLogin);

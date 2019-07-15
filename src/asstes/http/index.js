@@ -1,8 +1,9 @@
 /* eslint-disable */
 import React from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
 import { session } from '../js/utils-methods';
+import { openNotifications } from '../../common/prompt-box/prompt-box';
+import { loginPrompt } from "../data/prompt-text";
 
 //
 const _setParams = (url, params) => {
@@ -21,17 +22,19 @@ const tokenUrl = [
   '/api/balance',
 ];
 
+// 控制
+let cancelFlag = false;
+
 // 请求前拦截
 axios.interceptors.request.use(
   (request) => {
     // 获取storage中的缓存Token
-    const loginInfo = JSON.parse(window.sessionStorage.getItem('loginInfo'));
+    const loginInfo = session.getSession('loginInfo');
     tokenUrl.forEach((items) => {
       if (request.url.startsWith(items) && loginInfo) {
         request.headers.Authorization = loginInfo.token;
       }
     });
-    // console.log('request: ', request);
     return request;
   },
   (err) => {
@@ -61,7 +64,18 @@ axios.interceptors.response.use(
     if (err.response.status === 504 || err.response.status === 404) {
       console.log('服务器被吃了⊙﹏⊙∥');
     } else if (err.response.status === 401) {
-      console.log('登录信息失效⊙﹏⊙∥');
+      // 401 登录信息失效 重定向到 登录页面
+      if (cancelFlag) {
+        return Promise.reject(err.response);
+      }
+      console.log('登录信息失效⊙﹏⊙∥', err.response);
+      window.__history__.push('/s/signin');
+      openNotifications.open({
+        message: err.response.data.message,
+        variant: 'error',
+        duration: 10, // null 表示永远不移除
+      });
+      cancelFlag = true;
     } else if (err.response.status === 500) {
       console.log('服务器开小差了⊙﹏⊙∥');
     }

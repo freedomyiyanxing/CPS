@@ -60,6 +60,12 @@ const registerInfoPrompt = {
   errorText: '服务器错误',
 };
 
+// 修改个人信息页面
+const userInfoPrompt = {
+  successText: '个人信息修改成功',
+  errorText: '服务器错误',
+};
+
 
 export {
   formPrompt,
@@ -69,4 +75,5 @@ export {
   resetPasswordPrompt,
   registerIndexPrompt,
   registerInfoPrompt,
+  userInfoPrompt,
 };

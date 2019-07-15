@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -10,30 +9,17 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import MainContainer from '../../common/box-container/main-container';
 
 import { accountIndex } from '../../asstes/data/default-data';
-import { get } from '../../asstes/http/index';
 import { indexStyle } from './style';
 
 @withStyles(indexStyle)
-class AccountIndex extends React.Component{
-  componentDidMount() {
-    get('/api/profile/info')
-      .then((response) => {
-        console.log(response)
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  }
-
+class AccountIndex extends React.Component {
   handleClick = (links) => {
-    const { history } = props;
-    console.log(links);
+    const { history } = this.props;
     history.push(`/my/${links}`);
   };
 
   render() {
     const { classes } = this.props;
-
     return (
       <MainContainer>
         <div className={classes.root}>
@@ -44,13 +30,13 @@ class AccountIndex extends React.Component{
                   button
                   key={items.id}
                   className={classes.listItem}
-                  onClick={() => { handleClick(items.links); }}
+                  onClick={() => { this.handleClick(items.links); }}
                 >
                   <ListItemIcon className={classes.listAvatar}>
                     <span className={items.icon} />
                   </ListItemIcon>
                   <ListItemText
-                    className={classes.listText}
+                    // className={classes.listText}
                     primary={items.title}
                     secondary={items.text}
                     classes={{
@@ -64,7 +50,7 @@ class AccountIndex extends React.Component{
         </div>
       </MainContainer>
     );
-  };
+  }
 }
 
 AccountIndex.propTypes = {

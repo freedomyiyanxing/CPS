@@ -19,6 +19,8 @@ import AccountIndex from '../component/account/index';
 import WibsiteSetting from '../component/account/wibsite/wibsite-setting';
 import BasicSetting from '../component/account/basic/basic-setting';
 import AccountPassword from '../component/account/password/account-password';
+import Payment from '../component/account/payment/account-payment';
+import Taxes from '../component/account/taxes/account-taxes';
 import Not404 from '../component/not-404/not-404';
 
 const routers = [
@@ -132,6 +134,18 @@ const routers = [
             path: '/my/account-password',
             exact: true,
             component: AccountPassword,
+            key: uuid(),
+          },
+          {
+            path: '/my/account-payment',
+            exact: true,
+            component: Payment,
+            key: uuid(),
+          },
+          {
+            path: '/my/account-taxes',
+            exact: true,
+            component: Taxes,
             key: uuid(),
           },
           {

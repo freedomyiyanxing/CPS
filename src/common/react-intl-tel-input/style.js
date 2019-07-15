@@ -51,5 +51,6 @@ export const countryListStyle = theme => ({
   },
   icon: {
     color: theme.palette.text.secondary,
+    fontSize: theme.typography.h5.fontSize,
   },
 });

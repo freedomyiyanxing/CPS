@@ -16,6 +16,8 @@ module.exports = {
       'jss',
       'react-jss',
       'prop-types',
+      'mobx',
+      'mobx-react',
     ]
   },
   output: {

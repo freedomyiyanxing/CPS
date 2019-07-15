@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { makeStyles, MuiThemeProvider } from '@material-ui/core/styles';
+import { Provider } from 'mobx-react';
 
 import renderRoutes from './router/render-routes';
-import Context from './context/index';
+import User from './store/user';
 import routers from './router/index';
 
 import './asstes/style/reset.css';
@@ -25,20 +26,22 @@ const useStyles = makeStyles(() => ({
 }));
 const root = document.getElementById('root');
 
+const userStore = new User();
+
 const App = () => {
   const classes = useStyles();
   return (
-    <BrowserRouter>
-      <MuiThemeProvider theme={theme}>
-        <Context>
+    <Provider userStore={userStore}>
+      <BrowserRouter>
+        <MuiThemeProvider theme={theme}>
           <div className={classes.root}>
             {
               renderRoutes(routers)
             }
           </div>
-        </Context>
-      </MuiThemeProvider>
-    </BrowserRouter>
+        </MuiThemeProvider>
+      </BrowserRouter>
+    </Provider>
   );
 };
 

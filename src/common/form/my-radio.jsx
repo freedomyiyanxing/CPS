@@ -24,7 +24,6 @@ const MyRadio = (props) => {
   };
 
   const { getFieldProps } = form;
-
   return (
     <FormControl
       fullWidth
@@ -37,13 +36,11 @@ const MyRadio = (props) => {
       <span className={classes.label}>Gender :</span>
       <RadioGroup
         row
-        aria-label="position"
-        name="position"
         value={val}
         onChange={handleChange}
       >
         <FormControlLabel
-          value="Male"
+          value="1"
           control={(
             <Radio
               color="primary"
@@ -55,7 +52,7 @@ const MyRadio = (props) => {
           labelPlacement="end"
         />
         <FormControlLabel
-          value="Female"
+          value="2"
           control={(
             <Radio
               color="primary"
@@ -77,7 +74,7 @@ MyRadio.propTypes = {
 };
 
 MyRadio.defaultProps = {
-  value: '',
+  value: null,
 };
 
 export default MyRadio;

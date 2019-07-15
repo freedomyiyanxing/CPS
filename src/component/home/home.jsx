@@ -1,16 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { inject } from 'mobx-react';
 
 import MainContainer from '../../common/box-container/main-container';
 import HomeHeader from './home-utils/home-header';
 import HomeCurve from './home-utils/home-curve';
 import HomeDetail from './home-utils/home-detail';
-import { Consumer } from '../../context/index';
 import { session, getDaysTime, getTime } from '../../asstes/js/utils-methods';
 import { httpResponse } from './home-http';
 
 const PAGE_SIZE = 10; // 分页每一页条数
 
+@inject(store => ({
+  userStore: store.userStore,
+}))
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -22,10 +25,10 @@ class Home extends React.Component {
       daily: null, // 推广数据统计 (折线图)
       timer: {},
     };
-    this.consumer = null;
   }
 
   componentDidMount() {
+    const { userStore } = this.props;
     const start = getTime(getDaysTime(90));
     const end = getTime(new Date().getTime(), 'end');
     this._unmount = true;
@@ -43,8 +46,8 @@ class Home extends React.Component {
           userName: response[0].firstName + response[0].lastName,
           userPhoto: response[0].photo,
         };
-        // userInfo 写入context当中
-        this.consumer.setUserInfo(userInfo);
+        // userInfo 写入store当中
+        userStore.setUserInfo(userInfo);
         // // userInfo 写入 session 当中
         session.setSession('userInfo', userInfo);
 
@@ -57,10 +60,7 @@ class Home extends React.Component {
         });
       }
     }).catch((err) => {
-      if (err.status === 401) {
-        // eslint-disable-next-line react/destructuring-assignment
-        this.props.history.push('/s/signin');
-      }
+      console.log(err);
     });
   }
 
@@ -94,38 +94,31 @@ class Home extends React.Component {
     } = this.state;
     return (
       <MainContainer margin={[44, 0, 40]}>
-        <Consumer>
-          {
-            (context) => {
-              this.consumer = context;
-              return (
-                loading
-                  ? <div style={{ minHeight: 500 }}>loading。。。。</div>
-                  : (
-                    <>
-                      <HomeHeader data={userInfo} />
-                      <HomeCurve
-                        data={[daily, statistics]}
-                        onChange={this.handleChangeDate}
-                      />
-                      <HomeDetail
-                        size={PAGE_SIZE}
-                        data={detail}
-                        time={timer}
-                      />
-                    </>
-                  )
-              );
-            }
-          }
-        </Consumer>
+        {
+          loading
+            ? <div style={{ minHeight: 500 }}>loading。。。。</div>
+            : (
+              <>
+                <HomeHeader data={userInfo} />
+                <HomeCurve
+                  data={[daily, statistics]}
+                  onChange={this.handleChangeDate}
+                />
+                <HomeDetail
+                  size={PAGE_SIZE}
+                  data={detail}
+                  time={timer}
+                />
+              </>
+            )
+        }
       </MainContainer>
     );
   }
 }
 
 Home.propTypes = {
-  history: PropTypes.objectOf(PropTypes.object).isRequired,
+  userStore: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default Home;
