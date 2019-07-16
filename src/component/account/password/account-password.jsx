@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
-import { withStyles } from '@material-ui/core/styles/index';
 
 import Password from '../../../common/form/password';
 import SubmitButton from '../../../common/form/submit-button';
-import MergePassword from '../../../common/form/password-merge';
 import MainContainer from '../../../common/box-container/main-container';
 import Container from '../utils/container';
+import MergePassword from '../../../common/form/password-merge';
 
-import passwordStyle from './style';
+import { openNotifications } from '../../../common/prompt-box/prompt-box';
+import { patchRequestBody, SUCCESS } from '../../../asstes/http/index';
+import { userSetPassword } from '../../../asstes/data/prompt-text';
 
-@withStyles(passwordStyle)
 @createForm()
 class AccountPassword extends React.Component {
   /**
@@ -24,10 +24,25 @@ class AccountPassword extends React.Component {
     form.validateFields((error, value) => {
       if (!error) {
         ayc = new Promise((resolve) => {
-          setTimeout(() => {
-            console.log({ ...value });
-            resolve(true);
-          }, 1000);
+          patchRequestBody('/api/profile/password', value)
+            .then((response) => {
+              if (response.message === SUCCESS) {
+                openNotifications.open({
+                  message: userSetPassword.successText,
+                  variant: 'success',
+                  duration: 10,
+                });
+              }
+              resolve(true);
+            })
+            .catch((err) => {
+              openNotifications.open({
+                message: err.data.message || userSetPassword.errorText,
+                variant: 'error',
+                duration: 10,
+              });
+              resolve(true);
+            });
         });
       }
     });
@@ -35,15 +50,24 @@ class AccountPassword extends React.Component {
   };
 
   render() {
-    // eslint-disable-next-line no-unused-vars
-    const { classes, form } = this.props;
+    const { form, history } = this.props;
     return (
       <MainContainer>
         <Container title="Change Password">
-          <Password form={form} name="Password" />
-          <MergePassword form={form} />
+          <Password
+            form={form}
+            name="Password"
+            outputName="oldPassword"
+          />
+          <MergePassword
+            form={form}
+            outputName="newPassword"
+          />
           <SubmitButton
+            bank
+            width="180"
             name="Submit"
+            history={history}
             handleSubmit={this.handleSubmit}
           />
         </Container>
@@ -53,7 +77,7 @@ class AccountPassword extends React.Component {
 }
 
 AccountPassword.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.object).isRequired,
+  history: PropTypes.objectOf(PropTypes.object).isRequired,
   form: formShape.isRequired,
 };
 

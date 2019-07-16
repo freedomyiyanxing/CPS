@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import InputContainer from '../../common/box-container/form-container';
 import MergePassword from '../../common/form/password-merge';
 import SubmitButton from '../../common/form/submit-button';
-import MyButton from '../../common/material-ui-compoents/button';
+import MyButton from '../../common/material-ui-component/button';
 
 import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { get, patchRequestBody, SUCCESS } from '../../asstes/http';

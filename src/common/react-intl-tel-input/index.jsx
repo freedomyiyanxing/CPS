@@ -30,6 +30,8 @@ class TelIndex extends React.Component {
   onPhoneNumberChange = (isValid, newNumber, countryData, fullNumber) => {
     // console.log('电话验证函数onchange: ->', isValid, fullNumber);
     let errors = null;
+    this.handlePhones(isValid, fullNumber);
+
     if (!fullNumber) {
       errors = [formPrompt.phoneRequired];
     }
@@ -45,6 +47,8 @@ class TelIndex extends React.Component {
   // 电话验证函数 (切换国家)
   onSelectFlag = (isValid, newNumber, countryData, fullNumber) => {
     // console.log('切换国家0: ->', isValid, fullNumber);
+    this.handlePhones(isValid, fullNumber);
+
     if (!fullNumber) {
       return false;
     }
@@ -68,6 +72,21 @@ class TelIndex extends React.Component {
       return false;
     }
     return this.phone;
+  };
+
+  // 检测是否修改了 电话号码
+  handlePhones = (isValid, fullNumber) => {
+    const { handlePhone, value } = this.props;
+    // 防止没有如何变化时 触发
+    if (isValid && fullNumber === value) {
+      return;
+    }
+    if (typeof handlePhone === 'function') {
+      if (!isValid) {
+        return handlePhone(!isValid);
+      }
+      handlePhone(fullNumber === value);
+    }
   };
 
   render() {
@@ -99,10 +118,12 @@ class TelIndex extends React.Component {
 TelIndex.propTypes = {
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
   value: PropTypes.string,
+  handlePhone: PropTypes.func,
 };
 
 TelIndex.defaultProps = {
   value: '',
+  handlePhone: null,
 };
 
 export default TelIndex;

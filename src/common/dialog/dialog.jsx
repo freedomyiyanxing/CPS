@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 
-import MyButton from '../material-ui-compoents/button';
+import MyButton from '../material-ui-component/button';
 import { dialogsStyle } from './style';
 
 const useStyle = makeStyles(dialogsStyle);

@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress/index';
 import copy from 'copy-to-clipboard/index';
 
-import MyButton from '../../../common/material-ui-compoents/button';
+import MyButton from '../../../common/material-ui-component/button';
 import MyDialogs from '../../../common/dialog/dialog';
 import openNotification from '../../../common/prompt-box/prompt-box';
 

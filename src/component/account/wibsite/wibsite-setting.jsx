@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
-import { withStyles } from '@material-ui/core/styles';
 
 import MainContainer from '../../../common/box-container/main-container';
 import SubmitButton from '../../../common/form/submit-button';
@@ -10,39 +9,43 @@ import MySelect from '../../../common/form/my-select';
 import MyTextarea from '../../../common/form/my-textarea';
 import Name from '../../../common/form/name';
 import Container from '../utils/container';
-// eslint-disable-next-line no-unused-vars
-import { postRequestBody, get } from '../../../asstes/http/index';
 
+import { postRequestBody, get, SUCCESS } from '../../../asstes/http/index';
 import { monthlyVisitors, webSiteCategory } from '../../../asstes/data/default-data';
-import { wibstieStyle } from '../style';
+import { openNotifications } from '../../../common/prompt-box/prompt-box';
+import { userInfoPrompt } from '../../../asstes/data/prompt-text';
+import { getIsForm, getSelectIndex } from '../../../asstes/js/utils-methods';
+
+let userDate = null;
 
 @createForm()
-@withStyles(wibstieStyle)
 class WibsiteSetting extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null,
+      data: userDate || null,
     };
   }
 
   componentDidMount() {
     this._unmount = true;
+    if (userDate) {
+      return;
+    }
+
     // 查询个人信息
-    setTimeout(() => {
-      get('/api/profile/info')
-        .then((response) => {
-          if (this._unmount) {
-            this.setState({
-              data: response,
-            });
-          }
-          console.log(response, 'response');
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, 500);
+    get('/api/profile/info')
+      .then((response) => {
+        if (this._unmount) {
+          this.setState({
+            data: userDate = response,
+          });
+        }
+        // console.log(response, 'response');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   componentWillUnmount() {
@@ -55,14 +58,34 @@ class WibsiteSetting extends React.Component {
    */
   handleSubmit = () => {
     const { form } = this.props;
+    const { data } = this.state;
     let ayc = null;
     form.validateFields((error, value) => {
       if (!error) {
+        const obj = Object.assign(data, value, {
+          monthlyVisits: getSelectIndex(value.monthlyVisits, monthlyVisitors),
+          websiteCategory: getSelectIndex(value.websiteCategory, webSiteCategory),
+        });
         ayc = new Promise((resolve) => {
-          setTimeout(() => {
-            console.log({ ...value });
-            resolve(true);
-          }, 1000);
+          postRequestBody('/api/profile/update', obj)
+            .then((response) => {
+              if (response.message === SUCCESS) {
+                openNotifications.open({
+                  message: userInfoPrompt.successText,
+                  variant: 'success',
+                  duration: 5, // null 表示永远不移除
+                });
+              }
+              resolve(true);
+            })
+            .catch((err) => {
+              openNotifications.open({
+                message: err.data.message || userInfoPrompt.errorText,
+                variant: 'error',
+                duration: 10, // null 表示永远不移除
+              });
+              resolve(true);
+            });
         });
       }
     });
@@ -70,54 +93,79 @@ class WibsiteSetting extends React.Component {
   };
 
   render() {
-    // eslint-disable-next-line no-unused-vars
-    const { form, classes } = this.props;
+    const { form, history } = this.props;
     const { data } = this.state;
-    console.log(data);
+    const disabled = data
+      ? getIsForm(
+        form,
+        {
+          websiteName: data.websiteName,
+          websiteUrl: data.websiteUrl,
+          websiteDesc: data.websiteDesc,
+          websiteCategory: webSiteCategory[data.websiteCategory - 1],
+          monthlyVisits: monthlyVisitors[data.monthlyVisits - 1],
+        }, [
+          'websiteName',
+          'websiteUrl',
+          'websiteCategory',
+          'monthlyVisits',
+          'websiteDesc',
+        ],
+      )
+      : true;
     return (
       <MainContainer>
-        <Container title="Wibsite Setting">
-          <Name
-            form={form}
-            name="Website Name"
-            value="freedom.yi"
-            outputName="websiteName"
-          />
-          <MyUrl
-            form={form}
-            value="http://192.168.1.22:8899/yes/account-setting"
-          />
-          <MySelect
-            form={form}
-            name="Category"
-            outputName="category"
-            selectArr={webSiteCategory}
-            value={webSiteCategory[0]}
-          />
-          <MySelect
-            form={form}
-            name="Current Monthly Unique Visitores"
-            outputName="monthlyVisitors"
-            selectArr={monthlyVisitors}
-            value={monthlyVisitors[0]}
-          />
-          <MyTextarea
-            form={form}
-            value="this is changsha ?"
-          />
-          <SubmitButton
-            width="200px"
-            name="Submit"
-            handleSubmit={this.handleSubmit}
-          />
-        </Container>
+        {
+          data
+            ? (
+              <Container title="Wibsite Setting">
+                <Name
+                  form={form}
+                  name="Website Name"
+                  value={data.websiteName}
+                  outputName="websiteName"
+                />
+                <MyUrl
+                  form={form}
+                  value={data.websiteUrl}
+                />
+                <MySelect
+                  form={form}
+                  name="Category"
+                  outputName="websiteCategory"
+                  selectArr={webSiteCategory}
+                  value={webSiteCategory[data.websiteCategory - 1]}
+                />
+                <MySelect
+                  form={form}
+                  name="Current Monthly Unique Visitores"
+                  outputName="monthlyVisits"
+                  selectArr={monthlyVisitors}
+                  value={monthlyVisitors[data.monthlyVisits - 1]}
+                />
+                <MyTextarea
+                  form={form}
+                  value={data.websiteDesc}
+                />
+                <SubmitButton
+                  bank
+                  width="180"
+                  name="Submit"
+                  disabled={disabled}
+                  history={history}
+                  handleSubmit={this.handleSubmit}
+                />
+              </Container>
+            )
+            : <div>loading....</div>
+        }
       </MainContainer>
     );
   }
 }
 
 WibsiteSetting.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.object).isRequired,
+  history: PropTypes.objectOf(PropTypes.object).isRequired,
   form: formShape.isRequired,
 };
 

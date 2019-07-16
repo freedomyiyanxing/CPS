@@ -2,8 +2,6 @@
 import React from 'react';
 import axios from 'axios';
 import { session } from '../js/utils-methods';
-import { openNotifications } from '../../common/prompt-box/prompt-box';
-import { loginPrompt } from "../data/prompt-text";
 
 //
 const _setParams = (url, params) => {
@@ -70,11 +68,6 @@ axios.interceptors.response.use(
       }
       console.log('登录信息失效⊙﹏⊙∥', err.response);
       window.__history__.push('/s/signin');
-      openNotifications.open({
-        message: err.response.data.message,
-        variant: 'error',
-        duration: 10, // null 表示永远不移除
-      });
       cancelFlag = true;
     } else if (err.response.status === 500) {
       console.log('服务器开小差了⊙﹏⊙∥');

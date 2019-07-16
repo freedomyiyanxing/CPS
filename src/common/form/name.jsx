@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-import MyInput from '../material-ui-compoents/input';
-import MyLabel from '../material-ui-compoents/input-label';
+import MyInput from '../material-ui-component/input';
+import MyLabel from '../material-ui-component/input-label';
 import { formPrompt } from '../../asstes/data/prompt-text';
 
 const Name = (props) => {

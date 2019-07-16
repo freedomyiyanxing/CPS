@@ -4,8 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 
 import PartitionLine from '../../../common/partition-line/partition-line';
-import MyButton from '../../../common/material-ui-compoents/button';
-import MyPerson from '../../../common/material-ui-compoents/icon-person';
+import MyButton from '../../../common/material-ui-component/button';
+import MyPerson from '../../../common/material-ui-component/icon-person';
 import MyDialog from '../../../common/dialog/dialog';
 import Withdraw from '../../../common/dialog/withdraw';
 

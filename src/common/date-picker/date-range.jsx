@@ -7,9 +7,9 @@ import moment from 'moment';
 import FormControl from '@material-ui/core/FormControl';
 import 'moment/locale/en-gb';
 
-import MyInput from '../material-ui-compoents/input';
-import MyTextField from '../material-ui-compoents/text-field-input';
-import MyLabel from '../material-ui-compoents/input-label';
+import MyInput from '../material-ui-component/input';
+import MyTextField from '../material-ui-component/text-field-input';
+import MyLabel from '../material-ui-component/input-label';
 import DateClose from './date-close';
 import { getTime, getDaysTime } from '../../asstes/js/utils-methods';
 import '../../asstes/style/rc-calendar.css';

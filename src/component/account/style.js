@@ -33,16 +33,6 @@ const indexStyle = theme => ({
   },
 });
 
-const wibstieStyle = theme => ({
-  root: {
-    padding: [[10, 24, 40]],
-    background: theme.palette.primary[50],
-  },
-  wrapper: {
-    width: 400,
-  },
-});
-
 const containerStyle = theme => ({
   root: {
     display: 'flex',
@@ -172,7 +162,6 @@ const taxesStyle = theme => ({
 
 export {
   indexStyle,
-  wibstieStyle,
   containerStyle,
   cropperStyle,
   paymentStyle,

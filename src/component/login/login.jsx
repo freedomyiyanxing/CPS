@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { inject } from 'mobx-react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import MyCheckbox from '../../common/material-ui-compoents/checkbox';
+import MyCheckbox from '../../common/material-ui-component/checkbox';
 import InputContainer from '../../common/box-container/form-container';
 import Emails from '../../common/form/email';
 import Password from '../../common/form/password';

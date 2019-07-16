@@ -6,8 +6,8 @@ import uuid from 'uuid';
 import Add from '@material-ui/icons/Add';
 import Remove from '@material-ui/icons/Remove';
 
-import MyTable from '../../../common/material-ui-compoents/table';
-import MyButton from '../../../common/material-ui-compoents/button';
+import MyTable from '../../../common/material-ui-component/table';
+import MyButton from '../../../common/material-ui-component/button';
 import MyPagination from '../../../common/pagination/pagination';
 import MyDialog from '../../../common/dialog/dialog';
 import Withdraw from '../../../common/dialog/withdraw';

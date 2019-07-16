@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Collapse from '@material-ui/core/Collapse';
 
-import MyButton from '../../../common/material-ui-compoents/button';
+import MyButton from '../../../common/material-ui-component/button';
 import { myHeader } from '../../../asstes/data/default-data';
 import logo from '../../../asstes/images/logo_white.png';
 

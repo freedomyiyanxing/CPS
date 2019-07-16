@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
 import { withStyles } from '@material-ui/core/styles';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
 
 import InputContainer from '../../common/box-container/form-container';
 import Emails from '../../common/form/email';
@@ -13,15 +11,14 @@ import SubmitButton from '../../common/form/submit-button';
 import MyTextarea from '../../common/form/my-textarea';
 import MyUrl from '../../common/form/my-url';
 import MySelect from '../../common/form/my-select';
-import MyButton from '../../common/material-ui-compoents/button';
-import IntlTelInput from '../../common/react-intl-tel-input/intlTelInput';
-import MyLabel from '../../common/material-ui-compoents/input-label';
+import MyButton from '../../common/material-ui-component/button';
+import TelIndex from '../../common/react-intl-tel-input/index';
 
 import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { postRequestBody, get, SUCCESS } from '../../asstes/http/index';
 import { webSiteCategory, monthlyVisitors } from '../../asstes/data/default-data';
-import { registerInfoPrompt, formPrompt } from '../../asstes/data/prompt-text';
-import { setSubmitArg } from '../../asstes/js/utils-methods';
+import { registerInfoPrompt } from '../../asstes/data/prompt-text';
+import { getSelectIndex } from '../../asstes/js/utils-methods';
 
 import { registerInfoStyle } from './style';
 
@@ -31,15 +28,10 @@ class RegisterInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
+      data: null,
       isError: false, // 标致 获取用户是否成功
-      loading: true,
-      errorPhone: null,
     };
-
-    this.phone = null;
+    this.phoneRef = createRef();
   }
 
   componentDidMount() {
@@ -50,13 +42,9 @@ class RegisterInfo extends React.Component {
       // 获取注册用户的信息 (name && email)
       get(`/api/auth/signup/info${search}`)
         .then((response) => {
-          const { firstName, lastName, email } = response;
           if (this._unmount) {
             this.setState({
-              firstName,
-              lastName,
-              email,
-              loading: false,
+              data: response,
             });
           }
         })
@@ -64,7 +52,6 @@ class RegisterInfo extends React.Component {
           console.log(err, 'error');
           this.setState({
             isError: true,
-            loading: false,
           });
         });
     }
@@ -80,29 +67,17 @@ class RegisterInfo extends React.Component {
    */
   handleSubmit = () => {
     const { form, history } = this.props;
-    const {
-      firstName, lastName, email, errorPhone,
-    } = this.state;
+    const { data } = this.state;
     let ayc = null;
     form.validateFields((error, value) => {
-      // 判断必须填写了电话号码
-      if (!this.phone) {
-        this.setState({
-          errorPhone: [formPrompt.phoneRequired],
+      const mobile = this.phoneRef.current.handleChange();
+      if (!error && mobile) {
+        const obj = Object.assign(data, value, {
+          mobile,
+          monthlyVisits: getSelectIndex(value.monthlyVisits, monthlyVisitors),
+          websiteCategory: getSelectIndex(value.websiteCategory, webSiteCategory),
         });
-        return false;
-      }
-
-      // (errorPhone如果为真 则表示有电话号码错误)
-      if (!error && !errorPhone) {
         ayc = new Promise((resolve) => {
-          const obj = {
-            firstName,
-            lastName,
-            email,
-            mobile: this.phone,
-            ...setSubmitArg(value),
-          };
           postRequestBody('/api/auth/signup/complete', obj)
             .then((response) => {
               if (response.message === SUCCESS) {
@@ -131,45 +106,15 @@ class RegisterInfo extends React.Component {
     return ayc;
   };
 
-  // 电话验证函数 (onchange)
-  onPhoneNumberChange = (isValid, newNumber, countryData, fullNumber) => {
-    console.log('电话验证函数onchange: ->', isValid, fullNumber);
-    let errors = null;
-    if (!fullNumber) {
-      errors = [formPrompt.phoneRequired];
-    }
-    if (!isValid && !errors) {
-      errors = [formPrompt.phoneFormat];
-    }
-    this.setState({
-      errorPhone: errors,
-    });
-    this.phone = fullNumber;
-  };
-
-  // 电话验证函数 (切换国家)
-  onSelectFlag = (isValid, newNumber, countryData, fullNumber) => {
-    console.log('切换国家0: ->', isValid, fullNumber);
-    if (!fullNumber) {
-      return false;
-    }
-    this.setState({
-      errorPhone: isValid ? null : [formPrompt.phoneFormat],
-    });
-    this.phone = fullNumber;
-  };
-
   render() {
     const { classes, form, history } = this.props;
-    const {
-      firstName, lastName, email, isError, loading, errorPhone,
-    } = this.state;
+    const { data, isError } = this.state;
     return (
-      <InputContainer title={(!loading && !isError) ? 'SIGN UP' : ''}>
+      <InputContainer title={(!data && !isError) ? 'SIGN UP' : ''}>
         {
           // eslint-disable-next-line no-nested-ternary
-          loading
-            ? <div>loading 0000</div>
+          !data
+            ? <div>loading ....</div>
             : (
               isError
                 ? (
@@ -190,27 +135,10 @@ class RegisterInfo extends React.Component {
                     <div className={classes.firstTitle}>
                       <h4 className={classes.title}>ACCOUNT INFORMATION</h4>
                     </div>
-                    <Name name="First Name" value={firstName} outputName="firstName" form={form} disabled />
-                    <Name name="Last Name" value={lastName} outputName="lastName" form={form} disabled />
-                    <Emails form={form} value={email} disabled />
-                    <FormControl
-                      fullWidth
-                      required
-                      margin="normal"
-                      error={errorPhone}
-                    >
-                      <MyLabel fontSize="sm" shrink>Phone *</MyLabel>
-                      <IntlTelInput
-                        // defaultValue="+244 923 123 456"
-                        onPhoneNumberChange={this.onPhoneNumberChange}
-                        onSelectFlag={this.onSelectFlag}
-                      />
-                      {
-                        errorPhone
-                          ? <FormHelperText>{errorPhone.join(',')}</FormHelperText>
-                          : null
-                      }
-                    </FormControl>
+                    <Name name="First Name" value={data.firstName} outputName="firstName" form={form} disabled />
+                    <Name name="Last Name" value={data.lastName} outputName="lastName" form={form} disabled />
+                    <Emails form={form} value={data.email} disabled />
+                    <TelIndex ref={this.phoneRef} />
                     <MergePassword form={form} />
                     <div className={classes.lastTitle}>
                       <h4 className={classes.title}>WEBSITE INFORMATION</h4>

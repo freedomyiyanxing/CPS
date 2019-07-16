@@ -5,11 +5,15 @@ import { inject } from 'mobx-react';
 import Dialog from '@material-ui/core/Dialog';
 import ErrorOutline from '@material-ui/icons/ErrorOutline';
 
-import MyButton from '../../common/material-ui-compoents/button';
+import MyButton from '../../common/material-ui-component/button';
 import HeaderContainer from './header-container';
-import { session } from '../../asstes/js/utils-methods';
 import HeaderLeft from './utils/header-left';
 import HeaderRight from './utils/header-right';
+
+import { openNotifications } from '../../common/prompt-box/prompt-box';
+import { patchRequestBody, SUCCESS } from '../../asstes/http/index';
+import { session } from '../../asstes/js/utils-methods';
+import { logoutPrompt } from '../../asstes/data/prompt-text';
 import { loginStyle } from './style';
 
 const useStyle = makeStyles(loginStyle);
@@ -22,14 +26,33 @@ const HeaderLogin = (props) => {
 
   // 退出登录
   const handleOutClick = () => {
-    // 清除 sessionStore 中的 登录信息 以及用户信息
-    session.remove('loginInfo');
-    session.remove('userInfo');
-    // 修改context中的登录状态 清除store中的登录信息
-    userStore.setLogin(false);
-    userStore.setUserInfo(null);
-    // to 到登录页面
-    history.push('/s/signin');
+    patchRequestBody('/api/profile/logout')
+      .then((response) => {
+        if (response.message === SUCCESS) {
+          // 清除 sessionStore 中的 登录信息 以及用户信息
+          session.remove('loginInfo');
+          session.remove('userInfo');
+          // 修改context中的登录状态 清除store中的登录信息
+          userStore.setLogin(false);
+          userStore.setUserInfo(null);
+          // to 到登录页面
+          history.push('/s/signin');
+
+          openNotifications.open({
+            message: logoutPrompt.successText,
+            variant: 'success',
+            duration: 5,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        openNotifications.open({
+          message: err.data.message || logoutPrompt.errorText,
+          variant: 'error',
+          duration: 10,
+        });
+      });
   };
 
   // 打开弹出框

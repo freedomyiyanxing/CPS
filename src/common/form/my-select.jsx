@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
-import MySelects from '../material-ui-compoents/select';
-import MyLabel from '../material-ui-compoents/input-label';
+import MyLabel from '../material-ui-component/input-label';
 import { formPrompt } from '../../asstes/data/prompt-text';
 
 const MySelect = (props) => {
@@ -23,10 +23,10 @@ const MySelect = (props) => {
       margin="normal"
     >
       <MyLabel fontSize={fontSize}>{name}</MyLabel>
-      <MySelects
-        renderValue={items => items.text}
+      <Select
+        value={value}
+        renderValue={items => items}
         {...getFieldProps(outputName, {
-          validateFirst: true,
           initialValue: value,
           rules: [
             {
@@ -37,16 +37,17 @@ const MySelect = (props) => {
         })}
       >
         {
-          !noRequire // 非必填时 给一个空选项
-            ? <MenuItem value="">None</MenuItem>
-            : null
+          // !noRequire // 非必填时 给一个空选项
+          //   ? <MenuItem value="">None</MenuItem>
+          //   : null
+          <MenuItem value="">None</MenuItem>
         }
         {
           selectArr.map(v => (
-            <MenuItem key={v.id} value={v}>{v.text}</MenuItem>
+            <MenuItem key={v} value={v}>{v}</MenuItem>
           ))
         }
-      </MySelects>
+      </Select>
       {
         errors
           ? <FormHelperText>{errors.join(',')}</FormHelperText>

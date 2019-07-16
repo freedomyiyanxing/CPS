@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 
-import MyInput from '../material-ui-compoents/input';
+import MyInput from '../material-ui-component/input';
 import paypal from '../../asstes/images/p.png';
 import { withdrawStyle } from './style';
 

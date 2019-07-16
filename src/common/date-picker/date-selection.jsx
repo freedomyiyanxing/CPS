@@ -8,8 +8,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import 'moment/locale/en-gb';
 
-import MyInput from '../material-ui-compoents/input';
-import MyLabel from '../material-ui-compoents/input-label';
+import MyInput from '../material-ui-component/input';
+import MyLabel from '../material-ui-component/input-label';
 import DateClose from './date-close';
 import { getTime } from '../../asstes/js/utils-methods';
 import '../../asstes/style/rc-calendar.css';
@@ -23,11 +23,22 @@ function disabledDate(current) {
 }
 
 const DateSelection = (props) => {
-  const { defaultValue, form } = props;
+  const { defaultValue, form, onChange } = props;
   const [date, setDate] = useState(defaultValue ? moment(defaultValue) : null);
 
   const handleChange = (value) => {
     setDate(value);
+    // 检测是否修改了 电话号码
+    if (typeof onChange === 'function') {
+      let is = true;
+      if (defaultValue) {
+        is = false;
+        if (value) {
+          is = moment(defaultValue).format('YYYY-MM-DD') === value.format('YYYY-MM-DD');
+        }
+      }
+      onChange(is);
+    }
   };
 
   const { getFieldProps } = form;
@@ -55,6 +66,7 @@ const DateSelection = (props) => {
             margin="normal"
             {...getFieldProps('dateOfBirth', {
               initialValue: getTime(date),
+              trigger: 'onChange',
             })}
           >
             <MyLabel fontSize="sm" htmlFor="my-rc-calendar">Date of birth</MyLabel>
@@ -80,10 +92,12 @@ const DateSelection = (props) => {
 DateSelection.propTypes = {
   form: PropTypes.objectOf(PropTypes.object).isRequired,
   defaultValue: PropTypes.number,
+  onChange: PropTypes.func,
 };
 
 DateSelection.defaultProps = {
   defaultValue: null,
+  onChange: null,
 };
 
 export default DateSelection;

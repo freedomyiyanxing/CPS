@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
 
 import Password from './password';
@@ -32,8 +33,21 @@ class MergePassword extends React.Component {
 
   // 确认密码的
   compareToFirstPassword = (rule, value, callback) => {
-    const { form } = this.props;
-    if (value && value !== form.getFieldValue('password')) {
+    const { form, outputName } = this.props;
+    const oldPsd = form.getFieldValue('oldPassword');
+    const newPsd = form.getFieldValue(outputName);
+    // 说明有原生密码 则需要判断
+    if (oldPsd) {
+      if (value && (value !== newPsd || value === oldPsd)) {
+        callback(
+          value === oldPsd
+            ? formPrompt.passwordOld
+            : formPrompt.passwordValidator,
+        );
+      } else {
+        callback();
+      }
+    } else if (value && value !== newPsd) {
       callback(formPrompt.passwordValidator);
     } else {
       callback();
@@ -41,13 +55,14 @@ class MergePassword extends React.Component {
   };
 
   render() {
-    const { form } = this.props;
+    const { form, outputName } = this.props;
     return (
       <>
         <Password
           form={form}
           name="New Password"
           onBlur={this.handleBlur}
+          outputName={outputName}
           validateToNextPassword={this.validateToNextPassword}
         />
         <ConfirmPassword
@@ -61,6 +76,11 @@ class MergePassword extends React.Component {
 
 MergePassword.propTypes = {
   form: formShape.isRequired,
+  outputName: PropTypes.string, // 输出key值
+};
+
+MergePassword.defaultProps = {
+  outputName: 'password',
 };
 
 export default MergePassword;

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import MyButton from '../../common/material-ui-compoents/button';
+import MyButton from '../../common/material-ui-component/button';
 import HeaderNotLogin from '../header/header-not-login';
 
 import not404Style from './style';

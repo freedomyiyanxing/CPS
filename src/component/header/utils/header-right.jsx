@@ -7,9 +7,9 @@ import MenuList from '@material-ui/core/MenuList';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 
-import MyButton from '../../../common/material-ui-compoents/button';
+import MyButton from '../../../common/material-ui-component/button';
 import PartitionLine from '../../../common/partition-line/partition-line';
-import MyPerson from '../../../common/material-ui-compoents/icon-person';
+import MyPerson from '../../../common/material-ui-component/icon-person';
 import { myHeader } from '../../../asstes/data/default-data';
 
 import { rightStyle } from '../style';

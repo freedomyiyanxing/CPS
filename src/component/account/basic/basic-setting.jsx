@@ -1,6 +1,5 @@
 import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import { createForm, formShape } from 'rc-form';
 
 import MainContainer from '../../../common/box-container/main-container';
@@ -16,36 +15,38 @@ import TelIndex from '../../../common/react-intl-tel-input/index';
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
 import { postRequestBody, get, SUCCESS } from '../../../asstes/http/index';
 import { userInfoPrompt } from '../../../asstes/data/prompt-text';
-import { wibstieStyle } from '../style';
+import { getIsForm } from '../../../asstes/js/utils-methods';
+
+let userDate = null;
 
 @createForm()
-@withStyles(wibstieStyle)
 class BasicSetting extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null,
+      data: userDate || null,
+      datePhoneDisable: true,
     };
     this.phoneRef = createRef();
   }
 
   componentDidMount() {
     this._unmount = true;
+    if (userDate) {
+      return;
+    }
     // 查询个人信息
-    setTimeout(() => {
-      get('/api/profile/info')
-        .then((response) => {
-          if (this._unmount) {
-            this.setState({
-              data: response,
-            });
-          }
-          console.log(response, 'response');
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, 500);
+    get('/api/profile/info')
+      .then((response) => {
+        if (this._unmount) {
+          this.setState({
+            data: userDate = response, // 缓存数据
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   componentWillUnmount() {
@@ -59,9 +60,9 @@ class BasicSetting extends React.Component {
   handleSubmit = () => {
     const { form } = this.props;
     const { data } = this.state;
+    const mobile = this.phoneRef.current.handleChange();
     let ayc = null;
     form.validateFields((error, value) => {
-      const mobile = this.phoneRef.current.handleChange();
       if (!error && mobile) {
         const obj = Object.assign(data, { ...value, mobile });
         ayc = new Promise((resolve) => {
@@ -70,8 +71,8 @@ class BasicSetting extends React.Component {
               if (response.message === SUCCESS) {
                 openNotifications.open({
                   message: userInfoPrompt.successText,
-                  variant: 'info',
-                  duration: null, // null 表示永远不移除
+                  variant: 'success',
+                  duration: 5, // null 表示永远不移除
                 });
               }
               resolve(true);
@@ -90,10 +91,28 @@ class BasicSetting extends React.Component {
     return ayc;
   };
 
+  // 日期控制 表单提交
+  handleDate = (is) => {
+    this.setState({
+      datePhoneDisable: is,
+    });
+  };
+
+  // 电话控制 表单提交
+  handlePhone = (is) => {
+    this.setState({
+      datePhoneDisable: is,
+    });
+  };
+
   render() {
-    // eslint-disable-next-line no-unused-vars
-    const { form, classes } = this.props;
-    const { data } = this.state;
+    const { form, history } = this.props;
+    const { data, datePhoneDisable } = this.state;
+    const disabled = getIsForm(
+      form,
+      data,
+      ['firstName', 'lastName', 'email', 'gender'],
+    );
     return (
       <MainContainer>
         {
@@ -101,7 +120,7 @@ class BasicSetting extends React.Component {
             ? (
               <Container
                 title="Basic Sitting"
-                component={<MyCropper />}
+                component={<MyCropper id={data.id} iconUrl={data.photo} />}
               >
                 <Name
                   form={form}
@@ -119,18 +138,26 @@ class BasicSetting extends React.Component {
                   form={form}
                   value={data.email}
                 />
-                <TelIndex ref={this.phoneRef} value={data.mobile} />
+                <TelIndex
+                  ref={this.phoneRef}
+                  value={data.mobile}
+                  handlePhone={this.handlePhone}
+                />
                 <DateSelection
                   form={form}
                   defaultValue={data.dateOfBirth}
+                  onChange={this.handleDate}
                 />
                 <MyRadio
                   form={form}
                   value={data.gender}
                 />
                 <SubmitButton
-                  width="200px"
+                  bank
+                  width="180"
                   name="Submit"
+                  disabled={disabled && datePhoneDisable}
+                  history={history}
                   handleSubmit={this.handleSubmit}
                 />
               </Container>
@@ -143,7 +170,7 @@ class BasicSetting extends React.Component {
 }
 
 BasicSetting.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.object).isRequired,
+  history: PropTypes.objectOf(PropTypes.object).isRequired,
   form: formShape.isRequired,
 };
 

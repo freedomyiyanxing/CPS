@@ -3,7 +3,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import MainContainer from '../../common/box-container/main-container';
-import MyButton from '../../common/material-ui-compoents/button';
+import MyButton from '../../common/material-ui-component/button';
 
 import { notHomeStyle } from './style';
 

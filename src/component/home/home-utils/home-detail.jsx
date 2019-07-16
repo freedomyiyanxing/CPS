@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import MyTable from '../../../common/material-ui-compoents/table';
-import MyTextField from '../../../common/material-ui-compoents/text-field-input';
+import MyTable from '../../../common/material-ui-component/table';
+import MyTextField from '../../../common/material-ui-component/text-field-input';
 import MyPagination from '../../../common/pagination/pagination';
 
 import { httpResponse } from '../home-http';

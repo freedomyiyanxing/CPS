@@ -5,6 +5,9 @@ export const submitButtonStyle = () => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  bank: {
+    justifyContent: 'space-between',
+  },
   btn: {
     minHeight: 38,
     borderRadius: 4,

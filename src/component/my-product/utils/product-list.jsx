@@ -8,8 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-import { MyTableCell } from '../../../common/material-ui-compoents/table';
-import MyCheckbox from '../../../common/material-ui-compoents/checkbox';
+import { MyTableCell } from '../../../common/material-ui-component/table';
+import MyCheckbox from '../../../common/material-ui-component/checkbox';
 import ItemButton from './item-button';
 
 import { getTimes, imgPath, getCheckArr } from '../../../asstes/js/utils-methods';

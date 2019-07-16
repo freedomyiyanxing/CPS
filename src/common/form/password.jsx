@@ -5,12 +5,12 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 import PsdVisibility from './psd-visibility';
-import MyInput from '../material-ui-compoents/input';
+import MyInput from '../material-ui-component/input';
 import { formPrompt } from '../../asstes/data/prompt-text';
 
 const Password = (props) => {
   const {
-    form, name, value, validateToNextPassword,
+    form, name, value, validateToNextPassword, outputName,
   } = props;
   const [showPassword, setShowPassword] = useState(false);
 
@@ -19,7 +19,7 @@ const Password = (props) => {
   };
 
   const { getFieldProps, getFieldError } = form;
-  const errors = getFieldError('password');
+  const errors = getFieldError(outputName);
   return (
     <FormControl
       fullWidth
@@ -31,7 +31,7 @@ const Password = (props) => {
       <MyInput
         id={`my-${name}`}
         type={showPassword ? 'text' : 'password'}
-        {...getFieldProps('password', {
+        {...getFieldProps(outputName, {
           validateFirst: true,
           force: true,
           initialValue: value, // 设置默认值 (保证在有默认值的情况 验证会通过)
@@ -66,12 +66,14 @@ Password.propTypes = {
   value: PropTypes.string,
   onBlur: PropTypes.func,
   name: PropTypes.string.isRequired,
+  outputName: PropTypes.string, // 输出key值
 };
 
 Password.defaultProps = {
   validateToNextPassword: null,
   onBlur: null,
   value: '',
+  outputName: 'password',
 };
 
 export default Password;

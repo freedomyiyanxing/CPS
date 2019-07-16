@@ -6,6 +6,7 @@ const formPrompt = {
   passwordRequired: '密码是必填的',
   passwordFormat: '密码格式错误',
   passwordValidator: '两次输入的密码不一致',
+  passwordOld: '原始密码与新秘密 请不要保持一致',
   advertisingFormat: '佣金 我们需要有效的 数字',
   advertisingEnd: '佣金 比例 不许 超过 100%',
   advertisingStart: '起始佣金必须 小于 结尾佣金',
@@ -66,6 +67,18 @@ const userInfoPrompt = {
   errorText: '服务器错误',
 };
 
+// 个人账户修改密码页面
+const userSetPassword = {
+  successText: '密码修改成功 请用新密码登录',
+  errorText: '服务器错误',
+};
+
+// 退出登录
+const logoutPrompt = {
+  successText: '退出登录',
+  errorText: '服务器错误',
+};
+
 
 export {
   formPrompt,
@@ -76,4 +89,6 @@ export {
   registerIndexPrompt,
   registerInfoPrompt,
   userInfoPrompt,
+  userSetPassword,
+  logoutPrompt,
 };

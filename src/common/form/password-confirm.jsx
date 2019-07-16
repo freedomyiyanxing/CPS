@@ -5,7 +5,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 import PsdVisibility from './psd-visibility';
-import MyInput from '../material-ui-compoents/input';
+import MyInput from '../material-ui-component/input';
 import { formPrompt } from '../../asstes/data/prompt-text';
 
 const ConfirmPassword = (props) => {

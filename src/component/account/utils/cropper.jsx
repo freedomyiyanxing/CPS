@@ -9,8 +9,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Cropper from 'react-cropper';
 
-import MyButton from '../../../common/material-ui-compoents/button';
+import MyButton from '../../../common/material-ui-component/button';
 import iconDefault from '../../../asstes/images/U_150x150.png';
+
+import { patchRequestBody } from '../../../asstes/http/index';
 import { cropperStyle } from '../style';
 
 // cropper控制按钮的
@@ -81,7 +83,6 @@ class MyCropper extends React.Component {
       });
     };
     reader.readAsDataURL(file);
-    console.log('2222', file);
   };
 
   /**
@@ -89,24 +90,39 @@ class MyCropper extends React.Component {
    * @returns {null|boolean}
    */
   handleClick = () => {
+    const { id } = this.props;
     const canvas = this.refCropper.getCroppedCanvas();
-    console.log(canvas);
+
+    console.log(id);
     if (!canvas) {
       console.log('裁剪失败');
       return false;
     }
-    this.setState({
-      icon: canvas.toDataURL(),
-    }, () => {
-      this.handleClose();
-      // eslint-disable-next-line react/destructuring-assignment
-      console.log('裁剪的图片 base64: ', this.state.icon);
-    });
+    patchRequestBody('/api/profile/upload', {
+      id,
+      photo: canvas.toDataURL(),
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // this.setState({
+    //   icon: canvas.toDataURL(),
+    // }, () => {
+    //   this.handleClose();
+    //   // eslint-disable-next-line react/destructuring-assignment
+    //   console.log('裁剪的图片 base64: ', this.state.icon);
+    // });
     return null;
   };
 
+  // handleChange = () => {
+  //   patchRequestBody()
+  // }
+
   handleControl = (name) => {
-    console.log(name);
     switch (name) {
       case 'leftRotate':
         this.refCropper.rotate(45);
@@ -140,6 +156,7 @@ class MyCropper extends React.Component {
   render() {
     const { classes } = this.props;
     const { open, imgUrl, icon } = this.state;
+    console.log(icon);
     return (
       <>
         <div className={classes.root}>
@@ -169,7 +186,7 @@ class MyCropper extends React.Component {
           <div className={classes.dialogTitle}>
             <MyButton
               variant="contained"
-              color="secondary"
+              color="primary"
               className={classes.dialogBtn}
             >
               <label
@@ -178,7 +195,7 @@ class MyCropper extends React.Component {
                 onChange={this.handleChange}
               >
                 <input type="file" id="chooseImg" />
-                上传图片
+                Upload
               </label>
             </MyButton>
             <IconButton onClick={this.handleClose}><Close /></IconButton>
@@ -214,7 +231,7 @@ class MyCropper extends React.Component {
                   <MyButton
                     key={v.id}
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                     className={classes.dialogBtn}
                     onClick={() => { this.handleControl(v.name); }}
                   >
@@ -225,11 +242,11 @@ class MyCropper extends React.Component {
             </div>
             <MyButton
               variant="contained"
-              color="secondary"
+              color="primary"
               className={classes.dialogBtn}
               onClick={this.handleClick}
             >
-              提交
+              Submit
             </MyButton>
           </div>
         </Dialog>
@@ -240,6 +257,7 @@ class MyCropper extends React.Component {
 
 MyCropper.propTypes = {
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
+  id: PropTypes.string.isRequired,
   iconUrl: PropTypes.string,
 };
 MyCropper.defaultProps = {
