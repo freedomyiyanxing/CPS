@@ -169,7 +169,7 @@ export const rightStyle = theme => ({
   },
   accountWrapperInner: {
     width: 170,
-    height: 118,
+    height: 82,
   },
   accountList: {
     padding: 0,

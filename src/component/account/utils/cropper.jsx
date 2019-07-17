@@ -1,59 +1,34 @@
 import React from 'react';
-import uuid from 'uuid';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { inject } from 'mobx-react';
 import LocalSee from '@material-ui/icons/LocalSee';
 import Close from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
 import IconButton from '@material-ui/core/IconButton';
-import Avatar from '@material-ui/core/Avatar';
 import Cropper from 'react-cropper';
 
 import MyButton from '../../../common/material-ui-component/button';
-import iconDefault from '../../../asstes/images/U_150x150.png';
+import SubmitButton from '../../../common/form/submit-button';
+import Avatars from '../../../common/material-ui-component/avatar';
 
+import { openNotifications } from '../../../common/prompt-box/prompt-box';
 import { patchRequestBody } from '../../../asstes/http/index';
+import { userIconPrompt } from '../../../asstes/data/prompt-text';
+import { cropperBtnArr } from '../../../asstes/data/default-data';
 import { cropperStyle } from '../style';
 
-// cropper控制按钮的
-const cropperBtnArr = [
-  {
-    id: uuid(),
-    name: 'leftRotate',
-    text: '左旋转',
-  },
-  {
-    id: uuid(),
-    name: 'rightRotate',
-    text: '右旋转',
-  },
-  {
-    id: uuid(),
-    name: 'scaleX',
-    text: '左右换向',
-  },
-  {
-    id: uuid(),
-    name: 'scaleY',
-    text: '上下换向',
-  },
-  {
-    id: uuid(),
-    name: 'reset',
-    text: '复位',
-  },
-];
-
+@inject(store => ({
+  userStore: store.userStore,
+}))
 @withStyles(cropperStyle)
 class MyCropper extends React.Component {
   constructor(props) {
     super(props);
-    const { iconUrl } = props;
 
     this.state = {
       open: false,
-      icon: iconUrl || iconDefault,
-      imgUrl: iconUrl || null,
+      imgUrl: null,
     };
 
     this.clickScaleX = 0;
@@ -87,48 +62,56 @@ class MyCropper extends React.Component {
 
   /**
    * 提交裁剪
-   * @returns {null|boolean}
+   * @returns {Promise<any>}
    */
   handleClick = () => {
-    const { id } = this.props;
+    const { id, userStore } = this.props;
     const canvas = this.refCropper.getCroppedCanvas();
 
-    console.log(id);
     if (!canvas) {
-      console.log('裁剪失败');
-      return false;
-    }
-    patchRequestBody('/api/profile/upload', {
-      id,
-      photo: canvas.toDataURL(),
-    })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
+      openNotifications.open({
+        message: userIconPrompt.warningText,
+        variant: 'warning',
+        duration: 5,
       });
-    // this.setState({
-    //   icon: canvas.toDataURL(),
-    // }, () => {
-    //   this.handleClose();
-    //   // eslint-disable-next-line react/destructuring-assignment
-    //   console.log('裁剪的图片 base64: ', this.state.icon);
-    // });
-    return null;
-  };
+      return null;
+    }
 
-  // handleChange = () => {
-  //   patchRequestBody()
-  // }
+    return new Promise((resolve) => {
+      patchRequestBody('/api/profile/upload', {
+        id,
+        photo: canvas.toDataURL(),
+      })
+        .then((response) => {
+          userStore.setUserPhoto(response.path);
+          openNotifications.open({
+            message: userIconPrompt.successText,
+            variant: 'success',
+            duration: 5,
+          });
+          resolve(true);
+          this.handleClose();
+        })
+        .catch((err) => {
+          console.log(err);
+          resolve(true);
+          openNotifications.open({
+            message: userIconPrompt.errorText,
+            variant: 'error',
+            duration: 5,
+          });
+          this.handleClose();
+        });
+    });
+  };
 
   handleControl = (name) => {
     switch (name) {
       case 'leftRotate':
-        this.refCropper.rotate(45);
+        this.refCropper.rotate(-45);
         break;
       case 'rightRotate':
-        this.refCropper.rotate(-45);
+        this.refCropper.rotate(45);
         break;
       case 'scaleX':
         this.handleScaleX();
@@ -142,21 +125,18 @@ class MyCropper extends React.Component {
   };
 
   handleScaleX = () => {
-    console.log(this.clickScaleX);
     this.refCropper.scaleX(this.clickScaleX % 2 === 0 ? -1 : 1);
     this.clickScaleX += 1;
   };
 
   handleScaleY = () => {
-    console.log(this.clickScaleY);
     this.refCropper.scaleY(this.clickScaleY % 2 === 0 ? -1 : 1);
     this.clickScaleY += 1;
   };
 
   render() {
-    const { classes } = this.props;
-    const { open, imgUrl, icon } = this.state;
-    console.log(icon);
+    const { classes, userStore } = this.props;
+    const { open, imgUrl } = this.state;
     return (
       <>
         <div className={classes.root}>
@@ -166,10 +146,12 @@ class MyCropper extends React.Component {
             onClick={this.handleClose}
             className={classes.wrapper}
           >
-            <Avatar
-              src={icon}
-              alt="account icon"
-              className={classes.bigAvatar}
+            <Avatars
+              photo={userStore.userPhoto}
+              classes={{
+                img: classes.bigAvatar,
+                icon: classes.iconAvatar,
+              }}
             />
             <span className={classes.mask}>
               <LocalSee className={classes.icon} />
@@ -227,27 +209,27 @@ class MyCropper extends React.Component {
           <div className={classes.dialogFooter}>
             <div className={classes.dialogControl}>
               {
-                cropperBtnArr.map(v => (
-                  <MyButton
-                    key={v.id}
-                    variant="contained"
-                    color="primary"
-                    className={classes.dialogBtn}
-                    onClick={() => { this.handleControl(v.name); }}
-                  >
-                    {v.text}
-                  </MyButton>
-                ))
+                cropperBtnArr.map((v) => {
+                  const Icon = v.icon;
+                  return (
+                    <MyButton
+                      key={v.id}
+                      variant="contained"
+                      color="primary"
+                      className={classes.dialogBtn}
+                      onClick={() => { this.handleControl(v.name); }}
+                    >
+                      <Icon />
+                    </MyButton>
+                  );
+                })
               }
             </div>
-            <MyButton
-              variant="contained"
-              color="primary"
-              className={classes.dialogBtn}
-              onClick={this.handleClick}
-            >
-              Submit
-            </MyButton>
+            <SubmitButton
+              name="Submit"
+              handleSubmit={this.handleClick}
+              styles={{ marginTop: 0, width: 80 }}
+            />
           </div>
         </Dialog>
       </>
@@ -257,11 +239,11 @@ class MyCropper extends React.Component {
 
 MyCropper.propTypes = {
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
+  userStore: PropTypes.objectOf(PropTypes.object),
   id: PropTypes.string.isRequired,
-  iconUrl: PropTypes.string,
 };
 MyCropper.defaultProps = {
-  iconUrl: null,
+  userStore: null,
 };
 
 

@@ -31,10 +31,10 @@ const HeaderLogin = (props) => {
         if (response.message === SUCCESS) {
           // 清除 sessionStore 中的 登录信息 以及用户信息
           session.remove('loginInfo');
-          session.remove('userInfo');
+          session.remove('userName');
+          session.remove('userPhoto');
           // 修改context中的登录状态 清除store中的登录信息
           userStore.setLogin(false);
-          userStore.setUserInfo(null);
           // to 到登录页面
           history.push('/s/signin');
 

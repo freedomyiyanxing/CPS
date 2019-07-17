@@ -48,7 +48,6 @@ const setTableData = (tables, classes) => {
     };
     index += 1;
   }
-  console.log(arr);
   return arr;
 };
 

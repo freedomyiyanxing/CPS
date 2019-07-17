@@ -75,6 +75,13 @@ const cropperStyle = theme => ({
     width: 120,
     height: 120,
   },
+  iconAvatar: {
+    width: 120,
+    height: 120,
+    '& > svg': {
+      fontSize: 60,
+    },
+  },
   mask: {
     width: '100%',
     height: 30,

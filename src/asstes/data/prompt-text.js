@@ -79,6 +79,13 @@ const logoutPrompt = {
   errorText: '服务器错误',
 };
 
+// 图片上传
+const userIconPrompt = {
+  successText: '图像上传成功',
+  warningText: '无效的裁剪',
+  errorText: '服务器错误',
+};
+
 
 export {
   formPrompt,
@@ -91,4 +98,5 @@ export {
   userInfoPrompt,
   userSetPassword,
   logoutPrompt,
+  userIconPrompt,
 };

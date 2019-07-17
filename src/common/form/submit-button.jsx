@@ -62,11 +62,14 @@ class SubmitButton extends React.Component {
 
   render() {
     const {
-      name, width, classes, bank, disabled,
+      name, width, classes, bank, disabled, styles,
     } = this.props;
     const { loading } = this.state;
     return (
-      <div className={`${classes.wrapperBtn} ${bank ? classes.bank : ''}`}>
+      <div
+        style={styles}
+        className={`${classes.wrapperBtn} ${bank ? classes.bank : ''}`}
+      >
         <MyButton
           disabled={disabled}
           fullWidth
@@ -111,6 +114,7 @@ SubmitButton.propTypes = {
   bank: PropTypes.bool, // 是否添加 回退按钮
   history: PropTypes.objectOf(PropTypes.object),
   disabled: PropTypes.bool,
+  styles: PropTypes.objectOf(PropTypes.object),
 };
 
 SubmitButton.defaultProps = {
@@ -118,6 +122,7 @@ SubmitButton.defaultProps = {
   bank: false,
   history: null,
   disabled: false,
+  styles: null,
 };
 
 export default SubmitButton;

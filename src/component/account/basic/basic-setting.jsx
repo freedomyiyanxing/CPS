@@ -1,6 +1,7 @@
 import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
+import { inject } from 'mobx-react';
 
 import MainContainer from '../../../common/box-container/main-container';
 import Emails from '../../../common/form/email';
@@ -19,6 +20,9 @@ import { getIsForm } from '../../../asstes/js/utils-methods';
 
 let userDate = null;
 
+@inject(store => ({
+  userStore: store.userStore,
+}))
 @createForm()
 class BasicSetting extends React.Component {
   constructor(props) {
@@ -58,7 +62,7 @@ class BasicSetting extends React.Component {
    * @returns {*} 验证正确的情况下返回一个 promise对象
    */
   handleSubmit = () => {
-    const { form } = this.props;
+    const { form, userStore } = this.props;
     const { data } = this.state;
     const mobile = this.phoneRef.current.handleChange();
     let ayc = null;
@@ -69,6 +73,7 @@ class BasicSetting extends React.Component {
           postRequestBody('/api/profile/update', obj)
             .then((response) => {
               if (response.message === SUCCESS) {
+                userStore.setUserName(obj.firstName + obj.lastName);
                 openNotifications.open({
                   message: userInfoPrompt.successText,
                   variant: 'success',
@@ -120,7 +125,7 @@ class BasicSetting extends React.Component {
             ? (
               <Container
                 title="Basic Sitting"
-                component={<MyCropper id={data.id} iconUrl={data.photo} />}
+                component={<MyCropper id={data.id} />}
               >
                 <Name
                   form={form}
@@ -171,7 +176,12 @@ class BasicSetting extends React.Component {
 
 BasicSetting.propTypes = {
   history: PropTypes.objectOf(PropTypes.object).isRequired,
+  userStore: PropTypes.objectOf(PropTypes.object),
   form: formShape.isRequired,
+};
+
+BasicSetting.defaultProps = {
+  userStore: null,
 };
 
 export default BasicSetting;

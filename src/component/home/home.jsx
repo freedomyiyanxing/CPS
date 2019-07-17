@@ -6,7 +6,8 @@ import MainContainer from '../../common/box-container/main-container';
 import HomeHeader from './home-utils/home-header';
 import HomeCurve from './home-utils/home-curve';
 import HomeDetail from './home-utils/home-detail';
-import { session, getDaysTime, getTime } from '../../asstes/js/utils-methods';
+
+import { getDaysTime, getTime } from '../../asstes/js/utils-methods';
 import { httpResponse } from './home-http';
 
 const PAGE_SIZE = 10; // 分页每一页条数
@@ -42,14 +43,9 @@ class Home extends React.Component {
     ]).then((response) => { // 最后还得处理异常情况
       // 防止组件移除后 执行setState
       if (this._unmount) {
-        const userInfo = {
-          userName: response[0].firstName + response[0].lastName,
-          userPhoto: response[0].photo,
-        };
-        // userInfo 写入store当中
-        userStore.setUserInfo(userInfo);
-        // // userInfo 写入 session 当中
-        session.setSession('userInfo', userInfo);
+        // 写入store当中
+        userStore.setUserPhoto(response[0].photo);
+        userStore.setUserName(response[0].firstName + response[0].lastName);
 
         this.setState({
           loading: false,

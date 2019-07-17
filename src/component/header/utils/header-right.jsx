@@ -5,11 +5,10 @@ import { inject, observer } from 'mobx-react';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 
 import MyButton from '../../../common/material-ui-component/button';
 import PartitionLine from '../../../common/partition-line/partition-line';
-import MyPerson from '../../../common/material-ui-component/icon-person';
+import Avatars from '../../../common/material-ui-component/avatar';
 import { myHeader } from '../../../asstes/data/default-data';
 
 import { rightStyle } from '../style';
@@ -36,27 +35,15 @@ const HeaderRight = (props) => {
         onClick={() => { setShowMessage(true); }}
         onMouseLeave={() => { setShowMessage(false); }}
       >
-        {
-          userStore.userInfo && userStore.userInfo.userPhoto
-            ? (
-              <Avatar
-                src={userStore.userInfo.userPhoto}
-                alt="iNFLUMONSTER logo"
-                className={classes.bigAvatar}
-              />
-            )
-            : (
-              <Avatar className={classes.defaultAvatar}>
-                <MyPerson />
-              </Avatar>
-            )
-        }
+        <Avatars
+          photo={userStore.userPhoto}
+          classes={{
+            img: classes.bigAvatar,
+            icon: classes.defaultAvatar,
+          }}
+        />
         <span className={classes.name}>
-          {
-            userStore.userInfo
-              ? userStore.userInfo.userName
-              : '默认名称有没有'
-          }
+          {userStore.userName}
         </span>
         <span className="triangle-right" />
         <Collapse

@@ -1,5 +1,17 @@
 import uuid from 'uuid';
 import moment from 'moment';
+import {
+  MySvgIconProfile,
+  MySvgIconPayment,
+  MySvgIconWebsite,
+  MySvgIconPsd,
+  MySvgIconTaxes,
+  MySvgIconReset,
+  MySvgIconScaleX,
+  MySvgIconScaleY,
+  MySvgIconRightRotate,
+  MySvgIconLeftRotate,
+} from '../../common/material-ui-component/svg-icon';
 
 // 网站分类默认数据 (用于信息注册页面)
 // const webSiteCategory = [
@@ -596,45 +608,40 @@ const accountIndex = [
     title: 'Profile',
     text: 'Viw and update your profile',
     links: 'account-profile',
-    icon: 'icon-profile',
+    icon: MySvgIconProfile,
   },
   {
     id: uuid(),
     title: 'Website',
     text: 'Viw and update your websiteinformation',
     links: 'account-website',
-    icon: 'icon-website',
+    icon: MySvgIconWebsite,
   },
   {
     id: uuid(),
     title: 'Password',
     text: 'Change your password',
     links: 'account-password',
-    icon: 'icon-password',
+    icon: MySvgIconPsd,
   },
   {
     id: uuid(),
     title: 'Payment',
     text: 'Manage your payment information',
     links: 'account-payment',
-    icon: 'icon-payment',
+    icon: MySvgIconPayment,
   },
   {
     id: uuid(),
     title: 'Taxes',
     text: 'Manage your taxes information',
     links: 'account-taxes',
-    icon: 'icon-taxes',
+    icon: MySvgIconTaxes,
   },
 ];
 
 // 忘记密码页面
-const forgetPasswordText = `
-  Type in your email address below and well send you an email with 
-  Instructions on how to reset your password. Due to Security reasons,
-  theink will be valid for 2 hours, after 2 hours you will 
-  need to submit anotherrequestgaln.
-`;
+const forgetPasswordText = 'Type in your email address below and well send you an email with Instructions on how to reset your password. Due to Security reasons, theink will be valid for 2 hours, after 2 hours you will need to submit anotherrequestgaln.';
 
 // 邮件发送页面
 const emailSentText = (is) => {
@@ -651,6 +658,35 @@ const emailSentText = (is) => {
   }
   return s;
 };
+
+// 图片上传裁剪 控制按钮
+const cropperBtnArr = [
+  {
+    id: uuid(),
+    name: 'leftRotate',
+    icon: MySvgIconLeftRotate,
+  },
+  {
+    id: uuid(),
+    name: 'rightRotate',
+    icon: MySvgIconRightRotate,
+  },
+  {
+    id: uuid(),
+    name: 'scaleX',
+    icon: MySvgIconScaleX,
+  },
+  {
+    id: uuid(),
+    name: 'scaleY',
+    icon: MySvgIconScaleY,
+  },
+  {
+    id: uuid(),
+    name: 'reset',
+    icon: MySvgIconReset,
+  },
+];
 
 export {
   webSiteCategory,
@@ -669,4 +705,5 @@ export {
   myProductStatus,
   myBalanceType,
   accountIndex,
+  cropperBtnArr,
 };

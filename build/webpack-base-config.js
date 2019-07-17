@@ -3,6 +3,11 @@ const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+// 判断当前打包环境 （dev = 开发，test = 测试，pre = 预环境）
+const ENVIRONMENT = process.env.ENVIRONMENT;
+
+console.log(ENVIRONMENT, 'ENVIRONMENT');
+
 module.exports = {
   entry: {
     app: [path.join(__dirname, '../src/app.js'),]
@@ -31,6 +36,14 @@ module.exports = {
           }
         ],
       },
+      // {
+      //   test: /\.svg$/,
+      //   exclude: path.join(__dirname, '../node_modules'), // 排除路径,
+      //   use: [
+      //     '@svgr/webpack',
+      //     // 'file-loader',
+      //   ]
+      // },
       {
         test: /\.(png|jpg|jpeg|gif)$/,
         exclude: path.join(__dirname, '../node_modules'), // 排除路径,
@@ -43,15 +56,15 @@ module.exports = {
         }]
       },
       {
-        test: /\.(ttf|eot|woff|woff2|svg)$/,
-        exclude: path.join(__dirname, '../node_modules'), // 排除路径,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            limit: 500,
-            outputPath: 'fonts',
-          }
-        }]
+        // test: /\.(ttf|eot|woff|woff2|svg)$/,
+        // exclude: path.join(__dirname, '../node_modules'), // 排除路径,
+        // use: [{
+        //   loader: 'file-loader',
+        //   options: {
+        //     limit: 500,
+        //     outputPath: 'fonts',
+        //   }
+        // }]
       },
     ],
   },
@@ -70,6 +83,12 @@ module.exports = {
         from: path.join(__dirname, '../static'),
         to: path.join(__dirname, '../dist'),
       }
-    ])
+    ]),
+    new webpack.DefinePlugin({
+      'process.env.IMG_BASE': // 根据打包环境 匹配相对应的图片路径
+        (ENVIRONMENT === 'dev' || ENVIRONMENT === 'test')
+          ? JSON.stringify("https://cdn.influmonsters.com")
+          : JSON.stringify("https://img.influmonsters.com"),
+    }),
   ],
 };

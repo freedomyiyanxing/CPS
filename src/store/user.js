@@ -6,12 +6,18 @@ class User {
 
   @observable userInfo;
 
+  @observable userName;
+
+  @observable userPhoto;
+
   constructor() {
     // 读取 SessionStorage 存储的登录信息
     const loginInfo = session.getSession('loginInfo');
-    const userInfo = session.getSession('userInfo');
+    const userName = session.getSession('userName');
+    const userPhoto = session.getSession('userPhoto');
     this.isLogin = loginInfo ? loginInfo.isLogin : false; // 默认登录状态为 false;
-    this.userInfo = userInfo || null; // 默认用户信息为 null;
+    this.userName = userName || '';
+    this.userPhoto = userPhoto || '';
   }
 
   // 修改登录信息
@@ -19,9 +25,16 @@ class User {
     this.isLogin = loginInfo;
   }
 
-  // 修改用户信息
-  @action setUserInfo(userInfo) {
-    this.userInfo = userInfo;
+  // 修改用户图像
+  @action setUserPhoto(photo) {
+    this.userPhoto = photo;
+    session.setSession('userPhoto', photo);
+  }
+
+  // 修改用户名称
+  @action setUserName(name) {
+    this.userName = name;
+    session.setSession('userName', name);
   }
 }
 

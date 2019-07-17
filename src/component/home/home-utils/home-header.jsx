@@ -1,13 +1,12 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
 
 import PartitionLine from '../../../common/partition-line/partition-line';
 import MyButton from '../../../common/material-ui-component/button';
-import MyPerson from '../../../common/material-ui-component/icon-person';
 import MyDialog from '../../../common/dialog/dialog';
 import Withdraw from '../../../common/dialog/withdraw';
+import Avatars from '../../../common/material-ui-component/avatar';
 
 import { headerStyle } from './style';
 
@@ -30,23 +29,14 @@ const HomeHeader = (props) => {
   return (
     <>
       <div className={classes.root}>
-        {
-          data.photo
-            ? (
-              <Avatar
-                src={data.photo}
-                alt="account icon"
-                className={classes.bigAvatar}
-              />
-            )
-            : (
-              <Avatar className={classes.bigAvatar}>
-                <MyPerson />
-              </Avatar>
-            )
-        }
+        <Avatars
+          photo={data.photo}
+          classes={{
+            img: classes.bigAvatar,
+          }}
+        />
         <h5 className={classes.name}>
-          {(data.firstName + data.lastName) || ''}
+          {data.firstName + data.lastName}
         </h5>
         <span className={classes.email}>
           {data.email}

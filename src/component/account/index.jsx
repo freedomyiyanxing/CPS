@@ -25,26 +25,28 @@ class AccountIndex extends React.Component {
         <div className={classes.root}>
           <List component="nav" className={classes.list}>
             {
-              accountIndex.map(items => (
-                <ListItem
-                  button
-                  key={items.id}
-                  className={classes.listItem}
-                  onClick={() => { this.handleClick(items.links); }}
-                >
-                  <ListItemIcon className={classes.listAvatar}>
-                    <span className={items.icon} />
-                  </ListItemIcon>
-                  <ListItemText
-                    // className={classes.listText}
-                    primary={items.title}
-                    secondary={items.text}
-                    classes={{
-                      primary: classes.title,
-                    }}
-                  />
-                </ListItem>
-              ))
+              accountIndex.map((items) => {
+                const Icon = items.icon;
+                return (
+                  <ListItem
+                    button
+                    key={items.id}
+                    className={classes.listItem}
+                    onClick={() => { this.handleClick(items.links); }}
+                  >
+                    <ListItemIcon className={classes.listAvatar}>
+                      <Icon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={items.title}
+                      secondary={items.text}
+                      classes={{
+                        primary: classes.title,
+                      }}
+                    />
+                  </ListItem>
+                );
+              })
             }
           </List>
         </div>
