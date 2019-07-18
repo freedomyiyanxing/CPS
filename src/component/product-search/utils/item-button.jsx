@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles/index';
@@ -8,29 +7,41 @@ import copy from 'copy-to-clipboard/index';
 import MyButton from '../../../common/material-ui-component/button';
 import PartitionLine from '../../../common/partition-line/partition-line';
 import MyDialogs from '../../../common/dialog/dialog';
-import openNotification from '../../../common/prompt-box/prompt-box';
+import { postRequestBody, SUCCESS } from '../../../asstes/http/index';
+import { openNotifications } from '../../../common/prompt-box/prompt-box';
+import { productPrompt } from '../../../asstes/data/prompt-text';
 
 import { itemButtonStyle } from '../style';
 
 const useStyle = makeStyles(itemButtonStyle);
 
+// 缓存商品链接
+// const productLink = {};
+
 const ItemButton = (props) => {
-  const { } = props;
+  const { id } = props;
   const [loading, setLoading] = useState(false);
   const [links, setLinks] = useState(null);
   const classes = useStyle();
   const dialogRef = useRef();
 
-  // 点击select 把商品加入当前用户的推广商品列表
+  /**
+   * 点击select 把商品加入当前用户的推广商品列表
+   */
   const handleSelect = () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      openNotification({
-        message: '已经加入你的推广商品列表 --- OK',
-        variant: 'success',
+    postRequestBody(`/api/promotions/add/${id}`)
+      .then((response) => {
+        const { message } = response;
+        if (message === SUCCESS) {
+          setLoading(false);
+          openNotifications.open({
+            message: productPrompt.addProductSuccess,
+            variant: 'success',
+            duration: 5,
+          });
+        }
       });
-    }, 1000);
   };
 
   /**
@@ -40,25 +51,38 @@ const ItemButton = (props) => {
     if (dialogRef.current) {
       // 打开弹出框
       dialogRef.current.handleCloses();
-      // 发送获取 Links 请求
-      setTimeout(() => {
-        setLinks('www.baidu.com');
-      }, 1000);
+      postRequestBody(`/api/promotions/link/${id}`)
+        .then((response) => {
+          const { link } = response;
+          setLinks(link);
+        })
+        .catch((err) => {
+          console.log(err);
+          openNotifications.open({
+            message: productPrompt.copyLinksError,
+            variant: 'error',
+            duration: 5,
+          });
+        });
     }
   };
 
-  // 复制Links
+  /**
+   * 点击复制Links
+   */
   const handleChange = () => {
     // 当links有值时
     if (links) {
       copy(links);
       dialogRef.current.handleCloses();
-      openNotification({
-        message: '复制成功 --- OK',
+      openNotifications.open({
+        message: productPrompt.copyLinksSuccess,
         variant: 'success',
+        duration: 5,
       });
     }
   };
+
   return (
     <>
       <div className={classes.btnWrapper}>
@@ -94,7 +118,7 @@ const ItemButton = (props) => {
         disabled={Boolean(links)}
       >
         <div className={classes.copyWrapper}>
-          {links ? links : '努力加载中....'}
+          {links || 'loading....'}
         </div>
       </MyDialogs>
     </>
@@ -102,6 +126,7 @@ const ItemButton = (props) => {
 };
 
 ItemButton.propTypes = {
+  id: PropTypes.string.isRequired,
 };
 
 export default ItemButton;

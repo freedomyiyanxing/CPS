@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
@@ -8,29 +9,46 @@ import SubmitButton from '../../../common/form/submit-button';
 import MySelect from '../../../common/form/my-select';
 import MyPrice from '../../../common/form/my-price';
 import MyPercentage from '../../../common/form/my-percentage';
-import { setSearchArg } from '../../../asstes/js/utils-methods';
+import { setSearchArg, setCategory } from '../../../asstes/js/utils-methods';
+import { get } from '../../../asstes/http/index';
 
 import { searchStyle } from '../style';
 
 @withStyles(searchStyle)
 @createForm()
 class Search extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      category: null,
+    };
+    this.cate = null;
+  }
+
+  componentDidMount() {
+    get('/api/promotions/prodCates')
+      .then((response) => {
+        this.cate = response;
+        this.setState({
+          category: setCategory(response),
+        });
+      })
+  }
+
   handleSubmit = () => {
-    const { form, onChange } = this.props;
+    const { form, viewRef } = this.props;
     let ayc = null;
     form.validateFields((error, value) => {
-      if (!error) {
-        const arg = setSearchArg(value);
-        // 如果没有搜索内容 则直接 return
-        if (!Object.keys(arg).length) {
-          return null;
+      if (value.category) {
+        for (let i = 0; i < this.cate.length; i += 1) {
+          if (this.cate[i].name === value.category) {
+            value.category = this.cate[i].id;
+            break;
+          }
         }
-        ayc = new Promise((resolve) => {
-          setTimeout(() => {
-            onChange(arg);
-            resolve(true);
-          }, 1000);
-        });
+      }
+      if (!error) {
+        ayc = viewRef.current.getData(setSearchArg(value), 1);
       }
     });
     return ayc;
@@ -38,6 +56,7 @@ class Search extends React.Component {
 
   render() {
     const { classes, form } = this.props;
+    const { category } = this.state;
     return (
       <div className={classes.root}>
         <div className={classes.wrapper}>
@@ -46,22 +65,28 @@ class Search extends React.Component {
             form={form}
             name="Product Name :"
             noRequire={false}
-            outputName="productName"
+            outputName="name"
             fontSize="sm"
           />
-          <MySelect
-            form={form}
-            name="Product Category :"
-            outputName="ProductCategory"
-            selectArr={['1', '2']} // 商品分类需要调用接口
-            noRequire={false}
-            fontSize="sm"
-          />
+          {
+            category
+              ? (
+                <MySelect
+                  form={form}
+                  name="Product Category :"
+                  outputName="category"
+                  selectArr={category}
+                  noRequire={false}
+                  fontSize="sm"
+                />
+              )
+              : null
+          }
           <Name
             form={form}
             name="Belong Store :"
             noRequire={false}
-            outputName="belongStore"
+            outputName="store"
             fontSize="sm"
           />
           <MyPrice form={form} />
@@ -78,7 +103,7 @@ class Search extends React.Component {
 
 Search.propTypes = {
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
-  onChange: PropTypes.func.isRequired,
+  viewRef: PropTypes.objectOf(PropTypes.object).isRequired,
   form: formShape.isRequired,
 };
 

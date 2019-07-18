@@ -25,7 +25,7 @@ const MySelect = (props) => {
       <MyLabel fontSize={fontSize}>{name}</MyLabel>
       <Select
         value={value}
-        renderValue={items => items}
+        // renderValue={items => items}
         {...getFieldProps(outputName, {
           initialValue: value,
           rules: [

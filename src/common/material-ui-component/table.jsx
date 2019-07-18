@@ -8,6 +8,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import EmptyPage from '../empty/index';
+
 export const MyTableCell = withStyles(theme => ({
   root: {
     padding: [[10, 0]],
@@ -67,7 +69,7 @@ const MyTable = (props) => {
             : (
               <TableRow>
                 <MyTableCell style={{ height: 200 }} align="center" colspan={8}>
-                  暂无数据
+                  <EmptyPage title="暂无数据" />
                 </MyTableCell>
               </TableRow>
             )

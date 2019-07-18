@@ -53,13 +53,17 @@ export const itemStyle = theme => ({
   },
   img: {
     width: '100%',
-    display: 'flex',
+    height: 'inherit',
+    borderRadius: 'inherit',
     '&:before': {
       paddingTop: 312,
       content: '""',
       background: '#3530305c',
       display: 'block',
       width: '100%',
+    },
+    '& > img': {
+      position: 'absolute',
     },
   },
   info: {

@@ -39,7 +39,8 @@ export const viewStyle = theme => ({
 export const listStyle = theme => ({
   imgWrapper: {
     width: 80,
-    display: 'block',
+    height: 'inherit',
+    borderRadius: 'inherit',
   },
   tableBody: {
     borderLeft: `1px solid ${theme.palette.border.borderEf}`,

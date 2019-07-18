@@ -10,6 +10,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import { MyTableCell } from '../../../common/material-ui-component/table';
 import MyCheckbox from '../../../common/material-ui-component/checkbox';
+import Avatars from '../../../common/material-ui-component/avatar';
 import ItemButton from './item-button';
 
 import { getTimes, imgPath, getCheckArr } from '../../../asstes/js/utils-methods';
@@ -71,7 +72,7 @@ class ProductList extends React.Component {
   };
 
   // 点击单个删除
-  handleDeleteClick = (id) => new Promise((resolve, reject) => {
+  handleDeleteClick = (id) => new Promise((resolve) => {
     const { getListData } = this.props;
     this.handle1 = setTimeout(() => {
       resolve('成功删除商品: ' + id);
@@ -82,14 +83,6 @@ class ProductList extends React.Component {
       // 把删除的 id 传递 view 组件做处理
       getListData(id);
     }, 1000);
-  });
-
-  // 点击单个获取商品链接
-  handleGetLinks = (id) => new Promise((resolve, reject) => {
-    this.handle2 = setTimeout(() => {
-     console.log('id', id);
-     resolve('成功商品links: ' + id);
-    }, 2000);
   });
 
 
@@ -133,10 +126,11 @@ class ProductList extends React.Component {
                       />
                     </MyTableCell>
                     <MyTableCell align="left" >
-                      <img
-                        className={classes.imgWrapper}
-                        src={imgPath + v.prodImg}
-                        alt="product"
+                      <Avatars
+                        photo={v.prodImg}
+                        classes={{
+                          img: classes.imgWrapper,
+                        }}
                       />
                     </MyTableCell>
                     <MyTableCell align="left">
@@ -153,7 +147,7 @@ class ProductList extends React.Component {
                     </MyTableCell>
                     <MyTableCell align="left">
                       <div className={classes.rate}>
-                        <span>$ {v.brokerageAmount}.00</span>
+                        <span>$ {v.brokerageAmount.toFixed(2)}</span>
                         <span>{v.brokerageRate}%</span>
                       </div>
                     </MyTableCell>
@@ -168,7 +162,6 @@ class ProductList extends React.Component {
                     <MyTableCell align="left">
                       <ItemButton
                         id={v.id}
-                        handleGetLinks={this.handleGetLinks}
                         handleDeleteClick={this.handleDeleteClick}
                       />
                     </MyTableCell>

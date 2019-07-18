@@ -86,6 +86,13 @@ const userIconPrompt = {
   errorText: '服务器错误',
 };
 
+// 推广商品
+const productPrompt = {
+  addProductSuccess: '已经加入你的推广商品列表',
+  copyLinksSuccess: '复制链接成功',
+  copyLinksError: '链接 生成 失败',
+};
+
 
 export {
   formPrompt,
@@ -99,4 +106,5 @@ export {
   userSetPassword,
   logoutPrompt,
   userIconPrompt,
+  productPrompt,
 };

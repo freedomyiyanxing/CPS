@@ -76,7 +76,7 @@ axios.interceptors.response.use(
   },
 );
 
-// @RequestBody请求
+// post请求
 const postRequestBody = (url, params) => axios({
   method: 'post',
   url,
@@ -98,29 +98,15 @@ const patchRequestBody = (url, params) => axios({
   },
 });
 
-
-// @RequestParam请求
-const postRequestParam = (url, params) => axios({
-  method: 'post',
-  url,
-  data: params,
-  transformRequest: [
-    (data) => {
-      let ret = '';
-      // eslint-disable-next-line guard-for-in,no-restricted-syntax
-      for (const it in data) {
-        ret += `${encodeURIComponent(it)}=${encodeURIComponent(data[it])}&`;
-      }
-      return ret;
-    },
-  ],
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-  },
-});
-
+// get请求
 const get = (url, params) => axios({
   method: 'get',
+  url: params ? _setParams(url, params) : url,
+});
+
+// delete请求
+const deleteRequestBody = (url, params) => axios({
+  method: 'delete',
   url: params ? _setParams(url, params) : url,
 });
 
@@ -128,13 +114,14 @@ const multiple = (requsetArray, callback) => {
   axios.all(requsetArray).then(axios.spread(callback));
 };
 
+// 成功返回的标志
 const SUCCESS = 'Success!';
 
 export {
   get,
   postRequestBody,
-  postRequestParam,
   patchRequestBody,
   multiple,
   SUCCESS,
+  deleteRequestBody,
 };

@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import MyButton from '../../../common/material-ui-component/button';
 
-// eslint-disable-next-line no-unused-vars
-const useStyle = makeStyles(theme => ({
+import MyButton from '../../../common/material-ui-component/button';
+import { get, deleteRequestBody } from '../../../asstes/http/index';
+
+const useStyle = makeStyles(() => ({
   root: {
     padding: [[7, 24]],
     borderRadius: 2,
@@ -18,8 +19,26 @@ const AllTopBtn = (props) => {
   const { selectArrId } = props;
   const classes = useStyle();
 
+  // 获取所有已选中的links
   const getLinks = () => {
-    console.log('获取所有的选中的id', selectArrId, 'value');
+    get('/api/promotions/links', {
+      ids: selectArrId.join(','),
+    }).then((response) => {
+      console.log(response);
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
+
+  // 删除所有已选中的商品
+  const deleteAll = () => {
+    deleteRequestBody('/api/promotions/delete', {
+      ids: selectArrId.join(','),
+    }).then((response) => {
+      console.log(response);
+    }).catch((err) => {
+      console.log(err);
+    });
   };
 
   return (
@@ -36,6 +55,7 @@ const AllTopBtn = (props) => {
         variant="contained"
         color="primary"
         className={classes.root}
+        onClick={deleteAll}
       >
         Delete
       </MyButton>

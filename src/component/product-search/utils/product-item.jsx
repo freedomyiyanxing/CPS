@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles/index';
-import ItemButton from './item-button';
 
-import { getTimes, imgPath } from '../../../asstes/js/utils-methods';
+import ItemButton from './item-button';
+import Avatars from '../../../common/material-ui-component/avatar';
+
+import { getTimes, setBrokerageRate } from '../../../asstes/js/utils-methods';
 import { itemStyle } from '../style';
 
 const useStyle = makeStyles(itemStyle);
@@ -13,9 +15,12 @@ const ProductItems = (props) => {
   const classes = useStyle();
   return (
     <div className={classes.root}>
-      <div className={classes.img}>
-        <img src={imgPath + data.prodImg} alt="product" />
-      </div>
+      <Avatars
+        photo={data.prodImg}
+        classes={{
+          img: classes.img,
+        }}
+      />
       <div className={classes.info}>
         <span className={classes.name}>{data.prodName}</span>
         <span className={classes.price}>
@@ -29,7 +34,7 @@ const ProductItems = (props) => {
           <span>Advertising Fees :</span>
           <span className={classes.brokerage}>
             $
-            {(data.prodPrice / data.brokerageRate).toFixed(2)}
+            {setBrokerageRate(data.prodPrice, data.brokerageRate)}
           </span>
           <span className={classes.rate}>
             {data.brokerageRate}
@@ -41,7 +46,9 @@ const ProductItems = (props) => {
           <span>{getTimes(data.endTime)}</span>
         </span>
       </div>
-      <ItemButton />
+      <ItemButton
+        id={data.id}
+      />
     </div>
   );
 };

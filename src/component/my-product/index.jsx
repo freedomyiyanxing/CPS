@@ -5,8 +5,6 @@ import MainContainer from '../../common/box-container/main-container';
 import Search from './utils/search';
 import View from './utils/view';
 
-import { myPromotions } from '../../../data/data';
-
 import { indexStyle } from './style';
 
 const useStyle = makeStyles(indexStyle);
@@ -16,7 +14,7 @@ const MyProducts = () => {
   return (
     <MainContainer className={classes.root}>
       <Search />
-      <View data={myPromotions} />
+      <View />
     </MainContainer>
   );
 };

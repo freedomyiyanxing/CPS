@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,15 +7,17 @@ import copy from 'copy-to-clipboard/index';
 
 import MyButton from '../../../common/material-ui-component/button';
 import MyDialogs from '../../../common/dialog/dialog';
-import openNotification from '../../../common/prompt-box/prompt-box';
+import { openNotifications } from '../../../common/prompt-box/prompt-box';
 
+import { productPrompt } from '../../../asstes/data/prompt-text';
+import { postRequestBody } from '../../../asstes/http';
 import { itemButtonStyle } from '../style';
 
 const useStyle = makeStyles(itemButtonStyle);
 
 const ItemButton = (props) => {
   const {
-    id, handleDeleteClick, handleGetLinks,
+    id, handleDeleteClick,
   } = props;
   const [links, setLinks] = useState(null);
   const [clean, setClean] = useState(false);
@@ -22,30 +25,39 @@ const ItemButton = (props) => {
   const dialogRef = useRef();
 
   /**
-   *  点击获取商品的 Links
+   *  获取商品的 Links
    */
-  const handleClick = (ids) => {
+  const handleClick = () => {
     if (dialogRef.current) {
-      console.log('发送id: ', ids);
       // 打开弹出框
       dialogRef.current.handleCloses();
-
-      // 获取link
-      handleGetLinks(ids).then((data) => {
-        setLinks(data);
-      });
+      postRequestBody(`/api/promotions/link/${id}`)
+        .then((response) => {
+          const { link } = response;
+          setLinks(link);
+        })
+        .catch((err) => {
+          openNotifications.open({
+            message: productPrompt.copyLinksError,
+            variant: 'error',
+            duration: 5,
+          });
+        });
     }
   };
 
-  // 点击复制Links
+  /**
+   * 点击复制Links
+   */
   const handleChange = () => {
     // 当links有值时
     if (links) {
       copy(links);
       dialogRef.current.handleCloses();
-      openNotification({
-        message: '复制成功 --- OK',
+      openNotifications.open({
+        message: productPrompt.copyLinksSuccess,
         variant: 'success',
+        duration: 5,
       });
     }
   };
@@ -56,7 +68,7 @@ const ItemButton = (props) => {
     handleDeleteClick(ids).then((data) => {
       setClean(false);
       console.log(data);
-      openNotification({
+      openNotifications({
         message: data,
         variant: 'success',
       });
@@ -80,7 +92,7 @@ const ItemButton = (props) => {
         <MyButton
           variant="outlined"
           className={classes.btn}
-          onClick={() => { handleClick(id); }}
+          onClick={handleClick}
         >
           Get Link
         </MyButton>
@@ -102,7 +114,6 @@ const ItemButton = (props) => {
 ItemButton.propTypes = {
   id: PropTypes.string.isRequired,
   handleDeleteClick: PropTypes.func.isRequired,
-  handleGetLinks: PropTypes.func.isRequired,
 };
 
 export default ItemButton;
