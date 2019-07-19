@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -47,9 +46,9 @@ class View extends React.Component {
     value = this.value,
     page = this.pageCurrent,
     size = PAGE_SIZE,
-    sortBy = this.sort
+    sortBy = this.sort,
   ) => new Promise((resolve) => {
-    this.value= value; // 如果参数value有值 则覆盖缓存的值
+    this.value = value; // 如果参数value有值 则覆盖缓存的值
     this.pageCurrent = page; // 如果参数page有值 则覆盖缓存的值
     get('/api/promotions/all', {
       page, size, ...value, sortBy,
@@ -98,7 +97,7 @@ class View extends React.Component {
                 <div className={classes.wrapper}>
                   {
                     data.items.length
-                     ? (
+                      ? (
                         data.items.map(v => (
                           <ProductItems
                             data={v}
@@ -106,7 +105,7 @@ class View extends React.Component {
                           />
                         ))
                       )
-                      : <EmptyPage title="暂无数据" height={375} />
+                      : <EmptyPage height={375} />
                   }
                 </div>
                 <MyPagination

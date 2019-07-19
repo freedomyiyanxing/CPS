@@ -33,12 +33,13 @@ const EmptyPage = (props) => {
 };
 
 EmptyPage.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   height: PropTypes.number,
 };
 
 EmptyPage.defaultProps = {
   height: null,
+  title: '暂无数据',
 };
 
 export default EmptyPage;

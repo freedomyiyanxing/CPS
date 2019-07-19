@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import MyButton from '../../../common/material-ui-component/button';
-import { get, deleteRequestBody } from '../../../asstes/http/index';
 
 const useStyle = makeStyles(() => ({
   root: {
@@ -16,28 +16,24 @@ const useStyle = makeStyles(() => ({
 }));
 
 const AllTopBtn = (props) => {
-  const { selectArrId } = props;
+  const { handleDeleteChange, getAllLinks } = props;
+  const [loading, setLoading] = useState(false);
+  const [links, setLinks] = useState(false);
   const classes = useStyle();
 
-  // 获取所有已选中的links
-  const getLinks = () => {
-    get('/api/promotions/links', {
-      ids: selectArrId.join(','),
-    }).then((response) => {
-      console.log(response);
-    }).catch((err) => {
-      console.log(err);
+  // 点击删除商品
+  const handleClean = () => {
+    setLoading(true);
+    handleDeleteChange().then(() => {
+      setLoading(false);
     });
   };
 
-  // 删除所有已选中的商品
-  const deleteAll = () => {
-    deleteRequestBody('/api/promotions/delete', {
-      ids: selectArrId.join(','),
-    }).then((response) => {
-      console.log(response);
-    }).catch((err) => {
-      console.log(err);
+  // 点击删除商品
+  const handleAllLinks = () => {
+    setLinks(true);
+    getAllLinks().then(() => {
+      setLinks(false);
     });
   };
 
@@ -47,24 +43,37 @@ const AllTopBtn = (props) => {
         variant="contained"
         color="primary"
         className={classes.root}
-        onClick={getLinks}
+        onClick={handleAllLinks}
+        loading={links}
+        style={{ minWidth: 134 }}
       >
-        Batch Get Link
+        {
+          links
+            ? <CircularProgress size={14} />
+            : 'Batch Get Link'
+        }
       </MyButton>
       <MyButton
         variant="contained"
         color="primary"
         className={classes.root}
-        onClick={deleteAll}
+        onClick={handleClean}
+        loading={loading}
+        style={{ minWidth: 88 }}
       >
-        Delete
+        {
+          loading
+            ? <CircularProgress size={14} />
+            : 'Delete'
+        }
       </MyButton>
     </div>
   );
 };
 
 AllTopBtn.propTypes = {
-  selectArrId: PropTypes.objectOf(PropTypes.array).isRequired,
+  handleDeleteChange: PropTypes.func.isRequired,
+  getAllLinks: PropTypes.func.isRequired,
 };
 
 export default AllTopBtn;

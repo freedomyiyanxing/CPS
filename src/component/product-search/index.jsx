@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import MainContainer from '../../common/box-container/main-container';
-import Search from './utils/search';
+import Search from '../../common/product/search';
 import View from './utils/view';
 
 import { indexStyle } from './style';

@@ -52,7 +52,6 @@ const HeaderLeft = (props) => {
 
   // 点击进入推广管理页面
   const handlePushWide = (links) => {
-    console.log(1);
     history.push(`/my/${links}`);
     // indicator.current.style.transform = 'translateX(85px)';
   };

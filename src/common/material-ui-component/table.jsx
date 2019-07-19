@@ -69,7 +69,7 @@ const MyTable = (props) => {
             : (
               <TableRow>
                 <MyTableCell style={{ height: 200 }} align="center" colspan={8}>
-                  <EmptyPage title="暂无数据" />
+                  <EmptyPage />
                 </MyTableCell>
               </TableRow>
             )

@@ -1,9 +1,6 @@
-/* eslint-disable */
-import React from 'react';
 import axios from 'axios';
 import { session } from '../js/utils-methods';
 
-//
 const _setParams = (url, params) => {
   const str = Object.keys(params).reduce((result, key) => {
     result += `${key}=${params[key]}&`; // eslint-disable-line
@@ -99,10 +96,16 @@ const patchRequestBody = (url, params) => axios({
 });
 
 // get请求
-const get = (url, params) => axios({
-  method: 'get',
-  url: params ? _setParams(url, params) : url,
-});
+const get = (url, params, buffer) => {
+  const obj = {
+    method: 'get',
+    url: params ? _setParams(url, params) : url,
+  };
+  if (buffer) {
+    obj.responseType = buffer;
+  }
+  return axios(obj);
+};
 
 // delete请求
 const deleteRequestBody = (url, params) => axios({

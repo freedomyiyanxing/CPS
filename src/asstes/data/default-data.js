@@ -350,7 +350,7 @@ const balanceTableHeaders = [
 ];
 
 // 个人推广商品页面 状态刷选 默认数据
-const myProductStatus = ['normal', 'invalid'];
+const myProductStatus = ['Invalid', 'Normal'];
 
 // 个人账户的个人推广商品明细
 const myBalanceType = [

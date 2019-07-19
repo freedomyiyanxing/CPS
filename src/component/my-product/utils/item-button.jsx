@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -38,7 +37,7 @@ const ItemButton = (props) => {
         })
         .catch((err) => {
           openNotifications.open({
-            message: productPrompt.copyLinksError,
+            message: err.data.message || productPrompt.copyLinksError,
             variant: 'error',
             duration: 5,
           });
@@ -65,15 +64,11 @@ const ItemButton = (props) => {
   // 点击删除商品
   const handleClean = (ids) => {
     setClean(true);
-    handleDeleteClick(ids).then((data) => {
+    handleDeleteClick(ids).then(() => {
       setClean(false);
-      console.log(data);
-      openNotifications({
-        message: data,
-        variant: 'success',
-      });
     });
   };
+
   return (
     <>
       <div className={classes.btnWrapper}>
@@ -104,7 +99,7 @@ const ItemButton = (props) => {
         disabled={Boolean(links)}
       >
         <div className={classes.copyWrapper}>
-          {links || '努力加载中....'}
+          {links || 'loading....'}
         </div>
       </MyDialogs>
     </>

@@ -93,6 +93,13 @@ const productPrompt = {
   copyLinksError: '链接 生成 失败',
 };
 
+// 用户推广商品
+const myProductPrompt = {
+  deleteSuccess: '删除成功...',
+  downloadLinks: '成功 下载 links.xls',
+  errorText: '服务器错误',
+};
+
 
 export {
   formPrompt,
@@ -107,4 +114,5 @@ export {
   logoutPrompt,
   userIconPrompt,
   productPrompt,
+  myProductPrompt,
 };
