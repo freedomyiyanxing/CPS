@@ -1,27 +1,28 @@
 import uuid from 'uuid';
+import loadable from '@loadable/component';
 
 import FooterNavigation from './footer-navigation';
 import NotHeaderNavigation from './not-header-navigation';
 import HeaderNavigation from './header-navigation';
-import Home from '../component/home/home';
-import ProductSearch from '../component/product-search/index';
-import MyProducts from '../component/my-product/index';
+import Not404 from '../component/not-404/index';
 
-import NotHome from '../component/home/not-home';
-import Login from '../component/login/login';
-import ForgetPassword from '../component/login/forget-password';
-import EmailSentPage from '../component/login/email-sent';
-import ResetPassword from '../component/login/reset-password';
-import Register from '../component/register/index';
-import RegisterInfo from '../component/register/register-info';
-import AccountBalance from '../component/account/balance/account-balance';
-import AccountIndex from '../component/account/index';
-import WibsiteSetting from '../component/account/wibsite/wibsite-setting';
-import BasicSetting from '../component/account/basic/basic-setting';
-import AccountPassword from '../component/account/password/account-password';
-import Payment from '../component/account/payment/account-payment';
-import Taxes from '../component/account/taxes/account-taxes';
-import Not404 from '../component/not-404/not-404';
+const Home = loadable(() => import('../component/home/home'));
+const ProductSearch = loadable(() => import('../component/product-search/index'));
+const MyProducts = loadable(() => import('../component/my-product/index'));
+const NotHome = loadable(() => import('../component/home/not-home'));
+const Login = loadable(() => import('../component/login/login'));
+const ForgetPassword = loadable(() => import('../component/login/forget-password'));
+const EmailSentPage = loadable(() => import('../component/login/email-sent'));
+const ResetPassword = loadable(() => import('../component/login/reset-password'));
+const Register = loadable(() => import('../component/register/index'));
+const RegisterInfo = loadable(() => import('../component/register/register-info'));
+const AccountBalance = loadable(() => import('../component/account/balance/account-balance'));
+const AccountIndex = loadable(() => import('../component/account/index'));
+const WibsiteSetting = loadable(() => import('../component/account/wibsite/wibsite-setting'));
+const BasicSetting = loadable(() => import('../component/account/basic/basic-setting'));
+const AccountPassword = loadable(() => import('../component/account/password/account-password'));
+const Payment = loadable(() => import('../component/account/payment/account-payment'));
+const Taxes = loadable(() => import('../component/account/taxes/account-taxes'));
 
 const routers = [
   {
@@ -78,7 +79,8 @@ const routers = [
             key: uuid(),
           },
           {
-            path: '/*',
+            component: Not404,
+            key: uuid(),
           },
         ],
       },
@@ -149,12 +151,12 @@ const routers = [
             key: uuid(),
           },
           {
-            path: '/*',
+            component: Not404,
+            key: uuid(),
           },
         ],
       },
       {
-        path: '/*',
         component: Not404,
         key: uuid(),
       },

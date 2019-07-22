@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -8,10 +9,25 @@ import Select from '@material-ui/core/Select';
 import MyLabel from '../material-ui-component/input-label';
 import { formPrompt } from '../../asstes/data/prompt-text';
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 5;
+
+const styles = theme => ({
+  root: {
+    '&:before': {
+      borderBottomColor: theme.palette.text.colorDdd,
+    },
+  },
+});
+
+const useStyle = makeStyles(styles);
+
 const MySelect = (props) => {
   const {
-    form, selectArr, name, outputName, value, noRequire, fontSize,
+    form, selectArr, name, outputName, value, noRequire, fontSize, liLen,
   } = props;
+
+  const classes = useStyle();
 
   const { getFieldProps, getFieldError } = form;
   const errors = getFieldError(outputName);
@@ -25,7 +41,15 @@ const MySelect = (props) => {
       <MyLabel fontSize={fontSize}>{name}</MyLabel>
       <Select
         value={value}
-        // renderValue={items => items}
+        className={classes.root}
+        MenuProps={{
+          PaperProps: {
+            style: {
+              maxHeight: ITEM_HEIGHT * liLen + ITEM_PADDING_TOP,
+              width: 250,
+            },
+          },
+        }}
         {...getFieldProps(outputName, {
           initialValue: value,
           rules: [
@@ -36,12 +60,7 @@ const MySelect = (props) => {
           ],
         })}
       >
-        {
-          // !noRequire // 非必填时 给一个空选项
-          //   ? <MenuItem value="">None</MenuItem>
-          //   : null
-          <MenuItem value="">None</MenuItem>
-        }
+        <MenuItem value="">None</MenuItem>
         {
           selectArr.map(v => (
             <MenuItem key={v} value={v}>{v}</MenuItem>
@@ -65,6 +84,7 @@ MySelect.propTypes = {
   value: PropTypes.string, // 默认值
   noRequire: PropTypes.bool, // 是否必填
   fontSize: PropTypes.string, // 控制label文字
+  liLen: PropTypes.number, // 控制子元素显示个数
 };
 
 
@@ -72,6 +92,7 @@ MySelect.defaultProps = {
   value: '',
   noRequire: true,
   fontSize: 'md',
+  liLen: 5.5,
 };
 
 export default MySelect;

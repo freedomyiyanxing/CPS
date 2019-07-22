@@ -1,10 +1,9 @@
-const path = require('path');
 const webpackMerge = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpackBaseConfig = require('./webpack-base-config');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
 module.exports = webpackMerge(webpackBaseConfig, {
   mode: 'production',
@@ -32,53 +31,49 @@ module.exports = webpackMerge(webpackBaseConfig, {
           },
         ],
       },
-      {
-        test: /\.less$/,
-        exclude: path.join(__dirname, '../node_modules'),
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../',
-            },
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: {
-                mode: 'local',
-                localIdentName: '[name]-[local]-[hash:base64:5]',
-                context: path.resolve(__dirname, 'src'),
-                hashPrefix: 'my-custom-hash',
-              }
-            },
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-            },
-          },
-          'less-loader',
-        ]
-      },
+      // {
+      //   test: /\.less$/,
+      //   exclude: path.join(__dirname, '../node_modules'),
+      //   use: [
+      //     {
+      //       loader: MiniCssExtractPlugin.loader,
+      //       options: {
+      //         publicPath: '../',
+      //       },
+      //     },
+      //     {
+      //       loader: 'css-loader',
+      //       options: {
+      //         modules: {
+      //           mode: 'local',
+      //           localIdentName: '[name]-[local]-[hash:base64:5]',
+      //           context: path.resolve(__dirname, 'src'),
+      //           hashPrefix: 'my-custom-hash',
+      //         }
+      //       },
+      //     },
+      //     {
+      //       loader: 'postcss-loader',
+      //       options: {
+      //         ident: 'postcss',
+      //       },
+      //     },
+      //     'less-loader',
+      //   ]
+      // },
     ],
   },
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'css/[name]-[hash].css',
     }),
-    // new BundleAnalyzerPlugin({ // 可视化工具 http://127.0.0.1:8888
-    //   analyzerMode: 'server',
-    //   analyzerHost: '127.0.0.1',
-    //   analyzerPort: 8888,
-    //   reportFilename: 'report.html',
-    //   defaultSizes: 'parsed',
-    //   openAnalyzer: true,
-    //   generateStatsFile: false,
-    //   statsFilename: 'stats.json',
-    //   logLevel: 'info'
-    // })
+    new CompressionWebpackPlugin({ //gzip 压缩 // https://www.npmjs.com/package/compression-webpack-plugin
+      filename: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.(js|css)$/i,
+      threshold: 10240,
+      // minRatio: 0.8 // 默认0.8
+    })
   ],
   optimization: {
     runtimeChunk: {
@@ -108,7 +103,7 @@ module.exports = webpackMerge(webpackBaseConfig, {
     },
     minimizer: [
       new TerserPlugin({ // 开启js压缩
-        cache: true, // 开去缓存
+        cache: true, // 开去缓存OptimizeCSSAssetsPlugin
         parallel: true, // 开启并行压缩，充分利用cpu (相当于 os.length - 1)
         // sourceMap: false, // 移除源地址
         // extractComments: false, // 移除注释

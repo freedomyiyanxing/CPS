@@ -2,11 +2,10 @@ const path = require('path');
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // 判断当前打包环境 （dev = 开发，test = 测试，pre = 预环境）
 const ENVIRONMENT = process.env.ENVIRONMENT;
-
-console.log(ENVIRONMENT, 'ENVIRONMENT');
 
 module.exports = {
   entry: {
@@ -36,14 +35,6 @@ module.exports = {
           }
         ],
       },
-      // {
-      //   test: /\.svg$/,
-      //   exclude: path.join(__dirname, '../node_modules'), // 排除路径,
-      //   use: [
-      //     '@svgr/webpack',
-      //     // 'file-loader',
-      //   ]
-      // },
       {
         test: /\.(png|jpg|jpeg|gif)$/,
         exclude: path.join(__dirname, '../node_modules'), // 排除路径,
@@ -54,17 +45,6 @@ module.exports = {
             outputPath: 'images',
           }
         }]
-      },
-      {
-        // test: /\.(ttf|eot|woff|woff2|svg)$/,
-        // exclude: path.join(__dirname, '../node_modules'), // 排除路径,
-        // use: [{
-        //   loader: 'file-loader',
-        //   options: {
-        //     limit: 500,
-        //     outputPath: 'fonts',
-        //   }
-        // }]
       },
     ],
   },
@@ -90,5 +70,16 @@ module.exports = {
           ? JSON.stringify("https://cdn.influmonsters.com")
           : JSON.stringify("https://img.influmonsters.com"),
     }),
+    // new BundleAnalyzerPlugin({ // 可视化工具 http://127.0.0.1:8888
+    //   analyzerMode: 'server',
+    //   analyzerHost: '127.0.0.1',
+    //   analyzerPort: 8899,
+    //   reportFilename: 'report.html',
+    //   defaultSizes: 'parsed',
+    //   openAnalyzer: true,
+    //   generateStatsFile: false,
+    //   statsFilename: 'stats.json',
+    //   logLevel: 'info'
+    // })
   ],
 };

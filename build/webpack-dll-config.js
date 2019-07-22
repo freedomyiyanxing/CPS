@@ -1,10 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
 // 抽离 vendor 数组中的第三方插件, 只打包一次, 优化打包速度
 module.exports = {
   mode: 'production',
-  devtool: false,
+  devtool: 'none',
   entry: {
     vendor: [
       'axios',
@@ -18,6 +19,7 @@ module.exports = {
       'prop-types',
       'mobx',
       'mobx-react',
+      '@loadable/component',
     ]
   },
   output: {
@@ -27,12 +29,16 @@ module.exports = {
   },
   plugins: [
     new webpack.DllPlugin({
-      // path: path.join(__dirname, '../static/json', '[name]-manifest.json'),
-      // name: '[name]_library',
-      // context: path.join(__dirname, '..'),
       path: path.join(__dirname, '.', '[name]-manifest.json'), // vendor-manifest.json 输出在当前目录下
       name: '[name]_library', // 暴露出的函数名, 同 output.library 一致即可,
       context: path.join(__dirname, '..'), // manifest 文件中请求的上下文(context)(默认值为 webpack 的上下文(context))
+    }),
+    new CompressionWebpackPlugin({ //gzip 压缩 // https://www.npmjs.com/package/compression-webpack-plugin
+      filename: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.js(\?.*)?$/i,
+      threshold: 10240,
+      // minRatio: 0.8 // 默认0.8
     })
   ]
 };

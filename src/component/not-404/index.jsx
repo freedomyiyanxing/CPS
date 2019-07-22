@@ -13,7 +13,11 @@ const Not404 = (props) => {
   const classes = useStyles();
   return (
     <>
-      <HeaderNotLogin history={history} />
+      {
+        location.pathname.split('/').length <= 2
+          ? <HeaderNotLogin history={history} />
+          : null
+      }
       <div
         className={classes.root}
       >
