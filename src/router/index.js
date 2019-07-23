@@ -34,7 +34,7 @@ const routers = [
         path: '/s',
         component: NotHeaderNavigation,
         key: uuid(),
-        auth: false,
+        // auth: false,
         routes: [
           {
             path: '/s/index',
@@ -88,7 +88,7 @@ const routers = [
         path: '/my',
         component: HeaderNavigation,
         key: uuid(),
-        auth: true,
+        // auth: true,
         routes: [
           {
             path: '/my/index',

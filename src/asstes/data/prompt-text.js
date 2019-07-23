@@ -89,6 +89,7 @@ const userIconPrompt = {
 // 推广商品
 const productPrompt = {
   addProductSuccess: '已经加入你的推广商品列表',
+  addProductError: '加入你的推广商品列表失败',
   copyLinksSuccess: '复制链接成功',
   copyLinksError: '链接 生成 失败',
 };
@@ -99,6 +100,13 @@ const myProductPrompt = {
   downloadLinks: '成功 下载 links.xls',
   errorText: '服务器错误',
 };
+
+const validPasswordPrompt = {
+  validPasswordSuccess: '密码Ok',
+  validPasswordError: '密码错误, 请重新输入',
+};
+
+const errorText = '服务器错误, 请联系管理员';
 
 
 export {
@@ -115,4 +123,6 @@ export {
   userIconPrompt,
   productPrompt,
   myProductPrompt,
+  validPasswordPrompt,
+  errorText,
 };

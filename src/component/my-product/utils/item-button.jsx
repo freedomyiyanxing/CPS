@@ -1,13 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress/index';
 import copy from 'copy-to-clipboard/index';
 
 import MyButton from '../../../common/material-ui-component/button';
-import MyDialogs from '../../../common/dialog/dialog';
-import { openNotifications } from '../../../common/prompt-box/prompt-box';
+import DialogIndex from '../../../common/dialog/dialog-index';
+import DialogHeader from '../../../common/dialog/dialog-header';
+import DialogFooter from '../../../common/dialog/dialog-footer';
 
+import { openNotifications } from '../../../common/prompt-box/prompt-box';
 import { productPrompt } from '../../../asstes/data/prompt-text';
 import { postRequestBody } from '../../../asstes/http';
 import { itemButtonStyle } from '../style';
@@ -18,31 +19,30 @@ const ItemButton = (props) => {
   const {
     id, handleDeleteClick,
   } = props;
+  const [open, setOpen] = useState(false);
   const [links, setLinks] = useState(null);
   const [clean, setClean] = useState(false);
   const classes = useStyle();
-  const dialogRef = useRef();
 
   /**
    *  获取商品的 Links
    */
   const handleClick = () => {
-    if (dialogRef.current) {
-      // 打开弹出框
-      dialogRef.current.handleCloses();
-      postRequestBody(`/api/promotions/link/${id}`)
-        .then((response) => {
-          const { link } = response;
-          setLinks(link);
-        })
-        .catch((err) => {
-          openNotifications.open({
-            message: err.data.message || productPrompt.copyLinksError,
-            variant: 'error',
-            duration: 5,
-          });
+    // 打开弹出框
+    setOpen(true);
+    // 打开弹出框
+    postRequestBody(`/api/promotions/link/${id}`)
+      .then((response) => {
+        const { link } = response;
+        setLinks(link);
+      })
+      .catch((err) => {
+        openNotifications.open({
+          message: err.data.message || productPrompt.copyLinksError,
+          variant: 'error',
+          duration: 5,
         });
-    }
+      });
   };
 
   /**
@@ -52,7 +52,7 @@ const ItemButton = (props) => {
     // 当links有值时
     if (links) {
       copy(links);
-      dialogRef.current.handleCloses();
+      setOpen(false);
       openNotifications.open({
         message: productPrompt.copyLinksSuccess,
         variant: 'success',
@@ -77,12 +77,9 @@ const ItemButton = (props) => {
           className={classes.btn}
           onClick={() => { handleClean(id); }}
           loading={clean}
+          loadingSize={14}
         >
-          {
-            clean
-              ? <CircularProgress size={14} />
-              : 'Delete'
-          }
+          Delete
         </MyButton>
         <MyButton
           variant="outlined"
@@ -92,16 +89,21 @@ const ItemButton = (props) => {
           Get Link
         </MyButton>
       </div>
-      <MyDialogs
-        ref={dialogRef}
-        onChange={handleChange}
-        btnArr={['Copy', 'Close']}
-        disabled={Boolean(links)}
+      <DialogIndex
+        open={open}
+        onClose={() => { setOpen(false); }}
+        wrapperCls={classes.copyWrapper}
+        header={<DialogHeader title="我是谁???" />}
+        footer={(
+          <DialogFooter
+            handleChange={handleChange}
+            handleDelete={() => { setOpen(false); }}
+            disabled={!links}
+          />
+        )}
       >
-        <div className={classes.copyWrapper}>
-          {links || 'loading....'}
-        </div>
-      </MyDialogs>
+        {links || 'loading....'}
+      </DialogIndex>
     </>
   );
 };

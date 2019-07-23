@@ -31,6 +31,9 @@ const indexStyle = theme => ({
   title: {
     fontWeight: theme.typography.fontWeight,
   },
+  dialogWrapper: {
+    minHeight: 92,
+  },
 });
 
 const containerStyle = theme => ({
@@ -156,7 +159,53 @@ const cropperStyle = theme => ({
 
 const paymentStyle = theme => ({
   root: {
-    fontSize: theme.typography.fontSizeLg,
+    margin: [[30, 0, 40]],
+    position: 'relative',
+  },
+  palpayWrapper: {
+    width: '100%',
+    height: 78,
+    display: 'flex',
+    alignItems: 'center',
+    padding: [[0, 40, 0, 20]],
+    background: theme.palette.primary[100],
+    border: `1px solid ${theme.palette.border.borderEf}`,
+  },
+  paypalIcon: {
+    fontSize: 38,
+  },
+  textWrapper: {
+    height: 40,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    marginLeft: 10,
+    minWidth: 0,
+    '& > h2': {
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      fontSize: theme.typography.fontSizeMd,
+      color: theme.palette.text.primary,
+    },
+    '& > p': {
+      fontSize: theme.typography.fontSize,
+      color: theme.palette.text.secondary,
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+    },
+  },
+  iconButton: {
+    position: 'absolute',
+    right: 0,
+    '&:hover': {
+      background: 'none',
+    },
+  },
+  icon: {
+    fontSize: theme.typography.fontSize,
+    color: theme.palette.text.secondary,
   },
 });
 

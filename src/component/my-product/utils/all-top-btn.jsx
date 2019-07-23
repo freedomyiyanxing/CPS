@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import MyButton from '../../../common/material-ui-component/button';
 
@@ -45,13 +44,10 @@ const AllTopBtn = (props) => {
         className={classes.root}
         onClick={handleAllLinks}
         loading={links}
+        loadingSize={14}
         style={{ minWidth: 134 }}
       >
-        {
-          links
-            ? <CircularProgress size={14} />
-            : 'Batch Get Link'
-        }
+        Batch Get Link
       </MyButton>
       <MyButton
         variant="contained"
@@ -60,12 +56,9 @@ const AllTopBtn = (props) => {
         onClick={handleClean}
         loading={loading}
         style={{ minWidth: 88 }}
+        loadingSize={14}
       >
-        {
-          loading
-            ? <CircularProgress size={14} />
-            : 'Delete'
-        }
+        Delete
       </MyButton>
     </div>
   );

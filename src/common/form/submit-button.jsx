@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import MyButton from '../material-ui-component/button';
 import { submitButtonStyle } from './style';
@@ -80,11 +79,7 @@ class SubmitButton extends React.Component {
           onClick={this.handleClick}
           style={{ width: `${width}px` }}
         >
-          {
-            loading
-              ? <CircularProgress size={24} />
-              : name
-          }
+          {name}
         </MyButton>
         {
           bank

@@ -1,12 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles/index';
-import CircularProgress from '@material-ui/core/CircularProgress/index';
 import copy from 'copy-to-clipboard/index';
 
 import MyButton from '../../../common/material-ui-component/button';
 import PartitionLine from '../../../common/partition-line/partition-line';
-import MyDialogs from '../../../common/dialog/dialog';
+import DialogIndex from '../../../common/dialog/dialog-index';
+import DialogHeader from '../../../common/dialog/dialog-header';
+import DialogFooter from '../../../common/dialog/dialog-footer';
 import { postRequestBody, SUCCESS } from '../../../asstes/http/index';
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
 import { productPrompt } from '../../../asstes/data/prompt-text';
@@ -20,10 +21,10 @@ const useStyle = makeStyles(itemButtonStyle);
 
 const ItemButton = (props) => {
   const { id } = props;
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [links, setLinks] = useState(null);
   const classes = useStyle();
-  const dialogRef = useRef();
 
   /**
    * 点击select 把商品加入当前用户的推广商品列表
@@ -40,6 +41,14 @@ const ItemButton = (props) => {
             variant: 'success',
           });
         }
+      })
+      .catch((err) => {
+        setLoading(false);
+        openNotifications.open({
+          message: err.data.message || productPrompt.addProductError,
+          variant: 'error',
+          duration: 5,
+        });
       });
   };
 
@@ -47,23 +56,21 @@ const ItemButton = (props) => {
    *  获取商品的 Links
    */
   const handleClick = () => {
-    if (dialogRef.current) {
-      // 打开弹出框
-      dialogRef.current.handleCloses();
-      postRequestBody(`/api/promotions/link/${id}`)
-        .then((response) => {
-          const { link } = response;
-          setLinks(link);
-        })
-        .catch((err) => {
-          console.log(err);
-          openNotifications.open({
-            message: productPrompt.copyLinksError,
-            variant: 'error',
-            duration: 5,
-          });
+    // 打开弹出框
+    setOpen(true);
+    postRequestBody(`/api/promotions/link/${id}`)
+      .then((response) => {
+        const { link } = response;
+        setLinks(link);
+      })
+      .catch((err) => {
+        console.log(err);
+        openNotifications.open({
+          message: productPrompt.copyLinksError,
+          variant: 'error',
+          duration: 5,
         });
-    }
+      });
   };
 
   /**
@@ -73,7 +80,7 @@ const ItemButton = (props) => {
     // 当links有值时
     if (links) {
       copy(links);
-      dialogRef.current.handleCloses();
+      setOpen(false);
       openNotifications.open({
         message: productPrompt.copyLinksSuccess,
         variant: 'success',
@@ -99,27 +106,28 @@ const ItemButton = (props) => {
         />
         <MyButton
           color="primary"
-          disabled={loading}
+          loading={loading}
           className={`${classes.btn} ${loading ? classes.disabled : ''}`}
           onClick={handleSelect}
         >
-          {
-            loading
-              ? <CircularProgress size={24} />
-              : 'Select'
-          }
+          Select
         </MyButton>
       </div>
-      <MyDialogs
-        ref={dialogRef}
-        onChange={handleChange}
-        btnArr={['Copy', 'Close']}
-        disabled={Boolean(links)}
+      <DialogIndex
+        open={open}
+        onClose={() => { setOpen(false); }}
+        wrapperCls={classes.copyWrapper}
+        header={<DialogHeader title="我是谁???" />}
+        footer={(
+          <DialogFooter
+            handleChange={handleChange}
+            handleDelete={() => { setOpen(false); }}
+            disabled={!links}
+          />
+        )}
       >
-        <div className={classes.copyWrapper}>
-          {links || 'loading....'}
-        </div>
-      </MyDialogs>
+        {links || 'loading....'}
+      </DialogIndex>
     </>
   );
 };

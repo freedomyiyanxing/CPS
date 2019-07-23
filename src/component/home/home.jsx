@@ -85,6 +85,7 @@ class Home extends React.Component {
   };
 
   render() {
+    const { history } = this.props;
     const {
       loading, userInfo, statistics, detail, daily, timer,
     } = this.state;
@@ -95,7 +96,7 @@ class Home extends React.Component {
             ? <div style={{ minHeight: 500 }}>loading。。。。</div>
             : (
               <>
-                <HomeHeader data={userInfo} />
+                <HomeHeader data={userInfo} history={history} />
                 <HomeCurve
                   data={[daily, statistics]}
                   onChange={this.handleChangeDate}
@@ -114,6 +115,7 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
+  history: PropTypes.objectOf(PropTypes.object).isRequired,
   userStore: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 

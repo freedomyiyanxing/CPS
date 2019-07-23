@@ -209,20 +209,17 @@ class MyCropper extends React.Component {
           <div className={classes.dialogFooter}>
             <div className={classes.dialogControl}>
               {
-                cropperBtnArr.map((v) => {
-                  const Icon = v.icon;
-                  return (
-                    <MyButton
-                      key={v.id}
-                      variant="contained"
-                      color="primary"
-                      className={classes.dialogBtn}
-                      onClick={() => { this.handleControl(v.name); }}
-                    >
-                      <Icon />
-                    </MyButton>
-                  );
-                })
+                cropperBtnArr.map(v => (
+                  <MyButton
+                    key={v.id}
+                    variant="contained"
+                    color="primary"
+                    className={classes.dialogBtn}
+                    onClick={() => { this.handleControl(v.name); }}
+                  >
+                    <v.icon />
+                  </MyButton>
+                ))
               }
             </div>
             <SubmitButton

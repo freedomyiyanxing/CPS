@@ -15,6 +15,7 @@ const tokenUrl = [
   '/api/promotions',
   '/api/profile',
   '/api/balance',
+  '/api/payout',
 ];
 
 // 控制

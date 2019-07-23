@@ -52,36 +52,6 @@ export const loginNotStyle = theme => ({
   rightBtn: rightBtn(theme),
 });
 
-// 登陆 头部样式
-export const loginStyle = theme => ({
-  // 弹出框
-  dialogWrapper: {
-    width: 400,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 10,
-    borderTop: '4px solid',
-    minHeight: 180,
-  },
-  dialogIcon: {
-    fontSize: theme.typography.h1.fontSize,
-  },
-  dialogText: {
-    fontSize: theme.typography.fontSizeMd,
-  },
-  dialogFooter: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-  },
-  dialogButton: {
-    padding: [[10, 30]],
-  },
-});
-
 // 登陆头部 left样式
 export const leftStyle = theme => ({
   left: {

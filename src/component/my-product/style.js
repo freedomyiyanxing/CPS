@@ -98,6 +98,7 @@ export const itemButtonStyle = theme => ({
     borderColor: theme.palette.border.borderDD,
   },
   copyWrapper: {
+    width: 500,
     height: 150,
     margin: [[20, 20, 30]],
     padding: 10,

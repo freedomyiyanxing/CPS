@@ -26,7 +26,8 @@ class AccountPassword extends React.Component {
         ayc = new Promise((resolve) => {
           patchRequestBody('/api/profile/password', value)
             .then((response) => {
-              if (response.message === SUCCESS) {
+              const { message } = response;
+              if (message === SUCCESS) {
                 openNotifications.open({
                   message: userSetPassword.successText,
                   variant: 'success',

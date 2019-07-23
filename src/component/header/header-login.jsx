@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { inject } from 'mobx-react';
-import Dialog from '@material-ui/core/Dialog';
 import ErrorOutline from '@material-ui/icons/ErrorOutline';
 
-import MyButton from '../../common/material-ui-component/button';
+import DialogIndex from '../../common/dialog/dialog-index';
+import DialogHeader from '../../common/dialog/dialog-header';
+import DialogFooter from '../../common/dialog/dialog-footer';
 import HeaderContainer from './header-container';
 import HeaderLeft from './utils/header-left';
 import HeaderRight from './utils/header-right';
@@ -14,51 +15,71 @@ import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { patchRequestBody, SUCCESS } from '../../asstes/http/index';
 import { session } from '../../asstes/js/utils-methods';
 import { logoutPrompt } from '../../asstes/data/prompt-text';
-import { loginStyle } from './style';
 
-const useStyle = makeStyles(loginStyle);
+const useStyle = makeStyles(theme => ({
+  dialogIcon: {
+    fontSize: theme.typography.h1.fontSize,
+  },
+  dialogText: {
+    fontSize: theme.typography.fontSizeMd,
+  },
+  main: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    minHeight: 80,
+  },
+}));
 
 const HeaderLogin = (props) => {
   const { history, userStore } = props;
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [btnLoading, setBtnLoading] = useState(false);
 
   const classes = useStyle();
 
   // 退出登录
   const handleOutClick = () => {
-    patchRequestBody('/api/profile/logout')
-      .then((response) => {
-        if (response.message === SUCCESS) {
-          // 清除 sessionStore 中的 登录信息 以及用户信息
-          session.remove('loginInfo');
-          session.remove('userName');
-          session.remove('userPhoto');
-          // 修改context中的登录状态 清除store中的登录信息
-          userStore.setLogin(false);
-          // to 到登录页面
-          history.push('/s/signin');
+    setBtnLoading(true);
+    setTimeout(() => {
+      patchRequestBody('/api/profile/logout')
+        .then((response) => {
+          const { message } = response;
+          if (message === SUCCESS) {
+            // 清除 sessionStore 中的 登录信息 以及用户信息
+            session.remove('loginInfo');
+            session.remove('userName');
+            session.remove('userPhoto');
+            // 修改context中的登录状态 清除store中的登录信息
+            userStore.setLogin(false);
+            // to 到登录页面
+            history.push('/s/signin');
 
+            openNotifications.open({
+              message: logoutPrompt.successText,
+              variant: 'success',
+              duration: 5,
+            });
+          }
+          setBtnLoading(false);
+        })
+        .catch((err) => {
           openNotifications.open({
-            message: logoutPrompt.successText,
-            variant: 'success',
-            duration: 5,
+            message: err.data.message || logoutPrompt.errorText,
+            variant: 'error',
+            duration: 10,
           });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        openNotifications.open({
-          message: err.data.message || logoutPrompt.errorText,
-          variant: 'error',
-          duration: 10,
+          setBtnLoading(false);
         });
-      });
+    }, 500);
   };
 
   // 打开弹出框
   const openDialog = () => {
     setDialogOpen(true);
   };
+
   return (
     <>
       <HeaderContainer>
@@ -68,33 +89,27 @@ const HeaderLogin = (props) => {
           toggleDialog={openDialog}
         />
       </HeaderContainer>
-      <Dialog
+      <DialogIndex
         open={dialogOpen}
         onClose={() => { setDialogOpen(false); }}
+        header={<DialogHeader title="Logout" />}
+        footer={(
+          <DialogFooter
+            loading={btnLoading}
+            handleChange={handleOutClick}
+            handleDelete={() => { setDialogOpen(false); }}
+            title={{
+              ok: 'Confirm',
+              delete: 'Cancel',
+            }}
+          />
+        )}
       >
-        <div className={classes.dialogWrapper}>
+        <div className={classes.main}>
           <ErrorOutline className={classes.dialogIcon} />
           <p className={classes.dialogText}>Are you sure you want to sign out?</p>
-          <div className={classes.dialogFooter}>
-            <MyButton
-              variant="contained"
-              color="primary"
-              className={classes.dialogButton}
-              onClick={() => { setDialogOpen(false); }}
-            >
-              Cancel
-            </MyButton>
-            <MyButton
-              variant="contained"
-              color="primary"
-              className={classes.dialogButton}
-              onClick={handleOutClick}
-            >
-              Confirm
-            </MyButton>
-          </div>
         </div>
-      </Dialog>
+      </DialogIndex>
     </>
   );
 };

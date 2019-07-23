@@ -111,6 +111,7 @@ export const itemButtonStyle = theme => ({
     background: theme.palette.primary[400],
   },
   copyWrapper: {
+    width: 500,
     height: 150,
     margin: [[20, 20, 30]],
     padding: 10,
