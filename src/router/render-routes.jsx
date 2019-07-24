@@ -18,9 +18,9 @@ const renderRoutes = (routes, auth = true, extraProps = {}, switchProps = {}) =>
           }
 
           // 进入付款账户维护前, 先进入到account页面
-          if (location.pathname === '/my/account-payment' && !window.__valid__password__) {
-            // return <Redirect to={{ pathname: '/my/account' }} />;
-          }
+          // if (location.pathname === '/my/account-payment' && !window.__valid__password__) {
+          //   // return <Redirect to={{ pathname: '/my/account' }} />;
+          // }
 
           // 判断是否需要登录的页面
           if (auth) {

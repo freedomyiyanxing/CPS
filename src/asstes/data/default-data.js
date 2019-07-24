@@ -354,16 +354,9 @@ const myProductStatus = ['Invalid', 'Normal'];
 
 // 个人账户的个人推广商品明细
 const myBalanceType = [
-  {
-    id: uuid(),
-    sign: '1',
-    text: 'Get Earning',
-  },
-  {
-    id: uuid(),
-    sign: '2',
-    text: 'Withdraw',
-  },
+  'income',
+  'withdraw',
+  'refund',
 ];
 
 // 个人账户index页面

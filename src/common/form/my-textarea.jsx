@@ -9,11 +9,11 @@ import { formPrompt } from '../../asstes/data/prompt-text';
 
 const MyTextarea = (props) => {
   const {
-    form, value, noRequire, name, fontSize,
+    form, value, noRequire, name, fontSize, outputName,
   } = props;
 
   const { getFieldProps, getFieldError } = form;
-  const errors = getFieldError('websiteDesc');
+  const errors = getFieldError(outputName);
   return (
     <FormControl
       fullWidth
@@ -25,7 +25,7 @@ const MyTextarea = (props) => {
         multiline
         id={`my-${name}`}
         type="text"
-        {...getFieldProps('websiteDesc', {
+        {...getFieldProps(outputName, {
           validateFirst: true,
           initialValue: value,
           rules: [
@@ -55,6 +55,7 @@ MyTextarea.propTypes = {
   name: PropTypes.string,
   value: PropTypes.string,
   noRequire: PropTypes.bool,
+  outputName: PropTypes.string,
   fontSize: PropTypes.string,
 };
 
@@ -63,6 +64,7 @@ MyTextarea.defaultProps = {
   name: 'Discription of Your Website *',
   noRequire: true,
   fontSize: 'md',
+  outputName: 'websiteDesc',
 };
 
 

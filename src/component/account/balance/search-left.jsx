@@ -8,25 +8,30 @@ import MySelect from '../../../common/form/my-select';
 import SubmitButton from '../../../common/form/submit-button';
 import DateRange from '../../../common/date-picker/date-range';
 import { myBalanceType } from '../../../asstes/data/default-data';
+import { getSelectIndex } from '../../../asstes/js/utils-methods';
 
 import { searchStyle } from './style';
+
+let dateStart = null;
+let dateEnd = null;
 
 @withStyles(searchStyle)
 @createForm()
 class SearchLeft extends React.Component {
-  constructor() {
-    super();
-    this.date = null; // 存储日期区间
-  }
-
   handleSubmit = () => {
     const { form } = this.props;
     let ayc = null;
     form.validateFields((error, value) => {
       if (!error) {
+        const obj = {
+          ...value,
+          type: getSelectIndex(value.type, myBalanceType),
+          dateStart,
+          dateEnd,
+        };
         ayc = new Promise((resolve) => {
           setTimeout(() => {
-            console.log({ ...value, date: this.date });
+            console.log(obj);
             resolve(true);
           }, 1000);
         });
@@ -35,9 +40,11 @@ class SearchLeft extends React.Component {
     return ayc;
   };
 
+  // 选择时间
   getDate = (date) => {
-    this.date = date;
-    console.log('选择时间', date);
+    const { start, end } = date;
+    dateStart = start;
+    dateEnd = end;
   };
 
   render() {
@@ -58,6 +65,7 @@ class SearchLeft extends React.Component {
           <MyTextarea
             form={form}
             noRequire={false}
+            outputName="desc"
             name="Description :"
             fontSize="sm"
           />

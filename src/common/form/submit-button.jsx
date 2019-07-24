@@ -55,7 +55,7 @@ class SubmitButton extends React.Component {
   handleBack = () => {
     const { history } = this.props;
     if (history) {
-      history.goBack();
+      history.push('/my/account');
     }
   };
 

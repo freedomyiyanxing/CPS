@@ -161,6 +161,7 @@ const paymentStyle = theme => ({
   root: {
     margin: [[30, 0, 40]],
     position: 'relative',
+    minHeight: 78,
   },
   palpayWrapper: {
     width: '100%',
@@ -175,13 +176,14 @@ const paymentStyle = theme => ({
     fontSize: 38,
   },
   textWrapper: {
-    height: 40,
+    height: 48,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     marginLeft: 10,
     minWidth: 0,
     '& > h2': {
+      lineHeight: '22px',
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap',
       overflow: 'hidden',
@@ -189,6 +191,7 @@ const paymentStyle = theme => ({
       color: theme.palette.text.primary,
     },
     '& > p': {
+      lineHeight: '18px',
       fontSize: theme.typography.fontSize,
       color: theme.palette.text.secondary,
       textOverflow: 'ellipsis',

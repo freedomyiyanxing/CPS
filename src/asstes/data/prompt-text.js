@@ -106,6 +106,14 @@ const validPasswordPrompt = {
   validPasswordError: '密码错误, 请重新输入',
 };
 
+const paymentPrompt = {
+  deleteError: 'paypal 账户 删除失败',
+  deleteSuccess: 'paypal 账户 删除成功',
+  addPaypalSuccess: 'paypal 添加成功',
+  paypalLoginError: 'paypal 登录失败',
+  paypalDateError: 'paypal 数据更新不及时 请刷新 F5',
+};
+
 const errorText = '服务器错误, 请联系管理员';
 
 
@@ -124,5 +132,6 @@ export {
   productPrompt,
   myProductPrompt,
   validPasswordPrompt,
+  paymentPrompt,
   errorText,
 };
