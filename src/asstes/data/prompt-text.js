@@ -25,6 +25,10 @@ const formPrompt = {
   dateFour: '无效的日期 在判断闰年时报错',
   phoneRequired: '电话号码必填',
   phoneFormat: '电话号码错误',
+  withdrawRequired: '提现金额必填',
+  withdrawMin: '提现金额 必须大于 系统可允许最小金额',
+  withdrawMax: '提现金额 必须 <= 您的余额',
+  withdrawNumber: '这不是一个有效的数字类型...',
 };
 
 // 发送邮件页面
@@ -114,6 +118,10 @@ const paymentPrompt = {
   paypalDateError: 'paypal 数据更新不及时 请刷新 F5',
 };
 
+const tokenPrompt = {
+  warningText: '登录信息失效, 请重新登录...',
+};
+
 const errorText = '服务器错误, 请联系管理员';
 
 
@@ -134,4 +142,5 @@ export {
   validPasswordPrompt,
   paymentPrompt,
   errorText,
+  tokenPrompt,
 };

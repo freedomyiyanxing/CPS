@@ -27,6 +27,17 @@ export const viewStyle = theme => ({
     padding: 10,
     background: theme.palette.primary[50],
   },
+  amount: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  icon: {
+    fontSize: theme.typography.fontSize,
+    marginRight: 2,
+  },
+});
+
+export const viewHeader = theme => ({
   header: {
     display: 'flex',
     alignItems: 'flex-end',
@@ -41,12 +52,35 @@ export const viewStyle = theme => ({
   headerBtn: {
     padding: [[4, 9]],
   },
-  amount: {
-    display: 'flex',
-    alignItems: 'center',
+  dialogWrapper: {
+    width: 600,
+    minHeight: 100,
   },
-  icon: {
-    fontSize: theme.typography.fontSize,
-    marginRight: 2,
+  paymentPrompt: {
+    fontSize: theme.typography.fontSizeMd,
+    color: theme.palette.text.primary,
+    maxWidth: 450,
+    margin: [[0, 'auto']],
+    '& > p': {
+      lineHeight: '20px',
+      marginBottom: 20,
+    },
+    '& > a': {
+      fontWeight: theme.typography.fontWeight,
+      color: theme.palette.text.primary,
+      textDecoration: 'underline',
+    },
+  },
+  psd: {
+    width: 400,
+    margin: [[0, 'auto']],
+  },
+  paypal: {
+    display: 'block',
+    width: 400,
+    margin: [[0, 'auto']],
+    lineHeight: '20px',
+    fontSize: theme.typography.fontSizeMd,
+    color: theme.palette.text.primary,
   },
 });

@@ -1,6 +1,5 @@
-import React, { createRef } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import React, { useRef } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
 import MainContainer from '../../common/box-container/main-container';
 import Search from '../../common/product/search';
@@ -8,26 +7,18 @@ import View from './utils/view';
 
 import { indexStyle } from './style';
 
-@withStyles(indexStyle)
-class ProductSearch extends React.Component {
-  constructor(props) {
-    super(props);
-    this.viewRef = createRef();
-  }
+const useStyle = makeStyles(indexStyle);
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <MainContainer className={classes.root}>
-        <Search viewRef={this.viewRef} />
-        <View ref={this.viewRef} />
-      </MainContainer>
-    );
-  }
-}
+const ProductSearch = () => {
+  const classes = useStyle();
+  const viewRef = useRef();
 
-ProductSearch.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.object).isRequired,
+  return (
+    <MainContainer className={classes.root}>
+      <Search viewRef={viewRef} />
+      <View ref={viewRef} />
+    </MainContainer>
+  );
 };
 
 export default ProductSearch;

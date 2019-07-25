@@ -43,16 +43,17 @@ class Home extends React.Component {
     ]).then((response) => { // 最后还得处理异常情况
       // 防止组件移除后 执行setState
       if (this._unmount) {
+        const [userInfo, statistics, daily, detail] = response;
         // 写入store当中
-        userStore.setUserPhoto(response[0].photo);
-        userStore.setUserName(response[0].firstName + response[0].lastName);
+        userStore.setUserPhoto(userInfo.photo);
+        userStore.setUserName(userInfo.firstName + userInfo.lastName);
 
         this.setState({
           loading: false,
-          userInfo: response[0],
-          statistics: response[1],
-          daily: response[2],
-          detail: response[3],
+          userInfo,
+          statistics,
+          daily,
+          detail,
         });
       }
     }).catch((err) => {
@@ -67,15 +68,24 @@ class Home extends React.Component {
   // 按日期查询推广数据
   handleChangeDate = (result) => {
     const { start, end } = result;
+    const starts = start || getTime(getDaysTime(90));
+    const ends = end || getTime(new Date().getTime(), 'end');
     Promise.all([
-      httpResponse('/api/index/statistics/daily', { start, end }),
+      httpResponse('/api/index/statistics/daily', {
+        start: starts,
+        end: ends,
+      }),
       httpResponse('/api/index/statistics/detail', {
-        start, end, page: 1, size: PAGE_SIZE,
+        start: starts,
+        end: ends,
+        page: 1,
+        size: PAGE_SIZE,
       }),
     ]).then((response) => {
+      const [daily, detail] = response;
       this.setState({
-        daily: response[0],
-        detail: response[1],
+        daily,
+        detail,
         timer: {
           start,
           end,

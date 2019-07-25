@@ -33,14 +33,32 @@ class Payment extends React.Component {
   }
 
   componentDidMount() {
-    const { history } = this.props;
+    this._unmount = true;
+
     // 查询绑定的提现账号
+    this.getWithdraw();
+
+    // 查询系统设置
+    this.getSystemSetting();
+  }
+
+  componentWillUnmount() {
+    this._unmount = false;
+  }
+
+  /**
+   * 查询绑定的提现账号
+   */
+  getWithdraw = () => {
+    const { history } = this.props;
     get('/api/payout/binding')
       .then((response) => {
-        this.setState({
-          isPaypal: response,
-          loading: !(history.location.search && !response.id),
-        });
+        if (this._unmount) {
+          this.setState({
+            isPaypal: response,
+            loading: !(history.location.search && !response.id),
+          });
+        }
         // 说明是从paypal返回进来的,
         if (history.location.search && !response.id) {
           const url = decodeURIComponent(history.location.search);
@@ -50,14 +68,17 @@ class Payment extends React.Component {
             this.setState({
               loading: false,
             });
+
             postRequestBody('/api/payout/binding/paypal', {
               code: value,
             })
               .then((resp) => {
-                this.setState({
-                  isPaypal: resp,
-                  loading: true,
-                });
+                if (this._unmount) {
+                  this.setState({
+                    isPaypal: resp,
+                    loading: true,
+                  });
+                }
                 openNotifications.open({
                   message: paymentPrompt.addPaypalSuccess,
                   variant: 'success',
@@ -74,6 +95,9 @@ class Payment extends React.Component {
               message: paymentPrompt.paypalLoginError,
               variant: 'error',
             });
+            this.setState({
+              loading: true,
+            });
           }
         }
       })
@@ -83,7 +107,12 @@ class Payment extends React.Component {
           loading: true,
         });
       });
+  };
 
+  /**
+   * 查询系统设置
+   */
+  getSystemSetting = () => {
     if (!window.__payment__info__) {
       get('/api/common/settings')
         .then((response) => {
@@ -93,9 +122,12 @@ class Payment extends React.Component {
           console.log(err);
         });
     }
-  }
+  };
 
-  // paypal.js 加载完成时触发
+
+  /**
+   * paypal.js 加载完成时触发
+   */
   handleScriptLoad = () => {
     if (window.__payment__info__) {
       const { paypal } = window;
@@ -120,7 +152,9 @@ class Payment extends React.Component {
     }
   };
 
-  // 移除paypal账号
+  /**
+   * 移除paypal账号
+   */
   handleDeletePaypal = () => {
     const { history } = this.props;
     const { isPaypal } = this.state;

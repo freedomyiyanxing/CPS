@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { session } from '../js/utils-methods';
+import { openNotifications } from '../../common/prompt-box/prompt-box';
+import { tokenPrompt } from '../data/prompt-text';
 
 const _setParams = (url, params) => {
   const str = Object.keys(params).reduce((result, key) => {
@@ -62,6 +64,11 @@ axios.interceptors.response.use(
     } else if (err.response.status === 401) {
       // 401 登录信息失效 重定向到 登录页面
       if (cancelFlag) {
+        openNotifications.open({
+          message: tokenPrompt.warningText,
+          variant: 'warning',
+          duration: 5,
+        });
         return Promise.reject(err.response);
       }
       console.log('登录信息失效⊙﹏⊙∥', err.response);

@@ -7,9 +7,9 @@ import MyTextarea from '../../../common/form/my-textarea';
 import MySelect from '../../../common/form/my-select';
 import SubmitButton from '../../../common/form/submit-button';
 import DateRange from '../../../common/date-picker/date-range';
-import { myBalanceType } from '../../../asstes/data/default-data';
-import { getSelectIndex } from '../../../asstes/js/utils-methods';
 
+import { myBalanceType } from '../../../asstes/data/default-data';
+import { setSearchArg } from '../../../asstes/js/utils-methods';
 import { searchStyle } from './style';
 
 let dateStart = null;
@@ -19,22 +19,25 @@ let dateEnd = null;
 @createForm()
 class SearchLeft extends React.Component {
   handleSubmit = () => {
-    const { form } = this.props;
+    const { form, viewRef } = this.props;
     let ayc = null;
     form.validateFields((error, value) => {
       if (!error) {
+        if (value.type) {
+          for (let i = 0; i < myBalanceType.length; i += 1) {
+            if (value.type === myBalanceType[i]) {
+              // eslint-disable-next-line no-param-reassign
+              value.type = i + 1;
+              break;
+            }
+          }
+        }
         const obj = {
           ...value,
-          type: getSelectIndex(value.type, myBalanceType),
           dateStart,
           dateEnd,
         };
-        ayc = new Promise((resolve) => {
-          setTimeout(() => {
-            console.log(obj);
-            resolve(true);
-          }, 1000);
-        });
+        ayc = viewRef.current.getData(setSearchArg(obj), 1);
       }
     });
     return ayc;
@@ -81,6 +84,7 @@ class SearchLeft extends React.Component {
 
 SearchLeft.propTypes = {
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
+  viewRef: PropTypes.objectOf(PropTypes.object).isRequired,
   form: formShape.isRequired,
 };
 

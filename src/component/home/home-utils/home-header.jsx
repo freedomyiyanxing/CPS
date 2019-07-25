@@ -39,7 +39,8 @@ const HomeHeader = (props) => {
       <span className={classes.balance}>
         <span className={classes.text}>Balance :</span>
         <span className={classes.price}>
-          {`$ ${data.balance || 0}`}
+          $
+          {data.balance && data.balance.toFixed(2)}
         </span>
       </span>
       <MyButton

@@ -1,5 +1,8 @@
+import React from 'react';
 import uuid from 'uuid';
 import moment from 'moment';
+import Add from '@material-ui/icons/Add';
+import Remove from '@material-ui/icons/Remove';
 import {
   MySvgIconProfile,
   MySvgIconPayment,
@@ -12,6 +15,7 @@ import {
   MySvgIconRightRotate,
   MySvgIconLeftRotate,
 } from '../../common/material-ui-component/svg-icon';
+
 
 // 网站分类 (注册信息页面 | 个人账户页面)
 const webSiteCategory = [
@@ -446,6 +450,57 @@ const cropperBtnArr = [
   },
 ];
 
+
+// 处理余额明细页面中的 表格数据
+const amountTable = {
+  setAmount(classes, type, amount = null) {
+    return (
+      <span className={classes.amount}>
+        {
+          amount > 0 && (
+            type === '1' || type === '3'
+              ? <Add className={classes.icon} />
+              : <Remove className={classes.icon} />
+          )
+        }
+        $
+        {amount.toFixed(2)}
+      </span>
+    );
+  },
+  operateType(type) {
+    if (type === '1') {
+      return 'Get Earning';
+    }
+    if (type === '2') {
+      return 'Withdraw';
+    }
+    if (type === '3') {
+      return 'Refund';
+    }
+    return '';
+  },
+  setTableData(tables, classes) {
+    const arr = [];
+    let index = 0;
+    // eslint-disable-next-line no-restricted-syntax
+    for (const v of tables) {
+      // 1.改变数据顺序 保证遍历渲染顺序正确
+      // 2.处理数据格式
+      arr[index] = {
+        id: v.id || uuid(),
+        createdDate: moment(v.createdDate).format('YYYY-MM-DD HH:mm:ss'),
+        amount: this.setAmount(classes, v.operateType, v.amount),
+        balance: `$ ${v.balance.toFixed(2)}`,
+        operateType: this.operateType(v.operateType),
+        remark: v.remark,
+      };
+      index += 1;
+    }
+    return arr;
+  },
+};
+
 export {
   webSiteCategory,
   monthlyVisitors,
@@ -463,4 +518,5 @@ export {
   myBalanceType,
   accountIndex,
   cropperBtnArr,
+  amountTable,
 };
