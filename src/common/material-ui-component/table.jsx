@@ -29,6 +29,7 @@ const useStyle = makeStyles(theme => ({
     border: `1px solid ${theme.palette.border.borderEf}`,
     borderBottom: 'none',
     '& td': {
+      maxWidth: 200,
       paddingLeft: 30,
     },
   },

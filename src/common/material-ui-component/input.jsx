@@ -3,9 +3,10 @@ import Input from '@material-ui/core/Input';
 
 const MyInput = withStyles(theme => ({
   root: {
+    width: '100%',
     lineHeight: 1,
     padding: 6,
-    color: `${theme.palette.text.primary}!important`,
+    // color: `${theme.palette.text.primary}!important`,
     '&:before': {
       borderBottomStyle: 'solid !important',
       borderBottomColor: theme.palette.text.colorDdd,

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
@@ -73,21 +72,25 @@ class BasicSetting extends React.Component {
         ayc = new Promise((resolve) => {
           postRequestBody('/api/profile/update', obj)
             .then((response) => {
-              if (response.message === SUCCESS) {
+              const { message } = response;
+              if (message === SUCCESS) {
                 userStore.setUserName(obj.firstName + obj.lastName);
                 openNotifications.open({
                   message: userInfoPrompt.successText,
                   variant: 'success',
-                  duration: 5, // null 表示永远不移除
+                  duration: 5,
                 });
               }
+              this.setState({
+                datePhoneDisable: true,
+              });
               resolve(true);
             })
             .catch((err) => {
               openNotifications.open({
                 message: err.data.message || userInfoPrompt.errorText,
                 variant: 'error',
-                duration: 10, // null 表示永远不移除
+                duration: 5,
               });
               resolve(true);
             });

@@ -8,16 +8,6 @@ export const intTeInputStyle = () => ({
   },
 });
 
-export const telInputStyle = theme => ({
-  root: {
-    flex: 1,
-    paddingLeft: 6,
-    '&:before': {
-      borderBottomColor: theme.palette.text.colorDdd,
-    },
-  },
-});
-
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 

@@ -17,8 +17,7 @@ Notification.newInstance({
   notification = n;
 });
 
-// eslint-disable-next-line import/prefer-default-export
-export const openNotifications = {
+const openNotifications = {
   open({
     message, variant, duration = 3, key = '',
   }) {
@@ -36,18 +35,7 @@ export const openNotifications = {
   },
 };
 
-// 弃用
-// function openNotification({ message, variant, duration = 3 }) {
-//   notification.notice({
-//     content: <MySnackbarContentWrapper message={message} variant={variant} />,
-//     duration,
-//     style: null,
-//     closable: true,
-//     maxCount: 3, // 最多显示多少个
-//     onClose() {
-//       console.error('弃用 ->>> 提示框');
-//     },
-//   });
-// }
-//
-// export default openNotification;
+export {
+  // eslint-disable-next-line import/prefer-default-export
+  openNotifications,
+};

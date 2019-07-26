@@ -6,34 +6,33 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import MyInput from '../../../common/material-ui-component/input';
 import MyButton from '../../../common/material-ui-component/button';
-import { MySvgIconPaypal } from '../../../common/material-ui-component/svg-icon';
+import PaypalView from '../../../common/paypal/paypal-view';
+import MyTooltip from '../../../common/material-ui-component/tooltip';
+
 import { formPrompt } from '../../../asstes/data/prompt-text';
 
 const useStyle = makeStyles(theme => ({
-  content: {
-    margin: [[20, 0]],
+  wrapper: {
+    padding: [[0, 40]],
   },
   items: {
     display: 'flex',
     alignItems: 'center',
-    height: 40,
     marginBottom: 20,
   },
   left: {
-    flex: '0 0 206px',
+    flex: '0 0 33%',
     textAlign: 'right',
-    marginRight: 22,
+    marginRight: 20,
     fontSize: theme.typography.fontSizeLg,
   },
-  right: {
-    width: 272,
-  },
-  img: {
-    '& img': {
-      width: 138,
-    },
+  paypalWrapper: {
+    height: 64,
+    padding: [[0, 14]],
   },
   all: {
+    width: '100%',
+    height: 40,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -47,6 +46,10 @@ const useStyle = makeStyles(theme => ({
   },
   links: {
     color: theme.palette.text.secondary,
+  },
+  helperText: {
+    position: 'absolute',
+    bottom: -18,
   },
 }));
 
@@ -66,10 +69,6 @@ const Withdraw = (props) => {
     if (formVal > data.max) {
       callback(formPrompt.withdrawMax);
     }
-    callback();
-  };
-
-  const compareToFormat = (rule, formVal, callback) => {
     // eslint-disable-next-line no-restricted-properties
     if (window.isNaN(formVal)) {
       callback(formPrompt.withdrawNumber);
@@ -77,27 +76,34 @@ const Withdraw = (props) => {
     callback();
   };
 
+  const handleAllWithdraw = () => {
+    const { setFieldsValue } = form;
+    setFieldsValue({
+      withdraw: data.max,
+    });
+  };
+
   const { getFieldProps, getFieldError } = form;
   const errors = getFieldError('withdraw');
+  console.log(data);
   return (
-    <div className={classes.content}>
+    <div className={classes.wrapper}>
       <div className={classes.items}>
         <span className={classes.left}>Payment Account :</span>
-        <span className={`${classes.right} ${classes.img}`}>
-          <MySvgIconPaypal style={{ fontSize: 130 }} />
-        </span>
+        {<PaypalView data={data} className={classes.paypalWrapper} />}
       </div>
       <div className={classes.items}>
         <span className={classes.left}>Account Balance :</span>
-        <span className={`${classes.right} ${classes.all}`}>
+        <span className={classes.all}>
           <span className={classes.price}>
             $
             {data.max.toFixed(2)}
           </span>
           <MyButton
             className={classes.links}
+            onClick={handleAllWithdraw}
           >
-            Widthdraw All
+            Withdraw All
           </MyButton>
         </span>
       </div>
@@ -107,11 +113,10 @@ const Withdraw = (props) => {
           fullWidth
           required
           error={errors}
-          margin="normal"
+          margin="none"
         >
           <MyInput
             value={value}
-            placeholder="请输入金额"
             className={classes.right}
             onChange={change}
             {...getFieldProps('withdraw', {
@@ -124,18 +129,20 @@ const Withdraw = (props) => {
                 {
                   validator: compareToMin,
                 },
-                {
-                  validator: compareToFormat,
-                },
               ],
             })}
           />
           {
             errors
-              ? <FormHelperText>{errors.join(',')}</FormHelperText>
+              ? <FormHelperText className={classes.helperText}>{errors.join(',')}</FormHelperText>
               : null
           }
         </FormControl>
+        <MyTooltip
+          text={`Minimun Payment Amount $
+          ${data.min}
+          ; Fees Rate : 我也不知道多少`}
+        />
       </div>
     </div>
   );

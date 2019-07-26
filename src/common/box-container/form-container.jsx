@@ -9,12 +9,12 @@ const useStyle = makeStyles(theme => ({
     background: theme.palette.primary[50],
   },
   root: {
-    width: 520,
-    margin: [[132, 'auto']],
+    width: 450,
+    margin: [[102, 'auto']],
     border: '1px solid',
     borderColor: theme.palette.text.colorDdd,
     borderRadius: 10,
-    padding: [[20, 60, 50]],
+    padding: [[20, 40]],
   },
   title: {
     lineHeight: theme.typography.h2.lineHeight,

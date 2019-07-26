@@ -1,19 +1,39 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import SvgIcon from '@material-ui/core/SvgIcon';
+// import SvgIcon from '@material-ui/core/SvgIcon';
+
+const useStyle = makeStyles(() => ({
+  root: {
+    fill: 'currentColor',
+    width: '1em',
+    height: '1em',
+    display: 'inline-block',
+    fontSize: '2.4rem',
+    transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+    userSelect: 'none',
+    flexShrink: 0,
+  },
+}));
 
 const MySvgIcon = (props) => {
-  const { children, viewBox } = props;
+  const { children, viewBox, className } = props;
+  const classes = useStyle();
   return (
-    <SvgIcon {...props} viewBox={viewBox}>
+    <svg {...props} className={`${classes.root} ${className}`} viewBox={viewBox}>
       {children}
-    </SvgIcon>
+    </svg>
   );
 };
 
 MySvgIcon.propTypes = {
   children: PropTypes.node.isRequired,
   viewBox: PropTypes.string.isRequired,
+  className: PropTypes.string,
+};
+
+MySvgIcon.defaultProps = {
+  className: '',
 };
 
 const MySvgIconReset = props => (
@@ -187,6 +207,43 @@ const MySvgIconDelete = props => (
   </MySvgIcon>
 );
 
+
+const MySvgIconErrorIcon = props => (
+  <MySvgIcon viewBox="0 0 24 24" {...props}>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+  </MySvgIcon>
+);
+
+const MySvgIconWarningIcon = props => (
+  <MySvgIcon viewBox="0 0 24 24" {...props}>
+    <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+  </MySvgIcon>
+);
+
+const MySvgIconInfoIcon = props => (
+  <MySvgIcon viewBox="0 0 24 24" {...props}>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+  </MySvgIcon>
+);
+
+const MySvgIconSuccessIcon = props => (
+  <MySvgIcon viewBox="0 0 24 24" {...props}>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+  </MySvgIcon>
+);
+
+const MySvgIconClear = props => (
+  <MySvgIcon viewBox="0 0 24 24" {...props}>
+    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+  </MySvgIcon>
+);
+
+const MySvgIconPrompt = props => (
+  <MySvgIcon viewBox="0 0 1024 1024" {...props}>
+    <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64z m84 343.1l-87 301.4c-4.8 17.2-7.2 28.6-7.2 33.9 0 3.1 1.3 6 3.8 8.7s5.2 4 8.1 4c4.8 0 9.6-2.1 14.4-6.4 12.7-10.5 28-29.4 45.8-56.8l14.4 8.5c-42.7 74.4-88 111.6-136.1 111.6-18.4 0-33-5.2-43.9-15.5-10.9-10.3-16.3-23.4-16.3-39.2 0-10.5 2.4-23.7 7.2-39.9l58.9-202.7c5.7-19.5 8.5-34.2 8.5-44.1 0-6.2-2.7-11.7-8.1-16.5-5.4-4.8-12.7-7.2-22-7.2-4.2 0-9.3 0.1-15.3 0.4l5.5-17L570.4 407H596v0.1z m17.8-88.7c-12.2 12.2-26.9 18.2-44.1 18.2-17 0-31.5-6.1-43.7-18.2-12.2-12.2-18.2-26.9-18.2-44.1s6-31.9 18-44.1c12-12.1 26.6-18.2 43.9-18.2 17.5 0 32.3 6.1 44.3 18.2 12 12.2 18 26.9 18 44.1s-6.1 31.9-18.2 44.1z" />
+  </MySvgIcon>
+);
+
 export {
   MySvgIconPayment,
   MySvgIconProfile,
@@ -202,4 +259,10 @@ export {
   MySvgIconPaypal,
   MySvgIconSocialPaypal,
   MySvgIconDelete,
+  MySvgIconErrorIcon,
+  MySvgIconWarningIcon,
+  MySvgIconInfoIcon,
+  MySvgIconSuccessIcon,
+  MySvgIconClear,
+  MySvgIconPrompt,
 };

@@ -105,17 +105,25 @@ const myProductPrompt = {
   errorText: '服务器错误',
 };
 
+// 二次验证密码
 const validPasswordPrompt = {
   validPasswordSuccess: '密码Ok',
   validPasswordError: '密码错误, 请重新输入',
 };
 
+// payment注册账号页面
 const paymentPrompt = {
   deleteError: 'paypal 账户 删除失败',
   deleteSuccess: 'paypal 账户 删除成功',
   addPaypalSuccess: 'paypal 添加成功',
   paypalLoginError: 'paypal 登录失败',
   paypalDateError: 'paypal 数据更新不及时 请刷新 F5',
+};
+
+// 提额页面
+const withdrawPrompt = {
+  withdrawSuccess: '提现成功 ... 请关注提额明细数据表',
+  withdrawError: '提现失败',
 };
 
 const tokenPrompt = {
@@ -143,4 +151,5 @@ export {
   paymentPrompt,
   errorText,
   tokenPrompt,
+  withdrawPrompt,
 };

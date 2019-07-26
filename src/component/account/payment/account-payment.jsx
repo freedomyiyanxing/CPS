@@ -3,19 +3,15 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Script from 'react-load-script';
 import { createForm, formShape } from 'rc-form';
-import IconButton from '@material-ui/core/IconButton';
 
 import MainContainer from '../../../common/box-container/main-container';
 import SubmitButton from '../../../common/form/submit-button';
 import MySelect from '../../../common/form/my-select';
 import Container from '../utils/container';
+import PaypalView from '../../../common/paypal/paypal-view';
 
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
 import { paymentPrompt } from '../../../asstes/data/prompt-text';
-import {
-  MySvgIconSocialPaypal,
-  MySvgIconDelete,
-} from '../../../common/material-ui-component/svg-icon';
 import {
   get, postRequestBody, deleteRequestBody, SUCCESS,
 } from '../../../asstes/http/index';
@@ -206,19 +202,11 @@ class Payment extends React.Component {
                   ? (
                     isPaypal && isPaypal.id
                       ? (
-                        <div className={classes.palpayWrapper}>
-                          <MySvgIconSocialPaypal className={classes.paypalIcon} />
-                          <div className={classes.textWrapper}>
-                            <h2>{isPaypal.paypalName}</h2>
-                            <p>{isPaypal.paypalEmail}</p>
-                          </div>
-                          <IconButton
-                            className={classes.iconButton}
-                            onClick={this.handleDeletePaypal}
-                          >
-                            <MySvgIconDelete className={classes.icon} />
-                          </IconButton>
-                        </div>
+                        <PaypalView
+                          data={isPaypal}
+                          className={classes.palpay}
+                          handleDelete={this.handleDeletePaypal}
+                        />
                       )
                       : (
                         <Script

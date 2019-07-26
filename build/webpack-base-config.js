@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // 判断当前打包环境 （dev = 开发，test = 测试，pre = 预环境）
 const ENVIRONMENT = process.env.ENVIRONMENT;
@@ -70,16 +70,20 @@ module.exports = {
           ? JSON.stringify("https://cdn.influmonsters.com")
           : JSON.stringify("https://img.influmonsters.com"),
     }),
-    // new BundleAnalyzerPlugin({ // 可视化工具 http://127.0.0.1:8888
-    //   analyzerMode: 'server',
-    //   analyzerHost: '127.0.0.1',
-    //   analyzerPort: 8899,
-    //   reportFilename: 'report.html',
-    //   defaultSizes: 'parsed',
-    //   openAnalyzer: true,
-    //   generateStatsFile: false,
-    //   statsFilename: 'stats.json',
-    //   logLevel: 'info'
-    // })
+    new webpack.ContextReplacementPlugin( // 按需加载第三方包 (详细说明 请看官网)
+      /moment[/\\]locale$/,
+      /en-gb/,
+    ),
+    new BundleAnalyzerPlugin({ // 可视化工具 http://127.0.0.1:8888
+      analyzerMode: 'server',
+      analyzerHost: '127.0.0.1',
+      analyzerPort: 8899,
+      reportFilename: 'report.html',
+      defaultSizes: 'parsed',
+      openAnalyzer: true,
+      generateStatsFile: false,
+      statsFilename: 'stats.json',
+      logLevel: 'info'
+    })
   ],
 };

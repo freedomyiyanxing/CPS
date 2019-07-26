@@ -15,6 +15,7 @@ export const headerStyle = theme => ({
   name: {
     margin: [[0, 20]],
     maxWidth: 200,
+    lineHeight: '28px',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
@@ -73,14 +74,14 @@ export const curveStyle = theme => ({
     },
   },
   tabWrapper: {
+    position: 'relative',
     height: 80,
-    display: 'flex',
-    flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     padding: [[5, 10, 0]],
   },
   tabsText: {
+    display: 'flex',
     fontSize: theme.typography.fontSize,
     color: theme.palette.text.inherit,
     textAlign: 'left',

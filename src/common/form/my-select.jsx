@@ -18,6 +18,11 @@ const styles = theme => ({
       borderBottomColor: theme.palette.text.colorDdd,
     },
   },
+  select: {
+    lineHeight: '19px',
+    paddingTop: 6,
+    paddingBottom: 6,
+  },
 });
 
 const useStyle = makeStyles(styles);
@@ -42,6 +47,9 @@ const MySelect = (props) => {
       <Select
         value={value}
         className={classes.root}
+        classes={{
+          select: classes.select,
+        }}
         MenuProps={{
           PaperProps: {
             style: {

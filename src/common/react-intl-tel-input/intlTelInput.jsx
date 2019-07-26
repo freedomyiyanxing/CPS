@@ -6,11 +6,10 @@ import { withStyles } from '@material-ui/core/styles';
 
 import AllCountries from './AllCountries';
 import FlagDropDown from './FlagDropDown';
-import TelInput from './TelInput';
+import MyInput from '../material-ui-component/input';
 import utils from './utils';
 
 import { intTeInputStyle } from './style';
-
 
 @withStyles(intTeInputStyle)
 class IntlTelInput extends Component {
@@ -691,9 +690,11 @@ class IntlTelInput extends Component {
           countryCode={this.state.countryCode}
           preferredCountries={this.preferredCountries}
         />
-        <TelInput
+        <MyInput
+          id="my-phone"
+          type="tel"
           value={value}
-          handleInputChange={this.handleInputChange}
+          onChange={this.handleInputChange}
           placeholder={this.state.placeholder}
         />
       </div>

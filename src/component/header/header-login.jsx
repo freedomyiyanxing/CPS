@@ -68,7 +68,7 @@ const HeaderLogin = (props) => {
           openNotifications.open({
             message: err.data.message || logoutPrompt.errorText,
             variant: 'error',
-            duration: 10,
+            duration: 5,
           });
           setBtnLoading(false);
         });

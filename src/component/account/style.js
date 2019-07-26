@@ -157,58 +157,14 @@ const cropperStyle = theme => ({
   },
 });
 
-const paymentStyle = theme => ({
+const paymentStyle = () => ({
   root: {
     margin: [[30, 0, 40]],
     position: 'relative',
     minHeight: 78,
   },
-  palpayWrapper: {
-    width: '100%',
+  palpay: {
     height: 78,
-    display: 'flex',
-    alignItems: 'center',
-    padding: [[0, 40, 0, 20]],
-    background: theme.palette.primary[100],
-    border: `1px solid ${theme.palette.border.borderEf}`,
-  },
-  paypalIcon: {
-    fontSize: 38,
-  },
-  textWrapper: {
-    height: 48,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    marginLeft: 10,
-    minWidth: 0,
-    '& > h2': {
-      lineHeight: '22px',
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      fontSize: theme.typography.fontSizeMd,
-      color: theme.palette.text.primary,
-    },
-    '& > p': {
-      lineHeight: '18px',
-      fontSize: theme.typography.fontSize,
-      color: theme.palette.text.secondary,
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-    },
-  },
-  iconButton: {
-    position: 'absolute',
-    right: 0,
-    '&:hover': {
-      background: 'none',
-    },
-  },
-  icon: {
-    fontSize: theme.typography.fontSize,
-    color: theme.palette.text.secondary,
   },
 });
 

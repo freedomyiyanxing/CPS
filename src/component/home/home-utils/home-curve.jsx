@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import DateRange from '../../../common/date-picker/date-range';
 import Counter from '../../../common/beat-number/beat-number';
 import MyHighcharts from '../../../common/my-highcharts/my-highcharts';
+import MyTooltip from '../../../common/material-ui-component/tooltip';
 import { statisticsTabs, polylineDaily } from '../../../asstes/data/default-data';
 
 import { curveStyle } from './style';
@@ -51,7 +52,10 @@ class HomeCurve extends React.Component {
                 key={v.id}
                 label={(
                   <>
-                    <span className={classes.tabsText}>{v.text}</span>
+                    <span className={classes.tabsText}>
+                      <MyTooltip text={v.text} />
+                      {v.text}
+                    </span>
                     <Counter value={v.value} unit={v.unit} />
                     {
                       tabs === i

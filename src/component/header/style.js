@@ -129,6 +129,7 @@ export const rightStyle = theme => ({
     maxWidth: 110,
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
+    lineHeight: 1.4,
   },
   rightBtn: rightBtn(theme),
 

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles/index';
@@ -31,25 +30,33 @@ class ViewRight extends React.Component {
   componentDidMount() {
     this._unmount = true;
 
-    // 初始化时调用
+    this.getUserInfo();
+  }
+
+  componentWillUnmount() {
+    this._unmount = false;
+  }
+
+  // 初始化时调用, 提额完成时调用
+  getUserInfo = () => {
     Promise.all([
       new Promise((resolve) => {
-        get('/api/balance/detail', { page: 1, size: PAGE_SIZE, })
+        get('/api/balance/detail', { page: 1, size: PAGE_SIZE })
           .then((response) => {
             resolve(response);
           })
           .catch((err) => {
             console.log(err);
-          })
+          });
       }),
       new Promise((resolve) => {
         get('/api/index/userInfo')
           .then((response) => {
-            resolve(response)
+            resolve(response);
           })
           .catch((err) => {
             console.log(err);
-          })
+          });
       }),
     ])
       .then((response) => {
@@ -64,12 +71,8 @@ class ViewRight extends React.Component {
       })
       .catch((err) => {
         console.log(err);
-      })
-  }
-
-  componentWillUnmount() {
-    this._unmount = false;
-  }
+      });
+  };
 
   /**
    * * 点击查询余额变动明细
@@ -117,7 +120,7 @@ class ViewRight extends React.Component {
             ? <div>loading....</div>
             : (
               <>
-                <ViewHeight userInfo={userInfo} />
+                <ViewHeight userInfo={userInfo} getUserInfo={this.getUserInfo} />
                 <MyTable
                   headers={balanceTableHeaders}
                   rows={amountTable.setTableData(data.items, classes)}
