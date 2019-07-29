@@ -13,9 +13,9 @@ import SubmitButton from '../../../common/form/submit-button';
 import Avatars from '../../../common/material-ui-component/avatar';
 
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
-import { patchRequestBody } from '../../../asstes/http/index';
-import { userIconPrompt } from '../../../asstes/data/prompt-text';
-import { cropperBtnArr } from '../../../asstes/data/default-data';
+import { patchRequestBody } from '../../../assets/http/index';
+import { userIconPrompt } from '../../../assets/data/prompt-text';
+import { cropperBtnArr } from '../../../assets/data/default-data';
 import { cropperStyle } from '../style';
 
 @inject(store => ({

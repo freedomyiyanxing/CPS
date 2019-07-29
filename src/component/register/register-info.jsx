@@ -13,14 +13,16 @@ import MyUrl from '../../common/form/my-url';
 import MySelect from '../../common/form/my-select';
 import MyButton from '../../common/material-ui-component/button';
 import TelIndex from '../../common/react-intl-tel-input/index';
+import MyFormControlLabel from '../../common/material-ui-component/form-control-label';
 
 import { openNotifications } from '../../common/prompt-box/prompt-box';
-import { postRequestBody, get, SUCCESS } from '../../asstes/http/index';
-import { webSiteCategory, monthlyVisitors } from '../../asstes/data/default-data';
-import { registerInfoPrompt } from '../../asstes/data/prompt-text';
-import { getSelectIndex } from '../../asstes/js/utils-methods';
+import { postRequestBody, get, SUCCESS } from '../../assets/http/index';
+import { webSiteCategory, monthlyVisitors, agreement } from '../../assets/data/default-data';
+import { registerInfoPrompt } from '../../assets/data/prompt-text';
+import { getSelectIndex } from '../../assets/js/utils-methods';
 
 import { registerInfoStyle } from './style';
+
 
 @withStyles(registerInfoStyle)
 @createForm()
@@ -72,6 +74,15 @@ class RegisterInfo extends React.Component {
     form.validateFields((error, value) => {
       const mobile = this.phoneRef.current.handleChange();
       if (!error && mobile) {
+        if (!this.check) { // 如果没有点同意用户协议
+          openNotifications.open({
+            message: registerInfoPrompt.agreement,
+            variant: 'warning',
+            duration: 5,
+          });
+          return;
+        }
+
         const obj = Object.assign(data, value, {
           mobile,
           monthlyVisits: getSelectIndex(value.monthlyVisits, monthlyVisitors),
@@ -106,64 +117,71 @@ class RegisterInfo extends React.Component {
     return ayc;
   };
 
+  handleCheckChange = (check) => {
+    this.check = check;
+  };
+
   render() {
     const { classes, form, history } = this.props;
     const { data, isError } = this.state;
     return (
       <InputContainer title={(!data && !isError) ? 'SIGN UP' : ''}>
         {
-          // eslint-disable-next-line no-nested-ternary
-          !data
-            ? <div>loading ....</div>
+          isError
+            ? (
+              <div className={classes.errorWrapper}>
+                <h2 className={classes.errorTitle}>当前token错误</h2>
+                <p className={classes.errorText}>建议你点击下面按钮重新注册一此, 如果多次出现错误, 请联系管理员</p>
+                <MyButton
+                  variant="contained"
+                  color="inherit"
+                  onClick={() => { history.push('/s/signup'); }}
+                >
+                  回到注册页面
+                </MyButton>
+              </div>
+            )
             : (
-              isError
-                ? (
-                  <div className={classes.errorWrapper}>
-                    <h2 className={classes.errorTitle}>当前token错误</h2>
-                    <p className={classes.errorText}>建议你点击下面按钮重新注册一此, 如果多次出现错误, 请联系管理员</p>
-                    <MyButton
-                      variant="contained"
-                      color="inherit"
-                      onClick={() => { history.push('/s/signup'); }}
-                    >
-                      回到注册页面
-                    </MyButton>
-                  </div>
-                )
-                : (
-                  <>
-                    <div className={classes.firstTitle}>
-                      <h4 className={classes.title}>ACCOUNT INFORMATION</h4>
-                    </div>
-                    <Name name="First Name" value={data.firstName} outputName="firstName" form={form} disabled />
-                    <Name name="Last Name" value={data.lastName} outputName="lastName" form={form} disabled />
-                    <Emails form={form} value={data.email} disabled />
-                    <TelIndex ref={this.phoneRef} />
-                    <MergePassword form={form} />
-                    <div className={classes.lastTitle}>
-                      <h4 className={classes.title}>WEBSITE INFORMATION</h4>
-                    </div>
-                    <Name name="Website Name" outputName="websiteName" form={form} />
-                    <MyUrl form={form} />
-                    <MySelect
-                      form={form}
-                      name="Category"
-                      outputName="websiteCategory"
-                      selectArr={webSiteCategory}
-                    />
-                    <MySelect
-                      form={form}
-                      name="Current Monthly Unique Visitores"
-                      outputName="monthlyVisits"
-                      selectArr={monthlyVisitors}
-                    />
-                    <MyTextarea form={form} />
-                    <SubmitButton
-                      name="Submit"
-                      handleSubmit={this.handleSubmit}
-                    />
-                  </>
-                )
+              <>
+                <div className={classes.firstTitle}>
+                  <h4 className={classes.title}>ACCOUNT INFORMATION</h4>
+                </div>
+                <Name name="First Name" value={data && data.firstName} outputName="firstName" form={form} disabled />
+                <Name name="Last Name" value={data && data.lastName} outputName="lastName" form={form} disabled />
+                <Emails form={form} value={data && data.email} disabled />
+                <TelIndex ref={this.phoneRef} />
+                <MergePassword form={form} />
+                <div className={classes.lastTitle}>
+                  <h4 className={classes.title}>WEBSITE INFORMATION</h4>
+                </div>
+                <Name name="Website Name" outputName="websiteName" form={form} />
+                <MyUrl form={form} />
+                <MySelect
+                  form={form}
+                  name="Category"
+                  outputName="websiteCategory"
+                  selectArr={webSiteCategory}
+                />
+                <MySelect
+                  form={form}
+                  name="Current Monthly Unique Visitores"
+                  outputName="monthlyVisits"
+                  selectArr={monthlyVisitors}
+                />
+                <MyTextarea form={form} />
+                <div className={classes.lastTitle}>
+                  <h4 className={classes.title}>AGREEMENT</h4>
+                </div>
+                <p className={classes.text}>{agreement}</p>
+                <MyFormControlLabel
+                  label="I agree to the agreement."
+                  onChange={this.handleCheckChange}
+                />
+                <SubmitButton
+                  name="Submit"
+                  handleSubmit={this.handleSubmit}
+                />
+              </>
             )
         }
       </InputContainer>

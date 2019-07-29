@@ -11,8 +11,8 @@ import MyInput from '../material-ui-component/input';
 import MyTextField from '../material-ui-component/text-field-input';
 import MyLabel from '../material-ui-component/input-label';
 import DateClose from './date-close';
-import { getTime, getDaysTime } from '../../asstes/js/utils-methods';
-import '../../asstes/style/rc-calendar.css';
+import { getTime, getDaysTime } from '../../assets/js/utils-methods';
+import '../../assets/style/rc-calendar.css';
 
 // 转换 日期的 语言
 moment.locale('en-gb');

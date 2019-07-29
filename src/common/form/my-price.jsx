@@ -7,7 +7,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Remove from '@material-ui/icons/Remove';
 import MyInput from '../material-ui-component/input';
 import MyLabel from '../material-ui-component/input-label';
-import { formPrompt } from '../../asstes/data/prompt-text';
+import { formPrompt } from '../../assets/data/prompt-text';
 
 const useStyle = makeStyles(theme => ({
   root: {

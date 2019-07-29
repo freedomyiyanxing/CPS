@@ -14,9 +14,9 @@ import MyCropper from '../utils/cropper';
 import TelIndex from '../../../common/react-intl-tel-input/index';
 
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
-import { postRequestBody, get, SUCCESS } from '../../../asstes/http/index';
-import { userInfoPrompt } from '../../../asstes/data/prompt-text';
-import { getIsForm } from '../../../asstes/js/utils-methods';
+import { postRequestBody, get, SUCCESS } from '../../../assets/http/index';
+import { userInfoPrompt } from '../../../assets/data/prompt-text';
+import { getIsForm } from '../../../assets/js/utils-methods';
 
 let userDate = null;
 

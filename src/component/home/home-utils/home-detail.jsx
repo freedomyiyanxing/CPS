@@ -7,8 +7,8 @@ import MyTextField from '../../../common/material-ui-component/text-field-input'
 import MyPagination from '../../../common/pagination/pagination';
 
 import { httpResponse } from '../home-http';
-import { getDaysTime, getTime, debounce } from '../../../asstes/js/utils-methods';
-import { myIndexTableHeaders, myIndexTablesBody } from '../../../asstes/data/default-data';
+import { getDaysTime, getTime, debounce } from '../../../assets/js/utils-methods';
+import { myIndexTableHeaders, myIndexTablesBody } from '../../../assets/data/default-data';
 
 import { detailStyle } from './style';
 

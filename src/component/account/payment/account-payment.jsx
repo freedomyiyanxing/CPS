@@ -11,10 +11,10 @@ import Container from '../utils/container';
 import PaypalView from '../../../common/paypal/paypal-view';
 
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
-import { paymentPrompt } from '../../../asstes/data/prompt-text';
+import { paymentPrompt } from '../../../assets/data/prompt-text';
 import {
   get, postRequestBody, deleteRequestBody, SUCCESS,
-} from '../../../asstes/http/index';
+} from '../../../assets/http/index';
 import { paymentStyle } from '../style';
 
 @withStyles(paymentStyle)

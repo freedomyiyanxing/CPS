@@ -8,8 +8,8 @@ import SubmitButton from '../form/submit-button';
 import MySelect from '../form/my-select';
 import MyPrice from '../form/my-price';
 import MyPercentage from '../form/my-percentage';
-import { setSearchArg, setCategory } from '../../asstes/js/utils-methods';
-import { get } from '../../asstes/http/index';
+import { setSearchArg, setCategory } from '../../assets/js/utils-methods';
+import { get } from '../../assets/http/index';
 
 // 缓存商品分类数据
 let __cacheProdCates__ = null;

@@ -41,7 +41,7 @@ export const itemStyle = theme => ({
     '&:before': {
       paddingTop: 312,
       content: '""',
-      background: '#3530305c',
+      background: theme.palette.background.disabled,
       display: 'block',
       width: '100%',
     },

@@ -7,12 +7,13 @@ import MyPagination from '../../../common/pagination/pagination';
 import AllTopBtn from './all-top-btn';
 import ProductList from './product-list';
 import EmptyPage from '../../../common/empty';
+import Skeleton from '../../../common/skeleton/index';
 
-import { get, deleteRequestBody, SUCCESS } from '../../../asstes/http/index';
-import { myProduct } from '../../../asstes/data/default-data';
-import { getCheckArr } from '../../../asstes/js/utils-methods';
+import { get, deleteRequestBody, SUCCESS } from '../../../assets/http/index';
+import { myProduct } from '../../../assets/data/default-data';
+import { getCheckArr } from '../../../assets/js/utils-methods';
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
-import { myProductPrompt } from '../../../asstes/data/prompt-text';
+import { myProductPrompt } from '../../../assets/data/prompt-text';
 import { viewStyle } from '../style';
 
 const PAGE_SIZE = 5; // 分页每一页条数
@@ -22,9 +23,10 @@ class View extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null,
-      pagination: null,
+      data: [],
+      pagination: {},
       checkedAllBool: false,
+      loading: true,
     };
 
     this.sort = myProduct.productSort[0].value;
@@ -72,6 +74,7 @@ class View extends React.Component {
             total,
             pages,
           },
+          loading: false,
         });
 
         // 当查询数据时 且 用户动过check 则清除所欲check状态
@@ -229,7 +232,9 @@ class View extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { data, pagination, checkedAllBool } = this.state;
+    const {
+      data, pagination, checkedAllBool, loading,
+    } = this.state;
     return (
       <div className={classes.root}>
         <div className={classes.header}>
@@ -242,33 +247,29 @@ class View extends React.Component {
             onChange={this.handleSelectChange}
           />
         </div>
-        {
-          data
-            ? (
-              <>
-                {
-                  data.length
-                    ? (
-                      <ProductList
-                        data={data}
-                        checkedAllBool={checkedAllBool}
-                        handleDeleteClick={this.handleDeleteClick}
-                        handleCheckAllChange={this.handleCheckAllChange}
-                        handleCheckChange={this.handleCheckChange}
-                      />
-                    )
-                    : <EmptyPage height={284} />
-                }
-                <MyPagination
-                  total={pagination.total} // 总条数
-                  pageSize={PAGE_SIZE} // 每页条数
-                  pageCurrent={this.pageCurrent}
-                  change={this.handlePaginationChange} // 点击分页时调用
+        <Skeleton
+          loading={loading}
+        >
+          {
+            data.length
+              ? (
+                <ProductList
+                  data={data}
+                  checkedAllBool={checkedAllBool}
+                  handleDeleteClick={this.handleDeleteClick}
+                  handleCheckAllChange={this.handleCheckAllChange}
+                  handleCheckChange={this.handleCheckChange}
                 />
-              </>
-            )
-            : <div>loading....</div>
-        }
+              )
+              : <EmptyPage height={284} />
+          }
+          <MyPagination
+            total={pagination.total} // 总条数
+            pageSize={PAGE_SIZE} // 每页条数
+            pageCurrent={this.pageCurrent}
+            change={this.handlePaginationChange} // 点击分页时调用
+          />
+        </Skeleton>
       </div>
     );
   }

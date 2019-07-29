@@ -6,7 +6,7 @@ import MyButton from '../../common/material-ui-component/button';
 import HeaderContainer from './header-container';
 import PartitionLine from '../../common/partition-line/partition-line';
 import { loginNotStyle } from './style';
-import logo from '../../asstes/images/logo_white.png';
+import logo from '../../assets/images/logo_white.png';
 
 const useStyles = makeStyles(loginNotStyle);
 

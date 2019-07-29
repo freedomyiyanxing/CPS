@@ -5,7 +5,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import MyInput from '../material-ui-component/input';
 import MyLabel from '../material-ui-component/input-label';
-import { formPrompt } from '../../asstes/data/prompt-text';
+import { formPrompt } from '../../assets/data/prompt-text';
 
 const MyTextarea = (props) => {
   const {

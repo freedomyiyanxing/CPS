@@ -8,8 +8,8 @@ import MySelect from '../../../common/form/my-select';
 import SubmitButton from '../../../common/form/submit-button';
 import DateRange from '../../../common/date-picker/date-range';
 
-import { myBalanceType } from '../../../asstes/data/default-data';
-import { setSearchArg } from '../../../asstes/js/utils-methods';
+import { myBalanceType } from '../../../assets/data/default-data';
+import { setSearchArg } from '../../../assets/js/utils-methods';
 import { searchStyle } from './style';
 
 let dateStart = null;

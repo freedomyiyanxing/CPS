@@ -10,11 +10,11 @@ import MyTextarea from '../../../common/form/my-textarea';
 import Name from '../../../common/form/name';
 import Container from '../utils/container';
 
-import { postRequestBody, get, SUCCESS } from '../../../asstes/http/index';
-import { monthlyVisitors, webSiteCategory } from '../../../asstes/data/default-data';
+import { postRequestBody, get, SUCCESS } from '../../../assets/http/index';
+import { monthlyVisitors, webSiteCategory } from '../../../assets/data/default-data';
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
-import { userInfoPrompt } from '../../../asstes/data/prompt-text';
-import { getIsForm, getSelectIndex } from '../../../asstes/js/utils-methods';
+import { userInfoPrompt } from '../../../assets/data/prompt-text';
+import { getIsForm, getSelectIndex } from '../../../assets/js/utils-methods';
 
 let userDate = null;
 

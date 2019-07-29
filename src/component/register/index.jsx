@@ -9,9 +9,9 @@ import Name from '../../common/form/name';
 import SubmitButton from '../../common/form/submit-button';
 
 import { openNotifications } from '../../common/prompt-box/prompt-box';
-import { debounce } from '../../asstes/js/utils-methods';
-import { postRequestBody, get, SUCCESS } from '../../asstes/http/index';
-import { registerIndexPrompt, formPrompt } from '../../asstes/data/prompt-text';
+import { debounce } from '../../assets/js/utils-methods';
+import { postRequestBody, get, SUCCESS } from '../../assets/http/index';
+import { registerIndexPrompt, formPrompt } from '../../assets/data/prompt-text';
 
 import { indexStyle } from './style';
 

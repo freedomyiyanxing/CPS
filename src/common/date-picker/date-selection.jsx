@@ -11,8 +11,8 @@ import 'moment/locale/en-gb';
 import MyInput from '../material-ui-component/input';
 import MyLabel from '../material-ui-component/input-label';
 import DateClose from './date-close';
-import { getTime } from '../../asstes/js/utils-methods';
-import '../../asstes/style/rc-calendar.css';
+import { getTime } from '../../assets/js/utils-methods';
+import '../../assets/style/rc-calendar.css';
 
 // 转换 日期的 语言
 moment.locale('en-gb');

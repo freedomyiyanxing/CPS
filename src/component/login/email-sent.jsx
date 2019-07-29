@@ -4,10 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import InputContainer from '../../common/box-container/form-container';
 import SubmitButton from '../../common/form/submit-button';
-import { get, SUCCESS } from '../../asstes/http/index';
+import { get, SUCCESS } from '../../assets/http/index';
 import { openNotifications } from '../../common/prompt-box/prompt-box';
-import { emailSentPrompt, forgetPasswordPrompt } from '../../asstes/data/prompt-text';
-import { emailSentText } from '../../asstes/data/default-data';
+import { emailSentPrompt, forgetPasswordPrompt } from '../../assets/data/prompt-text';
+import { emailSentText } from '../../assets/data/default-data';
 
 import { emailSentPageStyle } from './style';
 

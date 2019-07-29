@@ -14,10 +14,11 @@ export const containerStyle = theme => ({
 });
 
 const login = theme => ({
-  width: 260,
+  // width: 260,
   minHeight: 68,
   display: 'flex',
   alignItems: 'center',
+  paddingLeft: 16,
   color: theme.palette.primary[50],
 });
 
@@ -71,13 +72,13 @@ export const leftStyle = theme => ({
     bottom: 0,
     background: theme.palette.primary[50],
     transition: 'all .2s linear',
-    transform: 'translateX(12px)',
+    transform: 'translateX(14px)',
   },
   linkBtn: {
     minWidth: 0,
     height: 44,
     boxShadow: 'none',
-    padding: 14,
+    padding: 16,
     justifyContent: 'flex-start',
     color: theme.palette.primary[50],
     fontSize: theme.typography.fontSizeLg,

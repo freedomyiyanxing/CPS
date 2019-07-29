@@ -9,7 +9,7 @@ import Collapse from '@material-ui/core/Collapse';
 import MyButton from '../../../common/material-ui-component/button';
 import PartitionLine from '../../../common/partition-line/partition-line';
 import Avatars from '../../../common/material-ui-component/avatar';
-import { myHeader } from '../../../asstes/data/default-data';
+import { myHeader } from '../../../assets/data/default-data';
 
 import { rightStyle } from '../style';
 

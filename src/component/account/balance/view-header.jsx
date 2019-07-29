@@ -11,10 +11,10 @@ import MyButton from '../../../common/material-ui-component/button';
 import Password from '../../../common/form/password';
 import Withdraw from './withdraw';
 
-import { getCurrentDatePaypal } from '../../../asstes/js/utils-methods';
-import { get, postRequestBody, SUCCESS } from '../../../asstes/http/index';
+import { getCurrentDatePaypal } from '../../../assets/js/utils-methods';
+import { get, postRequestBody, SUCCESS } from '../../../assets/http/index';
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
-import { withdrawPrompt, validPasswordPrompt } from '../../../asstes/data/prompt-text';
+import { withdrawPrompt, validPasswordPrompt } from '../../../assets/data/prompt-text';
 import { viewHeader } from './style';
 
 const dates = '5,'; // 测试时间
@@ -95,7 +95,7 @@ class ViewHeight extends React.Component {
         });
         postRequestBody('/api/balance/payout', {
           payoutId: paypalAccount.id,
-          amount: Number(value.withdraw).toFixed(2),
+          amount: Math.abs(value.withdraw).toFixed(2),
         })
           .then((response) => {
             const { message } = response;

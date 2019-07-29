@@ -5,9 +5,10 @@ import { withStyles } from '@material-ui/core/styles/index';
 import MyTable from '../../../common/material-ui-component/table';
 import MyPagination from '../../../common/pagination/pagination';
 import ViewHeight from './view-header';
+import Skeleton from '../../../common/skeleton/index';
 
-import { balanceTableHeaders, amountTable } from '../../../asstes/data/default-data';
-import { get } from '../../../asstes/http/index';
+import { balanceTableHeaders, amountTable } from '../../../assets/data/default-data';
+import { get } from '../../../assets/http/index';
 
 import { viewStyle } from './style';
 
@@ -19,7 +20,8 @@ class ViewRight extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null,
+      items: [],
+      total: 0,
       userInfo: null,
       loading: true,
     };
@@ -61,9 +63,11 @@ class ViewRight extends React.Component {
     ])
       .then((response) => {
         const [data, userInfo] = response;
+        const { items, total } = data;
         if (this._unmount) {
           this.setState({
-            data,
+            items,
+            total,
             userInfo,
             loading: false,
           });
@@ -92,10 +96,11 @@ class ViewRight extends React.Component {
       page, size, ...value,
     })
       .then((response) => {
+        const { items, total } = response;
         this.setState({
-          data: response,
+          items,
+          total,
         });
-        console.log(response);
         resolve(true);
       })
       .catch((err) => {
@@ -112,28 +117,26 @@ class ViewRight extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { data, userInfo, loading } = this.state;
+    const {
+      items, total, userInfo, loading,
+    } = this.state;
     return (
       <div className={classes.root}>
-        {
-          loading
-            ? <div>loading....</div>
-            : (
-              <>
-                <ViewHeight userInfo={userInfo} getUserInfo={this.getUserInfo} />
-                <MyTable
-                  headers={balanceTableHeaders}
-                  rows={amountTable.setTableData(data.items, classes)}
-                />
-                <MyPagination
-                  pageCurrent={this.pageCurrent}
-                  total={data.total} // 总条数
-                  pageSize={PAGE_SIZE} // 每页条数
-                  change={this.handlePaginationChange} // 点击分页时调用
-                />
-              </>
-            )
-        }
+        <Skeleton
+          loading={loading}
+        >
+          <ViewHeight userInfo={userInfo} getUserInfo={this.getUserInfo} />
+          <MyTable
+            headers={balanceTableHeaders}
+            rows={amountTable.setTableData(items, classes)}
+          />
+          <MyPagination
+            pageCurrent={this.pageCurrent}
+            total={total} // 总条数
+            pageSize={PAGE_SIZE} // 每页条数
+            change={this.handlePaginationChange} // 点击分页时调用
+          />
+        </Skeleton>
       </div>
     );
   }

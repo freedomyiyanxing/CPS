@@ -9,8 +9,8 @@ import SubmitButton from '../../common/form/submit-button';
 import MyButton from '../../common/material-ui-component/button';
 
 import { openNotifications } from '../../common/prompt-box/prompt-box';
-import { get, patchRequestBody, SUCCESS } from '../../asstes/http';
-import { resetPasswordPrompt } from '../../asstes/data/prompt-text';
+import { get, patchRequestBody, SUCCESS } from '../../assets/http';
+import { resetPasswordPrompt } from '../../assets/data/prompt-text';
 
 import { resetPasswordStyle } from './style';
 

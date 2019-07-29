@@ -24,6 +24,16 @@ export const listStyle = theme => ({
     width: 80,
     height: 'inherit',
     borderRadius: 'inherit',
+    '&:before': {
+      width: '100%',
+      paddingTop: 100,
+      content: '""',
+      background: theme.palette.background.disabled,
+      display: 'block',
+    },
+    '& > img': {
+      position: 'absolute',
+    },
   },
   tableBody: {
     borderLeft: `1px solid ${theme.palette.border.borderEf}`,

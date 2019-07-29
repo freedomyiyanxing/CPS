@@ -8,9 +8,9 @@ import PartitionLine from '../../../common/partition-line/partition-line';
 import DialogIndex from '../../../common/dialog/dialog-index';
 import DialogHeader from '../../../common/dialog/dialog-header';
 import DialogFooter from '../../../common/dialog/dialog-footer';
-import { postRequestBody, SUCCESS } from '../../../asstes/http/index';
+import { postRequestBody, SUCCESS } from '../../../assets/http/index';
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
-import { productPrompt } from '../../../asstes/data/prompt-text';
+import { productPrompt } from '../../../assets/data/prompt-text';
 
 import { itemButtonStyle } from '../style';
 

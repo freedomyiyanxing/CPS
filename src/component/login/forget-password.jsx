@@ -8,10 +8,10 @@ import { forgetPasswordStyle } from './style';
 import InputContainer from '../../common/box-container/form-container';
 import Emails from '../../common/form/email';
 import SubmitButton from '../../common/form/submit-button';
-import { get, SUCCESS } from '../../asstes/http/index';
+import { get, SUCCESS } from '../../assets/http/index';
 import { openNotifications } from '../../common/prompt-box/prompt-box';
-import { forgetPasswordText } from '../../asstes/data/default-data';
-import { forgetPasswordPrompt } from '../../asstes/data/prompt-text';
+import { forgetPasswordText } from '../../assets/data/default-data';
+import { forgetPasswordPrompt } from '../../assets/data/prompt-text';
 
 @withStyles(forgetPasswordStyle)
 @createForm()

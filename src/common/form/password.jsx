@@ -6,7 +6,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import PsdVisibility from './psd-visibility';
 import MyInput from '../material-ui-component/input';
-import { formPrompt } from '../../asstes/data/prompt-text';
+import { formPrompt } from '../../assets/data/prompt-text';
 
 const Password = (props) => {
   const {

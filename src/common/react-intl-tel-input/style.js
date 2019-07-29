@@ -1,4 +1,4 @@
-import BgImg from '../../asstes/images/flags.png';
+import BgImg from '../../assets/images/flags.png';
 
 export const intTeInputStyle = () => ({
   wrapper: {

@@ -4,7 +4,7 @@ import { createForm, formShape } from 'rc-form';
 
 import Password from './password';
 import ConfirmPassword from './password-confirm';
-import { formPrompt } from '../../asstes/data/prompt-text';
+import { formPrompt } from '../../assets/data/prompt-text';
 
 @createForm()
 class MergePassword extends React.Component {

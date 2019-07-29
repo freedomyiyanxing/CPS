@@ -1,11 +1,18 @@
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // 判断当前打包环境 （dev = 开发，test = 测试，pre = 预环境）
 const ENVIRONMENT = process.env.ENVIRONMENT;
+
+// 获取骨架屏
+const loading = {
+  html: fs.readFileSync(path.join(__dirname, '../src/common/skeleton/skeleton.html')),
+  css: `<style id="skeleton-id">${fs.readFileSync(path.join(__dirname, '../src/common/skeleton/skeleton.css'))}</style>`,
+};
 
 module.exports = {
   entry: {
@@ -36,7 +43,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpg|jpeg|gif)$/,
+        test: /\.(png|jpg|jpeg|gif|ico)$/,
         exclude: path.join(__dirname, '../node_modules'), // 排除路径,
         use: [{
           loader: 'file-loader',
@@ -50,6 +57,7 @@ module.exports = {
   },
   plugins: [
     new HTMLWebpackPlugin({
+      loading,
       filename: 'index.html',
       template: path.join(__dirname, '../src/index.html'),
     }),
@@ -74,16 +82,16 @@ module.exports = {
       /moment[/\\]locale$/,
       /en-gb/,
     ),
-    new BundleAnalyzerPlugin({ // 可视化工具 http://127.0.0.1:8888
-      analyzerMode: 'server',
-      analyzerHost: '127.0.0.1',
-      analyzerPort: 8899,
-      reportFilename: 'report.html',
-      defaultSizes: 'parsed',
-      openAnalyzer: true,
-      generateStatsFile: false,
-      statsFilename: 'stats.json',
-      logLevel: 'info'
-    })
+    // new BundleAnalyzerPlugin({ // 可视化工具 http://127.0.0.1:8888
+    //   analyzerMode: 'server',
+    //   analyzerHost: '127.0.0.1',
+    //   analyzerPort: 8899,
+    //   reportFilename: 'report.html',
+    //   defaultSizes: 'parsed',
+    //   openAnalyzer: true,
+    //   generateStatsFile: false,
+    //   statsFilename: 'stats.json',
+    //   logLevel: 'info'
+    // })
   ],
 };

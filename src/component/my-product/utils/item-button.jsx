@@ -9,8 +9,8 @@ import DialogHeader from '../../../common/dialog/dialog-header';
 import DialogFooter from '../../../common/dialog/dialog-footer';
 
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
-import { productPrompt } from '../../../asstes/data/prompt-text';
-import { postRequestBody } from '../../../asstes/http';
+import { productPrompt } from '../../../assets/data/prompt-text';
+import { postRequestBody } from '../../../assets/http';
 import { itemButtonStyle } from '../style';
 
 const useStyle = makeStyles(itemButtonStyle);

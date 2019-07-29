@@ -11,19 +11,9 @@ import MyCheckbox from '../../../common/material-ui-component/checkbox';
 import Avatars from '../../../common/material-ui-component/avatar';
 import ItemButton from './item-button';
 
-import { getTimes } from '../../../asstes/js/utils-methods';
+import { myProduct } from '../../../assets/data/default-data';
+import { getTimes } from '../../../assets/js/utils-methods';
 import { listStyle } from '../style';
-
-const tableHeadText = [
-  '',
-  'Items Name',
-  'Price',
-  'Category',
-  'Advertising Fees',
-  'Remaining Days',
-  'Statues',
-  '',
-];
 
 const useStyle = makeStyles(listStyle);
 
@@ -47,7 +37,7 @@ const ProductList = (props) => {
           />
         </MyTableCell>
         {
-          tableHeadText.map(items => <MyTableCell align="left">{items}</MyTableCell>)
+          myProduct.tableHeadText.map(items => <MyTableCell align="left">{items}</MyTableCell>)
         }
       </TableHead>
       <TableBody className={classes.tableBody}>

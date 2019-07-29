@@ -1,5 +1,5 @@
 import { action, observable } from 'mobx';
-import { session } from '../asstes/js/utils-methods';
+import { session } from '../assets/js/utils-methods';
 
 class User {
   @observable isLogin;

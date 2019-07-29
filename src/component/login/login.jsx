@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
 import { withStyles } from '@material-ui/core/styles';
 import { inject } from 'mobx-react';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import MyCheckbox from '../../common/material-ui-component/checkbox';
 import InputContainer from '../../common/box-container/form-container';
 import Emails from '../../common/form/email';
 import Password from '../../common/form/password';
 import SubmitButton from '../../common/form/submit-button';
+import MyFormControlLabel from '../../common/material-ui-component/form-control-label';
+
 import { openNotifications } from '../../common/prompt-box/prompt-box';
-import { psdBase64, storage, session } from '../../asstes/js/utils-methods';
-import { postRequestBody } from '../../asstes/http/index';
-import { loginPrompt } from '../../asstes/data/prompt-text';
+import { psdBase64, storage, session } from '../../assets/js/utils-methods';
+import { postRequestBody } from '../../assets/http/index';
+import { loginPrompt } from '../../assets/data/prompt-text';
 
 import { loginStyle } from './style';
 
@@ -23,13 +23,6 @@ import { loginStyle } from './style';
 @withStyles(loginStyle)
 @createForm()
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      check: false,
-    };
-  }
-
   // render前 获取存储的数据
   componentWillMount() {
     const result = storage.getStorage('login');
@@ -50,7 +43,6 @@ class Login extends React.Component {
     const {
       form, history, location, userStore,
     } = this.props;
-    const { check } = this.state;
     let ayc = null;
     // rc-form验证
     form.validateFields((error, value) => {
@@ -60,7 +52,8 @@ class Login extends React.Component {
           postRequestBody('/api/auth/signin', { ...value })
             .then((response) => {
               // 只有当服务器返回正确 且 点击了存储密码邮箱的check
-              if (check) {
+              console.log(this.check, 'this');
+              if (this.check) {
                 storage.setStorage('login', {
                   emails: value.email,
                   psd: psdBase64.encryption(value.password),
@@ -95,11 +88,9 @@ class Login extends React.Component {
   };
 
   // 点击check 记住邮箱 密码
-  handleChange = () => {
-    const { check } = this.state;
-    this.setState({
-      check: !check,
-    });
+  handleChange = (check) => {
+    console.log(check);
+    this.check = check;
   };
 
   /**
@@ -112,16 +103,14 @@ class Login extends React.Component {
 
   render() {
     const { classes, form } = this.props;
-    const { check } = this.state;
     return (
       <InputContainer title="SIGN IN">
         <Emails form={form} value={this.emails} />
         <Password form={form} value={this.psd} name="Password" />
         <div className={classes.main}>
-          <FormControlLabel
-            label="Keep me logged in"
-            classes={{ root: classes.labelRoot, label: classes.label }}
-            control={<MyCheckbox checked={check} onChange={this.handleChange} />}
+          <MyFormControlLabel
+            label="Keep me logged ins"
+            onChange={this.handleChange}
           />
           <span
             role="button"

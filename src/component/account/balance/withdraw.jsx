@@ -9,7 +9,7 @@ import MyButton from '../../../common/material-ui-component/button';
 import PaypalView from '../../../common/paypal/paypal-view';
 import MyTooltip from '../../../common/material-ui-component/tooltip';
 
-import { formPrompt } from '../../../asstes/data/prompt-text';
+import { formPrompt } from '../../../assets/data/prompt-text';
 
 const useStyle = makeStyles(theme => ({
   wrapper: {
@@ -85,7 +85,6 @@ const Withdraw = (props) => {
 
   const { getFieldProps, getFieldError } = form;
   const errors = getFieldError('withdraw');
-  console.log(data);
   return (
     <div className={classes.wrapper}>
       <div className={classes.items}>

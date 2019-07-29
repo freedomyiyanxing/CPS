@@ -6,8 +6,8 @@ import MenuList from '@material-ui/core/MenuList';
 import Collapse from '@material-ui/core/Collapse';
 
 import MyButton from '../../../common/material-ui-component/button';
-import { myHeader } from '../../../asstes/data/default-data';
-import logo from '../../../asstes/images/logo_white.png';
+import { myHeader } from '../../../assets/data/default-data';
+import logo from '../../../assets/images/logo_white.png';
 
 import { leftStyle } from '../style';
 
@@ -22,7 +22,7 @@ const HeaderLeft = (props) => {
   useEffect(() => {
     const { pathname } = history.location;
     if (pathname.endsWith('product-search') || pathname.endsWith('my-products')) {
-      indicator.current.style.transform = 'translateX(85px)';
+      indicator.current.style.transform = 'translateX(90px)';
     }
   });
 
@@ -36,24 +36,22 @@ const HeaderLeft = (props) => {
   // home 点击事件
   const handleHome = () => {
     history.push('/my/index');
-    indicator.current.style.transform = 'translateX(12px)';
+    indicator.current.style.transform = 'translateX(14px)';
   };
 
   // home 移入事件
-  const onMouseEnterHome = () => {
-    // indicator.current.style.transform = 'translateX(12px)';
-  };
+  // const onMouseEnterHome = () => {
+  //   indicator.current.style.transform = 'translateX(12px)';
+  // };
 
   // links 移入事件
   const onMouseEnterLinks = () => {
     setOpen(true);
-    // indicator.current.style.transform = 'translateX(85px)';
   };
 
   // 点击进入推广管理页面
   const handlePushWide = (links) => {
     history.push(`/my/${links}`);
-    // indicator.current.style.transform = 'translateX(85px)';
   };
 
   return (
@@ -70,7 +68,7 @@ const HeaderLeft = (props) => {
         <MyButton
           className={classes.linkBtn}
           onClick={handleHome}
-          onMouseEnter={onMouseEnterHome}
+          // onMouseEnter={onMouseEnterHome}
         >
           Home
         </MyButton>

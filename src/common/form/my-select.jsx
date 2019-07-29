@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
 import MyLabel from '../material-ui-component/input-label';
-import { formPrompt } from '../../asstes/data/prompt-text';
+import { formPrompt } from '../../assets/data/prompt-text';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 5;

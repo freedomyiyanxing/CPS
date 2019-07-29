@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
+import { Helmet } from 'react-helmet';
 
 import MainContainer from '../../common/box-container/main-container';
 import HomeHeader from './home-utils/home-header';
 import HomeCurve from './home-utils/home-curve';
 import HomeDetail from './home-utils/home-detail';
+import Skeleton from '../../common/skeleton/index';
 
-import { getDaysTime, getTime } from '../../asstes/js/utils-methods';
+import { getDaysTime, getTime } from '../../assets/js/utils-methods';
 import { httpResponse } from './home-http';
 
 const PAGE_SIZE = 10; // 分页每一页条数
@@ -101,23 +103,24 @@ class Home extends React.Component {
     } = this.state;
     return (
       <MainContainer margin={[44, 0, 40]}>
+        <Helmet>
+          <title>home</title>
+        </Helmet>
         {
-          loading
-            ? <div style={{ minHeight: 500 }}>loading。。。。</div>
-            : (
-              <>
-                <HomeHeader data={userInfo} history={history} />
-                <HomeCurve
-                  data={[daily, statistics]}
-                  onChange={this.handleChangeDate}
-                />
-                <HomeDetail
-                  size={PAGE_SIZE}
-                  data={detail}
-                  time={timer}
-                />
-              </>
-            )
+          <Skeleton
+            loading={loading}
+          >
+            <HomeHeader data={userInfo} history={history} />
+            <HomeCurve
+              data={[daily, statistics]}
+              onChange={this.handleChangeDate}
+            />
+            <HomeDetail
+              size={PAGE_SIZE}
+              data={detail}
+              time={timer}
+            />
+          </Skeleton>
         }
       </MainContainer>
     );

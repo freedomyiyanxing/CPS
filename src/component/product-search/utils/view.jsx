@@ -1,14 +1,16 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
+import Skeleton from '../../../common/skeleton/index';
 import DropDownBox from '../../../common/drop-down-box/drop-down-box';
 import MyPagination from '../../../common/pagination/pagination';
 import EmptyPage from '../../../common/empty/index';
 import ProductItems from './product-item';
 
-import { storeProduct } from '../../../asstes/data/default-data';
-import { get } from '../../../asstes/http/index';
+import { storeProduct } from '../../../assets/data/default-data';
+import { get } from '../../../assets/http/index';
 import { viewStyle } from '../style';
 
 const PAGE_SIZE = 8; // 分页每一页条数
@@ -18,7 +20,9 @@ class View extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null,
+      items: [],
+      total: 0,
+      loading: true,
     };
     this.sort = storeProduct.productSort[0].value; // 默认排序的值
     this.pageCurrent = 1; // 当前页码 默认1;
@@ -54,9 +58,12 @@ class View extends React.Component {
       page, size, ...value, sortBy,
     })
       .then((response) => {
+        const { total, items } = response;
         if (this._unmount) {
           this.setState({
-            data: response,
+            items,
+            total,
+            loading: false,
           });
           resolve(true);
         }
@@ -81,7 +88,7 @@ class View extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { data } = this.state;
+    const { items, total, loading } = this.state;
     return (
       <div className={classes.root}>
         <div className={classes.header}>
@@ -90,34 +97,30 @@ class View extends React.Component {
             onChange={this.handleSelectChange}
           />
         </div>
-        {
-          data
-            ? (
-              <>
-                <div className={classes.wrapper}>
-                  {
-                    data.items.length
-                      ? (
-                        data.items.map(v => (
-                          <ProductItems
-                            data={v}
-                            key={v.id}
-                          />
-                        ))
-                      )
-                      : <EmptyPage height={375} />
-                  }
-                </div>
-                <MyPagination
-                  total={data.total} // 总条数
-                  pageSize={PAGE_SIZE} // 每页条数
-                  pageCurrent={this.pageCurrent}
-                  change={this.handlePaginationChange} // 点击分页时调用
-                />
-              </>
-            )
-            : <div>loading.....</div>
-        }
+        <Skeleton
+          loading={loading}
+        >
+          <div className={classes.wrapper}>
+            {
+              items.length
+                ? (
+                  items.map(v => (
+                    <ProductItems
+                      data={v}
+                      key={v.id}
+                    />
+                  ))
+                )
+                : <EmptyPage height={375} />
+            }
+          </div>
+          <MyPagination
+            total={total} // 总条数
+            pageSize={PAGE_SIZE} // 每页条数
+            pageCurrent={this.pageCurrent}
+            change={this.handlePaginationChange} // 点击分页时调用
+          />
+        </Skeleton>
       </div>
     );
   }

@@ -3,7 +3,7 @@ import {createMuiTheme} from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 import orange from '@material-ui/core/colors/orange';
 import lightBlue from '@material-ui/core/colors/lightBlue';
-import green from '@material-ui/core/colors/green';
+import yellow from '@material-ui/core/colors/yellow';
 
 export const theme = createMuiTheme({
   // 色彩配置
@@ -34,9 +34,7 @@ export const theme = createMuiTheme({
     // 次要色 (当前项目的风格中用不到)
     secondary: orange,
     // 继承色 (当前项目的风格中用不到)
-    inherit: lightBlue,
-    // 成功色
-    green: green,
+    inherit: yellow,
     type: 'light',
     background: {
       black: '#040404',

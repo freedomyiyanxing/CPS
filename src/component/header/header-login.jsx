@@ -12,9 +12,9 @@ import HeaderLeft from './utils/header-left';
 import HeaderRight from './utils/header-right';
 
 import { openNotifications } from '../../common/prompt-box/prompt-box';
-import { patchRequestBody, SUCCESS } from '../../asstes/http/index';
-import { session } from '../../asstes/js/utils-methods';
-import { logoutPrompt } from '../../asstes/data/prompt-text';
+import { patchRequestBody, SUCCESS } from '../../assets/http/index';
+import { session } from '../../assets/js/utils-methods';
+import { logoutPrompt } from '../../assets/data/prompt-text';
 
 const useStyle = makeStyles(theme => ({
   dialogIcon: {

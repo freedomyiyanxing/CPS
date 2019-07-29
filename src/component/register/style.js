@@ -41,4 +41,15 @@ export const registerInfoStyle = theme => ({
     fontWeight: theme.typography.fontWeight,
     lineHeight: 1.5,
   },
+  text: {
+    maxHeight: 178,
+    overflowY: 'auto',
+    padding: 12,
+    margin: [[10, 0, 6]],
+    lineHeight: '1.6rem',
+    borderRadius: 4,
+    fontSize: theme.typography.fontSize,
+    color: theme.palette.text.primary,
+    border: `1px solid ${theme.palette.border.borderDD}`,
+  },
 });

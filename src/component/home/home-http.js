@@ -1,4 +1,4 @@
-import { get } from '../../asstes/http/index';
+import { get } from '../../assets/http/index';
 
 const httpResponse = (url, params) => new Promise((resolve, reject) => {
   get(url, params)

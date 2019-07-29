@@ -8,7 +8,7 @@ import DateRange from '../../../common/date-picker/date-range';
 import Counter from '../../../common/beat-number/beat-number';
 import MyHighcharts from '../../../common/my-highcharts/my-highcharts';
 import MyTooltip from '../../../common/material-ui-component/tooltip';
-import { statisticsTabs, polylineDaily } from '../../../asstes/data/default-data';
+import { statisticsTabs, polylineDaily } from '../../../assets/data/default-data';
 
 import { curveStyle } from './style';
 

@@ -15,9 +15,9 @@ import MainContainer from '../../common/box-container/main-container';
 import Password from '../../common/form/password';
 
 import { openNotifications } from '../../common/prompt-box/prompt-box';
-import { postRequestBody } from '../../asstes/http/index';
-import { accountIndex } from '../../asstes/data/default-data';
-import { validPasswordPrompt, errorText } from '../../asstes/data/prompt-text';
+import { postRequestBody } from '../../assets/http/index';
+import { accountIndex } from '../../assets/data/default-data';
+import { validPasswordPrompt, errorText } from '../../assets/data/prompt-text';
 import { indexStyle } from './style';
 
 @withStyles(indexStyle)
@@ -34,14 +34,6 @@ class AccountIndex extends React.Component {
   handleClick = (links) => {
     const { history } = this.props;
     history.push(`/my/${links}`);
-    // if (links !== 'account-payment' || window.__valid__password__) {
-    //   history.push(`/my/${links}`);
-    //   console.log(links);
-    // } else {
-    //   this.setState({
-    //     open: true,
-    //   });
-    // }
   };
 
   // 确认密码提交

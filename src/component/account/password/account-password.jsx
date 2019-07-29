@@ -9,8 +9,8 @@ import Container from '../utils/container';
 import MergePassword from '../../../common/form/password-merge';
 
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
-import { patchRequestBody, SUCCESS } from '../../../asstes/http/index';
-import { userSetPassword } from '../../../asstes/data/prompt-text';
+import { patchRequestBody, SUCCESS } from '../../../assets/http/index';
+import { userSetPassword } from '../../../assets/data/prompt-text';
 
 @createForm()
 class AccountPassword extends React.Component {

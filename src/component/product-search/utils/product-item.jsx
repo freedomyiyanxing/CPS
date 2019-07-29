@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles/index';
 import ItemButton from './item-button';
 import Avatars from '../../../common/material-ui-component/avatar';
 
-import { getTimes, setBrokerageRate } from '../../../asstes/js/utils-methods';
+import { getTimes, setBrokerageRate } from '../../../assets/js/utils-methods';
 import { itemStyle } from '../style';
 
 const useStyle = makeStyles(itemStyle);
