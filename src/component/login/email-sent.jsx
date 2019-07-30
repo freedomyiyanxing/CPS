@@ -32,14 +32,14 @@ const EmailSentPage = (props) => {
   const handleSubmit = () => new Promise((resolve) => {
     get(url)
       .then((response) => {
-        if (response.message === SUCCESS) {
+        const { message } = response;
+        if (message === SUCCESS) {
           openNotifications.open({
             message: emailSentPrompt.successText,
             variant: 'success',
             duration: 5,
           });
           resolve(true);
-          console.log(response);
         }
       })
       .catch((err) => {
@@ -49,16 +49,15 @@ const EmailSentPage = (props) => {
           duration: 5,
         });
         resolve(true);
-        console.log(err);
       });
   });
 
   return (
     <InputContainer title="EMAIL SENT">
       <p className={classes.prompt}>
-        <span>An email has been sent to</span>
+        An email has been sent to
         <b>{email}</b>
-        <span>{emailSentText(isRegister)}</span>
+        {emailSentText(isRegister)}
       </p>
       <SubmitButton
         name="Didn't recive email? Resend"

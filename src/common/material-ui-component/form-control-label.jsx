@@ -9,7 +9,6 @@ const useStyle = makeStyles(theme => ({
   label: {
     color: theme.palette.text.secondary,
     fontSize: theme.typography.fontSizeSm,
-    fontFamily: theme.typography.fontFamily,
     letterSpacing: 0,
   },
   labelRoot: {
@@ -30,7 +29,10 @@ const MyFormControlLabel = (props) => {
   return (
     <FormControlLabel
       {...props}
-      classes={{ root: classes.labelRoot, label: classes.label }}
+      classes={{
+        root: classes.labelRoot,
+        label: classes.label,
+      }}
       control={<MyCheckbox checked={check} onChange={handleChange} />}
     />
   );

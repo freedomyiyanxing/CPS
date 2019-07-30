@@ -28,10 +28,20 @@ const HeaderNotLogin = (props) => {
     history.push('/s/signup');
   };
 
+  /**
+   * to 未登录首页
+   */
+  const handleChange = () => {
+    history.push('/s/index');
+  };
+
   return (
     <HeaderContainer>
       <div
         className={classes.logo}
+        tabIndex={0}
+        role="button"
+        onClick={handleChange}
       >
         <img src={logo} alt="iNFLUMONSTER logo" />
       </div>

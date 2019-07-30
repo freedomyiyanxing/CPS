@@ -8,6 +8,7 @@ import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 const useStyle = makeStyles(theme => ({
   checkRoot: {
     padding: 7,
+    color: theme.palette.border.borderDD,
   },
   icon: {
     fontSize: theme.typography.fontSizeLg,
@@ -21,7 +22,7 @@ const MyCheckbox = (props) => {
 
   return (
     <Checkbox
-      value="checkedC"
+      value="checked"
       checked={checked}
       onChange={onChange}
       icon={<CheckBoxOutlineBlank className={classes.icon} />}

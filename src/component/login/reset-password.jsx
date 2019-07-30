@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import InputContainer from '../../common/box-container/form-container';
 import MergePassword from '../../common/form/password-merge';
 import SubmitButton from '../../common/form/submit-button';
-import MyButton from '../../common/material-ui-component/button';
+import TokenError from '../../common/token-error/index';
 
 import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { get, patchRequestBody, SUCCESS } from '../../assets/http';
@@ -22,7 +22,6 @@ class ResetPassword extends React.Component {
     this.state = {
       email: '',
       isError: false, // 标致 获取用户是否成功
-      loading: true,
     };
   }
 
@@ -32,24 +31,21 @@ class ResetPassword extends React.Component {
     this._unmount = true;
     if (search) {
       // 获取注册用户的信息 (name && email)
-      setTimeout(() => {
-        get(`/api/password/info${search}`)
-          .then((response) => {
-            if (this._unmount) {
-              this.setState({
-                email: response.email,
-                loading: false,
-              });
-            }
-          })
-          .catch((err) => {
-            console.log(err, 'error');
+      get(`/api/password/info${search}`)
+        .then((response) => {
+          const { email } = response;
+          if (this._unmount) {
             this.setState({
-              isError: true,
-              loading: false,
+              email,
             });
+          }
+        })
+        .catch((err) => {
+          console.log(err, 'error');
+          this.setState({
+            isError: true,
           });
-      }, 1000);
+        });
     }
   }
 
@@ -68,34 +64,32 @@ class ResetPassword extends React.Component {
     form.validateFields((error, value) => {
       if (!error) {
         ayc = new Promise((resolve) => {
-          setTimeout(() => {
-            console.log({ ...value });
-            patchRequestBody('/api/password/reset', {
-              email,
-              newPassword: value.password,
-            })
-              .then((response) => {
-                if (response.message === SUCCESS) {
-                  openNotifications.open({
-                    message: resetPasswordPrompt.successText,
-                    variant: 'success',
-                    duration: 5,
-                  });
-                }
-                resolve(true);
-                // 密码修改完成 回到登录页面
-                history.push('/s/signin');
-              })
-              .catch((err) => {
-                console.log(err);
-                resolve(true);
+          patchRequestBody('/api/password/reset', {
+            email,
+            newPassword: value.password,
+          })
+            .then((response) => {
+              const { message } = response;
+              if (message === SUCCESS) {
                 openNotifications.open({
-                  message: err.data.message || resetPasswordPrompt.errorText,
-                  variant: 'error',
-                  duration: 5, // null 表示永远不移除
+                  message: resetPasswordPrompt.successText,
+                  variant: 'success',
+                  duration: 5,
                 });
+              }
+              resolve(true);
+              // 密码修改完成 回到登录页面
+              history.push('/s/signin');
+            })
+            .catch((err) => {
+              console.log(err);
+              resolve(true);
+              openNotifications.open({
+                message: err.data.message || resetPasswordPrompt.errorText,
+                variant: 'error',
+                duration: 5, // null 表示永远不移除
               });
-          }, 1000);
+            });
         });
       }
     });
@@ -105,45 +99,25 @@ class ResetPassword extends React.Component {
   render() {
     const { classes, form, history } = this.props;
     const {
-      email, isError, loading,
+      email, isError,
     } = this.state;
     return (
-      <InputContainer title={(!loading && !isError) ? 'REST PASSWORD' : ''}>
-        {
-          // eslint-disable-next-line no-nested-ternary
-          loading
-            ? <div>loading</div>
-            : isError
-              ? (
-                <div className={classes.errorWrapper}>
-                  <h2 className={classes.errorTitle}>当前token错误</h2>
-                  <p className={classes.errorText}>建议你点击下面按钮重新注册一此, 如果多次出现错误, 请联系管理员</p>
-                  <MyButton
-                    variant="contained"
-                    color="inherit"
-                    onClick={() => { history.push('/s/password/forgot'); }}
-                  >
-                    回到找回密码页面
-                  </MyButton>
-                </div>
-              )
-              : (
-                <>
-                  <p className={classes.prompt}>
-                    Dear
-                    <b>{email}</b>
-                  </p>
-                  <p className={classes.prompt}>
-                    To reset your password, simply enter a new password below
-                  </p>
-                  <MergePassword form={form} />
-                  <SubmitButton
-                    name="Log in"
-                    handleSubmit={this.handleSubmit}
-                  />
-                </>
-              )
-        }
+      <InputContainer title={isError ? '' : 'REST PASSWORD'}>
+        <TokenError
+          error={isError}
+          history={history}
+        >
+          <p className={classes.prompt}>
+            Dear
+            <b>{email || ''}</b>
+            To reset your password, simply enter a new password below
+          </p>
+          <MergePassword form={form} />
+          <SubmitButton
+            name="Log in"
+            handleSubmit={this.handleSubmit}
+          />
+        </TokenError>
       </InputContainer>
     );
   }

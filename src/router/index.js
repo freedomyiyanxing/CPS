@@ -16,6 +16,7 @@ const EmailSentPage = loadable(() => import('../component/login/email-sent'));
 const ResetPassword = loadable(() => import('../component/login/reset-password'));
 const Register = loadable(() => import('../component/register/index'));
 const RegisterInfo = loadable(() => import('../component/register/register-info'));
+const RegisterWait = loadable(() => import('../component/register/register-wait'));
 const AccountBalance = loadable(() => import('../component/account/balance/account-balance'));
 const AccountIndex = loadable(() => import('../component/account/index'));
 const WibsiteSetting = loadable(() => import('../component/account/wibsite/wibsite-setting'));
@@ -76,6 +77,12 @@ const routers = [
             path: '/s/signup/confirm',
             exact: true,
             component: RegisterInfo,
+            key: uuid(),
+          },
+          {
+            path: '/s/signup/wait',
+            exact: true,
+            component: RegisterWait,
             key: uuid(),
           },
           {

@@ -14,7 +14,7 @@ const useStyle = makeStyles(theme => ({
     border: '1px solid',
     borderColor: theme.palette.text.colorDdd,
     borderRadius: 10,
-    padding: [[20, 40]],
+    padding: [[20, 30]],
   },
   title: {
     lineHeight: theme.typography.h2.lineHeight,
