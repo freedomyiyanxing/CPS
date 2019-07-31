@@ -17,8 +17,6 @@ import { openNotifications } from '../../../common/prompt-box/prompt-box';
 import { withdrawPrompt, validPasswordPrompt } from '../../../assets/data/prompt-text';
 import { viewHeader } from './style';
 
-const dates = '5,'; // 测试时间
-
 @withStyles(viewHeader)
 @createForm()
 class ViewHeight extends React.Component {
@@ -65,7 +63,9 @@ class ViewHeight extends React.Component {
         this.setState({
           paypalAccount,
           systemInfo: window.__payment__info__ = systemInfo,
-          isSubmit: !(getCurrentDatePaypal(dates).isWithdrow && !!paypalAccount.id),
+          isSubmit: !(
+            getCurrentDatePaypal(systemInfo.payout.date).isWithdrow && !!paypalAccount.id
+          ),
         });
       })
       .catch((err) => {
@@ -210,7 +210,7 @@ class ViewHeight extends React.Component {
     const { balance } = userInfo;
     let getPaypal = null;
     if (systemInfo) {
-      getPaypal = getCurrentDatePaypal(dates);
+      getPaypal = getCurrentDatePaypal(systemInfo.payout.date);
     }
     let withdraw = {};
     if (systemInfo && paypalAccount && paypalAccount.id) {

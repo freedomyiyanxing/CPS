@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -35,6 +36,8 @@ class View extends React.Component {
 
     // 选中的id
     this.selectId = [];
+    // 选中商品的状态
+    this.productStatus = [];
   }
 
   componentDidMount() {
@@ -51,20 +54,20 @@ class View extends React.Component {
    * @param value // 表单数据
    * @param page // 当前页码
    * @param size // 每页条数
-   * @param sortBy // 排序
+   * @param sort // 排序
    * @returns {Promise<any>}
    */
   getData = (
     value = this.value,
     page = this.pageCurrent,
     size = PAGE_SIZE,
-    sortBy = this.sort,
+    sort = this.sort,
   ) => new Promise((resolve) => {
     const { checkedAllBool } = this.state;
     this.value = value; // 如果参数value有值 则覆盖缓存的值
     this.pageCurrent = page; // 如果参数page有值 则覆盖缓存的值
     get('/api/promotions/my', {
-      page, size, ...value, sortBy,
+      page, size, ...value, sort,
     }).then((response) => {
       const { total, pages, items } = response;
       if (this._unmount) {
@@ -198,12 +201,38 @@ class View extends React.Component {
 
   // 下载 xls
   getAllLinks =() => new Promise((resolve) => {
+    const { data } = this.state;
+    // arr中存储未过期的商品id
+    const arr = [];
+
     if (!this.selectId.length) {
       resolve(true);
       return;
     }
+
+    data.forEach((item) => {
+      if (item.valid) {
+        this.selectId.forEach((j) => {
+          if (item.id === j) { // 表示当前商品未过期
+            arr.push(j);
+          }
+        });
+      }
+    });
+
+    // arr.length === 0 表示所有选中的商品都是已经过期的
+    if(!arr.length) {
+      openNotifications.open({
+        message: myProductPrompt.downloadLinksError,
+        variant: 'warning',
+        duration: 5,
+      });
+      resolve(true);
+      return;
+    }
+
     // responseType: 'arraybuffer' response 是一个包含二进制数据的 JavaScript ArrayBuffer,
-    get('/api/promotions/links', { ids: this.selectId.join(',') }, 'arraybuffer')
+    get('/api/promotions/links', { ids: arr.join(',') }, 'arraybuffer')
       .then((response) => {
         openNotifications.open({
           message: myProductPrompt.downloadLinks,

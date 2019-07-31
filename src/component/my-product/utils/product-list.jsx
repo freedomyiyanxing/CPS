@@ -91,11 +91,12 @@ const ProductList = (props) => {
                 </span>
               </MyTableCell>
               <MyTableCell align="left">
-                <span className={classes.status}>{v.status}</span>
+                <span className={classes.status}>{v.valid ? 'Normal' : 'Invalid'}</span>
               </MyTableCell>
               <MyTableCell align="left">
                 <ItemButton
                   id={v.id}
+                  valid={v.valid}
                   handleDeleteClick={handleDeleteClick}
                 />
               </MyTableCell>

@@ -17,7 +17,7 @@ const useStyle = makeStyles(itemButtonStyle);
 
 const ItemButton = (props) => {
   const {
-    id, handleDeleteClick,
+    id, valid, handleDeleteClick,
   } = props;
   const [open, setOpen] = useState(false);
   const [links, setLinks] = useState(null);
@@ -28,6 +28,14 @@ const ItemButton = (props) => {
    *  获取商品的 Links
    */
   const handleClick = () => {
+    if (!valid) { // 过滤掉 过期商品
+      openNotifications.open({
+        message: productPrompt.getLinksWarning,
+        variant: 'warning',
+      });
+      return;
+    }
+
     // 打开弹出框
     setOpen(true);
     // 打开弹出框
@@ -110,6 +118,7 @@ const ItemButton = (props) => {
 
 ItemButton.propTypes = {
   id: PropTypes.string.isRequired,
+  valid: PropTypes.bool.isRequired,
   handleDeleteClick: PropTypes.func.isRequired,
 };
 

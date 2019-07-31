@@ -43,19 +43,19 @@ class View extends React.Component {
    * @param value 非必填参数 默认null
    * @param page 页码必填 默认 1
    * @param size 每页大小必填 默认 10;
-   * @param sortBy 排序参数 默认 dateDesc;
+   * @param sort 排序参数 默认 dateDesc;
    * @returns {Promise<any>} 返回一个promise对象
    */
   getData = (
     value = this.value,
     page = this.pageCurrent,
     size = PAGE_SIZE,
-    sortBy = this.sort,
+    sort = this.sort,
   ) => new Promise((resolve) => {
     this.value = value; // 如果参数value有值 则覆盖缓存的值
     this.pageCurrent = page; // 如果参数page有值 则覆盖缓存的值
     get('/api/promotions/all', {
-      page, size, ...value, sortBy,
+      page, size, ...value, sort,
     })
       .then((response) => {
         const { total, items } = response;

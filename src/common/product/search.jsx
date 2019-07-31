@@ -69,11 +69,10 @@ class Search extends React.Component {
           }
         }
       }
-      if (statusArr && value.status) {
+      if (statusArr && value.valid) {
         // eslint-disable-next-line no-param-reassign
-        value.status = statusArr.indexOf(value.status);
+        value.valid = Boolean(value.valid === 'Normal'); // 返回 true || false
       }
-
       if (!error) {
         ayc = viewRef.current.getData(setSearchArg(value), 1);
       }
@@ -102,7 +101,7 @@ class Search extends React.Component {
                 <MySelect
                   form={form}
                   name="Status :"
-                  outputName="status"
+                  outputName="valid"
                   selectArr={statusArr}
                   noRequire={false}
                   fontSize="sm"
