@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import MyButton from '../material-ui-component/button';
 
+import { emailTokenPagePrompt } from '../../assets/data/prompt-text';
+
 const useStyle = makeStyles(theme => ({
   errorWrapper: {
     display: 'flex',
@@ -32,14 +34,14 @@ const TokenError = (props) => {
     error
       ? (
         <div className={classes.errorWrapper}>
-          <h2 className={classes.errorTitle}>当前token错误</h2>
-          <p className={classes.errorText}>建议你点击下面按钮重新注册一此, 如果多次出现错误, 请联系管理员</p>
+          <h2 className={classes.errorTitle}>{emailTokenPagePrompt.title}</h2>
+          <p className={classes.errorText}>{emailTokenPagePrompt.content}</p>
           <MyButton
             variant="contained"
             color="inherit"
             onClick={() => { history.push('/s/signup'); }}
           >
-            回到注册页面
+            {emailTokenPagePrompt.btn}
           </MyButton>
         </div>
       )

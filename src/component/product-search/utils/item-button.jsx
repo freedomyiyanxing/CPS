@@ -117,7 +117,7 @@ const ItemButton = (props) => {
         open={open}
         onClose={() => { setOpen(false); }}
         wrapperCls={classes.copyWrapper}
-        header={<DialogHeader title="我是谁???" />}
+        header={<DialogHeader title="Get Link" />}
         footer={(
           <DialogFooter
             handleChange={handleChange}

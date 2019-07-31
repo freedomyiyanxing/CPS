@@ -24,10 +24,10 @@ const ProductItems = (props) => {
       <div className={classes.info}>
         <span className={classes.name}>{data.prodName}</span>
         <span className={classes.price}>
-          <span>YOZRA</span>
+          <span>{data.storeName}</span>
           <span>
             $
-            {data.prodPrice}
+            {data.prodPrice.toFixed(2)}
           </span>
         </span>
         <span className={classes.advertising}>

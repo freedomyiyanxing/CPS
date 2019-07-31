@@ -67,10 +67,17 @@ export const itemStyle = theme => ({
     fontWeight: theme.typography.fontWeight,
   },
   price: {
-    lineHeight: '26px',
+    height: 26,
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     fontSize: theme.typography.fontSizeMd,
     '& span:first-child': {
       marginRight: 10,
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+      textOverflow: 'ellipsis',
     },
   },
   advertising: {

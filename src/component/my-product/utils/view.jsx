@@ -199,6 +199,7 @@ class View extends React.Component {
   // 下载 xls
   getAllLinks =() => new Promise((resolve) => {
     if (!this.selectId.length) {
+      resolve(true);
       return;
     }
     // responseType: 'arraybuffer' response 是一个包含二进制数据的 JavaScript ArrayBuffer,

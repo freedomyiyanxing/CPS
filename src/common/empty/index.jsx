@@ -39,7 +39,7 @@ EmptyPage.propTypes = {
 
 EmptyPage.defaultProps = {
   height: null,
-  title: '暂无数据',
+  title: 'No data',
 };
 
 export default EmptyPage;
