@@ -210,6 +210,7 @@ class View extends React.Component {
       return;
     }
 
+    // 过滤掉过期商品
     data.forEach((item) => {
       if (item.valid) {
         this.selectId.forEach((j) => {

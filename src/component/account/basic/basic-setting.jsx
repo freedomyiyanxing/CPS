@@ -146,6 +146,7 @@ class BasicSetting extends React.Component {
                 <Emails
                   form={form}
                   value={data.email}
+                  disabled
                 />
                 <TelIndex
                   ref={this.phoneRef}

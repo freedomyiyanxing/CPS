@@ -96,6 +96,7 @@ const ProductList = (props) => {
               <MyTableCell align="left">
                 <ItemButton
                   id={v.id}
+                  promProdId={v.promProdId}
                   valid={v.valid}
                   handleDeleteClick={handleDeleteClick}
                 />

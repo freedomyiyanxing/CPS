@@ -10,6 +10,7 @@ import MyPrice from '../form/my-price';
 import MyPercentage from '../form/my-percentage';
 import { setSearchArg, setCategory } from '../../assets/js/utils-methods';
 import { get } from '../../assets/http/index';
+import { patterns } from '../../assets/data/pattern';
 
 // 缓存商品分类数据
 let __cacheProdCates__ = null;
@@ -94,6 +95,7 @@ class Search extends React.Component {
             noRequire={false}
             outputName="name"
             fontSize="sm"
+            pattern={patterns.productName}
           />
           {
             statusArr
@@ -129,6 +131,7 @@ class Search extends React.Component {
             noRequire={false}
             outputName="store"
             fontSize="sm"
+            pattern={patterns.productName}
           />
           {
             statusArr

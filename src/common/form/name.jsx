@@ -6,10 +6,11 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import MyInput from '../material-ui-component/input';
 import MyLabel from '../material-ui-component/input-label';
 import { formPrompt } from '../../assets/data/prompt-text';
+import { patterns } from '../../assets/data/pattern';
 
 const Name = (props) => {
   const {
-    value, form, name, disabled, noRequire, fontSize, outputName,
+    value, form, name, disabled, noRequire, fontSize, outputName, pattern,
   } = props;
   const { getFieldProps, getFieldError } = form;
   const errors = getFieldError(outputName);
@@ -35,7 +36,7 @@ const Name = (props) => {
               message: formPrompt.nameRequired,
             },
             {
-              pattern: /^([A-Za-z\s.-]{2,30})$/,
+              pattern,
               message: formPrompt.nameRequired,
             },
           ],
@@ -58,6 +59,7 @@ Name.propTypes = {
   noRequire: PropTypes.bool, // 是否必填
   fontSize: PropTypes.string, // 控制label文字
   outputName: PropTypes.string, // 输出key值
+  pattern: PropTypes.objectOf(PropTypes.object),
 };
 
 Name.defaultProps = {
@@ -66,6 +68,7 @@ Name.defaultProps = {
   noRequire: true, // 默认必填
   fontSize: 'md',
   outputName: 'name', // 输出key值
+  pattern: patterns.personName,
 };
 
 export default Name;

@@ -6,10 +6,11 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import MyInput from '../material-ui-component/input';
 import MyLabel from '../material-ui-component/input-label';
 import { formPrompt } from '../../assets/data/prompt-text';
+import { patterns } from '../../assets/data/pattern';
 
 const MyTextarea = (props) => {
   const {
-    form, value, noRequire, name, fontSize, outputName,
+    form, value, noRequire, name, fontSize, outputName, pattern,
   } = props;
 
   const { getFieldProps, getFieldError } = form;
@@ -34,7 +35,7 @@ const MyTextarea = (props) => {
               message: formPrompt.textareaRequired,
             },
             {
-              pattern: /^([A-Za-z0-9\s.\\,+()!?`={}'"<>/:#@$%&*-]{2,200})$/,
+              pattern,
               message: formPrompt.textareaFormat,
             },
           ],
@@ -52,6 +53,7 @@ const MyTextarea = (props) => {
 
 MyTextarea.propTypes = {
   form: PropTypes.objectOf(PropTypes.object).isRequired,
+  pattern: PropTypes.objectOf(PropTypes.object),
   name: PropTypes.string,
   value: PropTypes.string,
   noRequire: PropTypes.bool,
@@ -65,6 +67,7 @@ MyTextarea.defaultProps = {
   noRequire: true,
   fontSize: 'md',
   outputName: 'websiteDesc',
+  pattern: patterns.websiteDesc,
 };
 
 

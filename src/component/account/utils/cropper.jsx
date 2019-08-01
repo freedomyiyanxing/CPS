@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import LocalSee from '@material-ui/icons/LocalSee';
 import Close from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
@@ -22,12 +22,14 @@ import { cropperStyle } from '../style';
   userStore: store.userStore,
 }))
 @withStyles(cropperStyle)
+@observer
 class MyCropper extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       open: false,
+      isClose: true, // 控制在上传过程中不允许关闭弹出框
       imgUrl: null,
     };
 
@@ -77,6 +79,10 @@ class MyCropper extends React.Component {
       return null;
     }
 
+    this.setState({
+      isClose: false,
+    });
+
     return new Promise((resolve) => {
       patchRequestBody('/api/profile/upload', {
         id,
@@ -89,18 +95,23 @@ class MyCropper extends React.Component {
             variant: 'success',
             duration: 5,
           });
+          this.setState({
+            isClose: true,
+            open: false,
+          });
           resolve(true);
-          this.handleClose();
         })
         .catch((err) => {
-          console.log(err);
-          resolve(true);
           openNotifications.open({
-            message: userIconPrompt.errorText,
+            message: err.data.message || userIconPrompt.errorText,
             variant: 'error',
             duration: 5,
           });
-          this.handleClose();
+          this.setState({
+            isClose: true,
+            open: false,
+          });
+          resolve(true);
         });
     });
   };
@@ -136,7 +147,7 @@ class MyCropper extends React.Component {
 
   render() {
     const { classes, userStore } = this.props;
-    const { open, imgUrl } = this.state;
+    const { open, imgUrl, isClose } = this.state;
     return (
       <>
         <div className={classes.root}>
@@ -160,7 +171,7 @@ class MyCropper extends React.Component {
         </div>
         <Dialog
           open={open}
-          onClose={this.handleClose}
+          onClose={isClose && this.handleClose}
           classes={{
             paper: classes.dialog,
           }}
@@ -180,7 +191,11 @@ class MyCropper extends React.Component {
                 Upload
               </label>
             </MyButton>
-            <IconButton onClick={this.handleClose}><Close /></IconButton>
+            <IconButton
+              onClick={isClose && this.handleClose}
+            >
+              <Close />
+            </IconButton>
           </div>
           <div className={classes.dialogContent}>
             <Cropper
@@ -191,7 +206,7 @@ class MyCropper extends React.Component {
               preview=".cropper-img-preview" // 预览视图
               aspectRatio={9 / 9} // 宽高比列
               autoCropArea={0.5} // 初始化裁剪框大小（相对于图片大小做比例）
-              // viewMode={1} // 限制裁剪框不超过画布的大小
+              viewMode={1} // 限制裁剪框不超过画布的大小
             />
             <div className={classes.dialogView}>
               <div

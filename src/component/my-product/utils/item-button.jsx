@@ -17,7 +17,7 @@ const useStyle = makeStyles(itemButtonStyle);
 
 const ItemButton = (props) => {
   const {
-    id, valid, handleDeleteClick,
+    id, promProdId, valid, handleDeleteClick,
   } = props;
   const [open, setOpen] = useState(false);
   const [links, setLinks] = useState(null);
@@ -39,7 +39,7 @@ const ItemButton = (props) => {
     // 打开弹出框
     setOpen(true);
     // 打开弹出框
-    postRequestBody(`/api/promotions/link/${id}`)
+    postRequestBody(`/api/promotions/link/${promProdId}`)
       .then((response) => {
         const { link } = response;
         setLinks(link);
@@ -118,6 +118,7 @@ const ItemButton = (props) => {
 
 ItemButton.propTypes = {
   id: PropTypes.string.isRequired,
+  promProdId: PropTypes.string.isRequired,
   valid: PropTypes.bool.isRequired,
   handleDeleteClick: PropTypes.func.isRequired,
 };

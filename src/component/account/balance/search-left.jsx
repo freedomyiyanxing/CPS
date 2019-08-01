@@ -8,6 +8,7 @@ import MySelect from '../../../common/form/my-select';
 import SubmitButton from '../../../common/form/submit-button';
 import DateRange from '../../../common/date-picker/date-range';
 
+import { patterns } from '../../../assets/data/pattern';
 import { myBalanceType } from '../../../assets/data/default-data';
 import { setSearchArg } from '../../../assets/js/utils-methods';
 import { searchStyle } from './style';
@@ -71,6 +72,7 @@ class SearchLeft extends React.Component {
             outputName="desc"
             name="Description :"
             fontSize="sm"
+            pattern={patterns.productName}
           />
           <SubmitButton
             name="Apply"
