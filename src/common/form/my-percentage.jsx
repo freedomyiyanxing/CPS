@@ -4,9 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Remove from '@material-ui/icons/Remove';
+
 import MyInput from '../material-ui-component/input';
 import MyLabel from '../material-ui-component/input-label';
+
+import { Remove } from '../material-ui-component/svg-icon';
 import { formPrompt } from '../../assets/data/prompt-text';
 
 const useStyle = makeStyles(theme => ({

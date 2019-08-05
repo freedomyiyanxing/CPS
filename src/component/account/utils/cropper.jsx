@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { inject, observer } from 'mobx-react';
-import LocalSee from '@material-ui/icons/LocalSee';
-import Close from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
 import IconButton from '@material-ui/core/IconButton';
 import Cropper from 'react-cropper';
@@ -12,6 +10,7 @@ import MyButton from '../../../common/material-ui-component/button';
 import SubmitButton from '../../../common/form/submit-button';
 import Avatars from '../../../common/material-ui-component/avatar';
 
+import { MySvgIconLocalSee, MySvgIconClose } from '../../../common/material-ui-component/svg-icon';
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
 import { patchRequestBody } from '../../../assets/http/index';
 import { userIconPrompt } from '../../../assets/data/prompt-text';
@@ -165,7 +164,7 @@ class MyCropper extends React.Component {
               }}
             />
             <span className={classes.mask}>
-              <LocalSee className={classes.icon} />
+              <MySvgIconLocalSee />
             </span>
           </div>
         </div>
@@ -194,7 +193,7 @@ class MyCropper extends React.Component {
             <IconButton
               onClick={isClose && this.handleClose}
             >
-              <Close />
+              <MySvgIconClose />
             </IconButton>
           </div>
           <div className={classes.dialogContent}>

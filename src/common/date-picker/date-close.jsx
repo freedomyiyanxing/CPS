@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Close from '@material-ui/icons/Close';
+import {
+  MySvgIconClose,
+} from '../material-ui-component/svg-icon';
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -22,7 +24,7 @@ const DateClose = () => {
   const classes = useStyle();
   return (
     <span className={classes.root}>
-      <Close className={classes.close} />
+      <MySvgIconClose className={classes.close} />
     </span>
   );
 };

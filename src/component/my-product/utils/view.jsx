@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -222,7 +221,7 @@ class View extends React.Component {
     });
 
     // arr.length === 0 表示所有选中的商品都是已经过期的
-    if(!arr.length) {
+    if (!arr.length) {
       openNotifications.open({
         message: myProductPrompt.downloadLinksError,
         variant: 'warning',

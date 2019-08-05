@@ -98,8 +98,6 @@ const cropperStyle = theme => ({
     transition: 'all .2s linear',
     transform: 'translateY(30px)',
     opacity: 0.8,
-  },
-  icon: {
     color: theme.palette.primary[50],
   },
   dialog: {

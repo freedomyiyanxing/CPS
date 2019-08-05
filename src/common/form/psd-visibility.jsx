@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 
+import {
+  MySvgIconVisibility,
+  MySvgIconVisibilityOff,
+} from '../material-ui-component/svg-icon';
 import { psdVisibilityStyle } from './style';
 
 const useStyle = makeStyles(psdVisibilityStyle);
@@ -31,8 +33,8 @@ const PsdVisibility = (props) => {
       >
         {
           showPassword
-            ? <Visibility className={classes.icon} />
-            : <VisibilityOff className={classes.icon} />
+            ? <MySvgIconVisibility className={classes.icon} />
+            : <MySvgIconVisibilityOff className={classes.icon} />
         }
       </IconButton>
     </InputAdornment>

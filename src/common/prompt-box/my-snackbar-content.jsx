@@ -7,7 +7,7 @@ import {
   MySvgIconWarningIcon,
   MySvgIconInfoIcon,
   MySvgIconSuccessIcon,
-  MySvgIconClear,
+  MySvgIconClose,
 } from '../material-ui-component/svg-icon';
 
 const useStyles = makeStyles(theme => ({
@@ -81,7 +81,7 @@ export const IconButtons = () => {
   const classes = useStyle1();
   return (
     <div className={classes.root}>
-      <MySvgIconClear />
+      <MySvgIconClose />
     </div>
   );
 };

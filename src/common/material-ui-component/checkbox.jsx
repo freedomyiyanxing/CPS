@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
-import CheckBox from '@material-ui/icons/CheckBox';
-import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
+
+import { CheckBox, CheckBoxOutlineBlank } from './svg-icon';
 
 const useStyle = makeStyles(theme => ({
   checkRoot: {

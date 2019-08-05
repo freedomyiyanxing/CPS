@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { inject } from 'mobx-react';
-import ErrorOutline from '@material-ui/icons/ErrorOutline';
 
 import DialogIndex from '../../common/dialog/dialog-index';
 import DialogHeader from '../../common/dialog/dialog-header';
@@ -11,6 +10,7 @@ import HeaderContainer from './header-container';
 import HeaderLeft from './utils/header-left';
 import HeaderRight from './utils/header-right';
 
+import { ErrorOutline } from '../../common/material-ui-component/svg-icon';
 import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { patchRequestBody, SUCCESS } from '../../assets/http/index';
 import { session } from '../../assets/js/utils-methods';
@@ -42,37 +42,35 @@ const HeaderLogin = (props) => {
   // 退出登录
   const handleOutClick = () => {
     setBtnLoading(true);
-    setTimeout(() => {
-      patchRequestBody('/api/profile/logout')
-        .then((response) => {
-          const { message } = response;
-          if (message === SUCCESS) {
-            // 清除 sessionStore 中的 登录信息 以及用户信息
-            session.remove('loginInfo');
-            session.remove('userName');
-            session.remove('userPhoto');
-            // 修改context中的登录状态 清除store中的登录信息
-            userStore.setLogin(false);
-            // to 到登录页面
-            history.push('/s/signin');
+    patchRequestBody('/api/profile/logout')
+      .then((response) => {
+        const { message } = response;
+        if (message === SUCCESS) {
+          // 清除 sessionStore 中的 登录信息 以及用户信息
+          session.remove('loginInfo');
+          session.remove('userName');
+          session.remove('userPhoto');
+          // 修改context中的登录状态 清除store中的登录信息
+          userStore.setLogin(false);
+          // to 到登录页面
+          history.push('/s/signin');
 
-            openNotifications.open({
-              message: logoutPrompt.successText,
-              variant: 'success',
-              duration: 5,
-            });
-          }
-          setBtnLoading(false);
-        })
-        .catch((err) => {
           openNotifications.open({
-            message: err.data.message || logoutPrompt.errorText,
-            variant: 'error',
+            message: logoutPrompt.successText,
+            variant: 'success',
             duration: 5,
           });
-          setBtnLoading(false);
+        }
+        setBtnLoading(false);
+      })
+      .catch((err) => {
+        openNotifications.open({
+          message: err.data.message || logoutPrompt.errorText,
+          variant: 'error',
+          duration: 5,
         });
-    }, 500);
+        setBtnLoading(false);
+      });
   };
 
   // 打开弹出框

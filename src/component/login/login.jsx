@@ -52,7 +52,6 @@ class Login extends React.Component {
           postRequestBody('/api/auth/signin', { ...value })
             .then((response) => {
               // 只有当服务器返回正确 且 点击了存储密码邮箱的check
-              console.log(this.check, 'this');
               if (this.check) {
                 storage.setStorage('login', {
                   emails: value.email,

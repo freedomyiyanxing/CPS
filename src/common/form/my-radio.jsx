@@ -5,9 +5,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 
+import {
+  RadioButtonUncheckedIcon,
+  RadioButtonCheckedIcon,
+} from '../material-ui-component/svg-icon';
 import { radioStyle } from './style';
 
 const useStyle = makeStyles(radioStyle);

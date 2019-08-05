@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import Collapse from '@material-ui/core/Collapse';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
+
+import { MySvgIconArrowDropDown } from '../material-ui-component/svg-icon';
 
 const useStyle = makeStyles(theme => ({
   selectMain: {
@@ -76,7 +77,7 @@ const DropDownBox = (props) => {
       >
         <span className={classes.firstName}>Sort by :</span>
         <span>{value}</span>
-        <ArrowDropDown className={classes.icon} />
+        <MySvgIconArrowDropDown className={classes.icon} />
       </div>
       <ClickAwayListener onClickAway={() => { setOpen(false); }}>
         <Collapse
