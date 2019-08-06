@@ -74,7 +74,7 @@ class BasicSetting extends React.Component {
             .then((response) => {
               const { message } = response;
               if (message === SUCCESS) {
-                userStore.setUserName(obj.firstName + obj.lastName);
+                userStore.selUserName(obj.firstName + obj.lastName);
                 openNotifications.open({
                   message: userInfoPrompt.successText,
                   variant: 'success',

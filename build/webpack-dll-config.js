@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // 抽离 vendor 数组中的第三方插件, 只打包一次, 优化打包速度
 module.exports = {
@@ -14,7 +14,6 @@ module.exports = {
       'react-dom',
       'react-router-dom',
       '@material-ui/core',
-      '@material-ui/icons',
       'jss',
       'react-jss',
       'prop-types',
@@ -41,16 +40,16 @@ module.exports = {
       threshold: 10240,
       // minRatio: 0.8 // 默认0.8
     }),
-    new BundleAnalyzerPlugin({ // 可视化工具 http://127.0.0.1:8888
-      analyzerMode: 'server',
-      analyzerHost: '127.0.0.1',
-      analyzerPort: 8899,
-      reportFilename: 'report.html',
-      defaultSizes: 'parsed',
-      openAnalyzer: true,
-      generateStatsFile: false,
-      statsFilename: 'stats.json',
-      logLevel: 'info'
-    })
+    // new BundleAnalyzerPlugin({ // 可视化工具 http://127.0.0.1:8888
+    //   analyzerMode: 'server',
+    //   analyzerHost: '127.0.0.1',
+    //   analyzerPort: 8899,
+    //   reportFilename: 'report.html',
+    //   defaultSizes: 'parsed',
+    //   openAnalyzer: true,
+    //   generateStatsFile: false,
+    //   statsFilename: 'stats.json',
+    //   logLevel: 'info'
+    // })
   ]
 };

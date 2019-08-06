@@ -88,7 +88,8 @@ class MyCropper extends React.Component {
         photo: canvas.toDataURL(),
       })
         .then((response) => {
-          userStore.setUserPhoto(response.path);
+          const { path } = response;
+          userStore.selUserPhoto(path);
           openNotifications.open({
             message: userIconPrompt.successText,
             variant: 'success',

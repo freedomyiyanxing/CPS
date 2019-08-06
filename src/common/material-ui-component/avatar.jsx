@@ -1,11 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 
-import MyPerson from './icon-person';
+import { Person } from './svg-icon';
 
 // 图片路径
 const IMGUrl = process.env.IMG_BASE || '';
+
+const useStyle = makeStyles(theme => ({
+  icon: {
+    fontSize: theme.typography.h2.fontSize,
+    color: theme.palette.primary.contrastText,
+  },
+}));
 
 const _getImageUrl = (image, options) => {
   if (!image) return '';
@@ -27,6 +35,7 @@ const _getImageUrl = (image, options) => {
 
 const Avatars = (props) => {
   const { photo, classes, options } = props;
+  const cls = useStyle();
   return (
     photo
       ? (
@@ -38,7 +47,7 @@ const Avatars = (props) => {
       )
       : (
         <Avatar className={classes.icon || classes.img}>
-          <MyPerson />
+          <Person className={cls.icon} />
         </Avatar>
       )
   );

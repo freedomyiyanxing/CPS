@@ -11,7 +11,7 @@ import SubmitButton from '../../common/form/submit-button';
 import MyFormControlLabel from '../../common/material-ui-component/form-control-label';
 
 import { openNotifications } from '../../common/prompt-box/prompt-box';
-import { psdBase64, storage, session } from '../../assets/js/utils-methods';
+import { psdBase64, storage } from '../../assets/js/utils-methods';
 import { postRequestBody } from '../../assets/http/index';
 import { loginPrompt } from '../../assets/data/prompt-text';
 
@@ -44,13 +44,14 @@ class Login extends React.Component {
       form, history, location, userStore,
     } = this.props;
     let ayc = null;
-    // rc-form验证
     form.validateFields((error, value) => {
       // 如果没有错误信息 说明 验证通过
       if (!error) {
         ayc = new Promise((resolve) => {
           postRequestBody('/api/auth/signin', { ...value })
             .then((response) => {
+              /* eslint-disable */
+              const { token, photo, firstName, lastName } = response;
               // 只有当服务器返回正确 且 点击了存储密码邮箱的check
               if (this.check) {
                 storage.setStorage('login', {
@@ -58,13 +59,13 @@ class Login extends React.Component {
                   psd: psdBase64.encryption(value.password),
                 });
               }
-              // 登录完成后 把token 和 登录标志 写入 sessionStorage
-              session.setSession('loginInfo', {
-                token: response.token,
-                isLogin: true,
-              });
-              // 修改全局登录状态 (确保路由不在拦截)
-              userStore.setLogin(true);
+              // 登录完成把token、登录标志、用户信息写入userStore
+              userStore.setLoginInfo(
+                true,
+                {
+                  token, photo, firstName, lastName
+                }
+              );
               // 登录完成时 -> 跳转至登录首页 或者上次停留的页面
               const { pathname } = location.state ? location.state.from : { pathname: '/my/index' };
               history.push(pathname);
@@ -88,7 +89,6 @@ class Login extends React.Component {
 
   // 点击check 记住邮箱 密码
   handleChange = (check) => {
-    console.log(check);
     this.check = check;
   };
 

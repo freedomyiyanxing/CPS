@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Pagination from 'rc-pagination';
-import ChevronRight from '@material-ui/icons/ChevronRight';
-import ChevronLeft from '@material-ui/icons/ChevronLeft';
+
+import { ChevronLeft, ChevronRight } from '../material-ui-component/svg-icon';
 import './style.css';
 
 const useStyle = makeStyles(theme => ({

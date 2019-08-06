@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { inject } from 'mobx-react';
 import { Helmet } from 'react-helmet';
 
 import MainContainer from '../../common/box-container/main-container';
@@ -14,9 +13,6 @@ import { httpResponse } from './home-http';
 
 const PAGE_SIZE = 10; // 分页每一页条数
 
-@inject(store => ({
-  userStore: store.userStore,
-}))
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -31,7 +27,6 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    const { userStore } = this.props;
     const start = getTime(getDaysTime(90));
     const end = getTime(new Date().getTime(), 'end');
     this._unmount = true;
@@ -46,9 +41,6 @@ class Home extends React.Component {
       // 防止组件移除后 执行setState
       if (this._unmount) {
         const [userInfo, statistics, daily, detail] = response;
-        // 写入store当中
-        userStore.setUserPhoto(userInfo.photo);
-        userStore.setUserName(userInfo.firstName + userInfo.lastName);
 
         this.setState({
           loading: false,
@@ -73,6 +65,10 @@ class Home extends React.Component {
     const starts = start || getTime(getDaysTime(90));
     const ends = end || getTime(new Date().getTime(), 'end');
     Promise.all([
+      httpResponse('/api/index/statistics', {
+        start: starts,
+        end: ends,
+      }),
       httpResponse('/api/index/statistics/daily', {
         start: starts,
         end: ends,
@@ -84,8 +80,9 @@ class Home extends React.Component {
         size: PAGE_SIZE,
       }),
     ]).then((response) => {
-      const [daily, detail] = response;
+      const [statistics, daily, detail] = response;
       this.setState({
+        statistics,
         daily,
         detail,
         timer: {
@@ -114,6 +111,7 @@ class Home extends React.Component {
             <HomeCurve
               data={[daily, statistics]}
               onChange={this.handleChangeDate}
+              time={timer}
             />
             <HomeDetail
               size={PAGE_SIZE}
@@ -129,7 +127,6 @@ class Home extends React.Component {
 
 Home.propTypes = {
   history: PropTypes.objectOf(PropTypes.object).isRequired,
-  userStore: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default Home;

@@ -13,7 +13,7 @@ import HeaderRight from './utils/header-right';
 import { ErrorOutline } from '../../common/material-ui-component/svg-icon';
 import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { patchRequestBody, SUCCESS } from '../../assets/http/index';
-import { session } from '../../assets/js/utils-methods';
+// import { session } from '../../assets/js/utils-methods';
 import { logoutPrompt } from '../../assets/data/prompt-text';
 
 const useStyle = makeStyles(theme => ({
@@ -46,15 +46,10 @@ const HeaderLogin = (props) => {
       .then((response) => {
         const { message } = response;
         if (message === SUCCESS) {
-          // 清除 sessionStore 中的 登录信息 以及用户信息
-          session.remove('loginInfo');
-          session.remove('userName');
-          session.remove('userPhoto');
-          // 修改context中的登录状态 清除store中的登录信息
-          userStore.setLogin(false);
+          // 修改userStore中的登录状态 清除userStore中的登录信息
+          userStore.setLoginInfo(false);
           // to 到登录页面
           history.push('/s/signin');
-
           openNotifications.open({
             message: logoutPrompt.successText,
             variant: 'success',

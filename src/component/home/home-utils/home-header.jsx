@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import { inject } from 'mobx-react';
 
 import PartitionLine from '../../../common/partition-line/partition-line';
 import MyButton from '../../../common/material-ui-component/button';
@@ -11,7 +12,7 @@ import { headerStyle } from './style';
 const useStyle = makeStyles(headerStyle);
 
 const HomeHeader = (props) => {
-  const { data, history } = props;
+  const { data, history, userStore } = props;
   const classes = useStyle();
 
   /**
@@ -24,13 +25,13 @@ const HomeHeader = (props) => {
   return (
     <div className={classes.root}>
       <Avatars
-        photo={data.photo}
+        photo={userStore.userPhoto}
         classes={{
           img: classes.bigAvatar,
         }}
       />
       <h5 className={classes.name}>
-        {data.firstName + data.lastName}
+        {userStore.userName}
       </h5>
       <span className={classes.email}>
         {data.email}
@@ -58,6 +59,7 @@ const HomeHeader = (props) => {
 HomeHeader.propTypes = {
   history: PropTypes.objectOf(PropTypes.object).isRequired,
   data: PropTypes.objectOf(PropTypes.object).isRequired,
+  userStore: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
-export default HomeHeader;
+export default inject('userStore')(HomeHeader);

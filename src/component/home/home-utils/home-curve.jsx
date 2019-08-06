@@ -23,6 +23,11 @@ class HomeCurve extends React.Component {
     this.tabs = statisticsTabs(data[1]);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { data } = nextProps;
+    this.tabs = statisticsTabs(data[1]);
+  }
+
   // tabs 切换
   handleChange = (event, tabs) => {
     this.setState({
@@ -31,9 +36,11 @@ class HomeCurve extends React.Component {
   };
 
   render() {
-    const { classes, data, onChange } = this.props;
+    const {
+      classes, data, onChange, time,
+    } = this.props;
     const { tabs } = this.state;
-    const polyline = polylineDaily(data[0]);
+    const polyline = polylineDaily(data[0], time);
     return (
       <div className={classes.root}>
         <DateRange onChange={onChange} />
@@ -86,6 +93,7 @@ class HomeCurve extends React.Component {
 HomeCurve.propTypes = {
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
   data: PropTypes.objectOf(PropTypes.array).isRequired,
+  time: PropTypes.objectOf(PropTypes.object).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

@@ -11,7 +11,6 @@ class User {
   @observable userPhoto;
 
   constructor() {
-    // 读取 SessionStorage 存储的登录信息
     const loginInfo = session.getSession('loginInfo');
     const userName = session.getSession('userName');
     const userPhoto = session.getSession('userPhoto');
@@ -20,21 +19,32 @@ class User {
     this.userPhoto = userPhoto || '';
   }
 
-  // 修改登录信息
-  @action setLogin(loginInfo) {
-    this.isLogin = loginInfo;
+  @action setLoginInfo(isLogin, loginInfo) {
+    this.isLogin = isLogin;
+    if (isLogin) {
+      const {
+        photo, firstName, lastName, token,
+      } = loginInfo;
+      this.selUserPhoto(photo);
+      this.selUserName(firstName + lastName);
+      session.setSession('loginInfo', { token, isLogin });
+    } else {
+      session.remove('loginInfo');
+      session.remove('userName');
+      session.remove('userPhoto');
+      this.userPhoto = '';
+      this.userName = '';
+    }
   }
 
-  // 修改用户图像
-  @action setUserPhoto(photo) {
-    this.userPhoto = photo;
-    session.setSession('userPhoto', photo);
-  }
-
-  // 修改用户名称
-  @action setUserName(name) {
+  @action selUserName(name) {
     this.userName = name;
-    session.setSession('userName', name);
+    session.setSession('userName', this.userName);
+  }
+
+  @action selUserPhoto(photo) {
+    this.userPhoto = photo;
+    session.setSession('userPhoto', this.userPhoto);
   }
 }
 
