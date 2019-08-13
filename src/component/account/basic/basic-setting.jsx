@@ -69,31 +69,19 @@ class BasicSetting extends React.Component {
     form.validateFields((error, value) => {
       if (!error && mobile) {
         const obj = Object.assign(data, { ...value, mobile });
-        ayc = new Promise((resolve) => {
-          postRequestBody('/api/profile/update', obj)
-            .then((response) => {
-              const { message } = response;
-              if (message === SUCCESS) {
-                userStore.selUserName(obj.firstName + obj.lastName);
-                openNotifications.open({
-                  message: userInfoPrompt.successText,
-                  variant: 'success',
-                  duration: 5,
-                });
-              }
-              this.setState({
-                datePhoneDisable: true,
-              });
-              resolve(true);
-            })
-            .catch((err) => {
-              openNotifications.open({
-                message: err.data.message || userInfoPrompt.errorText,
-                variant: 'error',
-                duration: 5,
-              });
-              resolve(true);
+        ayc = postRequestBody('/api/profile/update', obj).then((response) => {
+          const { message } = response;
+          if (message === SUCCESS) {
+            userStore.selUserName(obj.firstName + obj.lastName);
+            openNotifications.open({
+              message: userInfoPrompt.successText,
+              variant: 'success',
+              duration: 5,
             });
+          }
+          this.setState({
+            datePhoneDisable: true,
+          });
         });
       }
     });
@@ -102,16 +90,21 @@ class BasicSetting extends React.Component {
 
   // 日期控制 表单提交
   handleDate = (is) => {
-    this.setState({
-      datePhoneDisable: is,
-    });
+    this.setStates(is);
   };
 
   // 电话控制 表单提交
   handlePhone = (is) => {
-    this.setState({
-      datePhoneDisable: is,
-    });
+    this.setStates(is);
+  };
+
+  setStates = (is) => {
+    const { datePhoneDisable } = this.state;
+    if (datePhoneDisable) {
+      this.setState({
+        datePhoneDisable: is,
+      });
+    }
   };
 
   render() {

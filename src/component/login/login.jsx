@@ -13,7 +13,6 @@ import MyFormControlLabel from '../../common/material-ui-component/form-control-
 import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { psdBase64, storage } from '../../assets/js/utils-methods';
 import { postRequestBody } from '../../assets/http/index';
-import { loginPrompt } from '../../assets/data/prompt-text';
 
 import { loginStyle } from './style';
 
@@ -45,42 +44,28 @@ class Login extends React.Component {
     } = this.props;
     let ayc = null;
     form.validateFields((error, value) => {
-      // 如果没有错误信息 说明 验证通过
       if (!error) {
-        ayc = new Promise((resolve) => {
-          postRequestBody('/api/auth/signin', { ...value })
-            .then((response) => {
-              /* eslint-disable */
-              const { token, photo, firstName, lastName } = response;
-              // 只有当服务器返回正确 且 点击了存储密码邮箱的check
-              if (this.check) {
-                storage.setStorage('login', {
-                  emails: value.email,
-                  psd: psdBase64.encryption(value.password),
-                });
-              }
-              // 登录完成把token、登录标志、用户信息写入userStore
-              userStore.setLoginInfo(
-                true,
-                {
-                  token, photo, firstName, lastName
-                }
-              );
-              // 登录完成时 -> 跳转至登录首页 或者上次停留的页面
-              const { pathname } = location.state ? location.state.from : { pathname: '/my/index' };
-              history.push(pathname);
-              // 结束按钮的loading效果
-              resolve(true);
-            })
-            .catch((err) => {
-              resolve(err);
-              openNotifications.open({
-                message: err.data.message || loginPrompt.errorText,
-                variant: 'error',
-                duration: null, // null 表示永远不移除
-                key: 'error', // 方便删除 相当于当前提示框的唯一标识
-              });
+        ayc = postRequestBody('/api/auth/signin', { ...value }).then((response) => {
+          const {
+            token, photo, firstName, lastName,
+          } = response;
+          // 只有当服务器返回正确 且 点击了存储密码邮箱的check
+          if (this.check) {
+            storage.setStorage('login', {
+              emails: value.email,
+              psd: psdBase64.encryption(value.password),
             });
+          }
+          // 登录完成把token、登录标志、用户信息写入userStore
+          userStore.setLoginInfo(
+            true,
+            {
+              token, photo, firstName, lastName,
+            },
+          );
+          // 登录完成时 -> 跳转至登录首页 或者上次停留的页面
+          const { pathname } = location.state ? location.state.from : { pathname: '/my/index' };
+          history.push(pathname);
         });
       }
     });

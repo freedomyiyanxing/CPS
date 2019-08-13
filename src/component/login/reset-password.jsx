@@ -63,33 +63,20 @@ class ResetPassword extends React.Component {
     let ayc = null;
     form.validateFields((error, value) => {
       if (!error) {
-        ayc = new Promise((resolve) => {
-          patchRequestBody('/api/password/reset', {
-            email,
-            newPassword: value.password,
-          })
-            .then((response) => {
-              const { message } = response;
-              if (message === SUCCESS) {
-                openNotifications.open({
-                  message: resetPasswordPrompt.successText,
-                  variant: 'success',
-                  duration: 5,
-                });
-              }
-              resolve(true);
-              // 密码修改完成 回到登录页面
-              history.push('/s/signin');
-            })
-            .catch((err) => {
-              console.log(err);
-              resolve(true);
-              openNotifications.open({
-                message: err.data.message || resetPasswordPrompt.errorText,
-                variant: 'error',
-                duration: 5, // null 表示永远不移除
-              });
+        ayc = patchRequestBody('/api/password/reset', {
+          email,
+          newPassword: value.password,
+        }).then((response) => {
+          const { message } = response;
+          if (message === SUCCESS) {
+            openNotifications.open({
+              message: resetPasswordPrompt.successText,
+              variant: 'success',
+              duration: 5,
             });
+          }
+          // 密码修改完成 回到登录页面
+          history.push('/s/signin');
         });
       }
     });

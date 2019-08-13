@@ -10,7 +10,7 @@ import DateRange from '../../../common/date-picker/date-range';
 
 import { patterns } from '../../../assets/data/pattern';
 import { myBalanceType } from '../../../assets/data/default-data';
-import { setSearchArg } from '../../../assets/js/utils-methods';
+import { setSearchArg, getSelectValue } from '../../../assets/js/utils-methods';
 import { searchStyle } from './style';
 
 let dateStart = null;
@@ -25,13 +25,7 @@ class SearchLeft extends React.Component {
     form.validateFields((error, value) => {
       if (!error) {
         if (value.type) {
-          for (let i = 0; i < myBalanceType.length; i += 1) {
-            if (value.type === myBalanceType[i]) {
-              // eslint-disable-next-line no-param-reassign
-              value.type = i + 1;
-              break;
-            }
-          }
+          value.type = getSelectValue(myBalanceType, value.type, true);
         }
         const obj = {
           ...value,

@@ -14,7 +14,7 @@ import { postRequestBody, get, SUCCESS } from '../../../assets/http/index';
 import { monthlyVisitors, webSiteCategory } from '../../../assets/data/default-data';
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
 import { userInfoPrompt } from '../../../assets/data/prompt-text';
-import { getIsForm, getSelectIndex } from '../../../assets/js/utils-methods';
+import { getIsForm, getSelectValue } from '../../../assets/js/utils-methods';
 
 let userDate = null;
 
@@ -62,29 +62,17 @@ class WibsiteSetting extends React.Component {
     form.validateFields((error, value) => {
       if (!error) {
         const obj = Object.assign(data, value, {
-          monthlyVisits: getSelectIndex(value.monthlyVisits, monthlyVisitors),
-          websiteCategory: getSelectIndex(value.websiteCategory, webSiteCategory),
+          monthlyVisits: getSelectValue(monthlyVisitors, value.monthlyVisits, true),
+          websiteCategory: getSelectValue(webSiteCategory, value.websiteCategory, true),
         });
-        ayc = new Promise((resolve) => {
-          postRequestBody('/api/profile/update', obj)
-            .then((response) => {
-              if (response.message === SUCCESS) {
-                openNotifications.open({
-                  message: userInfoPrompt.successText,
-                  variant: 'success',
-                  duration: 5, // null 表示永远不移除
-                });
-              }
-              resolve(true);
-            })
-            .catch((err) => {
-              openNotifications.open({
-                message: err.data.message || userInfoPrompt.errorText,
-                variant: 'error',
-                duration: 10, // null 表示永远不移除
-              });
-              resolve(true);
+        ayc = postRequestBody('/api/profile/update', obj).then((response) => {
+          const { message } = response;
+          if (message === SUCCESS) {
+            openNotifications.open({
+              message: userInfoPrompt.successText,
+              variant: 'success',
             });
+          }
         });
       }
     });
@@ -101,8 +89,8 @@ class WibsiteSetting extends React.Component {
           websiteName: data.websiteName,
           websiteUrl: data.websiteUrl,
           websiteDesc: data.websiteDesc,
-          websiteCategory: webSiteCategory[data.websiteCategory - 1],
-          monthlyVisits: monthlyVisitors[data.monthlyVisits - 1],
+          websiteCategory: getSelectValue(webSiteCategory, data.websiteCategory),
+          monthlyVisits: getSelectValue(monthlyVisitors, data.monthlyVisits),
         }, [
           'websiteName',
           'websiteUrl',
@@ -112,6 +100,7 @@ class WibsiteSetting extends React.Component {
         ],
       )
       : true;
+
     return (
       <MainContainer>
         {
@@ -134,14 +123,14 @@ class WibsiteSetting extends React.Component {
                   name="Category"
                   outputName="websiteCategory"
                   selectArr={webSiteCategory}
-                  value={webSiteCategory[data.websiteCategory - 1]}
+                  value={getSelectValue(webSiteCategory, data.websiteCategory)}
                 />
                 <MySelect
                   form={form}
                   name="Current Monthly Unique Visitores"
                   outputName="monthlyVisits"
                   selectArr={monthlyVisitors}
-                  value={monthlyVisitors[data.monthlyVisits - 1]}
+                  value={getSelectValue(monthlyVisitors, data.monthlyVisits)}
                 />
                 <MyTextarea
                   form={form}

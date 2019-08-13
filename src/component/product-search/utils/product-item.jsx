@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles/index';
 import ItemButton from './item-button';
 import Avatars from '../../../common/material-ui-component/avatar';
 
-import { getTimes, setBrokerageRate } from '../../../assets/js/utils-methods';
+import { getViewDate, setBrokerageRate } from '../../../assets/js/utils-methods';
 import { itemStyle } from '../style';
 
 const useStyle = makeStyles(itemStyle);
@@ -43,7 +43,7 @@ const ProductItems = (props) => {
         </span>
         <span className={classes.date}>
           <span>Remaining Days :</span>
-          <span>{getTimes(data.endTime)}</span>
+          <span>{getViewDate(data.endTime)}</span>
         </span>
       </div>
       <ItemButton

@@ -46,6 +46,7 @@ const MySelect = (props) => {
       <MyLabel fontSize={fontSize}>{name}</MyLabel>
       <Select
         value={value}
+        renderValue={val => val}
         className={classes.root}
         classes={{
           select: classes.select,
@@ -68,11 +69,19 @@ const MySelect = (props) => {
           ],
         })}
       >
-        <MenuItem value="">None</MenuItem>
         {
-          selectArr.map(v => (
-            <MenuItem key={v} value={v}>{v}</MenuItem>
-          ))
+          !noRequire && <MenuItem value="">None</MenuItem>
+        }
+        {
+          Array.isArray(selectArr)
+            ? (
+              selectArr.map(v => (
+                <MenuItem key={v} value={v}>{v}</MenuItem>
+              ))
+            )
+            : Object.keys(selectArr).map(key => (
+              <MenuItem key={selectArr[key]} value={key}>{key}</MenuItem>
+            ))
         }
       </Select>
       {

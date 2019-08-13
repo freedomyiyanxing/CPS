@@ -12,7 +12,7 @@ import Avatars from '../../../common/material-ui-component/avatar';
 import ItemButton from './item-button';
 
 import { myProduct } from '../../../assets/data/default-data';
-import { getTimes } from '../../../assets/js/utils-methods';
+import { getViewDate } from '../../../assets/js/utils-methods';
 import { listStyle } from '../style';
 
 const useStyle = makeStyles(listStyle);
@@ -87,7 +87,7 @@ const ProductList = (props) => {
               </MyTableCell>
               <MyTableCell align="left">
                 <span className={classes.date}>
-                  {getTimes(v.endTime)}
+                  {getViewDate(v.endTime)}
                 </span>
               </MyTableCell>
               <MyTableCell align="left">

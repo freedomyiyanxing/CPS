@@ -22,8 +22,8 @@ const startUp = (ref, time, data) => {
       categories: time,
     },
     tooltip: {
-      headerFormat: '日期: {point.x} <br>',
-      pointFormat: '数量：{point.y} 次 ',
+      headerFormat: 'Date: {point.x} <br>',
+      pointFormat: 'Qty：{point.y} Times',
     },
     yAxis: {
       title: {

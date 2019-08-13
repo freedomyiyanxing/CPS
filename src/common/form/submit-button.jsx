@@ -47,6 +47,10 @@ class SubmitButton extends React.Component {
         this.setState({
           loading: false,
         });
+      }).catch(() => {
+        this.setState({
+          loading: false,
+        });
       });
     }
   };

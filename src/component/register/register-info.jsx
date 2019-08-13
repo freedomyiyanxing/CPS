@@ -19,7 +19,7 @@ import { openNotifications } from '../../common/prompt-box/prompt-box';
 import { postRequestBody, get, SUCCESS } from '../../assets/http/index';
 import { webSiteCategory, monthlyVisitors, agreement } from '../../assets/data/default-data';
 import { registerInfoPrompt } from '../../assets/data/prompt-text';
-import { getSelectIndex } from '../../assets/js/utils-methods';
+import { getSelectValue } from '../../assets/js/utils-methods';
 
 import { registerInfoStyle } from './style';
 
@@ -85,32 +85,20 @@ class RegisterInfo extends React.Component {
 
         const obj = Object.assign(data, value, {
           mobile,
-          monthlyVisits: getSelectIndex(value.monthlyVisits, monthlyVisitors),
-          websiteCategory: getSelectIndex(value.websiteCategory, webSiteCategory),
+          monthlyVisits: getSelectValue(monthlyVisitors, value.monthlyVisits, true),
+          websiteCategory: getSelectValue(webSiteCategory, value.websiteCategory, true),
         });
-        ayc = new Promise((resolve) => {
-          postRequestBody('/api/auth/signup/complete', obj)
-            .then((response) => {
-              if (response.message === SUCCESS) {
-                openNotifications.open({
-                  message: registerInfoPrompt.successText,
-                  variant: 'success',
-                  duration: 5,
-                });
-                resolve(true);
-                // to 注册完成 等待审批页面
-                history.push('/s/signup/wait');
-              }
-            })
-            .catch((err) => {
-              console.log(err, 'err');
-              openNotifications.open({
-                message: err.data.message || registerInfoPrompt.errorText,
-                variant: 'error',
-                duration: 5,
-              });
-              resolve(true);
+
+        ayc = postRequestBody('/api/auth/signup/complete', obj).then((response) => {
+          const { message } = response;
+          if (message === SUCCESS) {
+            openNotifications.open({
+              message: registerInfoPrompt.successText,
+              variant: 'success',
             });
+            // to 注册完成 等待审批页面
+            history.push('/s/signup/wait');
+          }
         });
       }
     });

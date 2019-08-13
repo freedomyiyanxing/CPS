@@ -21,27 +21,16 @@ class ForgetPassword extends React.Component {
     let ayc = null;
     form.validateFields((error, value) => {
       if (!error) {
-        ayc = new Promise((resolve) => {
-          get(`/api/password/send?email=${value.email}`)
-            .then((response) => {
-              if (response.message === SUCCESS) {
-                openNotifications.open({
-                  message: forgetPasswordPrompt.successText,
-                  variant: 'success',
-                  duration: 5,
-                });
-                history.push('/s/email-sent', { email: value.email, link: 'login' });
-              }
-              resolve(true);
-            })
-            .catch((err) => {
-              openNotifications.open({
-                message: err.data.message || forgetPasswordPrompt.errorText,
-                variant: 'error',
-                duration: 5,
-              });
-              resolve(true);
+        ayc = get(`/api/password/send?email=${value.email}`).then((response) => {
+          const { message } = response;
+          if (message === SUCCESS) {
+            openNotifications.open({
+              message: forgetPasswordPrompt.successText,
+              variant: 'success',
+              duration: 5,
             });
+            history.push('/s/email-sent', { email: value.email, link: 'login' });
+          }
         });
       }
     });

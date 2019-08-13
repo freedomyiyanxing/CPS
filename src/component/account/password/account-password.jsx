@@ -23,27 +23,15 @@ class AccountPassword extends React.Component {
     let ayc = null;
     form.validateFields((error, value) => {
       if (!error) {
-        ayc = new Promise((resolve) => {
-          patchRequestBody('/api/profile/password', value)
-            .then((response) => {
-              const { message } = response;
-              if (message === SUCCESS) {
-                openNotifications.open({
-                  message: userSetPassword.successText,
-                  variant: 'success',
-                  duration: 10,
-                });
-              }
-              resolve(true);
-            })
-            .catch((err) => {
-              openNotifications.open({
-                message: err.data.message || userSetPassword.errorText,
-                variant: 'error',
-                duration: 10,
-              });
-              resolve(true);
+        ayc = patchRequestBody('/api/profile/password', value).then((response) => {
+          const { message } = response;
+          if (message === SUCCESS) {
+            openNotifications.open({
+              message: userSetPassword.successText,
+              variant: 'success',
+              duration: 10,
             });
+          }
         });
       }
     });

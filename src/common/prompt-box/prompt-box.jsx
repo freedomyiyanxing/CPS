@@ -19,7 +19,7 @@ Notification.newInstance({
 
 const openNotifications = {
   open({
-    message, variant, duration = 3, key = '',
+    message, variant, duration = 5, key = '',
   }) {
     notification.notice({
       content: <MySnackbarContentWrapper message={message} variant={variant} />,

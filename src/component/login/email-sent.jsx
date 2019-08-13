@@ -6,7 +6,7 @@ import InputContainer from '../../common/box-container/form-container';
 import SubmitButton from '../../common/form/submit-button';
 import { get, SUCCESS } from '../../assets/http/index';
 import { openNotifications } from '../../common/prompt-box/prompt-box';
-import { emailSentPrompt, forgetPasswordPrompt } from '../../assets/data/prompt-text';
+import { emailSentPrompt } from '../../assets/data/prompt-text';
 import { emailSentText } from '../../assets/data/default-data';
 
 import { emailSentPageStyle } from './style';
@@ -29,27 +29,15 @@ const EmailSentPage = (props) => {
    * 再次点击发送邮件
    * @returns {Promise<any>} 返回promise对象
    */
-  const handleSubmit = () => new Promise((resolve) => {
-    get(url)
-      .then((response) => {
-        const { message } = response;
-        if (message === SUCCESS) {
-          openNotifications.open({
-            message: emailSentPrompt.successText,
-            variant: 'success',
-            duration: 5,
-          });
-          resolve(true);
-        }
-      })
-      .catch((err) => {
-        openNotifications.open({
-          message: err.data.message || forgetPasswordPrompt.errorText,
-          variant: 'error',
-          duration: 5,
-        });
-        resolve(true);
+  const handleSubmit = () => get(url).then((response) => {
+    const { message } = response;
+    if (message === SUCCESS) {
+      openNotifications.open({
+        message: emailSentPrompt.successText,
+        variant: 'success',
+        duration: 5,
       });
+    }
   });
 
   return (

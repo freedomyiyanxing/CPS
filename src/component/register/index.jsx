@@ -26,13 +26,12 @@ class Register extends React.Component {
     if (emails) {
       get(`/api/auth/emailExist/${emails}`)
         .then((data) => {
-          if (data.existed) {
+          const { existed } = data;
+          if (existed) {
             callback(formPrompt.emailValidator);
           } else {
             callback();
           }
-        }).catch((err) => {
-          console.log(err);
         });
     }
   });
@@ -46,29 +45,17 @@ class Register extends React.Component {
     let ayc = null;
     form.validateFields((error, value) => {
       if (!error) {
-        ayc = new Promise((resolve) => {
-          postRequestBody('/api/auth/signup', { ...value })
-            .then((data) => {
-              if (data.message === SUCCESS) {
-                openNotifications.open({
-                  message: registerIndexPrompt.successText,
-                  variant: 'success',
-                  duration: 5,
-                });
-                resolve(true);
-                // to 到发送邮件页面
-                history.push('/s/email-sent', { email: value.email, link: 'register' });
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-              openNotifications.open({
-                message: err.data.message || registerIndexPrompt.errorText,
-                variant: 'error',
-                duration: 5,
-              });
-              resolve(true);
+        ayc = postRequestBody('/api/auth/signup', { ...value }).then((data) => {
+          const { message } = data;
+          if (message === SUCCESS) {
+            openNotifications.open({
+              message: registerIndexPrompt.successText,
+              variant: 'success',
+              duration: 5,
             });
+            // to 到发送邮件页面
+            history.push('/s/email-sent', { email: value.email, link: 'register' });
+          }
         });
       }
     });
@@ -89,7 +76,10 @@ class Register extends React.Component {
           and
           <span> Privacy Policy </span>
         </p>
-        <SubmitButton name="Next" handleSubmit={this.handleSubmit} />
+        <SubmitButton
+          name="Next"
+          handleSubmit={this.handleSubmit}
+        />
       </InputContainer>
     );
   }

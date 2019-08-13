@@ -77,15 +77,8 @@ class TelIndex extends React.Component {
   // 检测是否修改了 电话号码
   handlePhones = (isValid, fullNumber) => {
     const { handlePhone, value } = this.props;
-    // 防止没有如何变化时 触发
-    if (isValid && fullNumber === value) {
-      return;
-    }
     if (typeof handlePhone === 'function') {
-      if (!isValid) {
-        return handlePhone(!isValid);
-      }
-      handlePhone(fullNumber === value);
+      handlePhone(!isValid || fullNumber === value);
     }
   };
 

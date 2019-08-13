@@ -33,9 +33,9 @@ const DateSelection = (props) => {
       let is = true;
       if (defaultValue) {
         is = false;
-        if (value) {
-          is = moment(defaultValue).format('YYYY-MM-DD') === value.format('YYYY-MM-DD');
-        }
+      }
+      if (value) {
+        is = moment(defaultValue).format('YYYY-MM-DD') === value.format('YYYY-MM-DD');
       }
       onChange(is);
     }

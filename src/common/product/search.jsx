@@ -48,7 +48,7 @@ class Search extends React.Component {
     // 获取商品分类数据
     get('/api/promotions/prodCates')
       .then((response) => {
-        // 缓存起来 (方便个人推广中使用)
+        // 缓存起来
         __cacheProdCates__ = response;
         this.setState({
           category: setCategory(response),
@@ -64,15 +64,13 @@ class Search extends React.Component {
       if (value.category) {
         for (let i = 0; i < cate.length; i += 1) {
           if (cate[i].name === value.category) {
-            // eslint-disable-next-line no-param-reassign
             value.category = cate[i].id;
             break;
           }
         }
       }
       if (statusArr && value.valid) {
-        // eslint-disable-next-line no-param-reassign
-        value.valid = Boolean(value.valid === 'Normal'); // 返回 true || false
+        value.valid = value.valid === 'Normal'; // 返回 true || false
       }
       if (!error) {
         ayc = viewRef.current.getData(setSearchArg(value), 1);
