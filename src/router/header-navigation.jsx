@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 
 import renderRoutes from './render-routes';
 import HeaderLogin from '../component/header/header-login';
 import BoxContainer from '../common/box-container/index';
+import { CodeLoading } from '../common/skeleton/code-loading';
 
 /**
  * 解决方案 使用多级路由
@@ -18,7 +19,9 @@ const HeaderNavigation = (props) => {
     <>
       <HeaderLogin history={history} />
       <BoxContainer>
-        {renderRoutes(route.routes, userStore.isLogin)}
+        <Suspense fallback={<CodeLoading />}>
+          {renderRoutes(route.routes, userStore.isLogin)}
+        </Suspense>
       </BoxContainer>
     </>
   );
@@ -30,4 +33,6 @@ HeaderNavigation.propTypes = {
   route: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
-export default inject('userStore')(HeaderNavigation);
+const HeaderNavigations = inject('userStore')(HeaderNavigation);
+
+export default HeaderNavigations;

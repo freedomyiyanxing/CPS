@@ -1,29 +1,29 @@
+import { lazy } from 'react';
 import uuid from 'uuid';
-import loadable from '@loadable/component';
 
 import FooterNavigation from './footer-navigation';
 import NotHeaderNavigation from './not-header-navigation';
-import HeaderNavigation from './header-navigation';
+import HeaderNavigations from './header-navigation';
 import Not404 from '../component/not-404/index';
 
-const Home = loadable(() => import('../component/home/home'));
-const ProductSearch = loadable(() => import('../component/product-search/index'));
-const MyProducts = loadable(() => import('../component/my-product/index'));
-const NotHome = loadable(() => import('../component/home/not-home'));
-const Login = loadable(() => import('../component/login/login'));
-const ForgetPassword = loadable(() => import('../component/login/forget-password'));
-const EmailSentPage = loadable(() => import('../component/login/email-sent'));
-const ResetPassword = loadable(() => import('../component/login/reset-password'));
-const Register = loadable(() => import('../component/register/index'));
-const RegisterInfo = loadable(() => import('../component/register/register-info'));
-const RegisterWait = loadable(() => import('../component/register/register-wait'));
-const AccountBalance = loadable(() => import('../component/account/balance/account-balance'));
-const AccountIndex = loadable(() => import('../component/account/index'));
-const WibsiteSetting = loadable(() => import('../component/account/wibsite/wibsite-setting'));
-const BasicSetting = loadable(() => import('../component/account/basic/basic-setting'));
-const AccountPassword = loadable(() => import('../component/account/password/account-password'));
-const Payment = loadable(() => import('../component/account/payment/account-payment'));
-const Taxes = loadable(() => import('../component/account/taxes/account-taxes'));
+const Home = lazy(() => import('../component/home/home'));
+const ProductSearch = lazy(() => import('../component/product-search/index'));
+const MyProducts = lazy(() => import('../component/my-product/index'));
+const NotHome = lazy(() => import('../component/home/not-home'));
+const Login = lazy(() => import('../component/login/login'));
+const ForgetPassword = lazy(() => import('../component/login/forget-password'));
+const EmailSentPage = lazy(() => import('../component/login/email-sent'));
+const ResetPassword = lazy(() => import('../component/login/reset-password'));
+const Register = lazy(() => import('../component/register/index'));
+const RegisterInfo = lazy(() => import('../component/register/register-info'));
+const RegisterWait = lazy(() => import('../component/register/register-wait'));
+const AccountBalance = lazy(() => import('../component/account/balance/account-balance'));
+const AccountIndex = lazy(() => import('../component/account/index'));
+const WibsiteSetting = lazy(() => import('../component/account/wibsite/wibsite-setting'));
+const BasicSetting = lazy(() => import('../component/account/basic/basic-setting'));
+const AccountPassword = lazy(() => import('../component/account/password/account-password'));
+const Payment = lazy(() => import('../component/account/payment/account-payment'));
+const Taxes = lazy(() => import('../component/account/taxes/account-taxes'));
 
 const routers = [
   {
@@ -93,7 +93,7 @@ const routers = [
       },
       {
         path: '/my',
-        component: HeaderNavigation,
+        component: HeaderNavigations,
         key: uuid(),
         // auth: true,
         routes: [

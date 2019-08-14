@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import renderRoutes from './render-routes';
 import HeaderNotLogin from '../component/header/header-not-login';
 import BoxContainer from '../common/box-container/index';
+import { NotCodeLoading } from '../common/skeleton/code-loading';
 
 /**
  * 解决方案 使用多级路由
@@ -16,7 +17,9 @@ const NotHeaderNavigation = (props) => {
     <>
       <HeaderNotLogin history={history} />
       <BoxContainer>
-        {renderRoutes(route.routes)}
+        <Suspense fallback={<NotCodeLoading />}>
+          {renderRoutes(route.routes)}
+        </Suspense>
       </BoxContainer>
     </>
   );

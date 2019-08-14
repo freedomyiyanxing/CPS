@@ -19,7 +19,6 @@ module.exports = {
       'prop-types',
       'mobx',
       'mobx-react',
-      '@loadable/component',
     ]
   },
   output: {
