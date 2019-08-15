@@ -39,16 +39,12 @@ const ItemButton = (props) => {
           openNotifications.open({
             message: productPrompt.addProductSuccess,
             variant: 'success',
+            duration: 2.5,
           });
         }
       })
-      .catch((err) => {
+      .catch(() => {
         setLoading(false);
-        openNotifications.open({
-          message: err.data.message || productPrompt.addProductError,
-          variant: 'error',
-          duration: 5,
-        });
       });
   };
 
@@ -58,19 +54,10 @@ const ItemButton = (props) => {
   const handleClick = () => {
     // 打开弹出框
     setOpen(true);
-    postRequestBody(`/api/promotions/link/${id}`)
-      .then((response) => {
-        const { link } = response;
-        setLinks(link);
-      })
-      .catch((err) => {
-        console.log(err);
-        openNotifications.open({
-          message: productPrompt.copyLinksError,
-          variant: 'error',
-          duration: 5,
-        });
-      });
+    postRequestBody(`/api/promotions/link/${id}`).then((response) => {
+      const { link } = response;
+      setLinks(link);
+    });
   };
 
   /**

@@ -25,13 +25,17 @@ const AllTopBtn = (props) => {
     setLoading(true);
     handleDeleteChange().then(() => {
       setLoading(false);
+    }).catch(() => {
+      setLoading(false);
     });
   };
 
-  // 点击删除商品
+  // 点击批量下载商品信息
   const handleAllLinks = () => {
     setLinks(true);
     getAllLinks().then(() => {
+      setLinks(false);
+    }).catch(() => {
       setLinks(false);
     });
   };

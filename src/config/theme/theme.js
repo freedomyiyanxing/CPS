@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {createMuiTheme} from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 import orange from '@material-ui/core/colors/orange';
 import lightBlue from '@material-ui/core/colors/lightBlue';
@@ -50,6 +50,7 @@ export const theme = createMuiTheme({
       colorDdd: 'rgba(221, 221, 221, 1)',
       inherit: 'rgba(102, 102, 102, 1)',
       color00: 'rgba(0, 0, 0, 1)',
+      info: 'rgba(51, 165, 249, 1)',
     },
     action: {
       active: 'rgba(0, 0, 0, 0.54)',

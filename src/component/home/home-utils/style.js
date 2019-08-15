@@ -81,7 +81,9 @@ export const curveStyle = theme => ({
     padding: [[5, 10, 0]],
   },
   tabsText: {
+    width: '100%',
     display: 'flex',
+    justifyContent: 'space-between',
     fontSize: theme.typography.fontSize,
     color: theme.palette.text.inherit,
     textAlign: 'left',
@@ -89,8 +91,6 @@ export const curveStyle = theme => ({
   },
   active: {
     background: theme.palette.border.borderEf,
-  },
-  tabsItem: {
   },
   triangle: {
     position: 'absolute',
@@ -100,14 +100,6 @@ export const curveStyle = theme => ({
     marginLeft: -11,
     borderWidth: '8px 11px 0',
   },
-  /*
-    position: absolute;
-    border-top-color: #efefef;
-    bottom: -8px;
-    left: 50%;
-    margin-left: -11px;
-    border-width: 8px 11px 0;
-  */
 });
 
 export const detailStyle = theme => ({

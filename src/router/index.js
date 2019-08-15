@@ -5,11 +5,12 @@ import FooterNavigation from './footer-navigation';
 import NotHeaderNavigation from './not-header-navigation';
 import HeaderNavigations from './header-navigation';
 import Not404 from '../component/not-404/index';
+// import NotHome from '../component/home/not-home';
 
+const NotHome = lazy(() => import('../component/home/not-home'));
 const Home = lazy(() => import('../component/home/home'));
 const ProductSearch = lazy(() => import('../component/product-search/index'));
 const MyProducts = lazy(() => import('../component/my-product/index'));
-const NotHome = lazy(() => import('../component/home/not-home'));
 const Login = lazy(() => import('../component/login/login'));
 const ForgetPassword = lazy(() => import('../component/login/forget-password'));
 const EmailSentPage = lazy(() => import('../component/login/email-sent'));
@@ -35,7 +36,6 @@ const routers = [
         path: '/s',
         component: NotHeaderNavigation,
         key: uuid(),
-        // auth: false,
         routes: [
           {
             path: '/s/index',

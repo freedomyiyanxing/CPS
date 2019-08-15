@@ -20,12 +20,12 @@ class HomeCurve extends React.Component {
     this.state = {
       tabs: 0, // 默认展开第0项
     };
-    this.tabs = statisticsTabs(data[1]);
+    this.tab = statisticsTabs(data[1]);
   }
 
   componentWillReceiveProps(nextProps) {
     const { data } = nextProps;
-    this.tabs = statisticsTabs(data[1]);
+    this.tab = statisticsTabs(data[1]);
   }
 
   // tabs 切换
@@ -54,14 +54,14 @@ class HomeCurve extends React.Component {
           onChange={this.handleChange}
         >
           {
-            this.tabs.map((v, i) => (
+            this.tab.map((v, i) => (
               <Tab
                 key={v.id}
                 label={(
                   <>
                     <span className={classes.tabsText}>
-                      <MyTooltip text={v.text} />
                       {v.text}
+                      <MyTooltip text={v.text} />
                     </span>
                     <Counter value={v.value} unit={v.unit} />
                     {

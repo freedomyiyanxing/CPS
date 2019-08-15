@@ -7,6 +7,7 @@ import { MySvgIconPrompt } from './svg-icon';
 
 const useStyle = makeStyles(theme => ({
   root: {
+    maxWidth: '100%',
     margin: [[10, 0]],
     padding: 14,
     fontSize: theme.typography.fontSize,
@@ -22,7 +23,7 @@ const useStyle = makeStyles(theme => ({
   },
   svgIcon: {
     fontSize: theme.typography.h4.fontSize,
-    color: theme.palette.inherit[500],
+    color: theme.palette.text.info,
   },
 }));
 

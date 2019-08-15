@@ -73,18 +73,6 @@ class SubmitButton extends React.Component {
         style={styles}
         className={`${classes.wrapperBtn} ${bank ? classes.bank : ''}`}
       >
-        <MyButton
-          disabled={disabled}
-          fullWidth
-          variant="contained"
-          color="primary"
-          loading={loading}
-          className={classes.btn}
-          onClick={this.handleClick}
-          style={{ width: `${width}px` }}
-        >
-          {name}
-        </MyButton>
         {
           bank
             ? (
@@ -100,6 +88,18 @@ class SubmitButton extends React.Component {
             )
             : null
         }
+        <MyButton
+          disabled={disabled}
+          fullWidth
+          variant="contained"
+          color="primary"
+          loading={loading}
+          className={classes.btn}
+          onClick={this.handleClick}
+          style={{ width: `${width}px` }}
+        >
+          {name}
+        </MyButton>
       </div>
     );
   }

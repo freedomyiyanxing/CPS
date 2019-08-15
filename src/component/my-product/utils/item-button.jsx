@@ -39,18 +39,10 @@ const ItemButton = (props) => {
     // 打开弹出框
     setOpen(true);
     // 打开弹出框
-    postRequestBody(`/api/promotions/link/${promProdId}`)
-      .then((response) => {
-        const { link } = response;
-        setLinks(link);
-      })
-      .catch((err) => {
-        openNotifications.open({
-          message: err.data.message || productPrompt.copyLinksError,
-          variant: 'error',
-          duration: 5,
-        });
-      });
+    postRequestBody(`/api/promotions/link/${promProdId}`).then((response) => {
+      const { link } = response;
+      setLinks(link);
+    });
   };
 
   /**
@@ -73,6 +65,8 @@ const ItemButton = (props) => {
   const handleClean = (ids) => {
     setClean(true);
     handleDeleteClick(ids).then(() => {
+      setClean(false);
+    }).catch(() => {
       setClean(false);
     });
   };

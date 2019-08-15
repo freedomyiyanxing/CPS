@@ -140,7 +140,7 @@ const Withdraw = (props) => {
         <MyTooltip
           text={`Minimun Payment Amount $
           ${data.min}
-          ; Fees Rate : 我也不知道多少`}
+          ; Fees Rate : 0`}
         />
       </div>
     </div>

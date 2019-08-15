@@ -28,20 +28,20 @@ const DialogFooter = (props) => {
       <MyButton
         color="primary"
         variant="contained"
+        className={classes.btn}
+        onClick={handleDelete}
+      >
+        {title.delete}
+      </MyButton>
+      <MyButton
+        color="primary"
+        variant="contained"
         disabled={disabled}
         className={classes.btn}
         onClick={handleChange}
         loading={loading}
       >
         {title.ok}
-      </MyButton>
-      <MyButton
-        color="primary"
-        variant="contained"
-        className={classes.btn}
-        onClick={handleDelete}
-      >
-        {title.delete}
       </MyButton>
     </div>
   );

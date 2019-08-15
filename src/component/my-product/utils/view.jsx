@@ -35,8 +35,7 @@ class View extends React.Component {
 
     // 选中的id
     this.selectId = [];
-    // 选中商品的状态
-    this.productStatus = [];
+    this.isSingle = false;
   }
 
   componentDidMount() {
@@ -61,17 +60,17 @@ class View extends React.Component {
     page = this.pageCurrent,
     size = PAGE_SIZE,
     sort = this.sort,
-  ) => new Promise((resolve) => {
+  ) => {
     const { checkedAllBool } = this.state;
     this.value = value; // 如果参数value有值 则覆盖缓存的值
     this.pageCurrent = page; // 如果参数page有值 则覆盖缓存的值
-    get('/api/promotions/my', {
+    return get('/api/promotions/my', {
       page, size, ...value, sort,
     }).then((response) => {
       const { total, pages, items } = response;
       if (this._unmount) {
         this.setState({
-          data: getCheckArr(items),
+          data: getCheckArr(items, (this.isSingle && checkedAllBool)),
           pagination: {
             total,
             pages,
@@ -80,16 +79,25 @@ class View extends React.Component {
         });
 
         // 当查询数据时 且 用户动过check 则清除所欲check状态
-        if (checkedAllBool) {
+        if (checkedAllBool && !this.isSingle) {
           this.setState({
             checkedAllBool: false,
           });
+          this.selectId.length = 0;
         }
-        this.selectId.length = 0;
-        resolve(true);
+
+        // 如果点击了全局, 又点击了单个删除
+        if (this.isSingle && checkedAllBool) {
+          this.selectId.length = 0;
+          items.forEach((item) => {
+            this.selectId.push(item.id);
+          });
+        }
+
+        this.isSingle = false;
       }
     });
-  });
+  };
 
   // 获取筛选排序的值
   handleSelectChange = (v) => {
@@ -149,115 +157,91 @@ class View extends React.Component {
     }
   };
 
-  // 点击单个删除
-  handleDeleteClick = id => new Promise((resolve) => {
-    this.selectId.push(id);
-    this.handleDelete().then(() => {
-      resolve(true);
-    });
-  });
-
-  // 执行删除逻辑
-  handleDelete = () => new Promise((resolve) => {
+  /**
+   * 点击单个删除
+   * @param id id 商品id
+   * @returns {Promise<void>}
+   */
+  handleDeleteClick = (id) => {
     const { data, pagination } = this.state;
-
-    if (!this.selectId.length) {
-      resolve(true);
-      return false;
+    this.isSingle = true;
+    if ( // 如果是最后一页的最后一项, 删除完成后 分页跳转到上一页
+      pagination.pages === this.pageCurrent && data.length === 1
+    ) {
+      this.pageCurrent -= 1;
+      this.isSingle = false;
     }
 
-    // 表示在删除最后一页的数据
+    return this.deleteRequest(id);
+  };
+
+  /**
+   * 全选删除
+   * @returns {Promise<void>|Promise<T>|Promise<void>}
+   */
+  handleDelete = () => {
+    const { data, pagination } = this.state;
+    if (!this.selectId.length) {
+      openNotifications.open({
+        message: myProductPrompt.deleteWarning,
+        variant: 'warning',
+      });
+      return Promise.resolve();
+    }
+
+    // 如果是最后一页的最后一项, 删除完成后 分页跳转到上一页
     if (
-      data.length === this.selectId.length
+      data.length <= this.selectId.length
       && this.pageCurrent > 1
       && pagination.pages === this.pageCurrent
     ) {
       this.pageCurrent -= 1;
     }
 
-    deleteRequestBody('/api/promotions/delete', {
-      ids: this.selectId.join(','),
-    }).then((response) => {
+    return this.deleteRequest(this.selectId);
+  };
+
+  /**
+   * 删除请求
+   * @param id 商品id
+   * @returns {Promise<void>|Promise<void>}
+   */
+  deleteRequest = (id) => {
+    if (!id) {
+      return Promise.resolve();
+    }
+    const ids = Array.isArray(id) ? id.join(',') : id;
+    return deleteRequestBody('/api/promotions/delete', { ids }).then((response) => {
       const { message } = response;
       if (message === SUCCESS) {
         this.getData().then(); // 请求数据
         openNotifications.open({
           message: myProductPrompt.deleteSuccess,
           variant: 'success',
-          duration: 5,
-        });
-        resolve(true);
-      }
-    }).catch((err) => {
-      openNotifications.open({
-        message: err.data.message || myProductPrompt.errorText,
-        variant: 'error',
-        duration: 5,
-      });
-      resolve(true);
-    });
-  });
-
-  // 下载 xls
-  getAllLinks =() => new Promise((resolve) => {
-    const { data } = this.state;
-    // arr中存储未过期的商品id
-    const arr = [];
-
-    if (!this.selectId.length) {
-      resolve(true);
-      return;
-    }
-
-    // 过滤掉过期商品
-    data.forEach((item) => {
-      if (item.valid) {
-        this.selectId.forEach((j) => {
-          if (item.id === j) { // 表示当前商品未过期
-            arr.push(j);
-          }
+          duration: 2.5,
         });
       }
     });
+  };
 
-    // arr.length === 0 表示所有选中的商品都是已经过期的
-    if (!arr.length) {
-      openNotifications.open({
-        message: myProductPrompt.downloadLinksError,
-        variant: 'warning',
-        duration: 5,
-      });
-      resolve(true);
-      return;
-    }
-
-    // responseType: 'arraybuffer' response 是一个包含二进制数据的 JavaScript ArrayBuffer,
-    get('/api/promotions/links', { ids: arr.join(',') }, 'arraybuffer')
-      .then((response) => {
-        openNotifications.open({
-          message: myProductPrompt.downloadLinks,
-          variant: 'success',
-          duration: 5,
-        });
-        resolve(true);
-
-        const blob = new Blob([response]);
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'links.xls';
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      })
-      .catch((err) => {
-        resolve(true);
-        openNotifications.open({
-          message: err.data.message || myProductPrompt.errorText,
-          variant: 'error',
-          duration: 5,
-        });
-      });
+  /**
+   * 下载 xls
+   * @returns {Promise<void>|Promise<void>}
+   * responseType: 'arraybuffer' response 是一个包含二进制数据的 JavaScript ArrayBuffer,
+   */
+  getAllLinks = () => get('/api/promotions/links', 'arraybuffer').then((response) => {
+    openNotifications.open({
+      message: myProductPrompt.downloadLinks,
+      variant: 'success',
+    });
+    const blob = new Blob([response]);
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'links.xls';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   });
 
   render() {
