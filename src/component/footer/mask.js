@@ -93,6 +93,13 @@ const footerObj = {
       type: 'content',
       url: '/article/list/2/8',
     },
+    {
+      id: '300',
+      isBlankTarget: false,
+      name: 'Contact Us',
+      type: 'content',
+      url: 'http://192.168.1.26:8080/shop/contactUs?isCps=true',
+    },
   ],
 };
 

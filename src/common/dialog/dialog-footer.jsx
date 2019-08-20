@@ -23,6 +23,7 @@ const DialogFooter = (props) => {
     title, handleDelete, handleChange, disabled, loading,
   } = props;
   const classes = useStyle();
+
   return (
     <div className={classes.footer}>
       <MyButton

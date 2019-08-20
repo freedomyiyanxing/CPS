@@ -5,10 +5,14 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpackBaseConfig = require('./webpack-base-config');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
+// 一定要记得要不要在nginx上或者其他地方 缓存 .html 文件
+
 module.exports = webpackMerge(webpackBaseConfig, {
   mode: 'production',
   output: {
-    filename: 'js/[name]-[hash].js',
+    // chunkhash 与 hash是有区别的 项目涉及到拆包，分模块进行加载等等，
+    // 那么需要用 chunkhash，来保证每次更新之后只有相关的文件 hash 值发生改变。
+    filename: 'js/[name]-[chunkhash].js',
     publicPath: '/',
   },
   module: {

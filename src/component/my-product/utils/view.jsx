@@ -251,38 +251,40 @@ class View extends React.Component {
     } = this.state;
     return (
       <div className={classes.root}>
-        <div className={classes.header}>
-          <AllTopBtn
-            getAllLinks={this.getAllLinks}
-            handleDeleteChange={this.handleDelete}
-          />
-          <DropDownBox
-            selects={myProduct.productSort}
-            onChange={this.handleSelectChange}
-          />
-        </div>
         <Skeleton
           loading={loading}
         >
           {
             data.length
               ? (
-                <ProductList
-                  data={data}
-                  checkedAllBool={checkedAllBool}
-                  handleDeleteClick={this.handleDeleteClick}
-                  handleCheckAllChange={this.handleCheckAllChange}
-                  handleCheckChange={this.handleCheckChange}
-                />
+                <>
+                  <div className={classes.header}>
+                    <AllTopBtn
+                      getAllLinks={this.getAllLinks}
+                      handleDeleteChange={this.handleDelete}
+                    />
+                    <DropDownBox
+                      selects={myProduct.productSort}
+                      onChange={this.handleSelectChange}
+                    />
+                  </div>
+                  <ProductList
+                    data={data}
+                    checkedAllBool={checkedAllBool}
+                    handleDeleteClick={this.handleDeleteClick}
+                    handleCheckAllChange={this.handleCheckAllChange}
+                    handleCheckChange={this.handleCheckChange}
+                  />
+                  <MyPagination
+                    total={pagination.total} // 总条数
+                    pageSize={PAGE_SIZE} // 每页条数
+                    pageCurrent={this.pageCurrent}
+                    change={this.handlePaginationChange} // 点击分页时调用
+                  />
+                </>
               )
               : <EmptyPage height={284} />
           }
-          <MyPagination
-            total={pagination.total} // 总条数
-            pageSize={PAGE_SIZE} // 每页条数
-            pageCurrent={this.pageCurrent}
-            change={this.handlePaginationChange} // 点击分页时调用
-          />
         </Skeleton>
       </div>
     );

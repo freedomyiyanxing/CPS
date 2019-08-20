@@ -28,6 +28,7 @@ class SubmitButton extends React.Component {
     // 回车事件
     if (e.keyCode === 13 && !disabled) {
       this.handleClick();
+      return;
     }
     // Esc事件
     if (e.keyCode === 27 && bank) {

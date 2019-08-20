@@ -129,7 +129,7 @@ class Payment extends React.Component {
       const { paypal } = window;
       const obj = {
         appid: window.__payment__info__.paypal.appId,
-        returnurl: 'http://192.168.1.22:8899/my/account-payment',
+        returnurl: window.__payment__info__.paypal.returnUrl, // 'http://192.168.1.22:8899/my/account-payment',
         scopes: 'openid email profile https://uri.paypal.com/services/paypalattributes',
         containerid: 'cwppButton',
         responseType: 'id_Token',
