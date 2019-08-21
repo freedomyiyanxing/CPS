@@ -1,4 +1,6 @@
-const footerObj = {
+import uuid from 'uuid';
+
+export const footerObj = {
   left: [
     {
       id: '83719078436573191',
@@ -91,16 +93,32 @@ const footerObj = {
       isBlankTarget: false,
       name: 'Account Questions',
       type: 'content',
-      url: '/article/list/2/8',
+      url: '/article/test',
     },
     {
       id: '300',
       isBlankTarget: false,
       name: 'Contact Us',
       type: 'content',
-      url: 'http://192.168.1.26:8080/shop/contactUs?isCps=true',
+      url: '/article/contact-us',
     },
   ],
 };
 
-export default footerObj;
+export const title = [
+  {
+    id: uuid(),
+    text: 'ABOUT INFLUMONSTER',
+    children: footerObj.left,
+  },
+  {
+    id: uuid(),
+    text: 'CUSTOMER SERVICE',
+    children: footerObj.middle,
+  },
+  {
+    id: uuid(),
+    text: 'FOLLOW INFLUMONSTER',
+    children: null,
+  },
+];

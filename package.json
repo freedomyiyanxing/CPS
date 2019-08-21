@@ -76,7 +76,6 @@
     "react-helmet": "^5.2.1",
     "react-jss": "^8.6.1",
     "react-load-script": "^0.0.6",
-    "react-router-config": "^5.0.1",
     "react-router-dom": "^5.0.0",
     "uuid": "^3.3.2"
   }

@@ -47,7 +47,7 @@ class Login extends React.Component {
       if (!error) {
         ayc = postRequestBody('/api/auth/signin', { ...value }).then((response) => {
           const {
-            token, photo, firstName, lastName,
+            token, photo, firstName, lastName, email,
           } = response;
           // 只有当服务器返回正确 且 点击了存储密码邮箱的check
           if (this.check) {
@@ -63,6 +63,7 @@ class Login extends React.Component {
               token, photo, firstName, lastName,
             },
           );
+          userStore.loginUseInfo({ firstName, lastName, email });
           // 登录完成时 -> 跳转至登录首页 或者上次停留的页面
           const { pathname } = location.state ? location.state.from : { pathname: '/my/index' };
           history.push(pathname);

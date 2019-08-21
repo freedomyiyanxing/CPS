@@ -5,7 +5,7 @@ import { makeStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'mobx-react';
 import { Helmet } from 'react-helmet';
 
-import renderRoutes from './router/render-routes';
+import { renderRoutes } from './router/render-routes';
 import User from './store/user';
 import routers from './router/index';
 import favicon from './assets/images/favicon.ico';

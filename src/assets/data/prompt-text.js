@@ -140,6 +140,10 @@ const emailTokenPagePrompt = {
   btn: '回到注册页面',
 };
 
+const contactUsPrompt = {
+  success: '做完待在原地吧, 我也不知道改怎么做',
+};
+
 const errorText = '服务器错误, 请联系管理员';
 const clientErrorText = '当前路径不存在 ---- !!';
 const clientNetworkError = '当前网络错误';
@@ -167,4 +171,5 @@ export {
   emailTokenPagePrompt,
   clientErrorText,
   clientNetworkError,
+  contactUsPrompt,
 };

@@ -48,6 +48,7 @@ const HeaderLogin = (props) => {
         if (message === SUCCESS) {
           // 修改userStore中的登录状态 清除userStore中的登录信息
           userStore.setLoginInfo(false);
+          userStore.loginUseInfo(null);
           // to 到登录页面
           history.push('/s/signin');
           openNotifications.open({

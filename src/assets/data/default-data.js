@@ -64,6 +64,17 @@ const monthlyVisitors = {
   '> 1000k': 5,
 };
 
+// 联系我们select选择
+const contactUsSelect = {
+  'Account': 9,
+  'Ads Fees & Earnings': 10,
+  'Balance & Withdrawal': 11,
+  'Join Us': 12,
+  'Linking': 13,
+  'Products': 14,
+  'Others': 15,
+};
+
 // 用户首页 推广数据统计 tab数据
 const statisticsTabs = statistics => ([
   {
@@ -542,4 +553,5 @@ export {
   cropperBtnArr,
   amountTable,
   agreement,
+  contactUsSelect,
 };

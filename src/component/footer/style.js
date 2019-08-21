@@ -31,7 +31,12 @@ const footerStyle = theme => ({
   links: {
     lineHeight: '22px',
     fontSize: theme.typography.fontSizeSm,
-    color: theme.palette.text.colorDdd,
+    // color: theme.palette.text.colorDdd,
+    color: theme.palette.text.secondary,
+    cursor: 'pointer',
+    '&:hover': {
+      color: theme.palette.text.colorDdd,
+    },
   },
   copyright: {
     marginTop: 20,

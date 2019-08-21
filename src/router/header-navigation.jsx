@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 
-import renderRoutes from './render-routes';
+import { renderRoutes } from './render-routes';
 import HeaderLogin from '../component/header/header-login';
 import BoxContainer from '../common/box-container/index';
 import { CodeLoading } from '../common/skeleton/code-loading';
@@ -15,6 +15,7 @@ import { CodeLoading } from '../common/skeleton/code-loading';
  */
 const HeaderNavigation = (props) => {
   const { route, history, userStore } = props;
+  // console.log(route);
   return (
     <>
       <HeaderLogin history={history} />

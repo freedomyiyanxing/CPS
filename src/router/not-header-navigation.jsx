@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
-import renderRoutes from './render-routes';
+import { renderRoutes } from './render-routes';
 import HeaderNotLogin from '../component/header/header-not-login';
 import BoxContainer from '../common/box-container/index';
 import { NotCodeLoading } from '../common/skeleton/code-loading';

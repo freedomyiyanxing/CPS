@@ -1,32 +1,18 @@
 import React from 'react';
-import uuid from 'uuid';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { title } from './mask';
+
 import footerStyle from './style';
-import footerObj from './mask';
 
 const useStyles = makeStyles(footerStyle);
 
-const title = [
-  {
-    id: uuid(),
-    text: 'ABOUT INFLUMONSTER',
-    children: footerObj.left,
-  },
-  {
-    id: uuid(),
-    text: 'CUSTOMER SERVICE',
-    children: footerObj.middle,
-  },
-  {
-    id: uuid(),
-    text: 'FOLLOW INFLUMONSTER',
-    children: null,
-  },
-];
 
-const FooterIndex = () => {
+const FooterIndex = (props) => {
+  const { history } = props;
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>
@@ -42,13 +28,16 @@ const FooterIndex = () => {
                     val.children
                       ? (
                         val.children.map(v => (
-                          <a
+                          <span
                             className={classes.links}
-                            href={v.url}
+                            // href={v.url}
                             key={v.id}
+                            tabIndex={0}
+                            role="button"
+                            onClick={() => { history.push(v.url); }}
                           >
                             {v.name}
-                          </a>
+                          </span>
                         ))
                       )
                       : null
@@ -65,6 +54,10 @@ const FooterIndex = () => {
       </div>
     </div>
   );
+};
+
+FooterIndex.propTypes = {
+  history: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default FooterIndex;

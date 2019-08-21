@@ -14,9 +14,11 @@ class User {
     const loginInfo = session.getSession('loginInfo');
     const userName = session.getSession('userName');
     const userPhoto = session.getSession('userPhoto');
+    const userInfo = session.getSession('userInfo');
     this.isLogin = loginInfo ? loginInfo.isLogin : false; // 默认登录状态为 false;
     this.userName = userName || '';
     this.userPhoto = userPhoto || '';
+    this.userInfo = userInfo || null;
   }
 
   @action setLoginInfo(isLogin, loginInfo) {
@@ -45,6 +47,15 @@ class User {
   @action selUserPhoto(photo) {
     this.userPhoto = photo;
     session.setSession('userPhoto', this.userPhoto);
+  }
+
+  @action loginUseInfo(info) {
+    if (info) {
+      session.setSession('userInfo', info);
+    } else {
+      session.remove('userInfo');
+    }
+    this.userInfo = info;
   }
 }
 

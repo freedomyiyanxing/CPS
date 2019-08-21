@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import renderRoutes from './render-routes';
-import { renderRoutes } from 'react-router-config';
+import { renderRoutes } from './render-routes';
 import FooterIndex from '../component/footer/footer-index';
 
 /**
@@ -16,7 +15,7 @@ const FooterNavigation = (props) => {
   return (
     <>
       {renderRoutes(route.routes)}
-      <FooterIndex />
+      <FooterIndex history={history} />
     </>
   );
 };

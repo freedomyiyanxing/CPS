@@ -106,12 +106,15 @@ axios.interceptors.response.use(
       return Promise.reject(response);
     }
     if (status >= 500) {
-      openNotifications.open({
-        message: detail || errorText,
-        variant: 'error',
-      });
+      if (cancelFlag) {
+        openNotifications.open({
+          message: detail || errorText,
+          variant: 'error',
+        });
+      }
+      cancelFlag = false;
+      return Promise.reject(response);
     }
-    return Promise.reject(response);
   },
 );
 

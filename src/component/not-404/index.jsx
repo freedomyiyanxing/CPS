@@ -34,48 +34,72 @@ const useStyles = makeStyles(theme => ({
 
 const text = 'Oops! Looks like the page you\'re trying to reach is temporarily unavailable or the page might have been moved, deleted or no longer exist.';
 
-const Not404 = (props) => {
-  const { location, history } = props;
+const Content = (props) => {
+  const { history } = props;
   const classes = useStyles();
-  const isLogin = location.pathname.split('/').length <= 2;
+  return (
+    <MainContainer>
+      <div
+        className={classes.root}
+      >
+        <h2 className={classes.h2}>THIS PAGE CANNOT BE FOUND</h2>
+        <p className={classes.text}>{text}</p>
+        <div>
+          <MyButton
+            variant="contained"
+            color="primary"
+            className={classes.btn}
+            // onClick={() => history.push(isLogin ? '/s/index' : '/my/index')}
+          >
+            Return Login
+          </MyButton>
+          <MyButton
+            variant="contained"
+            color="primary"
+            className={classes.btn}
+            onClick={() => history.goBack()}
+          >
+            Return
+          </MyButton>
+        </div>
+      </div>
+    </MainContainer>
+  );
+};
+
+export const Not404 = (props) => {
+  const { history } = props;
+  return (
+    <Content
+      history={history}
+    />
+  );
+};
+
+
+const Lost = (props) => {
+  const { history } = props;
   return (
     <>
-      {
-        isLogin ? <HeaderNotLogin history={history} /> : null
-      }
-      <MainContainer>
-        <div
-          className={classes.root}
-        >
-          <h2 className={classes.h2}>THIS PAGE CANNOT BE FOUND</h2>
-          <p className={classes.text}>{text}</p>
-          <div>
-            <MyButton
-              variant="contained"
-              color="primary"
-              className={classes.btn}
-              onClick={() => history.push(isLogin ? '/s/index' : '/my/index')}
-            >
-              Return Home
-            </MyButton>
-            <MyButton
-              variant="contained"
-              color="primary"
-              className={classes.btn}
-              onClick={() => history.goBack()}
-            >
-              Return Home
-            </MyButton>
-          </div>
-        </div>
-      </MainContainer>
+      <HeaderNotLogin history={history} />
+      <Content
+        history={history}
+      />
     </>
   );
 };
 
-Not404.propTypes = {
+
+Content.propTypes = {
   history: PropTypes.objectOf(PropTypes.object).isRequired,
-  location: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
-export default Not404;
+Not404.propTypes = {
+  history: PropTypes.objectOf(PropTypes.object).isRequired,
+};
+
+Lost.propTypes = {
+  history: PropTypes.objectOf(PropTypes.object).isRequired,
+};
+
+export default Lost;

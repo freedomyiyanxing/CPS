@@ -4,7 +4,10 @@ import uuid from 'uuid';
 import FooterNavigation from './footer-navigation';
 import NotHeaderNavigation from './not-header-navigation';
 import HeaderNavigations from './header-navigation';
-import Not404 from '../component/not-404/index';
+import Lost, { Not404 } from '../component/not-404/index';
+import ArticleContainers from '../component/article/index';
+import ContactUs from '../component/article/contact-us';
+import Test from '../component/article/test';
 // import NotHome from '../component/home/not-home';
 
 const NotHome = lazy(() => import('../component/home/not-home'));
@@ -95,7 +98,6 @@ const routers = [
         path: '/my',
         component: HeaderNavigations,
         key: uuid(),
-        // auth: true,
         routes: [
           {
             path: '/my/index',
@@ -164,7 +166,30 @@ const routers = [
         ],
       },
       {
-        component: Not404,
+        path: '/article',
+        component: ArticleContainers,
+        key: uuid(),
+        routes: [
+          {
+            path: '/article/contact-us',
+            exact: true,
+            component: ContactUs,
+            key: uuid(),
+          },
+          {
+            path: '/article/test',
+            exact: true,
+            component: Test,
+            key: uuid(),
+          },
+          {
+            component: Not404,
+            key: uuid(),
+          },
+        ],
+      },
+      {
+        component: Lost,
         key: uuid(),
       },
     ],
