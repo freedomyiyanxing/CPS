@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import {
   MySvgIconSocialPaypal,
   MySvgIconDelete,
+  BankCard,
 } from '../material-ui-component/svg-icon';
 
 const useStyle = makeStyles(theme => ({
@@ -59,15 +60,21 @@ const useStyle = makeStyles(theme => ({
 }));
 
 const PaypalView = (props) => {
-  const { data, handleDelete, className } = props;
+  const {
+    handleDelete, className, name, info, isPaypal,
+  } = props;
   const classes = useStyle();
-  const { paypalName, paypalEmail } = data;
+  // const { paypalName, paypalEmail } = data;
   return (
     <div className={`${classes.palpayWrapper} ${className}`}>
-      <MySvgIconSocialPaypal className={classes.paypalIcon} />
+      {
+        isPaypal
+          ? <BankCard />
+          : <MySvgIconSocialPaypal className={classes.paypalIcon} />
+      }
       <div className={classes.textWrapper}>
-        <h2>{paypalName}</h2>
-        <p>{paypalEmail}</p>
+        <h2>{name}</h2>
+        <p>{info}</p>
       </div>
       {
         handleDelete
@@ -86,7 +93,9 @@ const PaypalView = (props) => {
 };
 
 PaypalView.propTypes = {
-  data: PropTypes.objectOf(PropTypes.object).isRequired,
+  name: PropTypes.string.isRequired,
+  info: PropTypes.string.isRequired,
+  isPaypal: PropTypes.bool,
   handleDelete: PropTypes.func,
   className: PropTypes.string,
 };
@@ -94,6 +103,7 @@ PaypalView.propTypes = {
 PaypalView.defaultProps = {
   handleDelete: null,
   className: '',
+  isPaypal: false,
 };
 
 export default PaypalView;

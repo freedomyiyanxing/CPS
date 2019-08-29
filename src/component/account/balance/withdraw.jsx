@@ -6,7 +6,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import MyInput from '../../../common/material-ui-component/input';
 import MyButton from '../../../common/material-ui-component/button';
-import PaypalView from '../../../common/paypal/paypal-view';
+// import PaypalView from '../../../common/paypal/paypal-view';
 import MyTooltip from '../../../common/material-ui-component/tooltip';
 
 import { formPrompt } from '../../../assets/data/prompt-text';
@@ -89,7 +89,9 @@ const Withdraw = (props) => {
     <div className={classes.wrapper}>
       <div className={classes.items}>
         <span className={classes.left}>Payment Account :</span>
-        {<PaypalView data={data} className={classes.paypalWrapper} />}
+        {
+          /* <PaypalView data={data} className={classes.paypalWrapper} /> */
+        }
       </div>
       <div className={classes.items}>
         <span className={classes.left}>Account Balance :</span>
@@ -140,7 +142,9 @@ const Withdraw = (props) => {
         <MyTooltip
           text={`Minimun Payment Amount $
           ${data.min}
-          ; Fees Rate : 0`}
+          ; Fees Rate :
+          ${data.tax}
+          `}
         />
       </div>
     </div>

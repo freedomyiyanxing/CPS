@@ -100,7 +100,6 @@ class WibsiteSetting extends React.Component {
         ],
       )
       : true;
-
     return (
       <MainContainer>
         {

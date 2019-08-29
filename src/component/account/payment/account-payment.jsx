@@ -1,14 +1,16 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Script from 'react-load-script';
 import { createForm, formShape } from 'rc-form';
+import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import MainContainer from '../../../common/box-container/main-container';
 import SubmitButton from '../../../common/form/submit-button';
-import MySelect from '../../../common/form/my-select';
+import ToggleSelect from '../../../common/form/toggle-select';
 import Container from '../utils/container';
-import PaypalView from '../../../common/paypal/paypal-view';
+import Paypal from './paypal';
+import DirectDeposit from './direct-deposit';
 
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
 import { paymentPrompt } from '../../../assets/data/prompt-text';
@@ -17,25 +19,44 @@ import {
 } from '../../../assets/http/index';
 import { paymentStyle } from '../style';
 
+const selectArr = ['Please Select', 'Paypal', 'Direct Deposit'];
+
 @withStyles(paymentStyle)
 @createForm()
 class Payment extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+
+    const { history } = props;
+    const search = decodeURIComponent(history.location.search);
+    this.searchCode = search.slice(1, search.length - 1);
+    this.isPaypal = this.searchCode.startsWith('code=');
+    const t = window.__payout__account__;
+    const stateObj = {
       loading: false,
-      isPaypal: null,
+      // 查询提现账号信息
+      accountNumber: t || null,
+      // 当前选项卡下标 string 类型
+      selectIndex: t ? (t.accountType || '0') : '0',
+      selectCurrentVal: selectArr[t ? (t.accountType || '0') : '0'] // selectArr[0]
     };
+
+    if (this.isPaypal) {
+      stateObj.selectIndex = '1';
+      stateObj.selectCurrentVal = selectArr[stateObj.selectIndex];
+    }
+    this.state = stateObj;
   }
 
   componentDidMount() {
     this._unmount = true;
 
     // 查询绑定的提现账号
-    this.getWithdraw();
-
-    // 查询系统设置
-    this.getSystemSetting();
+    if (!this.isPaypal) {
+      this.getWithdraw();
+    } else {
+      this.getInquirePaypal();
+    }
   }
 
   componentWillUnmount() {
@@ -43,128 +64,83 @@ class Payment extends React.Component {
   }
 
   /**
-   * 查询绑定的提现账号
+   * 查询绑定的提现账号信息
    */
   getWithdraw = () => {
-    const { history } = this.props;
-    get('/api/payout/binding')
-      .then((response) => {
-        if (this._unmount) {
-          this.setState({
-            isPaypal: response,
-            loading: !(history.location.search && !response.id),
-          });
-        }
-        // 说明是从paypal返回进来的,
-        if (history.location.search && !response.id) {
-          const url = decodeURIComponent(history.location.search);
-          const search = url.substr(1, url.length - 1);
-          const [name, value] = search.split('&')[0].split('=');
-          if (name === 'code') {
+    if (!window.__payout__account__) {
+      get('/api/payout/binding')
+        .then((response) => {
+          const { accountType } = response = response || {};
+          if (this._unmount) {
+            window.__payout__account__ = response;
             this.setState({
-              loading: false,
-            });
-
-            postRequestBody('/api/payout/binding/paypal', {
-              code: value,
-            })
-              .then((resp) => {
-                if (this._unmount) {
-                  this.setState({
-                    isPaypal: resp,
-                    loading: true,
-                  });
-                }
-                openNotifications.open({
-                  message: paymentPrompt.addPaypalSuccess,
-                  variant: 'success',
-                });
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-
-            // 防止傻逼 在请求过程中... 刷新页面, 从而导致多次请求paypal接口
-            history.push('/my/account-payment');
-          } else {
-            openNotifications.open({
-              message: paymentPrompt.paypalLoginError,
-              variant: 'error',
-            });
-            this.setState({
-              loading: true,
+              accountNumber: response,
+              selectIndex: accountType || '0',
+              selectCurrentVal: selectArr[accountType || '0']
             });
           }
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        this.setState({
-          loading: true,
-        });
-      });
+        })
+    }
   };
 
   /**
-   * 查询系统设置
+   * 提交paypal账户绑定
    */
-  getSystemSetting = () => {
-    if (!window.__payment__info__) {
-      get('/api/common/settings')
+  getInquirePaypal = () => {
+    const { history } = this.props;
+    const [name, value] = this.searchCode.split('&')[0].split('=');
+    if (name === 'code') {
+      this.setState({
+        loading: false,
+      });
+
+      postRequestBody('/api/payout/binding/paypal', {
+        code: value,
+      })
         .then((response) => {
-          window.__payment__info__ = response;
+          console.log(response, 'resp');
+          this.setState({
+            accountNumber: response
+          });
+          openNotifications.open({
+            message: paymentPrompt.addPaypalSuccess,
+            variant: 'success',
+          });
         })
         .catch((err) => {
           console.log(err);
+          this.setState({
+            accountNumber: {}
+          });
         });
-    }
-  };
 
-
-  /**
-   * paypal.js 加载完成时触发
-   */
-  handleScriptLoad = () => {
-    if (window.__payment__info__) {
-      const { paypal } = window;
-      const obj = {
-        appid: window.__payment__info__.paypal.appId,
-        returnurl: window.__payment__info__.paypal.returnUrl, // 'http://192.168.1.22:8899/my/account-payment',
-        scopes: 'openid email profile https://uri.paypal.com/services/paypalattributes',
-        containerid: 'cwppButton',
-        responseType: 'id_Token',
-        locale: 'en-us',
-        buttonShape: 'rectangle',
-        buttonSize: 'lg',
-        fullPage: 'true',
-      };
-
-      if (window.__payment__info__.paypal.mode === 'sandbox') {
-        obj.authend = 'sandbox';
-      }
-      paypal.use(['login'], (login) => {
-        login.render(obj);
+      // 防止傻逼 在请求过程中... 刷新页面, 从而导致多次请求paypal接口
+      history.push('/my/account-payment');
+    } else {
+      openNotifications.open({
+        message: paymentPrompt.paypalLoginError,
+        variant: 'error',
+      });
+      this.setState({
+        loading: true,
       });
     }
   };
+
 
   /**
    * 移除paypal账号
    */
   handleDeletePaypal = () => {
-    const { history } = this.props;
-    const { isPaypal } = this.state;
-    history.push('/my/account-payment');
-    this.setState({
-      loading: false,
-    });
-    deleteRequestBody(`/api/payout/unbinding/${isPaypal.id}`)
+    const { accountNumber } = this.state;
+    deleteRequestBody(`/api/payout/unbinding/${accountNumber.id}`)
       .then((response) => {
         const { message } = response;
         if (message === SUCCESS) {
           this.setState({
-            isPaypal: null,
-            loading: true,
+            accountNumber: {},
+            selectIndex: '0', // 当前选项卡下标 string 类型
+            selectCurrentVal: selectArr[0]
           });
           openNotifications.open({
             message: paymentPrompt.deleteSuccess,
@@ -172,50 +148,79 @@ class Payment extends React.Component {
           });
         }
       })
-      .catch((err) => {
-        openNotifications.open({
-          message: err.data.message || paymentPrompt.deleteError,
-          variant: 'error',
-        });
-      });
+  };
+
+
+  // 绑定账户方式选择 (select)
+  handleChange = (value) => {
+    let i = '0';
+    switch (value) {
+      case 'Paypal':
+        i = '1';
+        break;
+      case 'Direct Deposit':
+        i = '2';
+        break
+    }
+
+    this.setState({
+      selectIndex: i,
+      selectCurrentVal: value,
+    })
+  };
+
+  /**
+   * 银行账号绑定提交事件
+   * @returns {*} 验证正确的情况下返回一个 promise对象
+   */
+  handleSubmit = () => {
+    const { form } = this.props;
+    const { selectIndex } = this.state;
+    // 只有切换至银行账户保存 才可以进入提交
+    if (selectIndex !== '2') {
+      return
+    }
+    let ayc = null;
+    form.validateFields((error, value) => {
+      if (!error) {
+        console.log(value)
+      }
+    });
+    return ayc;
   };
 
   render() {
-    const { classes, form, history } = this.props;
-    const { isPaypal, loading } = this.state;
+    const { classes, history, form } = this.props;
+    const { accountNumber, selectIndex, selectCurrentVal } = this.state;
+
+    const setView = () => {
+      switch (selectIndex) {
+        case '1':
+          return <Paypal data={accountNumber} func={this.handleDeletePaypal} />;
+        case '2':
+          return <DirectDeposit data={accountNumber} form={form} />;
+        default:
+          return null
+      }
+    };
+    console.log(window.__payout__account__, '222222');
+    // console.log(selectIndex, '33333', selectCurrentVal);
     return (
       <>
         <MainContainer>
           <Container title="Basic Payment">
-            <MySelect
-              form={form}
-              name="Payment Method *"
-              outputName="category"
-              selectArr={['Paypal']}
-              noRequire={false}
-              value="Paypal"
+            <ToggleSelect
+              name="Payment Method"
+              selectArr={selectArr}
+              value={selectCurrentVal}
+              handleChange={this.handleChange}
+              disabled={!Boolean(accountNumber)}
             />
-            <div id="cwppButton" className={classes.root}>
+            <div className={classes.root}>
               {
-                // eslint-disable-next-line no-nested-ternary
-                loading
-                  ? (
-                    isPaypal && isPaypal.id
-                      ? (
-                        <PaypalView
-                          data={isPaypal}
-                          className={classes.palpay}
-                          handleDelete={this.handleDeletePaypal}
-                        />
-                      )
-                      : (
-                        <Script
-                          url="https://www.paypalobjects.com/js/external/connect/api.js"
-                          onLoad={this.handleScriptLoad}
-                        />
-                      )
-                  )
-                  : <div>loading...</div>
+                accountNumber
+                  ? setView()
+                  : <CircularProgress />
               }
             </div>
             <SubmitButton
@@ -223,8 +228,8 @@ class Payment extends React.Component {
               width="180"
               name="Submit"
               history={history}
-              disabled
-              handleSubmit={() => {}}
+              disabled={selectIndex === '0'}
+              handleSubmit={this.handleSubmit}
             />
           </Container>
         </MainContainer>

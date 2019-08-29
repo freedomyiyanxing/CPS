@@ -174,7 +174,7 @@ const getSelectValue = (arr, value, isKey = false) => {
       }
     }
   }
-  return Object.keys(arr).filter(key => value === arr[key]).join();
+  return Object.keys(arr).filter(key => window.parseInt(value) === arr[key]).join();
 };
 
 // 获取表单是否发送了修改

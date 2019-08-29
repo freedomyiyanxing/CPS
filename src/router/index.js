@@ -112,7 +112,7 @@ const routers = [
             key: uuid(),
           },
           {
-            path: '/my/my-products',
+            path: '/my/own-products',
             exact: true,
             component: MyProducts,
             key: uuid(),

@@ -35,7 +35,7 @@ class ContactUs extends React.Component {
           console.log(response);
           if (message === SUCCESS) {
             openNotifications.open({
-              message: contactUsPrompt,
+              message: contactUsPrompt.success,
               variant: 'success',
             });
           }

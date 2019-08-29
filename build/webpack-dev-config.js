@@ -96,10 +96,13 @@ module.exports = webpackMerge(webpackBaseConfig, {
     },
     compress: true, // 开启gzip压缩
     contentBase: path.join(__dirname, '../dist'), // 打包文件目录
-    proxy: { //解决跨域 代理有请求 /api的全部代理到 'http://192.168.1.20:8768'
-      '/api': {
-        target: 'http://192.168.1.20:8768',
-      },
-    }
+    // proxy: { //解决跨域 代理有请求 /api的全部代理到 'http://192.168.1.20:8768'
+    //   '/api': {
+    //     target: 'http://192.168.1.20:8768',
+    //   },
+    //   '/mock': {
+    //     target: 'http://192.168.1.22:7070',
+    //   },
+    // }
   },
 });

@@ -21,7 +21,7 @@ const HeaderLeft = (props) => {
 
   useEffect(() => {
     const { pathname } = history.location;
-    if (pathname.endsWith('product-search') || pathname.endsWith('my-products')) {
+    if (pathname.endsWith('product-search') || pathname.endsWith('own-products')) {
       indicator.current.style.transform = 'translateX(90px)';
     }
   });

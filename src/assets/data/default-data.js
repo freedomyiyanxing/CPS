@@ -265,7 +265,7 @@ const myHeader = {
     {
       id: uuid(),
       text: 'My Products',
-      links: 'my-products',
+      links: 'own-products',
     },
   ],
 

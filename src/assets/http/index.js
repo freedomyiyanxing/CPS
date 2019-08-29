@@ -5,6 +5,13 @@ import {
   tokenPrompt, clientErrorText, errorText, clientNetworkError,
 } from '../data/prompt-text';
 
+const serverUrl = process.env.SERVER_URL || '';
+
+const instance = axios.create({
+  baseURL: serverUrl,
+});
+
+
 const _setParams = (url, params) => {
   const str = Object.keys(params).reduce((result, key) => {
     result += `${key}=${params[key]}&`;
@@ -25,17 +32,20 @@ const tokenUrl = [
   '/api/payout',
   '/api/common',
 ];
+// 控制
+let cancelFlag = true;
 
 // 请求前拦截
-axios.interceptors.request.use(
+instance.interceptors.request.use(
   (request) => {
     // 获取storage中的缓存Token
     if (isGetToken || loginInfo === null) {
-      loginInfo = session.getSession('loginInfo') || { token: 'xxx' };
+      loginInfo = session.getSession('loginInfo') || { token: '' };
     }
     // 在符合要求的请求头中添加token
+    console.log('request.url --->', request.url);
     tokenUrl.forEach((items) => {
-      if (request.url.startsWith(items) && loginInfo) {
+      if (request.url.includes(items) && loginInfo) {
         request.headers.Authorization = loginInfo.token;
       }
     });
@@ -45,11 +55,9 @@ axios.interceptors.request.use(
   err => Promise.reject(err),
 );
 
-// 控制
-let cancelFlag = true;
 
 // 返回后拦截 都返回一个Promise对象
-axios.interceptors.response.use(
+instance.interceptors.response.use(
   // 成功的返回
   response => new Promise((resolve) => {
     // 如果服务端返回了新的 token 就写入 session
@@ -119,7 +127,7 @@ axios.interceptors.response.use(
 );
 
 // post请求
-const postRequestBody = (url, params) => axios({
+const postRequestBody = (url, params) => instance({
   method: 'post',
   url,
   data: params,
@@ -130,7 +138,7 @@ const postRequestBody = (url, params) => axios({
 });
 
 // patch请求
-const patchRequestBody = (url, params) => axios({
+const patchRequestBody = (url, params) => instance({
   method: 'patch',
   url,
   data: params,
@@ -153,18 +161,14 @@ const get = (url, params, buffer) => {
   if (buffer) {
     obj.responseType = buffer;
   }
-  return axios(obj);
+  return instance(obj);
 };
 
 // delete请求
-const deleteRequestBody = (url, params) => axios({
+const deleteRequestBody = (url, params) => instance({
   method: 'delete',
   url: params ? _setParams(url, params) : url,
 });
-
-const multiple = (requsetArray, callback) => {
-  axios.all(requsetArray).then(axios.spread(callback));
-};
 
 // 成功返回的标志
 const SUCCESS = 'Success!';
@@ -173,7 +177,6 @@ export {
   get,
   postRequestBody,
   patchRequestBody,
-  multiple,
-  SUCCESS,
   deleteRequestBody,
+  SUCCESS,
 };

@@ -7,7 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // 判断当前打包环境 （dev = 开发，test = 测试，pre = 预环境）BundleAnalyzerPlugin
 const ENVIRONMENT = process.env.ENVIRONMENT;
-
+console.log(` ======   当前是 ${ENVIRONMENT} 环境   ==== `);
 // 获取骨架屏
 const loading = {
   html: fs.readFileSync(path.join(__dirname, '../src/common/skeleton/skeleton.html')),
@@ -73,10 +73,12 @@ module.exports = {
       }
     ]),
     new webpack.DefinePlugin({
-      'process.env.IMG_BASE': // 根据打包环境 匹配相对应的图片路径
-        (ENVIRONMENT === 'dev' || ENVIRONMENT === 'test')
-          ? JSON.stringify("https://cdn.influmonsters.com")
-          : JSON.stringify("https://img.influmonsters.com"),
+      // 根据打包环境 匹配相对应的图片路径
+      'process.env.IMG_BASE': imgUrls(ENVIRONMENT),
+      'process.env.SERVER_URL': serverUrls(ENVIRONMENT),
+      // (ENVIRONMENT === 'dev' || ENVIRONMENT === 'test')
+      //   ? JSON.stringify("https://cdn.influmonsters.com")
+      //   : JSON.stringify("https://img.influmonsters.com"),
     }),
     new webpack.ContextReplacementPlugin( // 按需加载第三方包 (详细说明 请看官网)
       /moment[/\\]locale$/,
@@ -95,3 +97,32 @@ module.exports = {
     // })
   ],
 };
+
+function imgUrls(env) {
+  let imgUrl = '';
+  if (env === 'dev' || env === 'test') {
+    imgUrl = 'https://cdn.influmonsters.com';
+  } else if (env === 'pre' || env === 'runtime') {
+    imgUrl = 'https://img.influmonsters.com';
+  }
+  return JSON.stringify(imgUrl);
+}
+
+function serverUrls(env) {
+  let serverUrl = '';
+  switch (env) {
+    case 'dev':
+      serverUrl = 'http://192.168.1.20:8768';
+      break;
+    case 'test':
+      serverUrl = 'http://192.168.1.20:8768';
+      break;
+    case 'pre':
+      serverUrl = 'https://www.yingshuxinxi.com';
+      break;
+    case 'runtime':
+      serverUrl = 'https://influmonster.com';
+      break;
+  }
+  return JSON.stringify(serverUrl);
+}

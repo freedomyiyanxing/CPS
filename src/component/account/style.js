@@ -157,12 +157,14 @@ const cropperStyle = theme => ({
 
 const paymentStyle = () => ({
   root: {
-    margin: [[30, 0, 40]],
+    margin: [[50, 0]],
     position: 'relative',
-    minHeight: 78,
-  },
-  palpay: {
-    height: 78,
+    overflow: 'hidden',
+    minHeight: 60,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
   },
 });
 
