@@ -118,10 +118,10 @@ function serverUrls(env) {
       serverUrl = 'http://192.168.1.20:8768';
       break;
     case 'pre':
-      serverUrl = 'https://www.yingshuxinxi.com';
+      serverUrl = 'https://cps-api.yingshuxinxi.com';
       break;
     case 'runtime':
-      serverUrl = 'https://influmonster.com';
+      serverUrl = 'https://cps-api.influmonster.com';
       break;
   }
   return JSON.stringify(serverUrl);
