@@ -19,10 +19,6 @@ const formPrompt = {
   textareaRequired: '我们需要 你网站的详细信息',
   textareaFormat: '我们需要有效的字符(A-Z a-z) 字数(2 - 200) 之间',
   selectRequired: '我们需要 你选择类别',
-  dateOne: '无效的日期, 在判断2月不可能 有30天 时 报错',
-  dateTwo: '无效的日期, 在判断大小月份时 报错',
-  dateThree: '无效的日期 , 出生日期 不可能在今天 或者 以后',
-  dateFour: '无效的日期 在判断闰年时报错',
   phoneRequired: '电话号码必填',
   phoneFormat: '电话号码错误',
   withdrawRequired: '提现金额必填',
@@ -39,11 +35,6 @@ const emailSentPrompt = {
 // 忘记密码页面
 const forgetPasswordPrompt = {
   successText: '邮件发送成功, 请打开邮箱点击进入重置密码页面',
-  errorText: '服务器错误',
-};
-
-// 登录页面
-const loginPrompt = {
   errorText: '服务器错误',
 };
 
@@ -117,19 +108,24 @@ const validPasswordPrompt = {
 
 // payment注册账号页面
 const paymentPrompt = {
-  deleteError: 'paypal 账户 删除失败',
   deleteSuccess: 'paypal 账户 删除成功',
   addPaypalSuccess: 'paypal 添加成功',
   paypalLoginError: 'paypal 登录失败',
-  paypalDateError: 'paypal 数据更新不及时 请刷新 F5',
 };
 
 // 提额页面
 const withdrawPrompt = {
   withdrawSuccess: '提现成功 ... 请关注提额明细数据表',
   withdrawError: '提现失败',
+  // (${xx} 表示动态值 切不需要翻译 比如说: 提现必须是每个月2号至月底)
+  withdrawDateOne: start => `提现必须是每个月${start}号至月底`,
+  // (${xx} 表示动态值 切不需要翻译 比如说: 提现必须是每个月2号至25号)
+  withdrawDateTwo: (start, end) => `提现必须是每个月${start}号至${end}号`,
+  // (${xx} 表示动态值 切不需要翻译 比如说: 提现必须是每个月2号)
+  withdrawDateThree: val => `提现必须是每个月${val}号`,
 };
 
+// 信息提交失败
 const tokenPrompt = {
   warningText: '登录信息失效, 请重新登录...',
 };
@@ -140,6 +136,7 @@ const emailTokenPagePrompt = {
   btn: '回到注册页面',
 };
 
+// 联系我们页面
 const contactUsPrompt = {
   success: '做完待在原地吧, 我也不知道改怎么做',
 };
@@ -153,7 +150,6 @@ export {
   formPrompt,
   emailSentPrompt,
   forgetPasswordPrompt,
-  loginPrompt,
   resetPasswordPrompt,
   registerIndexPrompt,
   registerInfoPrompt,

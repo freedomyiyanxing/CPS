@@ -18,6 +18,8 @@ import {
   get, postRequestBody, deleteRequestBody, SUCCESS,
 } from '../../../assets/http/index';
 import { paymentStyle } from '../style';
+import { getSelectValue } from '../../../assets/js/utils-methods';
+import { bankAccountTypes, country } from '../../../assets/data/default-data';
 
 const selectArr = ['Please Select', 'Paypal', 'Direct Deposit'];
 
@@ -183,7 +185,14 @@ class Payment extends React.Component {
     let ayc = null;
     form.validateFields((error, value) => {
       if (!error) {
-        console.log(value)
+        const obj = Object.assign({}, value, {
+          bankAccountType: getSelectValue(bankAccountTypes, value.bankAccountType, true),
+          bankAccountCountry: getSelectValue(country, value.bankAccountCountry, true)
+        });
+        postRequestBody('/api/payout/binding/bank', obj).then((response) => {
+          console.log(response)
+        });
+        console.log(obj)
       }
     });
     return ayc;

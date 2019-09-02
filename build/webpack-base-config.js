@@ -5,7 +5,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-// 判断当前打包环境 （dev = 开发，test = 测试，pre = 预环境）BundleAnalyzerPlugin
+// 判断当前打包环境 （dev = 开发，test = 测试，pre = 预环境）
 const ENVIRONMENT = process.env.ENVIRONMENT;
 console.log(` ======   当前是 ${ENVIRONMENT} 环境   ==== `);
 // 获取骨架屏
@@ -60,6 +60,7 @@ module.exports = {
       loading,
       filename: 'index.html',
       template: path.join(__dirname, '../src/index.html'),
+      vendorName: `<script src="/js/${require('./vendor-manifest').name}.js"></script>`,
     }),
     new webpack.DllReferencePlugin({
       context: path.join(__dirname, '..'),
@@ -75,10 +76,7 @@ module.exports = {
     new webpack.DefinePlugin({
       // 根据打包环境 匹配相对应的图片路径
       'process.env.IMG_BASE': imgUrls(ENVIRONMENT),
-      'process.env.SERVER_URL': serverUrls(ENVIRONMENT),
-      // (ENVIRONMENT === 'dev' || ENVIRONMENT === 'test')
-      //   ? JSON.stringify("https://cdn.influmonsters.com")
-      //   : JSON.stringify("https://img.influmonsters.com"),
+      // 'process.env.SERVER_URL': serverUrls(ENVIRONMENT),
     }),
     new webpack.ContextReplacementPlugin( // 按需加载第三方包 (详细说明 请看官网)
       /moment[/\\]locale$/,
@@ -108,6 +106,7 @@ function imgUrls(env) {
   return JSON.stringify(imgUrl);
 }
 
+// eslint-disable-next-line no-unused-vars
 function serverUrls(env) {
   let serverUrl = '';
   switch (env) {

@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { withdrawPrompt } from '../data/prompt-text';
 
 const getViewDate = (time) => {
   // 返回 目标时间 与 当前时间 相隔的天数
@@ -174,7 +175,7 @@ const getSelectValue = (arr, value, isKey = false) => {
       }
     }
   }
-  return Object.keys(arr).filter(key => window.parseInt(value) === arr[key]).join();
+  return Object.keys(arr).filter(key => value === arr[key]).join();
 };
 
 // 获取表单是否发送了修改
@@ -220,16 +221,16 @@ const getCurrentDatePaypal = (date) => {
     const [start, end] = arr;
     if (end === '') {
       obj.isWithdrow = currentDay >= start;
-      obj.text = `提现必须是每个月${start}号 至 月底`;
+      obj.text = withdrawPrompt.withdrawDateOne(start);
     } else {
       obj.isWithdrow = currentDay >= start && currentDay <= end;
-      obj.text = `提现必须是每个月${start}号 至 ${end}号`;
+      obj.text = withdrawPrompt.withdrawDateTwo(start, end);
     }
   }
   // data == '5'(表示每个月5号 才有效)
   if (arr.length === 1) {
     obj.isWithdrow = parseInt(arr[0]) === currentDay;
-    obj.text = `提现必须是每个月${arr[0]}号`;
+    obj.text = withdrawPrompt.withdrawDateThree(arr[0]);
   }
   // 其他一律视为 false;
   return obj;

@@ -4,10 +4,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpackBaseConfig = require('./webpack-base-config');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const FileManagerPlugin = require('filemanager-webpack-plugin');
+const moment = require('moment');
+
+const ENVIRONMENT = process.env.ENVIRONMENT;
 
 // 一定要记得要不要在nginx上或者其他地方 缓存 .html 文件
-
-module.exports = webpackMerge(webpackBaseConfig, {
+const obj = webpackMerge(webpackBaseConfig, {
   mode: 'production',
   output: {
     // chunkhash 与 hash是有区别的 项目涉及到拆包，分模块进行加载等等，
@@ -77,7 +80,7 @@ module.exports = webpackMerge(webpackBaseConfig, {
       test: /\.(js|css)$/i,
       threshold: 10240,
       // minRatio: 0.8 // 默认0.8
-    })
+    }),
   ],
   optimization: {
     runtimeChunk: {
@@ -120,3 +123,38 @@ module.exports = webpackMerge(webpackBaseConfig, {
     ],
   },
 });
+
+// 只有预环境、正式环境 才需要 存档一份.tar.gz的文件
+// (方便预环境、正式环境上传到服务器) (测试环境就自己直接复制dist目录就好了)
+if (ENVIRONMENT === 'pre' || ENVIRONMENT === 'runtime') {
+  let version = '';
+
+  if (ENVIRONMENT === 'pre') { // 测试环境
+    version = moment().format('YYYY-MM-DD')
+  } else {
+    version = require('../package.json').version
+  }
+
+  obj.plugins.push(new FileManagerPlugin({
+    onEnd: {
+      archive: [
+        {
+          source: 'dist',
+          destination: 'dist/cps-web-' + version + '.tar.gz',
+          format: 'tar',
+          options: {
+            gzip: true,
+            gzipOptions: {
+              level: 1
+            },
+            globOptions: {
+              nomount: true
+            }
+          }
+        }
+      ],
+    }
+  }));
+}
+
+module.exports = obj;

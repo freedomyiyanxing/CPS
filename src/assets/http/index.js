@@ -5,13 +5,16 @@ import {
   tokenPrompt, clientErrorText, errorText, clientNetworkError,
 } from '../data/prompt-text';
 
-const serverUrl = process.env.SERVER_URL || '';
+// 实例化一个axios; (单例模式)
+const instance = axios.create();
 
-const instance = axios.create({
-  baseURL: serverUrl,
-});
-
-
+/**
+ * 在url后面拼接参数
+ * @param url => /api/daily
+ * @param params => start: xxx, end: xxx
+ * @returns {string} => /api/daily?start=xxx&end=xxx
+ * @private
+ */
 const _setParams = (url, params) => {
   const str = Object.keys(params).reduce((result, key) => {
     result += `${key}=${params[key]}&`;
@@ -43,9 +46,8 @@ instance.interceptors.request.use(
       loginInfo = session.getSession('loginInfo') || { token: '' };
     }
     // 在符合要求的请求头中添加token
-    console.log('request.url --->', request.url);
     tokenUrl.forEach((items) => {
-      if (request.url.includes(items) && loginInfo) {
+      if (request.url.startsWith(items) && loginInfo) {
         request.headers.Authorization = loginInfo.token;
       }
     });

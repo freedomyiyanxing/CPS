@@ -12,7 +12,7 @@ const useStyle = makeStyles(() => ({
 export const NotCodeLoading = () => {
   const classes = useStyle();
   return (
-    <InputContainer title="xxx">
+    <InputContainer title="">
       <div className={classes.root}>loading...</div>
     </InputContainer>
   );
