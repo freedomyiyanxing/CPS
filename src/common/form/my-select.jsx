@@ -22,6 +22,7 @@ const styles = theme => ({
     lineHeight: '19px',
     paddingTop: 6,
     paddingBottom: 6,
+    paddingLeft: 6,
   },
 });
 

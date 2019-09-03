@@ -75,7 +75,7 @@ class Paypal extends React.Component {
     const { paypal } = window;
     const obj = {
       appid: val.paypal.appId,
-      returnurl: 'http://192.168.1.22:8899/my/account-payment', // val.paypal.returnUrl, // ?paypal=true
+      returnurl: val.paypal.returnUrl, // 'http://192.168.1.22:8899/my/account-payment',
       scopes: 'openid email profile https://uri.paypal.com/services/paypalattributes',
       containerid: 'cwppButton',
       responseType: 'id_Token',
@@ -110,7 +110,6 @@ class Paypal extends React.Component {
                 className={classes.paypal}
                 name={data.paypalName}
                 info={data.paypalEmail}
-                isPaypal
                 handleDelete={func}
               />
             )

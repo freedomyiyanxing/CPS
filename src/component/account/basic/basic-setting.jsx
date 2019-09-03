@@ -47,9 +47,6 @@ class BasicSetting extends React.Component {
             data: userDate = response, // 缓存数据
           });
         }
-      })
-      .catch((err) => {
-        console.log(err);
       });
   }
 
@@ -165,7 +162,7 @@ class BasicSetting extends React.Component {
                 />
               </Container>
             )
-            : <div>loading....</div>
+            : null
         }
       </MainContainer>
     );

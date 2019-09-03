@@ -8,6 +8,10 @@
   transition: all .15s linear;
 }
 
+.orderSN{
+  user-select: all;
+}
+
 /*淡入淡出动画*/
 .slide-enter {
   opacity: 0;

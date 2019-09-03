@@ -56,11 +56,11 @@ const MyTable = (props) => {
           rows.length
             ? (
               rows.map(row => (
-                <TableRow key={row.id} className={row.id}>
+                <TableRow key={row.id}>
                   {
                     rowsKey.map(item => (
                       item !== 'id'
-                        ? <MyTableCell key={item}>{row[item]}</MyTableCell>
+                        ? <MyTableCell className={item} key={item}>{row[item]}</MyTableCell>
                         : null
                     ))
                   }

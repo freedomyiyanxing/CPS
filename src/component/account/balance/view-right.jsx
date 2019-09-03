@@ -46,18 +46,12 @@ class ViewRight extends React.Component {
         get('/api/balance/detail', { page: 1, size: PAGE_SIZE })
           .then((response) => {
             resolve(response);
-          })
-          .catch((err) => {
-            console.log(err);
           });
       }),
       new Promise((resolve) => {
         get('/api/index/userInfo')
           .then((response) => {
             resolve(response);
-          })
-          .catch((err) => {
-            console.log(err);
           });
       }),
     ])
@@ -72,9 +66,6 @@ class ViewRight extends React.Component {
             loading: false,
           });
         }
-      })
-      .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -103,8 +94,7 @@ class ViewRight extends React.Component {
         });
         resolve(true);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         resolve(true);
       });
   });

@@ -6,13 +6,14 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import MyInput from '../../../common/material-ui-component/input';
 import MyButton from '../../../common/material-ui-component/button';
-// import PaypalView from '../../../common/paypal/paypal-view';
+import PaypalView from '../../../common/paypal/paypal-view';
 import MyTooltip from '../../../common/material-ui-component/tooltip';
 
 import { formPrompt } from '../../../assets/data/prompt-text';
 
 const useStyle = makeStyles(theme => ({
   wrapper: {
+    width: '100%',
     padding: [[0, 40]],
   },
   items: {
@@ -51,36 +52,42 @@ const useStyle = makeStyles(theme => ({
     position: 'absolute',
     bottom: -18,
   },
+  tax: {
+    fontSize: theme.typography.fontSizeMd,
+    color: theme.palette.text.secondary,
+  },
 }));
 
 const Withdraw = (props) => {
   const { form, data } = props;
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(0);
   const classes = useStyle();
 
-  const change = (e) => {
-    setValue(e.target.value);
-  };
-
   const compareToMin = (rule, formVal, callback) => {
+    const { isNaN } = Number;
     if (formVal < data.min) {
       callback(formPrompt.withdrawMin);
-    }
-    if (formVal > data.max) {
+    } else if (formVal > data.max) {
       callback(formPrompt.withdrawMax);
-    }
-    // eslint-disable-next-line no-restricted-properties
-    if (window.isNaN(formVal)) {
+    } else if (isNaN(Number(formVal))) {
       callback(formPrompt.withdrawNumber);
+    } else {
+      if (data.tax > 0) {
+        setValue((formVal * (data.tax / 100)).toFixed(2));
+      }
+      callback();
     }
-    callback();
   };
 
+  // 点击提交全部余额
   const handleAllWithdraw = () => {
     const { setFieldsValue } = form;
     setFieldsValue({
       withdraw: data.max,
     });
+    if (data.tax > 0) {
+      setValue((data.max * (data.tax / 100)).toFixed(2));
+    }
   };
 
   const { getFieldProps, getFieldError } = form;
@@ -90,7 +97,12 @@ const Withdraw = (props) => {
       <div className={classes.items}>
         <span className={classes.left}>Payment Account :</span>
         {
-          /* <PaypalView data={data} className={classes.paypalWrapper} /> */
+          <PaypalView
+            name={data.name}
+            info={data.cardNumber}
+            isPaypal={data.accountType !== '1'}
+            className={classes.paypalWrapper}
+          />
         }
       </div>
       <div className={classes.items}>
@@ -117,9 +129,6 @@ const Withdraw = (props) => {
           margin="none"
         >
           <MyInput
-            value={value}
-            className={classes.right}
-            onChange={change}
             {...getFieldProps('withdraw', {
               validateFirst: true,
               rules: [
@@ -132,6 +141,7 @@ const Withdraw = (props) => {
                 },
               ],
             })}
+            className={classes.right}
           />
           {
             errors
@@ -146,6 +156,13 @@ const Withdraw = (props) => {
           ${data.tax}
           `}
         />
+      </div>
+      <div className={classes.items}>
+        <span className={classes.left}>Fees :</span>
+        <span className={classes.tax}>
+          $
+          {value}
+        </span>
       </div>
     </div>
   );

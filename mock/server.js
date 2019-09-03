@@ -70,14 +70,14 @@ function settings() {
     },
     "payout": {
       "paypal": {
-        "tax": 0.02,
+        "tax": 2.00,
         "min": 100.00,
-        "date": "5,20"
+        "date": "2,20"
       },
       "bank": {
         "tax": 0,
         "min": 100.00,
-        "date": "5,"
+        "date": "1,"
       }
     }
   }

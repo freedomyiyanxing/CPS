@@ -1,9 +1,9 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles/index';
 import { createForm, formShape } from 'rc-form';
 import { Link } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import DialogIndex from '../../../common/dialog/dialog-index';
 import DialogHeader from '../../../common/dialog/dialog-header';
@@ -18,22 +18,28 @@ import { openNotifications } from '../../../common/prompt-box/prompt-box';
 import { withdrawPrompt, validPasswordPrompt } from '../../../assets/data/prompt-text';
 import { viewHeader } from './style';
 
+// 在当前页面缓存当前提现账号的信息
+let cacheWithdrawInfo;
+
 @withStyles(viewHeader)
 @createForm()
 class ViewHeight extends React.Component {
   constructor(props) {
     super(props);
-    const a = window.__payout__account__;
     this.state = {
       open: false, // 控制模态框
       loading: false, // 控制加载过程动画
-      accountType: a ? a.accountType : null,
-      systemInfo: window.__payment__info__ || null,
-      btnLoading: false, // 提示时的loading
-      psdValid: true, // 控制当前Submit是提交输入密码 还是提交提现
-      paypalAccount: null,
-      isSubmit: false, // 控制是否可点击提交按钮
+      accountType: null, // 当前提现账号的类型
+      withdrawInfo: null, // 当前提现账号的信息
+      systemInfo: window.__payment__info__ || null, // 获取系统设置的信息
+      btnLoading: false, // 控制提交时按钮的loading
+      psdValid: false, // 控制当前Submit是提交输入密码 还是提交提现
+      isSubmit: true, // 控制是否可点击提交按钮
     };
+  }
+
+  componentWillUnmount() {
+    cacheWithdrawInfo = null;
   }
 
   /**
@@ -42,14 +48,17 @@ class ViewHeight extends React.Component {
   getInfoData = () => {
     Promise.all([
       new Promise((resolve) => {
-        if (!window.__payout__account__) {
+        if (!cacheWithdrawInfo) {
           this.setState({
             loading: true,
           });
           get('/api/payout/binding')
             .then((response) => {
+              cacheWithdrawInfo = response;
               resolve(response);
             });
+        } else {
+          resolve(cacheWithdrawInfo);
         }
       }),
       new Promise((resolve) => {
@@ -59,62 +68,33 @@ class ViewHeight extends React.Component {
           });
           get('/api/common/settings')
             .then((response) => {
-              resolve(response)
-            });
-        }
-      })
-    ]).then((data) => {
-      const [withdrawInfo, systemSetting] = data;
-      const withdrawInfos = withdrawInfo || {};
-      window.__payout__account__ = withdrawInfos;
-      this.setState({
-        accountType: withdrawInfos.accountType,
-        systemInfo: window.__payment__info__ = systemSetting,
-        loading: false,
-      });
-      // console.log(withdrawInfo, systemSetting)
-    })
-  };
-
-  // 获取 paypal账户信息 和 系统设置信息
-  getInfo = () => {
-    Promise.all([
-      new Promise((resolve) => {
-        if (!window.__payment__info__) {
-          get('/api/common/settings')
-            .then((response) => {
+              window.__payment__info__ = response;
               resolve(response);
-            })
-            .catch((err) => {
-              console.log(err);
             });
         } else {
           resolve(window.__payment__info__);
         }
       }),
-      new Promise((resolve) => {
-        get('/api/payout/binding')
-          .then((response) => {
-            resolve(response);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }),
-    ])
-      .then((response) => {
-        const [systemInfo, paypalAccount] = response;
-        this.setState({
-          paypalAccount,
-          systemInfo: window.__payment__info__ = systemInfo,
-          isSubmit: !(
-            getCurrentDatePaypal(systemInfo.payout.date).isWithdrow && !!paypalAccount.id
-          ),
-        });
-      })
-      .catch((err) => {
-        console.log(err);
+    ]).then((data) => {
+      const [withdrawInfo, systemSetting] = data;
+      const withdrawInfos = withdrawInfo || {};
+
+      let isBtn = true;
+      if (withdrawInfos.accountType) {
+        const obj = withdrawInfos.accountType === '1' ? 'paypal' : 'bank';
+        const payout = systemSetting.payout[obj];
+        const withdraw = getCurrentDatePaypal(payout.date);
+        isBtn = !withdraw.isWithdrow;
+      }
+
+      this.setState({
+        withdrawInfo,
+        accountType: withdrawInfos.accountType,
+        systemInfo: systemSetting,
+        loading: false,
+        isSubmit: isBtn,
       });
+    });
   };
 
   // 点击提现按钮
@@ -122,15 +102,13 @@ class ViewHeight extends React.Component {
     this.setState({
       open: true,
     });
-    // this.getWithdrawInfo();
     this.getInfoData();
-    // this.getInfo();
   };
 
   // 点击提现
   handleChangeWithdraw = () => {
     const { form, getUserInfo } = this.props;
-    const { isSubmit, paypalAccount } = this.state;
+    const { isSubmit, withdrawInfo } = this.state;
     if (isSubmit) {
       return;
     }
@@ -140,7 +118,7 @@ class ViewHeight extends React.Component {
           btnLoading: true,
         });
         postRequestBody('/api/balance/payout', {
-          payoutId: paypalAccount.id,
+          payoutId: withdrawInfo.id,
           amount: Math.abs(value.withdraw).toFixed(2),
         })
           .then((response) => {
@@ -184,40 +162,30 @@ class ViewHeight extends React.Component {
         this.setState({
           btnLoading: true,
         });
-        setTimeout(() => {
-          this.setState({
-            btnLoading: false,
+        postRequestBody('/api/profile/password/validate', {
+          password: value.password,
+        })
+          .then((response) => {
+            const { valid } = response;
+            if (valid) {
+              this.setState({
+                psdValid: valid,
+              });
+            } else {
+              openNotifications.open({
+                message: validPasswordPrompt.validPasswordError,
+                variant: 'error',
+              });
+            }
+            this.setState({
+              btnLoading: false,
+            });
+          })
+          .catch(() => {
+            this.setState({
+              btnLoading: false,
+            });
           });
-        }, 2000)
-        // postRequestBody('/api/profile/password/validate', {
-        //   password: value.password,
-        // })
-        //   .then((response) => {
-        //     const { valid } = response;
-        //     if (valid) {
-        //       this.setState({
-        //         psdValid: valid,
-        //       });
-        //       openNotifications.open({
-        //         message: validPasswordPrompt.validPasswordSuccess,
-        //         variant: 'success',
-        //       });
-        //     } else {
-        //       openNotifications.open({
-        //         message: validPasswordPrompt.validPasswordError,
-        //         variant: 'error',
-        //       });
-        //     }
-        //     this.setState({
-        //       btnLoading: false,
-        //     });
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //     this.setState({
-        //       btnLoading: false,
-        //     });
-        //   });
       }
     });
   };
@@ -229,88 +197,80 @@ class ViewHeight extends React.Component {
     });
   };
 
-  // 渲染模态框内容
-  renderingDialogContent = (classes, getPaypal, paypalAccount, form, psdValid, withdraw) => {
-    if (getPaypal && paypalAccount) {
-      if (!getPaypal.isWithdrow) { // 判断当前日期是否是在可允许的时间范围内
-        return <span className={classes.paypal}>{getPaypal.text}</span>;
-      }
-      if (paypalAccount && !paypalAccount.id) { // 判断是否有paypal账户
-        return (
-          <div className={classes.paymentPrompt}>
-            <p>You must submit Payment information to be able to withdraw funds.</p>
-            <Link to="/my/account-payment">Go to set paypal</Link>
-          </div>
-        );
-      }
-
-      if (psdValid) { // 判断当前是否已经验证完密码
-        return <Withdraw form={form} data={withdraw} />;
-      }
-      return <div className={classes.psd}><Password form={form} name="Password" /></div>;
-    }
-
-    return 'loading...';
-  };
-
-  renderView = (classes, loading, accountType, systemInfo, psdValid, form, balance) => {
+  /**
+   * 渲染模态框内容
+   * @param classes
+   * @param loading
+   * @param accountType 提现账号类型: 1 - paypal, 2 - 银行账号
+   * @param systemInfo 系统设置信息
+   * @param psdValid 是否需要验证密码
+   * @param form 表单对象
+   * @param balance 当前账户余额
+   * @param withdrawInfo 绑定提现账户信息
+   * @returns {string|*}
+   */
+  renderView = (
+    classes, loading, accountType, systemInfo, psdValid, form, balance, withdrawInfo,
+  ) => {
     if (loading) {
-      return 'loading...'
+      return <CircularProgress />;
     }
+
+    // 是否有绑定银行或paypal提现账户
     if (!accountType) {
       return (
         <div className={classes.paymentPrompt}>
           <p>You must submit Payment information to be able to withdraw funds.</p>
           <Link to="/my/account-payment">Go to set paypal</Link>
         </div>
-      )
+      );
     }
+
+    // 已经绑定提现账户
     if (accountType) {
       const obj = accountType === '1' ? 'paypal' : 'bank';
       const payout = systemInfo.payout[obj];
-      const isWithdraw = getCurrentDatePaypal(payout.date);
-      // 判断当前日期 是否在可提现的日期范围内
-      if (!isWithdraw.isWithdrow) {
-        return <span className={classes.paypal}>{isWithdraw.text}</span>;
+      const withdraw = getCurrentDatePaypal(payout.date);
+
+      // 当前日期是否可提现
+      if (!withdraw.isWithdrow) {
+        return <span className={classes.paypal}>{withdraw.text}</span>;
       }
 
-      // 获取系统设置
-      let systemSetting = {
+      // 验证密码
+      if (!psdValid) {
+        return <div className={classes.psd}><Password form={form} name="Password" /></div>;
+      }
+
+      // 获取系统设置 与 卡用户信息
+      const systemSetting = {
         max: balance,
         min: payout.min,
-        // paypalName: paypalAccount.paypalName,
-        // paypalEmail: paypalAccount.paypalEmail,
+        tax: payout.tax,
+        accountType,
       };
-      console.log(systemSetting)
 
-      if (psdValid) { // 判断当前是否已经验证完密码
-        return <Withdraw form={form} data={systemSetting} />;
+      if (accountType === '1') {
+        systemSetting.name = withdrawInfo.paypalName;
+        systemSetting.cardNumber = withdrawInfo.paypalEmail;
+      } else {
+        systemSetting.name = withdrawInfo.bankAccountName;
+        systemSetting.cardNumber = withdrawInfo.bankAccountNumber;
       }
-      return <div className={classes.psd}><Password form={form} name="Password" /></div>;
+
+      // 提现操作
+      return <Withdraw form={form} data={systemSetting} />;
     }
   };
 
   render() {
     const { classes, userInfo, form } = this.props;
     const {
-      open, systemInfo, paypalAccount, btnLoading, psdValid, isSubmit, accountType, loading,
+      open, systemInfo, btnLoading, psdValid,
+      isSubmit, accountType, loading, withdrawInfo,
     } = this.state;
     const { balance } = userInfo; // 获取当前账号的可提余额数量
-    let getPaypal = null;
-    // if (systemInfo) {
-    //   getPaypal = getCurrentDatePaypal(systemInfo.payout.date);
-    // }
-    let withdraw = {};
-    // if (systemInfo && paypalAccount && paypalAccount.id) {
-    //   withdraw = {
-    //     max: balance,
-    //     min: systemInfo.payout.min,
-    //     paypalName: paypalAccount.paypalName,
-    //     paypalEmail: paypalAccount.paypalEmail,
-    //   };
-    // }
 
-    console.log(window.__payout__account__, 'accountType', systemInfo);
     return (
       <>
         <div className={classes.header}>
@@ -348,10 +308,13 @@ class ViewHeight extends React.Component {
             />
           )}
         >
-          {
-            this.renderView(classes, loading, accountType, systemInfo, psdValid, form, balance)
-            // this.renderingDialogContent(classes, getPaypal, paypalAccount, form, psdValid, withdraw)
-          }
+          <div className={classes.wrapper}>
+            {
+              this.renderView(
+                classes, loading, accountType, systemInfo, psdValid, form, balance, withdrawInfo,
+              )
+            }
+          </div>
         </DialogIndex>
       </>
     );

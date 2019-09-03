@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createForm, formShape } from 'rc-form';
@@ -33,14 +32,12 @@ class Payment extends React.Component {
     const search = decodeURIComponent(history.location.search);
     this.searchCode = search.slice(1, search.length - 1);
     this.isPaypal = this.searchCode.startsWith('code=');
-    const t = window.__payout__account__;
     const stateObj = {
-      loading: false,
       // 查询提现账号信息
-      accountNumber: t || null,
+      accountNumber: null,
       // 当前选项卡下标 string 类型
-      selectIndex: t ? (t.accountType || '0') : '0',
-      selectCurrentVal: selectArr[t ? (t.accountType || '0') : '0'] // selectArr[0]
+      selectIndex: '0',
+      selectCurrentVal: selectArr['0'],
     };
 
     if (this.isPaypal) {
@@ -68,22 +65,19 @@ class Payment extends React.Component {
   /**
    * 查询绑定的提现账号信息
    */
-  getWithdraw = () => {
-    if (!window.__payout__account__) {
-      get('/api/payout/binding')
-        .then((response) => {
-          const { accountType } = response = response || {};
-          if (this._unmount) {
-            window.__payout__account__ = response;
-            this.setState({
-              accountNumber: response,
-              selectIndex: accountType || '0',
-              selectCurrentVal: selectArr[accountType || '0']
-            });
-          }
-        })
-    }
-  };
+  getWithdraw() {
+    get('/api/payout/binding').then((response) => {
+      const resp = response || {};
+      const { accountType } = resp;
+      if (this._unmount) {
+        this.setState({
+          accountNumber: resp,
+          selectIndex: accountType || '0',
+          selectCurrentVal: selectArr[accountType || '0'],
+        });
+      }
+    });
+  }
 
   /**
    * 提交paypal账户绑定
@@ -92,27 +86,21 @@ class Payment extends React.Component {
     const { history } = this.props;
     const [name, value] = this.searchCode.split('&')[0].split('=');
     if (name === 'code') {
-      this.setState({
-        loading: false,
-      });
-
       postRequestBody('/api/payout/binding/paypal', {
         code: value,
       })
         .then((response) => {
-          console.log(response, 'resp');
           this.setState({
-            accountNumber: response
+            accountNumber: response,
           });
           openNotifications.open({
             message: paymentPrompt.addPaypalSuccess,
             variant: 'success',
           });
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
           this.setState({
-            accountNumber: {}
+            accountNumber: {},
           });
         });
 
@@ -122,9 +110,6 @@ class Payment extends React.Component {
       openNotifications.open({
         message: paymentPrompt.paypalLoginError,
         variant: 'error',
-      });
-      this.setState({
-        loading: true,
       });
     }
   };
@@ -142,33 +127,35 @@ class Payment extends React.Component {
           this.setState({
             accountNumber: {},
             selectIndex: '0', // 当前选项卡下标 string 类型
-            selectCurrentVal: selectArr[0]
+            selectCurrentVal: selectArr[0],
           });
           openNotifications.open({
             message: paymentPrompt.deleteSuccess,
             variant: 'success',
           });
         }
-      })
+      });
   };
 
 
   // 绑定账户方式选择 (select)
   handleChange = (value) => {
-    let i = '0';
+    let i;
     switch (value) {
       case 'Paypal':
         i = '1';
         break;
       case 'Direct Deposit':
         i = '2';
-        break
+        break;
+      default:
+        i = '0';
     }
 
     this.setState({
       selectIndex: i,
       selectCurrentVal: value,
-    })
+    });
   };
 
   /**
@@ -180,19 +167,25 @@ class Payment extends React.Component {
     const { selectIndex } = this.state;
     // 只有切换至银行账户保存 才可以进入提交
     if (selectIndex !== '2') {
-      return
+      return;
     }
     let ayc = null;
     form.validateFields((error, value) => {
       if (!error) {
         const obj = Object.assign({}, value, {
           bankAccountType: getSelectValue(bankAccountTypes, value.bankAccountType, true),
-          bankAccountCountry: getSelectValue(country, value.bankAccountCountry, true)
+          bankAccountCountry: getSelectValue(country, value.bankAccountCountry, true),
         });
-        postRequestBody('/api/payout/binding/bank', obj).then((response) => {
-          console.log(response)
+        ayc = postRequestBody('/api/payout/binding/bank', obj).then((response) => {
+          const { message } = response;
+          if (message === SUCCESS) {
+            openNotifications.open({
+              message: paymentPrompt.addDirectSuccess,
+              variant: 'success',
+            });
+            this.getWithdraw();
+          }
         });
-        console.log(obj)
       }
     });
     return ayc;
@@ -209,11 +202,9 @@ class Payment extends React.Component {
         case '2':
           return <DirectDeposit data={accountNumber} form={form} />;
         default:
-          return null
+          return null;
       }
     };
-    console.log(window.__payout__account__, '222222');
-    // console.log(selectIndex, '33333', selectCurrentVal);
     return (
       <>
         <MainContainer>
@@ -223,7 +214,7 @@ class Payment extends React.Component {
               selectArr={selectArr}
               value={selectCurrentVal}
               handleChange={this.handleChange}
-              disabled={!Boolean(accountNumber)}
+              disabled={!accountNumber}
             />
             <div className={classes.root}>
               {

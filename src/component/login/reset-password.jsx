@@ -101,7 +101,7 @@ class ResetPassword extends React.Component {
           </p>
           <MergePassword form={form} />
           <SubmitButton
-            name="Log in"
+            name="Rest Password"
             handleSubmit={this.handleSubmit}
           />
         </TokenError>

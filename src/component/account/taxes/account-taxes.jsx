@@ -10,7 +10,6 @@ const useStyle = makeStyles(taxesStyle);
 
 const Taxes = () => {
   const classes = useStyle();
-  console.log('Taxes');
   return (
     <MainContainer>
       <Container title="Basic Taxes">

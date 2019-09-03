@@ -28,7 +28,6 @@ class TelIndex extends React.Component {
 
   // 电话验证函数 (onchange)
   onPhoneNumberChange = (isValid, newNumber, countryData, fullNumber) => {
-    // console.log('电话验证函数onchange: ->', isValid, fullNumber);
     let errors = null;
     this.handlePhones(isValid, fullNumber);
 
@@ -46,7 +45,6 @@ class TelIndex extends React.Component {
 
   // 电话验证函数 (切换国家)
   onSelectFlag = (isValid, newNumber, countryData, fullNumber) => {
-    // console.log('切换国家0: ->', isValid, fullNumber);
     this.handlePhones(isValid, fullNumber);
 
     if (!fullNumber) {

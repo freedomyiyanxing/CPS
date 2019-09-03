@@ -542,6 +542,10 @@ const country = {
   'UNITED STATES': 'US',
 };
 
+const currencyCode = {
+  'USD': 'USD',
+};
+
 // 注册用户协议
 const agreement = 'In order to make effective use of QQ number resours and safeguard the legitimate rights and interests of users, we have formulated the "QQ Number Rules" (hereinafter referred to as "these Rules") You should read and abide by the Tencent Service an Agreement. Please read carefully and fully understand the contents of each clause, especially the clauses exempting or limiting Tencent\'s liability, the clauses restricting andre users\'rights, the clauses stipulating dispute';
 
@@ -567,4 +571,5 @@ export {
   contactUsSelect,
   bankAccountTypes,
   country,
+  currencyCode,
 };

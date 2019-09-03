@@ -111,6 +111,7 @@ const paymentPrompt = {
   deleteSuccess: 'paypal 账户 删除成功',
   addPaypalSuccess: 'paypal 添加成功',
   paypalLoginError: 'paypal 登录失败',
+  addDirectSuccess: '银行账户添加成功',
 };
 
 // 提额页面

@@ -100,9 +100,9 @@ module.exports = webpackMerge(webpackBaseConfig, {
       '/api': {
         target: 'http://192.168.1.20:8768',
       },
-      // '/mock': {
-      //   target: 'http://192.168.1.22:7070',
-      // },
+      '/mock': {
+        target: 'http://192.168.1.22:7070',
+      },
     }
   },
 });

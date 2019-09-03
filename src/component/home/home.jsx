@@ -50,8 +50,6 @@ class Home extends React.Component {
           detail,
         });
       }
-    }).catch((err) => {
-      console.log(err);
     });
   }
 

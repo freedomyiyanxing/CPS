@@ -32,7 +32,6 @@ class ContactUs extends React.Component {
         const obj = { ...value, issueType: getSelectValue(contactUsSelect, value.issueType, true) };
         ayc = postRequestBody('/api/common/contact', obj).then((response) => {
           const { message } = response;
-          console.log(response);
           if (message === SUCCESS) {
             openNotifications.open({
               message: contactUsPrompt.success,

@@ -59,8 +59,6 @@ export const viewHeader = theme => ({
   paymentPrompt: {
     fontSize: theme.typography.fontSizeMd,
     color: theme.palette.text.primary,
-    maxWidth: 450,
-    margin: [[0, 'auto']],
     '& > p': {
       lineHeight: '20px',
       marginBottom: 20,
@@ -72,15 +70,16 @@ export const viewHeader = theme => ({
     },
   },
   psd: {
-    width: 400,
-    margin: [[0, 'auto']],
+    width: 360,
   },
   paypal: {
-    display: 'block',
-    width: 400,
-    margin: [[0, 'auto']],
-    lineHeight: '20px',
     fontSize: theme.typography.fontSizeMd,
     color: theme.palette.text.primary,
+  },
+  wrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: 100,
   },
 });

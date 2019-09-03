@@ -23,7 +23,7 @@ const useStyle = makeStyles(theme => ({
     fontSize: 38,
   },
   textWrapper: {
-    height: 48,
+    height: 44,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -64,7 +64,6 @@ const PaypalView = (props) => {
     handleDelete, className, name, info, isPaypal,
   } = props;
   const classes = useStyle();
-  // const { paypalName, paypalEmail } = data;
   return (
     <div className={`${classes.palpayWrapper} ${className}`}>
       {

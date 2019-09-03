@@ -94,7 +94,7 @@ class Login extends React.Component {
         <Password form={form} value={this.psd} name="Password" />
         <div className={classes.main}>
           <MyFormControlLabel
-            label="Keep me logged ins"
+            label="Keep me logged in"
             onChange={this.handleChange}
           />
           <span

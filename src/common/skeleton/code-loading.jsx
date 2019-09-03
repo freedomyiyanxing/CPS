@@ -13,7 +13,7 @@ export const NotCodeLoading = () => {
   const classes = useStyle();
   return (
     <InputContainer title="">
-      <div className={classes.root}>loading...</div>
+      <div className={classes.root} />
     </InputContainer>
   );
 };
@@ -22,7 +22,7 @@ export const CodeLoading = () => {
   const classes = useStyle();
   return (
     <MainContainer margin={[40, 0]}>
-      <div className={classes.root}>loading...</div>
+      <div className={classes.root} />
     </MainContainer>
   );
 };

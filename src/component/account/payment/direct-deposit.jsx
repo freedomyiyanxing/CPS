@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 import MySelect from '../../../common/form/my-select';
 import Name from '../../../common/form/name';
 import { getSelectValue } from '../../../assets/js/utils-methods';
-import { bankAccountTypes, country } from '../../../assets/data/default-data';
+import { bankAccountTypes, country, currencyCode } from '../../../assets/data/default-data';
 
 const DirectDeposit = (props) => {
   const { form, data } = props;
-
   return (
     <>
       <MySelect
@@ -16,14 +15,14 @@ const DirectDeposit = (props) => {
         name="Bank Location"
         outputName="bankAccountCountry"
         selectArr={country}
-        value={getSelectValue(country, data.bankAccountCountry)}
+        value={getSelectValue(country, 'US')} // 暂时只有US 所以先固定值
       />
       <MySelect
         form={form}
         name="Bank Currency"
         outputName="currencyCode"
-        selectArr={['USD']}
-        value="USD"
+        selectArr={currencyCode}
+        value={getSelectValue(currencyCode, 'USD')} // 暂时只有USD 所以先固定值
       />
       <Name
         form={form}

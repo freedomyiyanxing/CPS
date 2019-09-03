@@ -41,9 +41,6 @@ class WibsiteSetting extends React.Component {
             data: userDate = response,
           });
         }
-      })
-      .catch((err) => {
-        console.log(err);
       });
   }
 
@@ -145,7 +142,7 @@ class WibsiteSetting extends React.Component {
                 />
               </Container>
             )
-            : <div>loading....</div>
+            : null
         }
       </MainContainer>
     );

@@ -15,7 +15,6 @@ import { CodeLoading } from '../common/skeleton/code-loading';
  */
 const HeaderNavigation = (props) => {
   const { route, history, userStore } = props;
-  // console.log(route);
   return (
     <>
       <HeaderLogin history={history} />
