@@ -194,7 +194,7 @@ class MyCropper extends React.Component {
             <IconButton
               onClick={isClose && this.handleClose}
             >
-              <MySvgIconClose />
+              <MySvgIconClose className={classes.close} />
             </IconButton>
           </div>
           <div className={classes.dialogContent}>

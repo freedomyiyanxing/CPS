@@ -11,10 +11,10 @@ const useStyle = makeStyles(() => ({
 }));
 
 const BoxContainer = (props) => {
-  const { children } = props;
+  const { children, marginTop } = props;
   const classes = useStyle();
   return (
-    <div className={classes.container}>
+    <div className={classes.container} style={{ marginTop }}>
       {children}
     </div>
   );
@@ -22,6 +22,7 @@ const BoxContainer = (props) => {
 
 BoxContainer.propTypes = {
   children: PropTypes.node.isRequired,
+  marginTop: PropTypes.number.isRequired,
 };
 
 export default BoxContainer;

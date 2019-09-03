@@ -18,19 +18,20 @@ const useStyles = makeStyles(theme => ({
     maxHeight: 300,
     overflow: 'hidden',
     padding: [[10, 46, 10, 16]],
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.primary.contrastText,
   },
   success: {
-    backgroundColor: '#43a047',
+    color: '#43a047',
   },
   error: {
-    backgroundColor: '#d32f2f',
+    color: '#d32f2f',
   },
   info: {
-    backgroundColor: '#1976d2',
+    color: '#1976d2',
   },
   warning: {
-    backgroundColor: '#ffa000',
+    color: '#ffa000',
   },
   icon: {
     marginRight: theme.spacing(2),
@@ -54,10 +55,8 @@ function MySnackbarContentWrapper(props) {
   const { message, variant } = props;
   const IconSvg = variantIcon[variant];
   return (
-    <div
-      className={`${classes[variant]} ${classes.wrapper}`}
-    >
-      <IconSvg variant={variant} className={classes.icon} />
+    <div className={classes.wrapper}>
+      <IconSvg variant={variant} className={`${classes.icon} ${classes[variant]}`} />
       <p className={classes.message}>{message}</p>
     </div>
   );
@@ -72,8 +71,10 @@ const useStyle1 = makeStyles(theme => ({
   root: {
     padding: 10,
     cursor: 'pointer',
-    color: theme.palette.primary.contrastText,
-    fontSize: 18,
+    color: theme.palette.text.secondary,
+  },
+  icon: {
+    fontSize: theme.typography.button.fontSize,
   },
 }));
 
@@ -81,7 +82,7 @@ export const IconButtons = () => {
   const classes = useStyle1();
   return (
     <div className={classes.root}>
-      <MySvgIconClose />
+      <MySvgIconClose className={classes.icon} />
     </div>
   );
 };

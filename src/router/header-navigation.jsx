@@ -18,7 +18,7 @@ const HeaderNavigation = (props) => {
   return (
     <>
       <HeaderLogin history={history} />
-      <BoxContainer>
+      <BoxContainer marginTop={112}>
         <Suspense fallback={<CodeLoading />}>
           {renderRoutes(route.routes, userStore.isLogin)}
         </Suspense>

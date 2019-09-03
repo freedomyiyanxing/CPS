@@ -39,7 +39,6 @@ const ItemButton = (props) => {
           openNotifications.open({
             message: productPrompt.addProductSuccess,
             variant: 'success',
-            duration: 2.5,
           });
         }
       })

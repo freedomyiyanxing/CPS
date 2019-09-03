@@ -1,5 +1,8 @@
 export const containerStyle = theme => ({
   root: {
+    position: 'fixed',
+    width: '100%',
+    zIndex: theme.zIndex.appBar,
     background: theme.palette.background.black,
   },
   wrapper: {
@@ -14,7 +17,6 @@ export const containerStyle = theme => ({
 });
 
 const login = theme => ({
-  // width: 260,
   minHeight: 68,
   display: 'flex',
   alignItems: 'center',
@@ -86,9 +88,6 @@ export const leftStyle = theme => ({
       marginLeft: 10,
       borderTopColor: theme.palette.primary[50],
     },
-    // '&:hover': {
-    //   background: theme.palette.primary.A400,
-    // },
   },
   linkCollapse: {
     position: 'absolute',

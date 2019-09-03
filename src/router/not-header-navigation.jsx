@@ -16,7 +16,7 @@ const NotHeaderNavigation = (props) => {
   return (
     <>
       <HeaderNotLogin history={history} />
-      <BoxContainer>
+      <BoxContainer marginTop={68}>
         <Suspense fallback={<NotCodeLoading />}>
           {renderRoutes(route.routes)}
         </Suspense>

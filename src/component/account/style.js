@@ -112,6 +112,7 @@ const cropperStyle = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingBottom: 10,
   },
   dialogBtn: {
     minHeight: 36,
@@ -152,6 +153,9 @@ const cropperStyle = theme => ({
     width: 74 * 5,
     display: 'flex',
     justifyContent: 'space-between',
+  },
+  close: {
+    fontSize: theme.typography.button.fontSize,
   },
 });
 

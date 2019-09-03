@@ -7,16 +7,14 @@ import {
 const useStyle = makeStyles(theme => ({
   root: {
     position: 'absolute',
-    right: 6,
-    top: 6,
+    right: 10,
+    top: 10,
     zIndex: 10,
-    width: 18,
-    height: 18,
     cursor: 'pointer',
     color: theme.palette.text.secondary,
   },
   close: {
-    fontSize: theme.typography.fontSizeLg,
+    fontSize: theme.typography.caption.fontSize,
   },
 }));
 

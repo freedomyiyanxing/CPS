@@ -9,8 +9,8 @@ let notification = null;
 Notification.newInstance({
   closeIcon: <IconButtons />,
   style: {
-    left: 24,
-    top: 24,
+    right: 24,
+    top: 120,
     bottom: 'auto',
   },
 }, (n) => {
@@ -19,7 +19,7 @@ Notification.newInstance({
 
 const openNotifications = {
   open({
-    message, variant, duration = 5, key = '',
+    message, variant, duration = 3, key = '',
   }) {
     notification.notice({
       content: <MySnackbarContentWrapper message={message} variant={variant} />,
@@ -36,6 +36,5 @@ const openNotifications = {
 };
 
 export {
-  // eslint-disable-next-line import/prefer-default-export
   openNotifications,
 };

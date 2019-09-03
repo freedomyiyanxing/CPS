@@ -116,13 +116,13 @@ instance.interceptors.response.use(
       return Promise.reject(response);
     }
     if (status >= 500) {
-      if (cancelFlag) {
-        openNotifications.open({
-          message: detail || errorText,
-          variant: 'error',
-        });
-      }
-      cancelFlag = false;
+      // if (cancelFlag) {
+      openNotifications.open({
+        message: detail || errorText,
+        variant: 'error',
+      });
+      // }
+      // cancelFlag = false;
       return Promise.reject(response);
     }
   },
