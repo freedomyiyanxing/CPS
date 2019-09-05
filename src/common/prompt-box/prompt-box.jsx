@@ -1,6 +1,6 @@
 import React from 'react';
 import Notification from 'rc-notification';
-import MySnackbarContentWrapper, { IconButtons } from './my-snackbar-content';
+import { MySnackbarContentWrapper, IconButtons } from './my-snackbar-content';
 
 import './notification.css';
 

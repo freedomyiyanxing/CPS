@@ -38,7 +38,6 @@ const HeaderRight = (props) => {
         <Avatars
           photo={userStore.userPhoto}
           classes={{
-            img: classes.bigAvatar,
             icon: classes.defaultAvatar,
           }}
         />

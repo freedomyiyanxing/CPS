@@ -16,8 +16,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     minHeight: 60,
     maxHeight: 300,
-    overflow: 'hidden',
-    padding: [[10, 46, 10, 16]],
+    padding: [[15, 45, 15, 15]],
     color: theme.palette.text.primary,
     backgroundColor: theme.palette.primary.contrastText,
   },
@@ -37,7 +36,9 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
   },
   message: {
-    fontSize: 16,
+    width: '100%',
+    overflow: 'hidden',
+    fontSize: theme.typography.h5.fontSize,
     lineHeight: 1.4,
   },
 }));
@@ -50,7 +51,7 @@ const variantIcon = {
 };
 
 
-function MySnackbarContentWrapper(props) {
+export function MySnackbarContentWrapper(props) {
   const classes = useStyles();
   const { message, variant } = props;
   const IconSvg = variantIcon[variant];
@@ -69,7 +70,7 @@ MySnackbarContentWrapper.propTypes = {
 
 const useStyle1 = makeStyles(theme => ({
   root: {
-    padding: 10,
+    padding: 14,
     cursor: 'pointer',
     color: theme.palette.text.secondary,
   },
@@ -86,5 +87,3 @@ export const IconButtons = () => {
     </div>
   );
 };
-
-export default MySnackbarContentWrapper;

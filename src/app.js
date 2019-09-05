@@ -17,8 +17,6 @@ import './assets/style/cropper.css';
 
 import { theme } from './config/theme/theme';
 
-// console.log(theme);
-
 const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',

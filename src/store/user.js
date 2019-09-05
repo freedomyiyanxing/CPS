@@ -25,10 +25,10 @@ class User {
     this.isLogin = isLogin;
     if (isLogin) {
       const {
-        photo, firstName, lastName, token,
+        photo, firstName, token,
       } = loginInfo;
       this.selUserPhoto(photo);
-      this.selUserName(firstName + lastName);
+      this.selUserName(firstName);
       session.setSession('loginInfo', { token, isLogin });
     } else {
       session.remove('loginInfo');

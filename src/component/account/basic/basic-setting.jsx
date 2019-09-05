@@ -69,7 +69,7 @@ class BasicSetting extends React.Component {
         ayc = postRequestBody('/api/profile/update', obj).then((response) => {
           const { message } = response;
           if (message === SUCCESS) {
-            userStore.selUserName(obj.firstName + obj.lastName);
+            userStore.selUserName(obj.firstName);
             openNotifications.open({
               message: userInfoPrompt.successText,
               variant: 'success',

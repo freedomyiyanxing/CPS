@@ -20,6 +20,10 @@ const ProductItems = (props) => {
         classes={{
           img: classes.img,
         }}
+        options={{
+          width: 250,
+          height: 312,
+        }}
       />
       <div className={classes.info}>
         <span className={classes.name}>{data.prodName}</span>

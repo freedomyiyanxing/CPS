@@ -47,7 +47,9 @@ const ProductList = (props) => {
               <MyTableCell align="center">
                 <MyCheckbox
                   checked={v.check}
-                  onChange={() => { handleCheckChange(i, v.id); }}
+                  onChange={() => {
+                    handleCheckChange(i, v.id);
+                  }}
                 />
               </MyTableCell>
               <MyTableCell align="left">
@@ -55,6 +57,10 @@ const ProductList = (props) => {
                   photo={v.prodImg}
                   classes={{
                     img: classes.imgWrapper,
+                  }}
+                  options={{
+                    width: 80,
+                    height: 100,
                   }}
                 />
               </MyTableCell>
