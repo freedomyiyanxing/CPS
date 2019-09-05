@@ -10,6 +10,7 @@ const useStyle = makeStyles(() => ({
     minWidth: 400,
     margin: 0,
     maxHeight: 'calc(100% - 30px)',
+    borderRadius: 4,
   },
   wrapper: {
     margin: [[30, 0]],

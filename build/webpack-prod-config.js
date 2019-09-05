@@ -3,9 +3,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpackBaseConfig = require('./webpack-base-config');
-const CompressionWebpackPlugin = require('compression-webpack-plugin');
+// const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
-const moment = require('moment');
 
 const ENVIRONMENT = process.env.ENVIRONMENT;
 
@@ -74,13 +73,13 @@ const obj = webpackMerge(webpackBaseConfig, {
     new MiniCssExtractPlugin({
       filename: 'css/[name]-[hash].css',
     }),
-    new CompressionWebpackPlugin({ //gzip 压缩 // https://www.npmjs.com/package/compression-webpack-plugin
-      filename: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: /\.(js|css)$/i,
-      threshold: 10240,
-      // minRatio: 0.8 // 默认0.8
-    }),
+    // new CompressionWebpackPlugin({ //gzip 压缩 // https://www.npmjs.com/package/compression-webpack-plugin
+    //   filename: '[path].gz[query]',
+    //   algorithm: 'gzip',
+    //   test: /\.(js|css)$/i,
+    //   threshold: 10240,
+    //   // minRatio: 0.8 // 默认0.8
+    // }),
   ],
   optimization: {
     runtimeChunk: {
@@ -130,7 +129,7 @@ if (ENVIRONMENT === 'pre' || ENVIRONMENT === 'runtime') {
   let version = '';
 
   if (ENVIRONMENT === 'pre') { // 测试环境
-    version = moment().format('YYYY-MM-DD')
+    version = new Date().getTime() // moment().format('YYYY-MM-DD')
   } else {
     version = require('../package.json').version
   }

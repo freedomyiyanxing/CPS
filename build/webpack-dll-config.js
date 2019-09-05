@@ -32,13 +32,13 @@ module.exports = {
       name: '[name]_library_[chunkhash]', // 暴露出的函数名, 同 output.library 一致即可,
       context: path.join(__dirname, '..'), // manifest 文件中请求的上下文(context)(默认值为 webpack 的上下文(context))
     }),
-    new CompressionWebpackPlugin({ //gzip 压缩 // https://www.npmjs.com/package/compression-webpack-plugin
-      filename: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: /\.js(\?.*)?$/i,
-      threshold: 10240,
-      // minRatio: 0.8 // 默认0.8
-    }),
+    // new CompressionWebpackPlugin({ //gzip 压缩 // https://www.npmjs.com/package/compression-webpack-plugin
+    //   filename: '[path].gz[query]',
+    //   algorithm: 'gzip',
+    //   test: /\.js(\?.*)?$/i,
+    //   threshold: 10240,
+    //   // minRatio: 0.8 // 默认0.8
+    // }),
     // new BundleAnalyzerPlugin({ // 可视化工具 http://127.0.0.1:8888
     //   analyzerMode: 'server',
     //   analyzerHost: '127.0.0.1',
