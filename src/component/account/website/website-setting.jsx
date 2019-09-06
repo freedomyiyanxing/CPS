@@ -9,6 +9,7 @@ import MySelect from '../../../common/form/my-select';
 import MyTextarea from '../../../common/form/my-textarea';
 import Name from '../../../common/form/name';
 import Container from '../utils/container';
+import { SkeletonHtml } from '../../../common/skeleton/index';
 
 import { postRequestBody, get, SUCCESS } from '../../../assets/http/index';
 import { monthlyVisitors, webSiteCategory } from '../../../assets/data/default-data';
@@ -19,7 +20,7 @@ import { getIsForm, getSelectValue } from '../../../assets/js/utils-methods';
 let userDate = null;
 
 @createForm()
-class WibsiteSetting extends React.Component {
+class WebsiteSetting extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -102,7 +103,7 @@ class WibsiteSetting extends React.Component {
         {
           data
             ? (
-              <Container title="Wibsite Setting">
+              <Container title="Website Setting">
                 <Name
                   form={form}
                   name="Website Name"
@@ -134,7 +135,7 @@ class WibsiteSetting extends React.Component {
                 />
                 <SubmitButton
                   bank
-                  width="180"
+                  width={180}
                   name="Submit"
                   disabled={disabled}
                   history={history}
@@ -142,16 +143,16 @@ class WibsiteSetting extends React.Component {
                 />
               </Container>
             )
-            : null
+            : <SkeletonHtml />
         }
       </MainContainer>
     );
   }
 }
 
-WibsiteSetting.propTypes = {
+WebsiteSetting.propTypes = {
   history: PropTypes.objectOf(PropTypes.object).isRequired,
   form: formShape.isRequired,
 };
 
-export default WibsiteSetting;
+export default WebsiteSetting;

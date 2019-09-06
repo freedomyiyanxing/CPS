@@ -1,8 +1,6 @@
 export const containerStyle = theme => ({
   root: {
-    position: 'fixed',
-    width: '100%',
-    zIndex: theme.zIndex.appBar,
+    display: 'block',
     background: theme.palette.background.black,
   },
   wrapper: {

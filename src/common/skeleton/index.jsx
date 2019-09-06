@@ -16,25 +16,37 @@ const useStyle = makeStyles(() => ({
   },
 }));
 
+export const SkeletonHtml = ({ rows }) => {
+  const classes = useStyle();
+  return (
+    <div className={classes.root}>
+      {
+        Array.from({ length: rows }, (v, k) => k).map(v => (
+          <span
+            key={v}
+            className={`${classes.items} show-loading-animation`}
+          />
+        ))
+      }
+    </div>
+  );
+};
+
+SkeletonHtml.propTypes = {
+  rows: PropTypes.number,
+};
+
+SkeletonHtml.defaultProps = {
+  rows: 8,
+};
+
 const Skeleton = (props) => {
   const {
     rows, loading, children,
   } = props;
-  const classes = useStyle();
   return (
     loading
-      ? (
-        <div className={classes.root}>
-          {
-            Array.from({ length: rows }, (v, k) => k).map(v => (
-              <span
-                key={v}
-                className={`${classes.items} show-loading-animation`}
-              />
-            ))
-          }
-        </div>
-      )
+      ? <SkeletonHtml rows={rows} />
       : children
   );
 };

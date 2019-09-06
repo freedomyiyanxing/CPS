@@ -2,19 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyle = makeStyles(() => ({
-  container: {
+const useStyle = makeStyles({
+  container: props => ({
     flex: 1,
     width: '100%',
     display: 'flex',
-  },
-}));
+    marginTop: props.marginTop,
+  }),
+});
 
 const BoxContainer = (props) => {
   const { children, marginTop } = props;
-  const classes = useStyle();
+  const styles = {
+    marginTop,
+  };
+  const classes = useStyle(styles);
   return (
-    <div className={classes.container} style={{ marginTop }}>
+    <div className={classes.container}>
       {children}
     </div>
   );

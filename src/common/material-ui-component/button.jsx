@@ -5,10 +5,11 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
-  root: {
+  root: props => ({
+    minWidth: props.minWidth,
     textTransform: 'capitalize',
     boxShadow: 'none',
-  },
+  }),
   loading: {
     backgroundColor: `${theme.palette.background.disabled} !important`,
   },
@@ -18,9 +19,12 @@ const useStyle = makeStyles(styles);
 
 const MyButton = (props) => {
   const {
-    className, loading, children, loadingSize,
+    className, loading, children, loadingSize, minWidth,
   } = props;
-  const classes = useStyle();
+  const style = {
+    minWidth,
+  };
+  const classes = useStyle(style);
   return (
     <Button
       {...props}
@@ -40,12 +44,14 @@ MyButton.propTypes = {
   loading: PropTypes.bool,
   children: PropTypes.node.isRequired,
   loadingSize: PropTypes.number,
+  minWidth: PropTypes.number,
 };
 
 MyButton.defaultProps = {
   className: '',
   loading: false,
   loadingSize: 24,
+  minWidth: null,
 };
 
 export default MyButton;

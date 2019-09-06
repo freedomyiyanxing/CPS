@@ -12,6 +12,7 @@ import DateSelection from '../../../common/date-picker/date-selection';
 import Container from '../utils/container';
 import MyCropper from '../utils/cropper';
 import TelIndex from '../../../common/react-intl-tel-input/index';
+import { SkeletonHtml } from '../../../common/skeleton/index';
 
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
 import { postRequestBody, get, SUCCESS } from '../../../assets/http/index';
@@ -154,7 +155,7 @@ class BasicSetting extends React.Component {
                 />
                 <SubmitButton
                   bank
-                  width="180"
+                  width={180}
                   name="Submit"
                   disabled={disabled && datePhoneDisable}
                   history={history}
@@ -162,7 +163,7 @@ class BasicSetting extends React.Component {
                 />
               </Container>
             )
-            : null
+            : <SkeletonHtml />
         }
       </MainContainer>
     );

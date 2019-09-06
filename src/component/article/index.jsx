@@ -16,7 +16,7 @@ const ArticleContainer = (props) => {
           ? <HeaderLogin history={history} />
           : <HeaderNotLogin history={history} />
       }
-      <BoxContainer>
+      <BoxContainer marginTop={userStore.isLogin ? 112 : 68}>
         {
           renderRoutes(route.routes)
         }

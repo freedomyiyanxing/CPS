@@ -54,7 +54,7 @@ class AccountPassword extends React.Component {
           />
           <SubmitButton
             bank
-            width="180"
+            width={180}
             name="Submit"
             history={history}
             handleSubmit={this.handleSubmit}

@@ -49,7 +49,8 @@ const AllTopBtn = (props) => {
         onClick={handleAllLinks}
         loading={links}
         loadingSize={14}
-        style={{ minWidth: 134 }}
+        // style={{ minWidth: 134 }}
+        minWidth={134}
       >
         Batch Get Link
       </MyButton>
@@ -59,7 +60,8 @@ const AllTopBtn = (props) => {
         className={classes.root}
         onClick={handleClean}
         loading={loading}
-        style={{ minWidth: 88 }}
+        minWidth={88}
+        // style={{ minWidth: 88 }}
         loadingSize={14}
       >
         Delete

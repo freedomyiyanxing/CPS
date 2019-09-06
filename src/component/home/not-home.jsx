@@ -11,7 +11,7 @@ const useStyles = makeStyles(notHomeStyle);
 const NotHome = () => {
   const classes = useStyles();
   return (
-    <MainContainer margin={[]}>
+    <MainContainer>
       <div className={classes.root}>
         <div className={classes.wrapper}>未登陆</div>
         <div>

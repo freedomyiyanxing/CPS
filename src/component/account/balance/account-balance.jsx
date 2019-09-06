@@ -14,10 +14,7 @@ const AccountBalance = () => {
   const viewRef = useRef();
 
   return (
-    <MainContainer
-      margin={[30, 0, 70]}
-      className={classes.root}
-    >
+    <MainContainer className={classes.root}>
       <SearchLeft viewRef={viewRef} />
       <ViewRight ref={viewRef} />
     </MainContainer>

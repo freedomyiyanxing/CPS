@@ -10,9 +10,9 @@ const useStyle = makeStyles(theme => ({
     alignItems: 'center',
     paddingLeft: 20,
     background: theme.palette.primary.main,
-    fontSize: theme.typography.fontSizeLg,
+    fontSize: theme.typography.h6.fontSize,
     color: theme.palette.primary.contrastText,
-    fontWeight: theme.typography.fontWeight,
+    fontWeight: theme.typography.h6.fontWeight,
     borderRadius: [[0, 0, 4, 4]],
   },
 }));

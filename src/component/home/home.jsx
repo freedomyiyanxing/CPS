@@ -97,7 +97,7 @@ class Home extends React.Component {
       loading, userInfo, statistics, detail, daily, timer,
     } = this.state;
     return (
-      <MainContainer margin={[44, 0, 40]}>
+      <MainContainer margin={44}>
         <Helmet>
           <title>home</title>
         </Helmet>

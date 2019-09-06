@@ -8,7 +8,6 @@ import Lost, { Not404 } from '../component/not-404/index';
 import ArticleContainers from '../component/article/index';
 import ContactUs from '../component/article/contact-us';
 import Test from '../component/article/test';
-// import NotHome from '../component/home/not-home';
 
 const NotHome = lazy(() => import('../component/home/not-home'));
 const Home = lazy(() => import('../component/home/home'));
@@ -23,7 +22,7 @@ const RegisterInfo = lazy(() => import('../component/register/register-info'));
 const RegisterWait = lazy(() => import('../component/register/register-wait'));
 const AccountBalance = lazy(() => import('../component/account/balance/account-balance'));
 const AccountIndex = lazy(() => import('../component/account/index'));
-const WibsiteSetting = lazy(() => import('../component/account/wibsite/wibsite-setting'));
+const WebsiteSetting = lazy(() => import('../component/account/website/website-setting'));
 const BasicSetting = lazy(() => import('../component/account/basic/basic-setting'));
 const AccountPassword = lazy(() => import('../component/account/password/account-password'));
 const Payment = lazy(() => import('../component/account/payment/account-payment'));
@@ -138,7 +137,7 @@ const routers = [
           {
             path: '/my/account-website',
             exact: true,
-            component: WibsiteSetting,
+            component: WebsiteSetting,
             key: uuid(),
           },
           {

@@ -25,7 +25,7 @@ const useStyle = makeStyles(theme => ({
     flex: '0 0 33%',
     textAlign: 'right',
     marginRight: 20,
-    fontSize: theme.typography.fontSizeLg,
+    fontSize: theme.typography.h6.fontSize,
   },
   paypalWrapper: {
     height: 64,
@@ -40,7 +40,7 @@ const useStyle = makeStyles(theme => ({
   },
   price: {
     fontSize: 24,
-    fontWeight: theme.typography.fontWeight,
+    fontWeight: theme.typography.h6.fontWeight,
   },
   input: {
     width: '100%',
@@ -53,7 +53,7 @@ const useStyle = makeStyles(theme => ({
     bottom: -18,
   },
   tax: {
-    fontSize: theme.typography.fontSizeMd,
+    fontSize: theme.typography.body1.fontSize,
     color: theme.palette.text.secondary,
   },
 }));
@@ -73,7 +73,7 @@ const Withdraw = (props) => {
       callback(formPrompt.withdrawNumber);
     } else {
       if (data.tax > 0) {
-        setValue((formVal * (data.tax / 100)).toFixed(2));
+        setValue((formVal * data.tax).toFixed(2));
       }
       callback();
     }
@@ -86,7 +86,7 @@ const Withdraw = (props) => {
       withdraw: data.max,
     });
     if (data.tax > 0) {
-      setValue((data.max * (data.tax / 100)).toFixed(2));
+      setValue((data.max * data.tax).toFixed(2));
     }
   };
 
@@ -153,7 +153,7 @@ const Withdraw = (props) => {
           text={`Minimun Payment Amount $
           ${data.min}
           ; Fees Rate :
-          ${data.tax}
+          ${data.tax * 100}%
           `}
         />
       </div>

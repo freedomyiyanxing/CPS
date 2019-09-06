@@ -23,9 +23,11 @@ const MyPagination = (props) => {
     total, pageSize, change, pageCurrent,
   } = props;
   const classes = useStyle();
+
   function onChange(page, size) {
     change(page, size);
   }
+
   return (
     <div className={classes.wrapper}>
       <Pagination
@@ -36,6 +38,10 @@ const MyPagination = (props) => {
         total={total}
         prevIcon={<ChevronLeft className={classes.icon} />}
         nextIcon={<ChevronRight className={classes.icon} />}
+        locale={{
+          prev_page: 'Previous page',
+          next_page: 'Next page',
+        }}
       />
     </div>
   );

@@ -201,7 +201,9 @@ class MyCropper extends React.Component {
             <Cropper
               src={imgUrl}
               className="cropper-img-wrapper"
-              ref={(n) => { this.refCropper = n; }}
+              ref={(n) => {
+                this.refCropper = n;
+              }}
               dragMode="move" // 移动画布
               preview=".cropper-img-preview" // 预览视图
               aspectRatio={9 / 9} // 宽高比列
@@ -209,16 +211,8 @@ class MyCropper extends React.Component {
               viewMode={1} // 限制裁剪框不超过画布的大小
             />
             <div className={classes.dialogView}>
-              <div
-                className="cropper-img-preview"
-                style={{ width: 200, height: 200, overflow: 'hidden' }}
-              />
-              <div
-                className="cropper-img-preview"
-                style={{
-                  width: 120, height: 120, overflow: 'hidden', borderRadius: '50%',
-                }}
-              />
+              <div className={`cropper-img-preview ${classes.cropperPreviewMax}`} />
+              <div className={`cropper-img-preview ${classes.cropperPreviewMin}`} />
             </div>
           </div>
           <div className={classes.dialogFooter}>
@@ -230,7 +224,9 @@ class MyCropper extends React.Component {
                     variant="contained"
                     color="primary"
                     className={classes.dialogBtn}
-                    onClick={() => { this.handleControl(v.name); }}
+                    onClick={() => {
+                      this.handleControl(v.name);
+                    }}
                   >
                     <v.icon />
                   </MyButton>
@@ -240,7 +236,7 @@ class MyCropper extends React.Component {
             <SubmitButton
               name="Submit"
               handleSubmit={this.handleClick}
-              styles={{ marginTop: 0, width: 80 }}
+              className={classes.btnWrapper}
             />
           </div>
         </Dialog>

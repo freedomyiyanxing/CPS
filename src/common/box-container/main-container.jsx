@@ -7,25 +7,23 @@ const useStyle = makeStyles(theme => ({
     width: '100%',
     background: theme.palette.primary[100],
   },
-  root: {
+  root: props => ({
     maxWidth: 1370,
     minWidth: 1100,
-    margin: [[0, 'auto']],
-  },
+    margin: [[props.margin, 'auto']],
+  }),
 }));
 
 const MainContainer = (props) => {
   const { children, margin, className } = props;
-  const classes = useStyle();
   const styles = {
-    margin: `${margin.join('px ')}px`,
+    margin,
   };
+  const classes = useStyle(styles);
   return (
     <div className={classes.main}>
-      <div className={classes.root}>
-        <div style={styles} className={className}>
-          {children}
-        </div>
+      <div className={`${classes.root} ${className || ''}`}>
+        {children}
       </div>
     </div>
   );
@@ -33,12 +31,12 @@ const MainContainer = (props) => {
 
 MainContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  margin: PropTypes.objectOf(PropTypes.array),
+  margin: PropTypes.number,
   className: PropTypes.string,
 };
 
 MainContainer.defaultProps = {
-  margin: [30, 0],
+  margin: 30,
   className: null,
 };
 

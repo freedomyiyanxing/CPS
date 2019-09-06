@@ -8,10 +8,11 @@ export const submitButtonStyle = () => ({
   bank: {
     justifyContent: 'space-between',
   },
-  btn: {
+  btn: props => ({
+    width: props.width || '100%',
     minHeight: 38,
-    borderRadius: 4,
-  },
+    borderRadius: 5,
+  }),
 });
 
 export const psdVisibilityStyle = theme => ({

@@ -359,6 +359,13 @@ const BankCard = props => (
   </MySvgIcon>
 );
 
+const GoBackLeft = props => (
+  <MySvgIcon viewBox="0 0 1024 1024" {...props}>
+    <path d="M736.4375 1024 224.4375 512 736.4375 0l63.125 63.125L350.7525 512l448.81 448.875L736.4375 1024z" />
+  </MySvgIcon>
+);
+
+
 export {
   MySvgIconPayment,
   MySvgIconProfile,
@@ -396,4 +403,5 @@ export {
   ChevronLeft,
   ChevronRight,
   BankCard,
+  GoBackLeft,
 };

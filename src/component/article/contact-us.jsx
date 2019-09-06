@@ -77,7 +77,7 @@ class ContactUs extends React.Component {
         />
         <SubmitButton
           bank
-          width="180"
+          width={180}
           name="Send E-mail"
           history={history}
           handleSubmit={this.handleSubmit}

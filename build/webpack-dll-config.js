@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const CompressionWebpackPlugin = require('compression-webpack-plugin');
+// const CompressionWebpackPlugin = require('compression-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // 抽离 vendor 数组中的第三方插件, 只打包一次, 优化打包速度

@@ -43,7 +43,8 @@ class ViewRight extends React.Component {
   getUserInfo = () => {
     Promise.all([
       new Promise((resolve) => {
-        get('/api/balance/detail', { page: 1, size: PAGE_SIZE })
+        this.pageCurrent = 1;
+        get('/api/balance/detail', { page: this.pageCurrent, size: PAGE_SIZE })
           .then((response) => {
             resolve(response);
           });

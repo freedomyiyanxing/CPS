@@ -157,6 +157,16 @@ const cropperStyle = theme => ({
   close: {
     fontSize: theme.typography.button.fontSize,
   },
+  btnWrapper: {
+    marginTop: 0,
+    width: 80,
+  },
+  cropperPreviewMax: {
+    width: 200, height: 200, overflow: 'hidden',
+  },
+  cropperPreviewMin: {
+    width: 120, height: 120, overflow: 'hidden', borderRadius: '50%',
+  },
 });
 
 const paymentStyle = () => ({

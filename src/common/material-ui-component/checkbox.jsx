@@ -11,7 +11,7 @@ const useStyle = makeStyles(theme => ({
     color: theme.palette.border.borderDD,
   },
   icon: {
-    fontSize: theme.typography.fontSizeLg,
+    fontSize: theme.typography.h6.fontSize,
   },
 }));
 

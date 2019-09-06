@@ -194,7 +194,6 @@ class Payment extends React.Component {
   render() {
     const { classes, history, form } = this.props;
     const { accountNumber, selectIndex, selectCurrentVal } = this.state;
-
     const setView = () => {
       switch (selectIndex) {
         case '1':
@@ -208,7 +207,7 @@ class Payment extends React.Component {
     return (
       <>
         <MainContainer>
-          <Container title="Basic Payment">
+          <Container title="Basic Payment" history={history}>
             <ToggleSelect
               name="Payment Method"
               selectArr={selectArr}
@@ -225,7 +224,7 @@ class Payment extends React.Component {
             </div>
             <SubmitButton
               bank
-              width="180"
+              width={180}
               name="Submit"
               history={history}
               disabled={selectIndex === '0'}
