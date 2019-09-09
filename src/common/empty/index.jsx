@@ -24,7 +24,6 @@ const useStyle = makeStyles(theme => ({
 
 const EmptyPage = (props) => {
   const { title, height } = props;
-  console.log(height);
   const style = {
     height,
   };

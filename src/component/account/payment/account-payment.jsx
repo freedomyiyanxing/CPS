@@ -231,7 +231,6 @@ class Payment extends React.Component {
       )
       : true;
 
-    console.log('genx');
     return (
       <>
         <MainContainer>
