@@ -171,7 +171,7 @@ const cropperStyle = theme => ({
 
 const paymentStyle = () => ({
   root: {
-    margin: [[50, 0]],
+    margin: [[50, 0, 10]],
     position: 'relative',
     overflow: 'hidden',
     minHeight: 60,
@@ -179,6 +179,9 @@ const paymentStyle = () => ({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
+  },
+  gobacks: {
+    marginTop: 50,
   },
 });
 

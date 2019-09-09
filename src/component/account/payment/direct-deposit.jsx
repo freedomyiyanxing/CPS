@@ -3,11 +3,19 @@ import PropTypes from 'prop-types';
 
 import MySelect from '../../../common/form/my-select';
 import Name from '../../../common/form/name';
+
 import { getSelectValue } from '../../../assets/js/utils-methods';
-import { bankAccountTypes, country, currencyCode } from '../../../assets/data/default-data';
+
+import {
+  country,
+  currencyCode,
+  bankAccountTypes,
+} from '../../../assets/data/default-data';
 
 const DirectDeposit = (props) => {
-  const { form, data } = props;
+  const {
+    form, data,
+  } = props;
   return (
     <>
       <MySelect
@@ -57,6 +65,7 @@ const DirectDeposit = (props) => {
         value={data.bankRoutingNumber}
         pattern={/^[A-Za-z0-9]{2,30}$/}
       />
+
     </>
   );
 };

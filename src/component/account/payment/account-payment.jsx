@@ -1,24 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createForm, formShape } from 'rc-form';
 import { withStyles } from '@material-ui/core/styles';
+import { createForm, formShape } from 'rc-form';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import MainContainer from '../../../common/box-container/main-container';
-import SubmitButton from '../../../common/form/submit-button';
 import ToggleSelect from '../../../common/form/toggle-select';
 import Container from '../utils/container';
 import Paypal from './paypal';
 import DirectDeposit from './direct-deposit';
+import GoBackBtn from '../../../common/form/go-back';
+import SubmitButton from '../../../common/form/submit-button';
 
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
 import { paymentPrompt } from '../../../assets/data/prompt-text';
+import { getIsForm, getSelectValue } from '../../../assets/js/utils-methods';
 import {
-  get, postRequestBody, deleteRequestBody, SUCCESS,
+  country,
+  currencyCode,
+  bankAccountTypes,
+} from '../../../assets/data/default-data';
+import {
+  SUCCESS,
+  get,
+  postRequestBody,
+  deleteRequestBody,
 } from '../../../assets/http/index';
 import { paymentStyle } from '../style';
-import { getSelectValue } from '../../../assets/js/utils-methods';
-import { bankAccountTypes, country } from '../../../assets/data/default-data';
 
 const selectArr = ['Please Select', 'Paypal', 'Direct Deposit'];
 
@@ -48,7 +56,7 @@ class Payment extends React.Component {
   }
 
   componentDidMount() {
-    this._unmount = true;
+    this._isMounted = true;
 
     // 查询绑定的提现账号
     if (!this.isPaypal) {
@@ -59,7 +67,7 @@ class Payment extends React.Component {
   }
 
   componentWillUnmount() {
-    this._unmount = false;
+    this._isMounted = false;
   }
 
   /**
@@ -69,7 +77,7 @@ class Payment extends React.Component {
     get('/api/payout/binding').then((response) => {
       const resp = response || {};
       const { accountType } = resp;
-      if (this._unmount) {
+      if (this._isMounted) {
         this.setState({
           accountNumber: resp,
           selectIndex: accountType || '0',
@@ -113,7 +121,6 @@ class Payment extends React.Component {
       });
     }
   };
-
 
   /**
    * 移除paypal账号
@@ -164,11 +171,7 @@ class Payment extends React.Component {
    */
   handleSubmit = () => {
     const { form } = this.props;
-    const { selectIndex } = this.state;
     // 只有切换至银行账户保存 才可以进入提交
-    if (selectIndex !== '2') {
-      return;
-    }
     let ayc = null;
     form.validateFields((error, value) => {
       if (!error) {
@@ -204,6 +207,31 @@ class Payment extends React.Component {
           return null;
       }
     };
+
+    const disabled = accountNumber
+      ? getIsForm(
+        form,
+        {
+          bankName: accountNumber.bankName,
+          bankRoutingNumber: accountNumber.bankRoutingNumber,
+          bankAccountName: accountNumber.bankAccountName,
+          bankAccountNumber: accountNumber.bankAccountNumber,
+          bankAccountCountry: getSelectValue(country, accountNumber.bankAccountCountry),
+          currencyCode: getSelectValue(currencyCode, accountNumber.currencyCode),
+          bankAccountType: getSelectValue(bankAccountTypes, accountNumber.bankAccountType),
+        }, [
+          'bankName',
+          'bankRoutingNumber',
+          'bankAccountName',
+          'bankAccountNumber',
+          'bankAccountCountry',
+          'currencyCode',
+          'bankAccountType',
+        ],
+      )
+      : true;
+
+    console.log('genx');
     return (
       <>
         <MainContainer>
@@ -222,14 +250,27 @@ class Payment extends React.Component {
                   : <CircularProgress />
               }
             </div>
-            <SubmitButton
-              bank
-              width={180}
-              name="Submit"
-              history={history}
-              disabled={selectIndex === '0'}
-              handleSubmit={this.handleSubmit}
-            />
+            {
+              selectIndex !== '2'
+                ? (
+                  <div className={classes.gobacks}>
+                    <GoBackBtn history={history}>
+                      Bank
+                    </GoBackBtn>
+                  </div>
+                )
+                : (
+                  <SubmitButton
+                    bank
+                    width={180}
+                    name="Submit"
+                    disabled={disabled}
+                    history={history}
+                    className={classes.gobacks}
+                    handleSubmit={this.handleSubmit}
+                  />
+                )
+            }
           </Container>
         </MainContainer>
       </>
@@ -238,9 +279,9 @@ class Payment extends React.Component {
 }
 
 Payment.propTypes = {
+  form: formShape.isRequired,
   classes: PropTypes.objectOf(PropTypes.object).isRequired,
   history: PropTypes.objectOf(PropTypes.object).isRequired,
-  form: formShape.isRequired,
 };
 
 export default Payment;

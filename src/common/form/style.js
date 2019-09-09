@@ -1,5 +1,6 @@
 export const submitButtonStyle = () => ({
   wrapperBtn: {
+    width: '100%',
     marginTop: 30,
     position: 'relative',
     display: 'flex',
