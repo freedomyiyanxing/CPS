@@ -16,7 +16,8 @@
  |-- postcss.config.js style添加前缀文件
 ````
 
-### 项目接受
+### 项目
+````html
 项目工程采用： webpack4.x babel7.x eslint 搭建
 
 项目采用 react, react-router, mobx, material-ui 搭建
@@ -26,3 +27,17 @@
 使用 eslint, react-arbnb 规范约束代码,
 
 建议使用 yarn 安装包
+````
+
+操作
+````html
+ 建议使用 yarn 操作本项目
+ 说明： 如果有遇到第三方包安装错误时, 一定是因为版本错误, 
+ 解决方案： 1、固定当前版本, 2、找到错误问题, 修改代码  (在不熟悉这个项目的情况下建议使用方案1)
+ 
+ 项目启动 以及打包命令
+ 1： yarn install (安装本项目所有依赖)
+ 2： yarn dev (开发时)
+ 3： yarn run build:test (测试环境打包)
+ 4:  yarn run build:pre (预环境 | 运行时环境)
+````
