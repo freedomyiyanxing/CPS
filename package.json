@@ -11,8 +11,8 @@
     "dll": "rimraf static && rimraf build/vendor-manifest.json && webpack --config build/webpack-dll-config.js",
     "dev": "cross-env NODE_ENV=development ENVIRONMENT=dev webpack-dev-server --config build/webpack-dev-config.js",
     "build:test": "rimraf dist && cross-env NODE_ENV=production ENVIRONMENT=test webpack --config build/webpack-prod-config.js",
-    "build:pre": "rimraf dist && cross-env NODE_ENV=production ENVIRONMENT=pre webpack --config build/webpack-prod-config.js",
-    "build:runtime": "rimraf dist && cross-env NODE_ENV=production ENVIRONMENT=runtime webpack --config build/webpack-prod-config.js"
+    "build:pre": "yarn run dll && rimraf dist && cross-env NODE_ENV=production ENVIRONMENT=pre webpack --config build/webpack-prod-config.js",
+    "build:runtime": "yarn run dll && rimraf dist && cross-env NODE_ENV=production ENVIRONMENT=runtime webpack --config build/webpack-prod-config.js"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
