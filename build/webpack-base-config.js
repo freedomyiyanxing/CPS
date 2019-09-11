@@ -76,7 +76,7 @@ module.exports = {
     new webpack.DefinePlugin({
       // 根据打包环境 匹配相对应的图片路径
       'process.env.IMG_BASE': imgUrls(ENVIRONMENT),
-      // 'process.env.SERVER_URL': serverUrls(ENVIRONMENT),
+      'process.env.PAYPAL_RETURN_URL': serverUrls(ENVIRONMENT),
     }),
     new webpack.ContextReplacementPlugin( // 按需加载第三方包 (详细说明 请看官网)
       /moment[/\\]locale$/,
@@ -106,22 +106,21 @@ function imgUrls(env) {
   return JSON.stringify(imgUrl);
 }
 
-// eslint-disable-next-line no-unused-vars
 function serverUrls(env) {
-  let serverUrl = '';
+  let paypalReturnUrl = '';
   switch (env) {
     case 'dev':
-      serverUrl = 'http://192.168.1.20:8768';
+      paypalReturnUrl = 'http://192.168.1.22:8899';
       break;
     case 'test':
-      serverUrl = 'http://192.168.1.20:8768';
+      paypalReturnUrl = 'http://192.168.1.20:8800';
       break;
     case 'pre':
-      serverUrl = 'https://cps-api.yingshuxinxi.com';
+      paypalReturnUrl = 'https://imtribe.yingshuxinxi.com';
       break;
     case 'runtime':
-      serverUrl = 'https://cps-api.influmonster.com';
+      paypalReturnUrl = 'https://imtribe.influmonster.com';
       break;
   }
-  return JSON.stringify(serverUrl);
+  return JSON.stringify(paypalReturnUrl + '/my/account-payment');
 }

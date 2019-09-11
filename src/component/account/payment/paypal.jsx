@@ -8,6 +8,9 @@ import PaypalView from '../../../common/paypal/paypal-view';
 
 import { get } from '../../../assets/http/index';
 
+// 根据环境配置的 paypal返回url
+const paypalRuturnUrl = process.env.PAYPAL_RETURN_URL || '';
+
 @withStyles(theme => ({
   wrapper: {
     width: '100%',
@@ -75,7 +78,7 @@ class Paypal extends React.Component {
     const { paypal } = window;
     const obj = {
       appid: val.paypal.appId,
-      returnurl: val.paypal.returnUrl, // 'http://192.168.1.22:8899/my/account-payment',
+      returnurl: paypalRuturnUrl,
       scopes: 'openid email profile https://uri.paypal.com/services/paypalattributes',
       containerid: 'cwppButton',
       responseType: 'id_Token',
