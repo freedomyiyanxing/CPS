@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -22,7 +21,7 @@ class View extends React.Component {
     this.state = {
       items: [],
       total: 0,
-      loading: true,
+      loading: false,
     };
     this.sort = storeProduct.productSort[0].value; // 默认排序的值
     this.pageCurrent = 1; // 当前页码 默认1;
@@ -63,13 +62,12 @@ class View extends React.Component {
           this.setState({
             items,
             total,
-            loading: false,
+            loading: true,
           });
           resolve(true);
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         resolve(true);
       });
   });
@@ -99,6 +97,7 @@ class View extends React.Component {
         </div>
         <Skeleton
           loading={loading}
+          variant="product"
         >
           <div className={classes.wrapper}>
             {

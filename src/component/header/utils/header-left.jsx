@@ -7,7 +7,6 @@ import Collapse from '@material-ui/core/Collapse';
 
 import MyButton from '../../../common/material-ui-component/button';
 import { myHeader } from '../../../assets/data/default-data';
-import logo from '../../../assets/images/logo_white.png';
 
 import { leftStyle } from '../style';
 
@@ -22,27 +21,15 @@ const HeaderLeft = (props) => {
   useEffect(() => {
     const { pathname } = history.location;
     if (pathname.endsWith('product-search') || pathname.endsWith('own-products')) {
-      indicator.current.style.transform = 'translateX(90px)';
+      indicator.current.style.transform = 'translateX(157px)';
     }
   });
-
-  /**
-   * 去登录的首页
-   */
-  const handleIndex = () => {
-    history.push('/my/index');
-  };
 
   // home 点击事件
   const handleHome = () => {
     history.push('/my/index');
-    indicator.current.style.transform = 'translateX(14px)';
+    indicator.current.style.transform = 'translateX(47px)';
   };
-
-  // home 移入事件
-  // const onMouseEnterHome = () => {
-  //   indicator.current.style.transform = 'translateX(12px)';
-  // };
 
   // links 移入事件
   const onMouseEnterLinks = () => {
@@ -55,55 +42,44 @@ const HeaderLeft = (props) => {
   };
 
   return (
-    <div className={classes.left}>
-      <div
-        className={classes.logo}
-        role="button"
-        tabIndex={0}
-        onClick={handleIndex}
+    <div className={classes.nav}>
+      <MyButton
+        className={classes.linkBtn}
+        onClick={handleHome}
       >
-        <img src={logo} alt="iNFLUMONSTER logo" />
-      </div>
-      <div className={classes.nav}>
-        <MyButton
-          className={classes.linkBtn}
-          onClick={handleHome}
-          // onMouseEnter={onMouseEnterHome}
+        Home
+      </MyButton>
+      <MyButton
+        className={classes.linkBtn}
+        onMouseEnter={onMouseEnterLinks}
+        onMouseLeave={() => { setOpen(false); }}
+      >
+        <span>Links</span>
+        <span className="triangle-right" />
+        <Collapse
+          in={open}
+          classes={{
+            container: classes.linkCollapse,
+          }}
         >
-          Home
-        </MyButton>
-        <MyButton
-          className={classes.linkBtn}
-          onMouseEnter={onMouseEnterLinks}
-          onMouseLeave={() => { setOpen(false); }}
-        >
-          <span>Links</span>
-          <span className="triangle-right" />
-          <Collapse
-            in={open}
-            classes={{
-              container: classes.linkCollapse,
-            }}
-          >
-            <MenuList className={classes.linkList}>
-              {
-                myHeader.homeList.map(v => (
-                  <MenuItem
-                    key={v.id}
-                    classes={{
-                      root: classes.items,
-                    }}
-                    onClick={() => { handlePushWide(v.links); }}
-                  >
-                    {v.text}
-                  </MenuItem>
-                ))
-              }
-            </MenuList>
-          </Collapse>
-        </MyButton>
-        <span ref={indicator} className={classes.indicator} />
-      </div>
+          <MenuList className={classes.linkList}>
+            {
+              myHeader.homeList.map(v => (
+                <MenuItem
+                  key={v.id}
+                  classes={{
+                    root: classes.items,
+                  }}
+                  onClick={() => { handlePushWide(v.links); }}
+                >
+                  {v.text}
+                </MenuItem>
+              ))
+            }
+          </MenuList>
+        </Collapse>
+      </MyButton>
+      <span ref={indicator} className={classes.indicator} />
     </div>
   );
 };

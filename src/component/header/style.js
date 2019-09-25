@@ -1,19 +1,3 @@
-export const containerStyle = theme => ({
-  root: {
-    display: 'block',
-    background: theme.palette.background.black,
-  },
-  wrapper: {
-    maxWidth: 1370,
-    minWidth: 1100,
-    margin: [[0, 'auto']],
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    background: theme.palette.background.black,
-  },
-});
-
 const login = theme => ({
   minHeight: 68,
   display: 'flex',
@@ -36,21 +20,59 @@ const rightBtn = theme => ({
 
 const _items = theme => ({
   width: '100%',
-  height: 36,
+  height: 42,
   minHeight: 0,
   display: 'flex',
   justifyContent: 'flex-start',
-  padding: [[0, 10]],
   color: theme.palette.primary[50],
   fontSize: theme.typography.fontSize,
   textTransform: 'capitalize',
 });
 
-// 未登陆 头部样式
-export const loginNotStyle = theme => ({
-  logo: login(theme),
-  right: right(),
-  rightBtn: rightBtn(theme),
+
+export const containerStyle = theme => ({
+  root: {
+    padding: [[50, 0]],
+    background: 'initial',
+    color: theme.palette.primary[50],
+    boxShadow: theme.shadows[0],
+    transition: 'all .3s linear',
+    '@media (max-width: 1370px)': {
+      padding: [[25, 0]],
+    },
+  },
+  root1: {
+    padding: [[13, 0]],
+    color: theme.palette.primary[50],
+    background: theme.palette.background.black,
+  },
+  appBarBg: {
+    padding: [[13, 0]],
+    background: theme.palette.background.black,
+  },
+  container: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: [[0, 60]],
+    '@media (max-width: 1370px)': {
+      padding: [[0, 30]],
+    },
+  },
+  logoWrapper: {
+    display: 'flex',
+  },
+  logo: {
+    fontSize: '11rem',
+    height: 54,
+  },
+  left: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  right: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 });
 
 // 登陆头部 left样式
@@ -68,23 +90,27 @@ export const leftStyle = theme => ({
   indicator: {
     width: 48,
     position: 'absolute',
-    height: 2,
-    bottom: 0,
+    height: 1,
+    bottom: 8,
     background: theme.palette.primary[50],
     transition: 'all .2s linear',
-    transform: 'translateX(14px)',
+    transform: 'translateX(47px)',
   },
   linkBtn: {
     minWidth: 0,
+    marginLeft: 32,
     height: 44,
     boxShadow: 'none',
-    padding: 16,
+    padding: [[12, 16]],
     justifyContent: 'flex-start',
     color: theme.palette.primary[50],
     fontSize: theme.typography.fontSizeLg,
     '& .triangle-right': {
       marginLeft: 10,
       borderTopColor: theme.palette.primary[50],
+    },
+    '&:hover': {
+      background: theme.palette.primary.A400,
     },
   },
   linkCollapse: {
@@ -95,8 +121,7 @@ export const leftStyle = theme => ({
   },
   linkList: {
     width: 160,
-    height: 72,
-    padding: 0,
+    height: 100,
     background: theme.palette.primary.A400,
   },
   items: _items(theme),
@@ -138,10 +163,9 @@ export const rightStyle = theme => ({
   },
   accountWrapperInner: {
     width: 170,
-    height: 82,
+    height: 110,
   },
   accountList: {
-    padding: 0,
     position: 'relative',
     top: 10,
     background: theme.palette.primary.A400,
@@ -159,4 +183,18 @@ export const rightStyle = theme => ({
   },
 
   items: _items(theme),
+
+  dialogIcon: {
+    fontSize: theme.typography.h1.fontSize,
+  },
+  dialogText: {
+    fontSize: theme.typography.body2.fontSize,
+  },
+  main: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    minHeight: 80,
+  },
 });

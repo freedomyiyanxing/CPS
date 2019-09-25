@@ -27,4 +27,14 @@ const DateClose = () => {
   );
 };
 
+export const promise = new Promise((resolve) => {
+  Promise.all([
+    import('rc-calendar'),
+    import('rc-calendar/lib/Picker'),
+    import('rc-calendar/lib/locale/en_US'),
+  ]).then((data) => {
+    resolve([data[0].default, data[1].default, data[2].default]);
+  });
+});
+
 export default DateClose;

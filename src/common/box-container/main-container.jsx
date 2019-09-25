@@ -10,7 +10,8 @@ const useStyle = makeStyles(theme => ({
   root: props => ({
     maxWidth: 1370,
     minWidth: 1100,
-    margin: [[props.margin, 'auto']],
+    margin: [[0, 'auto']],
+    padding: [[props.margin, 0]],
   }),
 }));
 

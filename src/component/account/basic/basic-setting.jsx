@@ -12,7 +12,7 @@ import DateSelection from '../../../common/date-picker/date-selection';
 import Container from '../utils/container';
 import MyCropper from '../utils/cropper';
 import TelIndex from '../../../common/react-intl-tel-input/index';
-import { SkeletonHtml } from '../../../common/skeleton/index';
+import Skeleton from '../../../common/skeleton/index';
 
 import { openNotifications } from '../../../common/prompt-box/prompt-box';
 import { postRequestBody, get, SUCCESS } from '../../../assets/http/index';
@@ -113,58 +113,60 @@ class BasicSetting extends React.Component {
       data,
       ['firstName', 'lastName', 'email', 'gender'],
     );
+
     return (
       <MainContainer>
-        {
-          data
-            ? (
-              <Container
-                title="Basic Sitting"
-                component={<MyCropper id={data.id} />}
-              >
-                <Name
-                  form={form}
-                  name="First Name"
-                  value={data.firstName}
-                  outputName="firstName"
-                />
-                <Name
-                  form={form}
-                  name="Last Name"
-                  value={data.lastName}
-                  outputName="lastName"
-                />
-                <Emails
-                  form={form}
-                  value={data.email}
-                  disabled
-                />
-                <TelIndex
-                  ref={this.phoneRef}
-                  value={data.mobile}
-                  handlePhone={this.handlePhone}
-                />
-                <DateSelection
-                  form={form}
-                  defaultValue={data.dateOfBirth}
-                  onChange={this.handleDate}
-                />
-                <MyRadio
-                  form={form}
-                  value={data.gender}
-                />
-                <SubmitButton
-                  bank
-                  width={180}
-                  name="Submit"
-                  disabled={disabled && datePhoneDisable}
-                  history={history}
-                  handleSubmit={this.handleSubmit}
-                />
-              </Container>
-            )
-            : <SkeletonHtml />
-        }
+        <Container
+          title="Basic Sitting"
+          component={
+            data && <MyCropper id={data && data.id} />
+          }
+        >
+          <Skeleton
+            loading={data}
+            variant="basic"
+          >
+            <Name
+              form={form}
+              name="First Name"
+              value={data && data.firstName}
+              outputName="firstName"
+            />
+            <Name
+              form={form}
+              name="Last Name"
+              value={data && data.lastName}
+              outputName="lastName"
+            />
+            <Emails
+              form={form}
+              value={data && data.email}
+              disabled
+            />
+            <TelIndex
+              ref={this.phoneRef}
+              value={data && data.mobile}
+              handlePhone={this.handlePhone}
+            />
+            <DateSelection
+              form={form}
+              defaultValue={data && data.dateOfBirth}
+              onChange={this.handleDate}
+            />
+            <MyRadio
+              form={form}
+              value={data && data.gender}
+            />
+            <SubmitButton
+              bank
+              width={180}
+              name="Submit"
+              disabled={disabled && datePhoneDisable}
+              history={history}
+              handleSubmit={this.handleSubmit}
+            />
+          </Skeleton>
+        </Container>
       </MainContainer>
     );
   }

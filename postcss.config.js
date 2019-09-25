@@ -10,5 +10,14 @@ module.exports = {
         'last 3 iOS versions'
       ]
     })
+    // {
+    //   "browserslist": [
+    //     "last 1 version",
+    //     "> 1%",
+    //     "maintained node versions",
+    //     "not dead"
+    //   ]
+    // }
   ]
+
 };

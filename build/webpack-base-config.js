@@ -3,16 +3,15 @@ const fs = require('fs');
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const dllName = require('./vendor-manifest.json').name;
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // 判断当前打包环境 （dev = 开发，test = 测试，pre = 预环境）
 const ENVIRONMENT = process.env.ENVIRONMENT;
 console.log(` ======   当前是 ${ENVIRONMENT} 环境   ==== `);
-// 获取骨架屏
-const loading = {
-  html: fs.readFileSync(path.join(__dirname, '../src/common/skeleton/skeleton.html')),
-  css: `<style id="skeleton-id">${fs.readFileSync(path.join(__dirname, '../src/common/skeleton/skeleton.css'))}</style>`,
-};
+
+// 获取骨架屏 loading
+const loading = fs.readFileSync(path.join(__dirname, '../src/common/skeleton/skeleton.html'));
 
 module.exports = {
   entry: {
@@ -31,8 +30,8 @@ module.exports = {
         exclude: path.join(__dirname, '../node_modules'), // 排除路径,
         include: path.resolve(__dirname, '../src'), // 精确需要处理的路径,
         use: [
-          'thread-loader',  // 加速编译
           'cache-loader', // 缓存
+          'thread-loader',  // 加速编译
           {
             loader: 'babel-loader',
             options: {
@@ -48,6 +47,7 @@ module.exports = {
         use: [{
           loader: 'file-loader',
           options: {
+            name: '[name]-[contenthash]',
             limit: 500,
             outputPath: 'images',
           }
@@ -55,12 +55,63 @@ module.exports = {
       },
     ],
   },
+
+  optimization: {
+    // runtimeChunk: {
+    //   name: 'manifest',
+    // },
+    splitChunks: { // 分块打包
+      chunks: 'all', // 同时分割同步和异步代码
+      cacheGroups: {
+        vendors: { // 打包 node_modules 下的第三方包, 打入vendors.js (除按需加载的)
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          minSize: 30000, // 生成包的大小 以字节为单位
+          // maxInitialRequests: 3, // 初始页面加载时并行请求的最大数量将小于或等于4 默认是3 (意思打开第一个页面的js不许超过3个请求)
+          minChunks: 1,
+          chunks: 'initial', // 设置为 all 会导致异步加载的库如果满足了当前 cacheGroups 的条件也会导致被打包到一起
+          // priority: 1 // 该配置项是设置 cacheGroups 分组处理的优先级，数值越大越优先处理 (默认 -10)
+        },
+        rcCalendarBase: { // 把 rc-calendar、moment 打入  calender-moment-base.js
+          name: 'calender-moment-base',
+          test: (module) => {
+            return /rc-calendar|moment/.test(module.context)
+          },
+          chunks: 'initial',
+          priority: 2, // 优先 rcCalendarBase 打包
+        },
+        // commons: { // 达不到 30kb 所以先注释
+        //   test: /[\\/]src[\\/]common[\\/]/,
+        //   name: 'commons',
+        //   minSize: 30000,
+        //   minChunks: 3,
+        //   chunks: 'initial',
+        //   priority: 1,
+        //   reuseExistingChunk: true // 这个配置允许我们使用已经存在的代码块
+        // },
+        // momentBase: {
+        //   name: 'moment-base',
+        //   test: (module) => {
+        //     return /moment/.test(module.context);
+        //   },
+        //   chunks: 'initial',
+        //   priority: 1,
+        // },
+      },
+    },
+  },
+
   plugins: [
     new HTMLWebpackPlugin({
       loading,
+      title: 'Gps',
       filename: 'index.html',
       template: path.join(__dirname, '../src/index.html'),
-      vendorName: `<script src="/js/${require('./vendor-manifest').name}.js"></script>`,
+      vendorName: `<script src="/js/${dllName}.js"></script>`,
+      favicon: path.join(__dirname, '../src/assets/images/favicon.ico'),
+      meta: {
+        'viewport': 'width=device-width, initial-scale=1, shrink-to-fit=no',
+      }
     }),
     new webpack.DllReferencePlugin({
       context: path.join(__dirname, '..'),

@@ -26,7 +26,7 @@ class View extends React.Component {
       data: [],
       pagination: {},
       checkedAllBool: false,
-      loading: true,
+      loading: false,
     };
 
     this.sort = myProduct.productSort[0].value;
@@ -75,7 +75,7 @@ class View extends React.Component {
             total,
             pages,
           },
-          loading: false,
+          loading: true,
         });
 
         // 当查询数据时 且 用户动过check 则清除所欲check状态
@@ -252,6 +252,7 @@ class View extends React.Component {
     return (
       <div className={classes.root}>
         <Skeleton
+          variant="myproduct"
           loading={loading}
         >
           {

@@ -1,16 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { title } from './mask';
+import { LinkRouter } from '../header/utils/not-header-left';
+import { footerObj } from '../../assets/data/default-data';
 
 import footerStyle from './style';
 
 const useStyles = makeStyles(footerStyle);
 
 
-const FooterIndex = (props) => {
-  const { history } = props;
+const Footer = () => {
   const classes = useStyles();
 
   return (
@@ -18,29 +17,27 @@ const FooterIndex = (props) => {
       <div className={classes.wrapper}>
         <div className={classes.footerNavigation}>
           {
-            title.map(val => (
+            footerObj.title.map(val => (
               <div key={val.id}>
                 <div className={classes.itemHeader}>
                   <span>{val.text}</span>
                 </div>
-                <div className={classes.itemContent}>
+                <div className={val.children === 'right' ? classes.itemIcon : classes.itemContent}>
                   {
-                    val.children
-                      ? (
-                        val.children.map(v => (
-                          <span
-                            className={classes.links}
-                            // href={v.url}
+                    footerObj[val.children].map((v) => {
+                      if (v.name) {
+                        return (
+                          <LinkRouter
                             key={v.id}
-                            tabIndex={0}
-                            role="button"
-                            onClick={() => { history.push(v.url); }}
+                            to={v.link}
+                            className={classes.links}
                           >
                             {v.name}
-                          </span>
-                        ))
-                      )
-                      : null
+                          </LinkRouter>
+                        );
+                      }
+                      return <v.icon />;
+                    })
                   }
                 </div>
               </div>
@@ -56,8 +53,4 @@ const FooterIndex = (props) => {
   );
 };
 
-FooterIndex.propTypes = {
-  history: PropTypes.objectOf(PropTypes.object).isRequired,
-};
-
-export default FooterIndex;
+export default Footer;

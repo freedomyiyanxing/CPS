@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles/index';
 
 import ItemButton from './item-button';
 import Avatars from '../../../common/material-ui-component/avatar';
+import { Store, AlarmClock, Purse } from '../../../common/material-ui-component/svg-icon';
 
 import { getViewDate, setBrokerageRate } from '../../../assets/js/utils-methods';
 import { itemStyle } from '../style';
@@ -26,28 +27,37 @@ const ProductItems = (props) => {
         }}
       />
       <div className={classes.info}>
-        <span className={classes.name}>{data.prodName}</span>
-        <span className={classes.price}>
-          <span>{data.storeName}</span>
+        <span className={classes.items}>
+          <span>{data.prodName}</span>
           <span>
             $
             {data.prodPrice.toFixed(2)}
           </span>
         </span>
-        <span className={classes.advertising}>
-          <span>Advertising Fees :</span>
-          <span className={classes.brokerage}>
-            $
-            {setBrokerageRate(data.prodPrice, data.brokerageRate)}
+        <span className={`${classes.items} ${classes.price}`}>
+          <span>
+            <Purse className={classes.purseIcon} />
+            <span className={classes.text}>
+              $
+              {setBrokerageRate(data.prodPrice, data.brokerageRate)}
+              &nbsp;&nbsp;
+              {data.brokerageRate}
+              %
+            </span>
           </span>
-          <span className={classes.rate}>
-            {data.brokerageRate}
-            %
+          <span>
+            <AlarmClock className={classes.purseIcon} />
+            <span className={classes.text}>
+              {getViewDate(data.endTime)}
+            </span>
           </span>
         </span>
-        <span className={classes.date}>
-          <span>Remaining Days :</span>
-          <span>{getViewDate(data.endTime)}</span>
+        <span className={classes.items}>
+          <span className={classes.store}>
+            <Store className={classes.storeIcon} />
+            <span>{data.storeName}</span>
+          </span>
+          <span />
         </span>
       </div>
       <ItemButton

@@ -13,6 +13,13 @@ import {
   MySvgIconLeftRotate,
   Add,
   Remove,
+  HomeJoin,
+  HomeShare,
+  HomeMoney,
+  Facebook,
+  Instagram,
+  Twitter,
+  Pinterest,
 } from '../../common/material-ui-component/svg-icon';
 
 
@@ -114,6 +121,20 @@ const statisticsTabs = statistics => ([
     value: statistics.completeBrokerageAmount,
   },
 ]);
+
+// 未登陆头部左侧 link
+const notLoginLeftHeaderLinks = [
+  {
+    id: uuid(),
+    text: 'Home',
+    link: '/i/index',
+  },
+  {
+    id: uuid(),
+    text: 'FAQ',
+    link: '/i/faq',
+  },
+];
 
 // 用户首页 推广数据统计 (曲线图)
 const polylineDaily = (daily, time) => {
@@ -434,6 +455,28 @@ const accountIndex = [
   // },
 ];
 
+// 未登录首页的list
+const notHomeList = [
+  {
+    id: uuid(),
+    title: 'JOIN',
+    text: 'To join, you must have a social media presence and/or blog or website.',
+    icon: HomeJoin,
+  },
+  {
+    id: uuid(),
+    title: 'SHARE YOUR LINK',
+    text: 'Create links to your favorite streetwear products and share them with your followers.',
+    icon: HomeShare,
+  },
+  {
+    id: uuid(),
+    title: 'EARN',
+    text: 'Support brands with values, style and earn up to 10% commission on each sale.',
+    icon: HomeMoney,
+  },
+];
+
 // 忘记密码页面
 const forgetPasswordText = 'Type in your email address below and well send you an email with Instructions on how to reset your password. Due to Security reasons, theink will be valid for 2 hours, after 2 hours you will need to submit anotherrequestgaln.';
 
@@ -549,6 +592,73 @@ const currencyCode = {
 // 注册用户协议
 const agreement = 'In order to make effective use of QQ number resours and safeguard the legitimate rights and interests of users, we have formulated the "QQ Number Rules" (hereinafter referred to as "these Rules") You should read and abide by the Tencent Service an Agreement. Please read carefully and fully understand the contents of each clause, especially the clauses exempting or limiting Tencent\'s liability, the clauses restricting andre users\'rights, the clauses stipulating dispute';
 
+const footerObj = {
+  left: [
+    {
+      id: uuid(),
+      name: 'About Us',
+      link: '/',
+    },
+    {
+      id: uuid(),
+      name: 'Privacy Policy',
+      link: '/',
+    },
+    {
+      id: uuid(),
+      name: 'Terms & Conditions',
+      link: '/',
+    },
+  ],
+  middle: [
+    {
+      id: uuid(),
+      name: 'FAQ',
+      link: '/i/faq',
+    },
+    {
+      id: uuid(),
+      name: 'Contact Us',
+      link: '/article/contact-us',
+    },
+  ],
+  right: [
+    {
+      id: uuid(),
+      icon: Facebook,
+    },
+    {
+      id: uuid(),
+      icon: Instagram,
+    },
+    {
+      id: uuid(),
+      icon: Twitter,
+    },
+    {
+      id: uuid(),
+      icon: Pinterest,
+    },
+  ],
+  title: [
+    {
+      id: uuid(),
+      text: 'ABOUT INFLUMONSTER',
+      children: 'left',
+    },
+    {
+      id: uuid(),
+      text: 'CUSTOMER SERVICE',
+      children: 'middle',
+    },
+    {
+      id: uuid(),
+      text: 'FOLLOW INFLUMONSTER',
+      children: 'right',
+    },
+  ],
+};
+
 export {
   webSiteCategory,
   monthlyVisitors,
@@ -572,4 +682,7 @@ export {
   bankAccountTypes,
   country,
   currencyCode,
+  notLoginLeftHeaderLinks,
+  notHomeList,
+  footerObj,
 };

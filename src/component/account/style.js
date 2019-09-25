@@ -1,6 +1,6 @@
 const indexStyle = theme => ({
   root: {
-    minHeight: 460,
+    minHeight: 'calc(100vh - 390px)',
     background: theme.palette.primary[50],
   },
   list: {

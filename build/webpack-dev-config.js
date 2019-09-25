@@ -1,23 +1,15 @@
 const path = require('path');
-const webpack = require('webpack');
+const ip = require('ip');
 const webpackMerge = require('webpack-merge');
 const webpackBaseConfig = require('./webpack-base-config');
 
-// 在入口注入热更新
-Object.keys(webpackBaseConfig.entry).forEach((name) => {
-  webpackBaseConfig.entry[name].push('react-hot-loader/patch');
-});
-
 module.exports = webpackMerge(webpackBaseConfig, {
   mode: 'development',
+  devtool: 'eval-source-map',
   output: {
     filename: 'js/[name].js',
     publicPath: '/',
   },
-  plugins: [
-    // 热更新
-    new webpack.HotModuleReplacementPlugin(),
-  ],
   module: {
     rules: [
       {
@@ -43,12 +35,12 @@ module.exports = webpackMerge(webpackBaseConfig, {
         use: [
           'style-loader',
           'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-            },
-          },
+          // {
+          //   loader: 'postcss-loader',
+          //   options: {
+          //     ident: 'postcss',
+          //   },
+          // },
         ],
       },
       // {
@@ -87,7 +79,7 @@ module.exports = webpackMerge(webpackBaseConfig, {
       errors: true,
       warnings: true,
     },
-    publicPath: '/',
+    // publicPath: '/', 默认就是 '/'
     // historyApiFallback 当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代为 index.html
     // react-router-dom 就是使用 HTML5的History API实现的
     // 防止跳转路由时 刷新会出现404页面
@@ -98,7 +90,7 @@ module.exports = webpackMerge(webpackBaseConfig, {
     contentBase: path.join(__dirname, '../dist'), // 打包文件目录
     proxy: { //解决跨域 代理有请求 /api的全部代理到 'http://192.168.1.20:8768'
       '/api': {
-        target: 'http://192.168.1.25:8768',
+        target: 'http://192.168.1.20:8768',
       },
       '/mock': {
         target: 'http://192.168.1.22:7070',
@@ -106,3 +98,5 @@ module.exports = webpackMerge(webpackBaseConfig, {
     }
   },
 });
+
+console.log(ip.address() + ':8899');

@@ -10,7 +10,7 @@ Notification.newInstance({
   closeIcon: <IconButtons />,
   style: {
     right: 24,
-    top: 120,
+    top: 90,
     bottom: 'auto',
   },
 }, (n) => {

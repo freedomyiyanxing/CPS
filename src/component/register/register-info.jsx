@@ -50,12 +50,15 @@ class RegisterInfo extends React.Component {
             });
           }
         })
-        .catch((err) => {
-          console.log(err, 'error');
+        .catch(() => {
           this.setState({
             isError: true,
           });
         });
+    } else {
+      this.setState({
+        isError: true,
+      });
     }
   }
 

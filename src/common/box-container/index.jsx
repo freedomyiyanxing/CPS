@@ -3,22 +3,21 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyle = makeStyles({
-  container: props => ({
+  container: {
     flex: 1,
     width: '100%',
     display: 'flex',
-    marginTop: props.marginTop,
-  }),
+  },
+  marginTop: {
+    marginTop: 80,
+  },
 });
 
 const BoxContainer = (props) => {
-  const { children, marginTop } = props;
-  const styles = {
-    marginTop,
-  };
-  const classes = useStyle(styles);
+  const { children, isMarginTop } = props;
+  const classes = useStyle();
   return (
-    <div className={classes.container}>
+    <div className={`${classes.container} ${isMarginTop ? classes.marginTop : ''}`}>
       {children}
     </div>
   );
@@ -26,7 +25,11 @@ const BoxContainer = (props) => {
 
 BoxContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  marginTop: PropTypes.number.isRequired,
+  isMarginTop: PropTypes.bool,
+};
+
+BoxContainer.defaultProps = {
+  isMarginTop: true,
 };
 
 export default BoxContainer;

@@ -32,7 +32,11 @@ export const theme = createMuiTheme({
     // 错误色
     error: red,
     // 次要色 (当前项目的风格中用不到)
-    secondary: orange,
+    secondary: {
+      ...orange,
+      A400: '#EC8B5D',
+      contrastText: '#ffffff',
+    },
     // 继承色 (当前项目的风格中用不到)
     inherit: yellow,
     type: 'light',

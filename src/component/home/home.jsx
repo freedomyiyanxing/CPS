@@ -17,7 +17,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
+      loading: false,
       userInfo: null, // 用户信息数据
       statistics: null, // 推广数据统计 (tab)
       detail: null, // 推广数据统计 (表格)
@@ -43,7 +43,7 @@ class Home extends React.Component {
         const [userInfo, statistics, daily, detail] = response;
 
         this.setState({
-          loading: false,
+          loading: true,
           userInfo,
           statistics,
           daily,
@@ -104,6 +104,7 @@ class Home extends React.Component {
         {
           <Skeleton
             loading={loading}
+            variant="home"
           >
             <HomeHeader data={userInfo} history={history} />
             <HomeCurve

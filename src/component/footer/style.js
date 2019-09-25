@@ -4,10 +4,10 @@ const footerStyle = theme => ({
     background: theme.palette.primary.main,
   },
   wrapper: {
-    width: 1100,
+    maxWidth: 1160,
     minWidth: 1100,
     margin: [[0, 'auto']],
-    padding: [[20, 0, 10]],
+    padding: [[20, 30]],
     background: theme.palette.primary.main,
   },
   footerNavigation: {
@@ -17,10 +17,9 @@ const footerStyle = theme => ({
   itemHeader: {
     marginBottom: 16,
     '& span': {
-      display: 'block',
-      width: '100%',
+      lineHeight: 1.7,
       fontWeight: theme.typography.fontWeight,
-      color: theme.palette.text.secondary,
+      color: theme.palette.primary[500],
       fontSize: theme.typography.fontSizeLg,
     },
   },
@@ -28,22 +27,30 @@ const footerStyle = theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  links: {
-    lineHeight: '22px',
-    fontSize: theme.typography.fontSizeSm,
-    // color: theme.palette.text.colorDdd,
-    color: theme.palette.text.secondary,
-    cursor: 'pointer',
-    '&:hover': {
-      color: theme.palette.text.colorDdd,
+  itemIcon: {
+    display: 'flex',
+    paddingTop: 10,
+    color: theme.palette.primary[50],
+    '& > svg': {
+      fontSize: '3.2rem',
+      marginRight: 46,
+      '&:last-child': {
+        marginRight: 0,
+      },
     },
+  },
+  links: {
+    marginBottom: 10,
+    lineHeight: 1.7,
+    fontSize: theme.typography.fontSize,
+    color: theme.palette.text.colorDdd,
   },
   copyright: {
     marginTop: 20,
     '& p': {
-      lineHeight: '22px',
-      fontSize: theme.typography.fontSizeXs,
-      color: theme.palette.text.colorDdd,
+      lineHeight: 1.9,
+      fontSize: theme.typography.caption.fontSize,
+      color: theme.palette.primary[500],
     },
   },
 });

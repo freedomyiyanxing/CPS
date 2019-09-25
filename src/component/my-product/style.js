@@ -28,7 +28,7 @@ export const listStyle = theme => ({
       width: '100%',
       paddingTop: 100,
       content: '""',
-      background: theme.palette.background.disabled,
+      background: theme.palette.primary[300],
       display: 'block',
     },
     '& > img': {

@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-import IntlTelInput from './intlTelInput';
 import { formPrompt } from '../../assets/data/prompt-text';
 
 @withStyles(theme => ({
@@ -22,8 +21,15 @@ class TelIndex extends React.Component {
     super(props);
     this.state = {
       errorPhone: null,
+      IntlTelInput: null,
     };
     this.phone = null;
+
+    import('./intlTelInput').then((data) => {
+      this.setState({
+        IntlTelInput: data.default,
+      });
+    });
   }
 
   // 电话验证函数 (onchange)
@@ -82,7 +88,7 @@ class TelIndex extends React.Component {
 
   render() {
     const { value, classes } = this.props;
-    const { errorPhone } = this.state;
+    const { errorPhone, IntlTelInput } = this.state;
     return (
       <FormControl
         fullWidth
@@ -91,11 +97,17 @@ class TelIndex extends React.Component {
         error={errorPhone}
       >
         <span className={classes.root}>Phone *</span>
-        <IntlTelInput
-          defaultValue={value}
-          onPhoneNumberChange={this.onPhoneNumberChange}
-          onSelectFlag={this.onSelectFlag}
-        />
+        {
+          IntlTelInput
+            ? (
+              <IntlTelInput
+                defaultValue={value}
+                onPhoneNumberChange={this.onPhoneNumberChange}
+                onSelectFlag={this.onSelectFlag}
+              />
+            )
+            : null
+        }
         {
           errorPhone
             ? <FormHelperText>{errorPhone.join(',')}</FormHelperText>

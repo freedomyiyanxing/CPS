@@ -1,8 +1,11 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link as RouterLink } from 'react-router-dom';
+
 import MyButton from '../../common/material-ui-component/button';
-import HeaderNotLogin from '../header/header-not-login';
+import NotLoginHeaders from '../header/not-login-header/header';
 import MainContainer from '../../common/box-container/main-container';
 
 const useStyles = makeStyles(theme => ({
@@ -21,21 +24,17 @@ const useStyles = makeStyles(theme => ({
     fontSize: theme.typography.h2.fontSize,
   },
   text: {
-    fontSize: theme.typography.fontSizeMd,
+    fontSize: theme.typography.body2.fontSize,
   },
   btn: {
-    padding: [[12, 15]],
-    fontSize: theme.typography.fontSizeMd,
-    '&:first-child': {
-      marginRight: 20,
-    },
+    padding: [[14, 25]],
+    fontSize: theme.typography.body2.fontSize,
   },
 }));
 
 const text = 'Oops! Looks like the page you\'re trying to reach is temporarily unavailable or the page might have been moved, deleted or no longer exist.';
 
-const Content = (props) => {
-  const { history } = props;
+const Content = () => {
   const classes = useStyles();
   return (
     <MainContainer>
@@ -44,58 +43,34 @@ const Content = (props) => {
       >
         <h2 className={classes.h2}>THIS PAGE CANNOT BE FOUND</h2>
         <p className={classes.text}>{text}</p>
-        <div>
-          <MyButton
-            variant="contained"
-            color="primary"
-            className={classes.btn}
-            // onClick={() => history.push(isLogin ? '/s/index' : '/my/index')}
-          >
-            Return Login
-          </MyButton>
-          <MyButton
-            variant="contained"
-            color="primary"
-            className={classes.btn}
-            onClick={() => history.goBack()}
-          >
-            Return
-          </MyButton>
-        </div>
+        <MyButton
+          variant="contained"
+          color="primary"
+          className={classes.btn}
+          component={RouterLink}
+          to="/i/index"
+        >
+          Return Home
+        </MyButton>
       </div>
     </MainContainer>
   );
 };
 
-export const Not404 = (props) => {
-  const { history } = props;
+export const Not404 = () => {
   return (
-    <Content
-      history={history}
-    />
+    <Content />
   );
 };
 
 
-const Lost = (props) => {
-  const { history } = props;
+const Lost = () => {
   return (
     <>
-      <HeaderNotLogin history={history} />
-      <Content
-        history={history}
-      />
+      <NotLoginHeaders />
+      <Content />
     </>
   );
-};
-
-
-Content.propTypes = {
-  history: PropTypes.objectOf(PropTypes.object).isRequired,
-};
-
-Not404.propTypes = {
-  history: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 Lost.propTypes = {

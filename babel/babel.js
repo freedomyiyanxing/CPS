@@ -24,12 +24,12 @@ const plugins = [
   ]
 ];
 
-const env = {
-  'development': {
-    'plugins': ['react-hot-loader/babel']
-  }
-};
+// const env = {
+//   'development': {
+//     'plugins': ['react-hot-loader/babel']
+//   }
+// };
 
 module.exports = {
-  presets, env, plugins,
+  presets, plugins,
 };

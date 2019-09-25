@@ -9,7 +9,7 @@ import MySelect from '../../../common/form/my-select';
 import MyTextarea from '../../../common/form/my-textarea';
 import Name from '../../../common/form/name';
 import Container from '../utils/container';
-import { SkeletonHtml } from '../../../common/skeleton/index';
+import Skeleton from '../../../common/skeleton/index';
 
 import { postRequestBody, get, SUCCESS } from '../../../assets/http/index';
 import { monthlyVisitors, webSiteCategory } from '../../../assets/data/default-data';
@@ -100,51 +100,50 @@ class WebsiteSetting extends React.Component {
       : true;
     return (
       <MainContainer>
-        {
-          data
-            ? (
-              <Container title="Website Setting">
-                <Name
-                  form={form}
-                  name="Website Name"
-                  value={data.websiteName}
-                  outputName="websiteName"
-                />
-                <MyUrl
-                  form={form}
-                  value={data.websiteUrl}
-                />
-                <MySelect
-                  form={form}
-                  liLen={8.5}
-                  name="Category"
-                  outputName="websiteCategory"
-                  selectArr={webSiteCategory}
-                  value={getSelectValue(webSiteCategory, data.websiteCategory)}
-                />
-                <MySelect
-                  form={form}
-                  name="Current Monthly Unique Visitores"
-                  outputName="monthlyVisits"
-                  selectArr={monthlyVisitors}
-                  value={getSelectValue(monthlyVisitors, data.monthlyVisits)}
-                />
-                <MyTextarea
-                  form={form}
-                  value={data.websiteDesc}
-                />
-                <SubmitButton
-                  bank
-                  width={180}
-                  name="Submit"
-                  disabled={disabled}
-                  history={history}
-                  handleSubmit={this.handleSubmit}
-                />
-              </Container>
-            )
-            : <SkeletonHtml />
-        }
+        <Container title="Website Setting">
+          <Skeleton
+            variant="basic"
+            loading={data}
+          >
+            <Name
+              form={form}
+              name="Website Name"
+              value={data && data.websiteName}
+              outputName="websiteName"
+            />
+            <MyUrl
+              form={form}
+              value={data && data.websiteUrl}
+            />
+            <MySelect
+              form={form}
+              liLen={8.5}
+              name="Category"
+              outputName="websiteCategory"
+              selectArr={webSiteCategory}
+              value={getSelectValue(webSiteCategory, data && data.websiteCategory)}
+            />
+            <MySelect
+              form={form}
+              name="Current Monthly Unique Visitores"
+              outputName="monthlyVisits"
+              selectArr={monthlyVisitors}
+              value={getSelectValue(monthlyVisitors, data && data.monthlyVisits)}
+            />
+            <MyTextarea
+              form={form}
+              value={data && data.websiteDesc}
+            />
+            <SubmitButton
+              bank
+              width={180}
+              name="Submit"
+              disabled={disabled}
+              history={history}
+              handleSubmit={this.handleSubmit}
+            />
+          </Skeleton>
+        </Container>
       </MainContainer>
     );
   }

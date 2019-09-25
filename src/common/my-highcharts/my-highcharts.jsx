@@ -1,68 +1,70 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Highcharts from 'highcharts';
 
 const startUp = (ref, time, data) => {
-  Highcharts.chart(ref, {
-    credits: {
-      enabled: false, // 移除默认的版权信息,
-    },
-    chart: {
-      zoomType: 'x',
-    },
-    title: {
-      text: null, // 'freedom.yi',
-    },
-    subtitle: {
-      // text: document.ontouchstart === undefined
-      //   ? '鼠标拖动可以进行缩放' : '手势操作进行缩放',
-    },
-    xAxis: {
-      categories: time,
-    },
-    tooltip: {
-      headerFormat: 'Date: {point.x} <br>',
-      pointFormat: 'Qty：{point.y} Times',
-    },
-    yAxis: {
+  import('highcharts').then((hig) => {
+    const ds = hig.default;
+    ds.chart(ref, {
+      credits: {
+        enabled: false, // 移除默认的版权信息,
+      },
+      chart: {
+        zoomType: 'x',
+      },
       title: {
-        text: null,
+        text: null, // 'freedom.yi',
       },
-    },
-    legend: {
-      enabled: false,
-    },
-    plotOptions: {
-      area: {
-        fillColor: {
-          linearGradient: {
-            x1: 0,
-            y1: 0,
-            x2: 0,
-            y2: 1,
-          },
-          stops: [
-            [0, Highcharts.getOptions().colors[0]],
-            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')],
-          ],
-        },
-        marker: {
-          radius: 2,
-        },
-        lineWidth: 1,
-        states: {
-          hover: {
-            lineWidth: 1,
-          },
-        },
-        threshold: null,
+      subtitle: {
+        // text: document.ontouchstart === undefined
+        //   ? '鼠标拖动可以进行缩放' : '手势操作进行缩放',
       },
-    },
-    series: [{
-      type: 'area',
-      data,
-    }],
+      xAxis: {
+        categories: time,
+      },
+      tooltip: {
+        headerFormat: 'Date: {point.x} <br>',
+        pointFormat: 'Qty：{point.y} Times',
+      },
+      yAxis: {
+        title: {
+          text: null,
+        },
+      },
+      legend: {
+        enabled: false,
+      },
+      plotOptions: {
+        area: {
+          fillColor: {
+            linearGradient: {
+              x1: 0,
+              y1: 0,
+              x2: 0,
+              y2: 1,
+            },
+            stops: [
+              [0, ds.getOptions().colors[0]],
+              [1, ds.Color(ds.getOptions().colors[0]).setOpacity(0).get('rgba')],
+            ],
+          },
+          marker: {
+            radius: 2,
+          },
+          lineWidth: 1,
+          states: {
+            hover: {
+              lineWidth: 1,
+            },
+          },
+          threshold: null,
+        },
+      },
+      series: [{
+        type: 'area',
+        data,
+      }],
+    });
   });
 };
 
@@ -94,7 +96,9 @@ class MyHighcharts extends React.Component {
     return (
       <div
         className={chartsData.time.length ? classes.root : classes.rootNo}
-        ref={(n) => { this.containerRef = n; }}
+        ref={(n) => {
+          this.containerRef = n;
+        }}
       />
     );
   }

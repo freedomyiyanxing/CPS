@@ -50,22 +50,20 @@ const DateRange = (props) => {
     });
   };
 
-  const calendar = (
-    <RangeCalendar
-      dateInputPlaceholder={['start', 'end']}
-      disabledDate={disabledDate}
-      locale={enUS}
-      showClear
-      clearIcon={<DateClose />}
-    />
-  );
-
   return (
     <Picker
       value={values}
       onChange={handleChange}
       animation="slide-up"
-      calendar={calendar}
+      calendar={(
+        <RangeCalendar
+          showClear
+          locale={enUS}
+          clearIcon={<DateClose />}
+          disabledDate={disabledDate}
+          dateInputPlaceholder={['start', 'end']}
+        />
+      )}
     >
       {
         ({ value }) => (

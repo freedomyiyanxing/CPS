@@ -13,7 +13,7 @@ export const renderRoutes = (routes, auth = true, extraProps = {}, switchProps =
           const { location } = props;
           // 进入当前端口 直接redirect到首页
           if (location.pathname === '/') {
-            return <Redirect to={{ pathname: '/s/index', state: { from: location } }} />;
+            return <Redirect to={{ pathname: '/i/index', state: { from: location } }} />;
           }
 
           // 判断是否需要登录的页面

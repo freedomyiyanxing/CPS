@@ -23,7 +23,7 @@ class ViewRight extends React.Component {
       items: [],
       total: 0,
       userInfo: null,
-      loading: true,
+      loading: false,
     };
     this.pageCurrent = 1; // 当前页码 默认1;
     this.value = null; // 默认search 表单值为null
@@ -64,7 +64,7 @@ class ViewRight extends React.Component {
             items,
             total,
             userInfo,
-            loading: false,
+            loading: true,
           });
         }
       });
@@ -114,6 +114,7 @@ class ViewRight extends React.Component {
     return (
       <div className={classes.root}>
         <Skeleton
+          variant="balance"
           loading={loading}
         >
           <ViewHeight userInfo={userInfo} getUserInfo={this.getUserInfo} />

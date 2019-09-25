@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { inject, observer } from 'mobx-react';
 import Dialog from '@material-ui/core/Dialog';
 import IconButton from '@material-ui/core/IconButton';
-import Cropper from 'react-cropper';
 
 import MyButton from '../../../common/material-ui-component/button';
 import SubmitButton from '../../../common/form/submit-button';
@@ -16,6 +15,8 @@ import { patchRequestBody } from '../../../assets/http/index';
 import { userIconPrompt } from '../../../assets/data/prompt-text';
 import { cropperBtnArr } from '../../../assets/data/default-data';
 import { cropperStyle } from '../style';
+
+let LazyCropper = null;
 
 @inject(store => ({
   userStore: store.userStore,
@@ -30,6 +31,7 @@ class MyCropper extends React.Component {
       open: false,
       isClose: true, // 控制在上传过程中不允许关闭弹出框
       imgUrl: null,
+      Cropper: LazyCropper || null,
     };
 
     this.clickScaleX = 0;
@@ -44,6 +46,16 @@ class MyCropper extends React.Component {
     this.setState({
       open: !open,
     });
+
+    // 保证只进来一次
+    if ((!open) && !LazyCropper) {
+      import('react-cropper').then((data) => {
+        LazyCropper = data.default;
+        this.setState({
+          Cropper: LazyCropper,
+        });
+      });
+    }
   };
 
   /**
@@ -147,7 +159,9 @@ class MyCropper extends React.Component {
 
   render() {
     const { classes, userStore } = this.props;
-    const { open, imgUrl, isClose } = this.state;
+    const {
+      open, imgUrl, isClose, Cropper,
+    } = this.state;
     return (
       <>
         <div className={classes.root}>
@@ -198,18 +212,24 @@ class MyCropper extends React.Component {
             </IconButton>
           </div>
           <div className={classes.dialogContent}>
-            <Cropper
-              src={imgUrl}
-              className="cropper-img-wrapper"
-              ref={(n) => {
-                this.refCropper = n;
-              }}
-              dragMode="move" // 移动画布
-              preview=".cropper-img-preview" // 预览视图
-              aspectRatio={9 / 9} // 宽高比列
-              autoCropArea={0.5} // 初始化裁剪框大小（相对于图片大小做比例）
-              viewMode={1} // 限制裁剪框不超过画布的大小
-            />
+            {
+              Cropper
+                ? (
+                  <Cropper
+                    src={imgUrl}
+                    className="cropper-img-wrapper"
+                    ref={(n) => {
+                      this.refCropper = n;
+                    }}
+                    dragMode="move" // 移动画布
+                    preview=".cropper-img-preview" // 预览视图
+                    aspectRatio={9 / 9} // 宽高比列
+                    autoCropArea={0.5} // 初始化裁剪框大小（相对于图片大小做比例）
+                    viewMode={1} // 限制裁剪框不超过画布的大小
+                  />
+                )
+                : <div className="cropper-img-preview" style={{ width: 500, height: 340 }} />
+            }
             <div className={classes.dialogView}>
               <div className={`cropper-img-preview ${classes.cropperPreviewMax}`} />
               <div className={`cropper-img-preview ${classes.cropperPreviewMin}`} />

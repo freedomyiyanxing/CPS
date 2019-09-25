@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 
-import HeaderLogin from '../header/header-login';
-import HeaderNotLogin from '../header/header-not-login';
+import LoginHeaders from '../header/login-header/header';
+import NotLoginHeaders from '../header/not-login-header/header';
 import BoxContainer from '../../common/box-container/index';
 import { renderRoutes } from '../../router/render-routes';
 
@@ -13,10 +13,10 @@ const ArticleContainer = (props) => {
     <>
       {
         userStore.isLogin
-          ? <HeaderLogin history={history} />
-          : <HeaderNotLogin history={history} />
+          ? <LoginHeaders history={history} />
+          : <NotLoginHeaders history={history} />
       }
-      <BoxContainer marginTop={userStore.isLogin ? 112 : 68}>
+      <BoxContainer>
         {
           renderRoutes(route.routes)
         }

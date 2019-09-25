@@ -41,3 +41,10 @@
  3： yarn run build:test (测试环境打包)
  4:  yarn run build:pre (预环境 | 运行时环境)
 ````
+
+注意事项
+```html
+rc-calendar  9.15.x 版本有BUG
+在没有确定BUG已经被修复的情况下， 不要修改package.json的 rc-calendar 引用
+https://github.com/react-component/calendar/issues/611
+```

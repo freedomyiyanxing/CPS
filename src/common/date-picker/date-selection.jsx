@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import Picker from 'rc-calendar/lib/Picker';
 import enUS from 'rc-calendar/lib/locale/en_US';
-import moment from 'moment';
 import Calendar from 'rc-calendar';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import 'moment/locale/en-gb';
-
 import MyInput from '../material-ui-component/input';
 import MyLabel from '../material-ui-component/input-label';
 import DateClose from './date-close';
@@ -43,20 +42,18 @@ const DateSelection = (props) => {
 
   const { getFieldProps } = form;
 
-  const calendar = (
-    <Calendar
-      locale={enUS}
-      disabledDate={disabledDate}
-      showToday={false}
-      clearIcon={<DateClose />}
-    />
-  );
-
   return (
     <Picker
       onChange={handleChange}
       animation="slide-up"
-      calendar={calendar}
+      calendar={(
+        <Calendar
+          locale={enUS}
+          disabledDate={disabledDate}
+          showToday={false}
+          clearIcon={<DateClose />}
+        />
+      )}
       value={date}
     >
       {
