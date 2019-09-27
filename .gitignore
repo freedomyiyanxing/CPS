@@ -9,6 +9,7 @@ yarn.lock
 .vscode/
 dist/
 static/
+build/vendor-manifest.json
 
 # Runtime data
 pids
