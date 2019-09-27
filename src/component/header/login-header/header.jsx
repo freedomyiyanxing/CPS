@@ -12,6 +12,7 @@ const Header = (props) => {
   return (
     <>
       <HeaderContainer
+        isLogin
         leftComponent={<HeaderLeft history={history} />}
         rightComponent={<HeaderRight history={history} />}
       />

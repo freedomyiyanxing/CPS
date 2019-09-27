@@ -14,6 +14,10 @@ import LoginHeaders from './header';
  */
 const LoginContainer = (props) => {
   const { route, history, userStore } = props;
+  if (window.scrollY > 0 && (typeof window.scroll === 'function')) {
+    console.log('触发了吗');
+    window.scroll(0, 0);
+  }
   return (
     <>
       <LoginHeaders history={history} />

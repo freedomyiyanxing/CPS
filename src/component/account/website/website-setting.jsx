@@ -108,12 +108,12 @@ class WebsiteSetting extends React.Component {
             <Name
               form={form}
               name="Website Name"
-              value={data && data.websiteName}
+              value={data ? data.websiteName : ''}
               outputName="websiteName"
             />
             <MyUrl
               form={form}
-              value={data && data.websiteUrl}
+              value={data ? data.websiteUrl : ''}
             />
             <MySelect
               form={form}
@@ -121,18 +121,18 @@ class WebsiteSetting extends React.Component {
               name="Category"
               outputName="websiteCategory"
               selectArr={webSiteCategory}
-              value={getSelectValue(webSiteCategory, data && data.websiteCategory)}
+              value={getSelectValue(webSiteCategory, data ? data.websiteCategory : '')}
             />
             <MySelect
               form={form}
               name="Current Monthly Unique Visitores"
               outputName="monthlyVisits"
               selectArr={monthlyVisitors}
-              value={getSelectValue(monthlyVisitors, data && data.monthlyVisits)}
+              value={getSelectValue(monthlyVisitors, data ? data.monthlyVisits : '')}
             />
             <MyTextarea
               form={form}
-              value={data && data.websiteDesc}
+              value={data ? data.websiteDesc : ''}
             />
             <SubmitButton
               bank

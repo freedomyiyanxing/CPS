@@ -115,6 +115,7 @@ class RegisterInfo extends React.Component {
   render() {
     const { classes, form, history } = this.props;
     const { data, isError } = this.state;
+    console.log(data);
     return (
       <InputContainer title={isError ? '' : 'SIGN UP'}>
         <TokenError
@@ -124,9 +125,9 @@ class RegisterInfo extends React.Component {
           <div className={classes.firstTitle}>
             <h4 className={classes.title}>ACCOUNT INFORMATION</h4>
           </div>
-          <Name name="First Name" value={data && data.firstName} outputName="firstName" form={form} disabled />
-          <Name name="Last Name" value={data && data.lastName} outputName="lastName" form={form} disabled />
-          <Emails form={form} value={data && data.email} disabled />
+          <Name name="First Name1" value={data ? data.firstName : ''} outputName="firstName" form={form} disabled />
+          <Name name="Last Name" value={data ? data.lastName : ''} outputName="lastName" form={form} disabled />
+          <Emails form={form} value={data ? data.email : ''} disabled />
           <TelIndex ref={this.phoneRef} />
           <MergePassword form={form} />
           <div className={classes.lastTitle}>

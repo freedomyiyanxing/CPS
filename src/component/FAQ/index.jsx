@@ -6,7 +6,7 @@ import { LogoColor } from '../../common/material-ui-component/svg-icon';
 import MyButton from '../../common/material-ui-component/button';
 import ColorContainer from '../../common/box-container/color-container';
 import faqStyle from './style';
-import FAQBg from '../../assets/images/FAQ-bg.png';
+import FAQBg from '../../assets/images/FAQ-bg.jpg';
 
 const useStyles = makeStyles(faqStyle);
 

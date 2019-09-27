@@ -7,6 +7,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import MyButton from '../../common/material-ui-component/button';
 import NotLoginHeaders from '../header/not-login-header/header';
 import MainContainer from '../../common/box-container/main-container';
+import BoxContainer from '../../common/box-container/index';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -68,7 +69,9 @@ const Lost = () => {
   return (
     <>
       <NotLoginHeaders />
-      <Content />
+      <BoxContainer>
+        <Content />
+      </BoxContainer>
     </>
   );
 };

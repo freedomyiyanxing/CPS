@@ -13,6 +13,10 @@ import NotLoginHeaders from './header';
  */
 const NotLoginContainer = (props) => {
   const { route, history } = props;
+  if (window.scrollY > 0 && (typeof window.scroll === 'function')) {
+    console.log('触发了吗');
+    window.scroll(0, 0);
+  }
   return (
     <>
       <NotLoginHeaders history={history} />

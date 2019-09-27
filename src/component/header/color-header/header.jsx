@@ -10,6 +10,7 @@ import HeaderRight from '../utils/header-right';
 const Header = ({ userStore, history }) => (
   <HeaderContainer
     scroll
+    isLogin={userStore.isLogin}
     leftComponent={
       userStore.isLogin ? <HeaderLeft history={history} /> : <NotLeft />
     }

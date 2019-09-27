@@ -1,0 +1,4 @@
+# robots.txt for influmonster  for test-aws
+
+User-agent: *
+Disallow: /

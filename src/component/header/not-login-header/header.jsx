@@ -18,6 +18,7 @@ const NotLoginHeaders = () => {
 
   return (
     <HeaderContainer
+      isLogin={false}
       leftComponent={<NotLeft />}
       rightComponent={(
         <>

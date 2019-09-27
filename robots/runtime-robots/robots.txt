@@ -1,0 +1,3 @@
+# robots.txt for influmonster  for test-dev
+
+User-agent: *

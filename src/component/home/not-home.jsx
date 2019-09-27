@@ -6,7 +6,7 @@ import { LinkRouter } from '../header/utils/not-header-left';
 import ColorContainer from '../../common/box-container/color-container';
 import MyButton from '../../common/material-ui-component/button';
 import { notHomeList } from '../../assets/data/default-data';
-import homeBg from '../../assets/images/home-bg.png';
+import homeBg from '../../assets/images/home-bg.jpg';
 import notHomeStyle from './style';
 
 const useStyles = makeStyles(notHomeStyle);

@@ -8,7 +8,6 @@ const dllName = require('./vendor-manifest.json').name;
 
 // 判断当前打包环境 （dev = 开发，test = 测试，pre = 预环境）
 const ENVIRONMENT = process.env.ENVIRONMENT;
-console.log(` ======   当前是 ${ENVIRONMENT} 环境   ==== `);
 
 // 获取骨架屏 loading
 const loading = fs.readFileSync(path.join(__dirname, '../src/common/skeleton/skeleton.html'));
@@ -47,7 +46,7 @@ module.exports = {
         use: [{
           loader: 'file-loader',
           options: {
-            name: '[name]-[contenthash]',
+            name: '[name]-[contenthash].[ext]',
             limit: 500,
             outputPath: 'images',
           }
@@ -118,21 +117,18 @@ module.exports = {
       //包含 content 和 name 的对象，或者在编译时(compilation)的一个用于加载的 JSON manifest 绝对路径
       manifest: require('./vendor-manifest.json'),
     }),
-    new CopyWebpackPlugin([ // 复制
-      {
-        from: path.join(__dirname, '../static'),
-        to: path.join(__dirname, '../dist'),
-      }
-    ]),
+    new CopyWebpackPlugin(getRobotsFile(ENVIRONMENT)),
     new webpack.DefinePlugin({
       // 根据打包环境 匹配相对应的图片路径
       'process.env.IMG_BASE': imgUrls(ENVIRONMENT),
       'process.env.PAYPAL_RETURN_URL': serverUrls(ENVIRONMENT),
     }),
+
     new webpack.ContextReplacementPlugin( // 按需加载第三方包 (详细说明 请看官网)
       /moment[/\\]locale$/,
       /en-gb/,
     ),
+
     // new BundleAnalyzerPlugin({ // 可视化工具 http://127.0.0.1:8888
     //   analyzerMode: 'server',
     //   analyzerHost: '127.0.0.1',
@@ -175,3 +171,33 @@ function serverUrls(env) {
   }
   return JSON.stringify(paypalReturnUrl + '/my/account-payment');
 }
+
+function getRobotsFile(env) {
+  let fileName = '';
+  const arr = [ // 复制
+    {
+      from: path.join(__dirname, '../static'),
+      to: path.join(__dirname, '../dist'),
+    },
+  ];
+  if (!env || env === 'dev' || env === 'test') {
+    return arr;
+  }
+
+  if (env === 'pre') {
+    fileName = 'pre-robots';
+  }
+
+  if (env === 'runtime') {
+    fileName = 'runtime-robots';
+  }
+
+  arr.push({
+    from: path.join(__dirname, `../robots/${fileName}/robots.txt`),
+    to: path.join(__dirname, '../dist'),
+  });
+
+  return arr;
+}
+
+

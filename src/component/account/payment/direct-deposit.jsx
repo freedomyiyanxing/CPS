@@ -65,7 +65,6 @@ const DirectDeposit = (props) => {
         value={data.bankRoutingNumber}
         pattern={/^[A-Za-z0-9]{2,30}$/}
       />
-
     </>
   );
 };

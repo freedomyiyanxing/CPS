@@ -28,6 +28,9 @@ const childTheme = {
  */
 const ColorContainer = (props) => {
   const { route, history } = props;
+  if (window.scrollY > 0 && (typeof window.scroll === 'function')) {
+    window.scroll(0, 0);
+  }
   return (
     <MuiThemeProvider
       theme={childTheme}

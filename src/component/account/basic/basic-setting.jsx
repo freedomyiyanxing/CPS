@@ -119,7 +119,7 @@ class BasicSetting extends React.Component {
         <Container
           title="Basic Sitting"
           component={
-            data && <MyCropper id={data && data.id} />
+            data ? <MyCropper id={data && data.id} /> : null
           }
         >
           <Skeleton
@@ -129,39 +129,39 @@ class BasicSetting extends React.Component {
             <Name
               form={form}
               name="First Name"
-              value={data && data.firstName}
+              value={data ? data.firstName : ''}
               outputName="firstName"
             />
             <Name
               form={form}
               name="Last Name"
-              value={data && data.lastName}
+              value={data ? data.lastName : ''}
               outputName="lastName"
             />
             <Emails
               form={form}
-              value={data && data.email}
+              value={data ? data.email : ''}
               disabled
             />
             <TelIndex
               ref={this.phoneRef}
-              value={data && data.mobile}
+              value={data ? data.mobile : ''}
               handlePhone={this.handlePhone}
             />
             <DateSelection
               form={form}
-              defaultValue={data && data.dateOfBirth}
+              defaultValue={data ? data.dateOfBirth : ''}
               onChange={this.handleDate}
             />
             <MyRadio
               form={form}
-              value={data && data.gender}
+              value={data ? data.gender : ''}
             />
             <SubmitButton
               bank
               width={180}
               name="Submit"
-              disabled={disabled && datePhoneDisable}
+              disabled={disabled ? datePhoneDisable : ''}
               history={history}
               handleSubmit={this.handleSubmit}
             />
